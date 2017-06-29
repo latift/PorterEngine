@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>tr.com.vbt.porter</groupId>
-    <artifactId>CobolPorter</artifactId>
+    <artifactId>PorterEngine</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>CobolPorterSemantic</artifactId>
