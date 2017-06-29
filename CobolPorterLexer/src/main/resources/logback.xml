@@ -1,0 +1,63 @@
+<configuration>
+  <contextName>THY TPS CONVERSION: </contextName>
+  
+  <!-- <property name="USER_HOME" value="D:/CobolPorterWorkspace2/CobolPorter/CobolPorter" /> -->
+  <property name="USER_HOME" value="/root/chopper/converter" /> 
+  
+   <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    <file>${USER_HOME}/THY_TPS_Conversion.log</file>
+    
+	  <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+	      <!-- rollover daily -->
+	      <fileNamePattern>THY_TPS_Conversion-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+	       <!-- each file should be at most 100MB, keep 60 days worth of history, but at most 20GB -->
+	       <maxFileSize>100MB</maxFileSize>    
+	       <maxHistory>5</maxHistory>
+	       <totalSizeCap>5GB</totalSizeCap>
+	    </rollingPolicy>
+    
+    <encoder>
+       <pattern>%d{HH:mm:ss.SSS} %contextName - %X{sessionId} - %X{InputFileForConversion}  %X{NaturalMode} %X{phase} %X{ConversionStatu}  [%thread] %-5level %logger{36}   - %msg%n</pattern>
+    </encoder>
+  </appender>
+  
+     <appender name="FILE_WARN" class="ch.qos.logback.core.FileAppender">
+    <file>${USER_HOME}/THY_Conversion_Summary.log</file>
+    
+         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+    
+	  <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+	      <!-- rollover daily -->
+	      <fileNamePattern>THY_TPS_Conversion-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+	       <!-- each file should be at most 100MB, keep 60 days worth of history, but at most 20GB -->
+	       <maxFileSize>100MB</maxFileSize>    
+	       <maxHistory>5</maxHistory>
+	       <totalSizeCap>5GB</totalSizeCap>
+	    </rollingPolicy>
+    
+    <encoder>
+       <pattern>%d{HH:mm:ss.SSS} %contextName - %X{sessionId} - %X{InputFileForConversion}  %X{NaturalMode} %X{phase} %X{ConversionStatu}  [%thread] %-5level %logger{36}   - %msg%n</pattern>
+    </encoder>
+  </appender>
+  
+  
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} %contextName - %X{sessionId} - %X{InputFileForConversion} %X{NaturalMode} %X{phase} %X{ConversionStatu} [%thread] %-5level %logger{36}   - %msg%n</pattern>
+    </encoder>
+  </appender>
+  
+  
+  
+
+  <root level="debug">
+    <appender-ref ref="FILE"/>
+    <appender-ref ref="STDOUT"/>
+      <appender-ref ref="FILE_WARN" />
+  </root>
+  
+
+    
+</configuration>

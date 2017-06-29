@@ -1,0 +1,133 @@
+package tr.com.vbt.framework.general;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import tr.com.vbt.natural.core.NaturalProgram;
+import tr.com.vbt.natural.core.SpringContextUtil;
+import tr.com.vbt.natural.core.ThreadManagerOld;
+import tr.com.vbt.natural.html.HtmlObject;
+
+
+public class NaturalProgramThreadManagerImplOld implements ThreadManagerOld  {
+	
+	final static Logger logger = LoggerFactory.getLogger(NaturalProgramThreadManagerImplOld.class);
+	
+	private static List<ThreadManagerOld> instanceList=new ArrayList<ThreadManagerOld>();
+	
+	private String sessionId;
+	
+	private String programName;
+	
+	private NaturalProgram nap;
+	
+	//private IDGPMUSS naturalProgramThread;
+	
+	private boolean threadStarted=false;
+	
+	private NaturalProgramThreadManagerImplOld(String sessionId, String programName) {
+		super();
+		this.sessionId = sessionId;
+		this.programName = programName;
+		Object obj= SpringContextUtil.getApplicationContext().getBean(programName);
+		/*if(obj instanceof IDGH2202){
+			
+		}*/
+		nap=(NaturalProgram) obj;
+		nap.setSessionId(sessionId);
+		//nap=naturalProgramThread;
+	}
+
+    public static ThreadManagerOld getInstance(String sessionId, String programName){
+    	ThreadManagerOld t;
+    	NaturalProgramThreadManagerImplOld newProgramManager;
+    	for(int i=0; i<instanceList.size();i++){
+    		t=instanceList.get(i);
+    		if(t.getProgramName().equals(programName)&&t.getSessionId().equals(sessionId)
+    				){
+    			return t;
+    		}
+    	}
+    	
+    	newProgramManager=new NaturalProgramThreadManagerImplOld(sessionId,programName);
+    	instanceList.add(newProgramManager);
+    	return newProgramManager;
+    }
+
+	
+	public void runNaturalProgram(){
+		
+		if(threadStarted==false){
+			nap.start();
+			threadStarted=true;
+		}
+		
+	    synchronized(nap.getLock()){
+            	logger.debug("manager is waiting for Natural Program Response.  Nap: "+ nap);
+            	try {
+            		nap.setThreadManagerRunFirst(true);
+            		nap.getLock().notify();
+            		nap.getLock().wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            	logger.debug("manager is carrying response of Natural Program to JSP. Now flow is being given to calling JSP.   Nap: "+ nap);
+        }
+    }
+
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
+
+	public String getProgramName() {
+		return programName;
+	}
+
+	public void setProgramName(String programName) {
+		this.programName = programName;
+	}
+
+	public NaturalProgram getNap() {
+		return nap;
+	}
+
+	public void setNap(NaturalProgram nap) {
+		this.nap = nap;
+	}
+
+	@Override
+	public List<HtmlObject> getHtmlTagList() {
+		return nap.getHtmlTagList();
+	}
+
+	@Override
+	public HttpServletRequest getRequest() {
+		return nap.getRequest();
+	}
+
+	@Override
+	public void setRequest(HttpServletRequest request) {
+		nap.setRequest(request);
+		
+	}
+
+	public String getPF_KEY() {
+		return nap.getPF_KEY();
+	}
+
+	public void setPF_KEY() {
+		nap.setPF_KEY();
+	}
+
+	   
+}

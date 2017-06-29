@@ -1,0 +1,664 @@
+
+////
+package tr.com.generated ;
+
+//// DEFINE_DATA
+import tr.com.vbt.natural.core.*;
+public class TemporaryClassName_RefactorWithNaturalProgramName  extends AbstractNaturalProgram implements NaturalProgram {
+
+////
+
+////
+//
+
+//// 1.0 T-KLMTARSEF2 ( A15 )
+String T_KLMTARSEF2;
+
+//// MAIN_START
+public static void main(String[] args){
+
+////
+
+////
+//
+
+//// PS = 23.0 LS = 240.0
+//UNDEFINED ELEMENT
+
+//// ( 3.0 ) PS = 60.0 LS = 240.0
+//UNDEFINED ELEMENT
+
+//// PF3 PF4
+//UNDEFINED ELEMENT
+
+//// PF10 = %W<
+//UNDEFINED ELEMENT
+
+//// PF11 = %W>
+//UNDEFINED ELEMENT
+
+////
+
+////
+//
+
+//// AT_TOP_OF_PAGE
+public void onload_0(){
+
+//// LANGUAGE EQ 7.0
+if(LANGUAGE == 7.0 ){
+
+//// 15.0 X T-TARIH  -  T-BIT-TARIH TARIHLERI ARASINDA 12.0 X DAT4E / 20.0 X FMM MESAJI ILE GELEN BILGILER 12.0 X SAYFA NO.: * PAGE-NUMBER / / SEFER              SEFER   OP.  U  C A K   REMAN.  BLOCK  UPLIFT                                     YAKIT     F   I   R   M   A            T   H   Y          SEFER    K  U  L  L  A  N  I  C  I   / TARIHI   KLIM VLIM   NO    COD  TIPI REG    (KG)  FUEL(KG) (LIT)  FATURA NO     DENSITY U/D FIRMA C* TIPI MATBU NO TARIH    MIKTAR    MATBU NO TARIH    MIKTAR  NO     KODU     TERMINAL   ISLEM  ZAMANI    TIPI   / = ( 212.0 ) ( I )
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X T-TARIH  -  T-BIT-TARIH TARIHLERI ARASINDA X DAT4E"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X FMM MESAJI ILE GELEN BILGILER X SAYFA NO.: PAGE-NUMBER"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null,""));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," SEFER              SEFER   OP.  U  C A K   REMAN.  BLOCK  UPLIFT                                     YAKIT     F   I   R   M   A            T   H   Y          SEFER    K  U  L  L  A  N  I  C  I  "));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," TARIHI   KLIM VLIM   NO    COD  TIPI REG    (KG)  FUEL(KG) (LIT)  FATURA NO     DENSITY U/D FIRMA C* TIPI MATBU NO TARIH    MIKTAR    MATBU NO TARIH    MIKTAR  NO     KODU     TERMINAL   ISLEM  ZAMANI    TIPI  "));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+}
+
+//// ELSE
+else{
+
+//// LANGUAGE EQ 1.0
+if(LANGUAGE == 1.0 ){
+
+//// 15.0 X T-TARIH  -  T-BIT-TARIH PERIOD             12.0 X DAT4E / 20.0 X DATA OBTAINED BY FMM SYSTEM   12.0 X PAGE  NO.: * PAGE-NUMBER / / FLGHT              FLGHT   OP.  A/C        REMAN.  BLOCK  UPLIFT                                     FUEL      F   I   R   M                T   H   Y          FLIGH    U    S    E    R           /  DATE    DEP. ARV.   NO    CODE TYPE REG    (KG)  FUEL(KG) (LIT)   INV. NO      DENSITY U/D FIRM  C* TYPE    CODE     TERMINAL   OPERATION TIME   TYPE / = ( 212.0 ) ( I )
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X T-TARIH  -  T-BIT-TARIH PERIOD             X DAT4E"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X DATA OBTAINED BY FMM SYSTEM   X PAGE  NO.: PAGE-NUMBER"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null,""));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," FLGHT              FLGHT   OP.  A/C        REMAN.  BLOCK  UPLIFT                                     FUEL      F   I   R   M                T   H   Y          FLIGH    U    S    E    R          "));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null,"  DATE    DEP. ARV.   NO    CODE TYPE REG    (KG)  FUEL(KG) (LIT)   INV. NO      DENSITY U/D FIRM  C* TYPE    CODE     TERMINAL   OPERATION TIME   TYPE"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+}
+}
+};
+
+//// AT_TOP_OF_PAGE ( 3.0 )
+public void onload_3(){
+
+//// LANGUAGE EQ 7.0
+if(LANGUAGE == 7.0 ){
+
+//// 15.0 X T-TARIH  -  T-BIT-TARIH TARIHLERI ARASINDA 12.0 X DAT4E / 20.0 X FMM MESAJI ILE GELEN BILGILER 12.0 X SAYFA NO.: * PAGE-NUMBER ( 3.0 ) / / SEFER              SEFER   OP.  U  C A K   REMAN.  BLOCK  UPLIFT                                     YAKIT     F   I   R   M   A            T   H   Y          SEFER    K  U  L  L  A  N  I  C  I   / TARIHI   KLIM VLIM   NO    COD  TIPI REG    (KG)  FUEL(KG) (LIT)  FATURA NO     DENSITY U/D FIRMA C* TIPI MATBU NO TARIH    MIKTAR    MATBU NO TARIH    MIKTAR  NO     KODU     TERMINAL   ISLEM  ZAMANI    TIPI   / = ( 212.0 )
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X T-TARIH  -  T-BIT-TARIH TARIHLERI ARASINDA X DAT4E"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X FMM MESAJI ILE GELEN BILGILER X SAYFA NO.: PAGE-NUMBER"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null,""));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," SEFER              SEFER   OP.  U  C A K   REMAN.  BLOCK  UPLIFT                                     YAKIT     F   I   R   M   A            T   H   Y          SEFER    K  U  L  L  A  N  I  C  I  "));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," TARIHI   KLIM VLIM   NO    COD  TIPI REG    (KG)  FUEL(KG) (LIT)  FATURA NO     DENSITY U/D FIRMA C* TIPI MATBU NO TARIH    MIKTAR    MATBU NO TARIH    MIKTAR  NO     KODU     TERMINAL   ISLEM  ZAMANI    TIPI  "));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+}
+
+//// ELSE
+else{
+
+//// LANGUAGE EQ 1.0
+if(LANGUAGE == 1.0 ){
+
+//// 15.0 X T-TARIH  -  T-BIT-TARIH PERIOD             12.0 X DAT4E / 20.0 X DATA OBTAINED BY FMM SYSTEM   12.0 X PAGE  NO.: * PAGE-NUMBER ( 3.0 ) / / FLGHT              FLGHT   OP.  A/C        REMAN.  BLOCK  UPLIFT                                     FUEL      F   I   R   M                T   H   Y          FLIGH    U    S    E    R           /  DATE    DEP. ARV.   NO    CODE TYPE REG    (KG)  FUEL(KG) (LIT)   INV. NO      DENSITY U/D FIRM  C* TYPE    CODE     TERMINAL   OPERATION TIME   TYPE / = ( 212.0 )
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X T-TARIH  -  T-BIT-TARIH PERIOD             X DAT4E"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X DATA OBTAINED BY FMM SYSTEM   X PAGE  NO.: PAGE-NUMBER"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null,""));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," FLGHT              FLGHT   OP.  A/C        REMAN.  BLOCK  UPLIFT                                     FUEL      F   I   R   M                T   H   Y          FLIGH    U    S    E    R          "));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null,"  DATE    DEP. ARV.   NO    CODE TYPE REG    (KG)  FUEL(KG) (LIT)   INV. NO      DENSITY U/D FIRM  C* TYPE    CODE     TERMINAL   OPERATION TIME   TYPE"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+}
+}
+};
+
+////
+
+////
+//
+
+//// SW
+SW=0;
+
+//// USER USER
+=USER;
+
+//// USER-LIMAN T-KLIM
+=USER_LIMAN;
+
+//// REPEAT
+while (true){
+//null
+
+//// T-BIT-TARIH T-SEFNO CARSEF U-REG T-TARIH ID DERECE-ADEDI TOPLAM-DERECE TOPLAM-YOGUNLUK TOPLAM-UPLIFT1 TOPLAM-UPLIFT2 TOPLAM-MIKTAR FARK1 FARK-ISARET ACIKLAMA TOPLAM-TESELLUM-SAYISI CEKILEN-FMM-SAYISI CEKILMEYEN-FMM-SAYISI T-UTIP T-REG T-VLIM L LL DIZI-KLIM DIZI-KLIM-UKOD DIZI-VLIM-UKOD UHM-BITIS-TARIHI UHM-KLIM UHM-VLIM UHM-REG KONTROL-REG KONTROL-TARIH F FMM-ADET DIZI-FMM-ISN FMM-ISN T-FIRMA K KK DIZI-KLIM DIZI-VLIM T-KOD
+T_BIT_TARIH=0;
+T_SEFNO=0;
+CARSEF=0;
+U_REG=0;
+T_TARIH=0;
+ID=0;
+DERECE_ADEDI=0;
+TOPLAM_DERECE=0;
+TOPLAM_YOGUNLUK=0;
+TOPLAM_UPLIFT1=0;
+TOPLAM_UPLIFT2=0;
+TOPLAM_MIKTAR=0;
+FARK1=0;
+FARK_ISARET=0;
+ACIKLAMA=0;
+TOPLAM_TESELLUM_SAYISI=0;
+CEKILEN_FMM_SAYISI=0;
+CEKILMEYEN_FMM_SAYISI=0;
+T_UTIP=0;
+T_REG=0;
+T_VLIM=0;
+L=0;
+LL=0;
+DIZI_KLIM=0;
+DIZI_KLIM_UKOD=0;
+DIZI_VLIM_UKOD=0;
+UHM_BITIS_TARIHI=0;
+UHM_KLIM=0;
+UHM_VLIM=0;
+UHM_REG=0;
+KONTROL_REG=0;
+KONTROL_TARIH=0;
+F=0;
+FMM_ADET=0;
+DIZI_FMM_ISN=0;
+FMM_ISN=0;
+T_FIRMA=0;
+K=0;
+KK=0;
+DIZI_KLIM=0;
+DIZI_VLIM=0;
+T_KOD=0;
+
+////
+
+////
+//
+
+//// CV
+//Conversion Errortr.com.vbt.java.basic.JavaCopyElement
+
+////
+
+////
+//
+
+//// USER-NAME-A4 EQ ED01 OR EQ SD01 OR EQ EY01 OR EQ SK03 OR EQ ISTM OR EQ HANT OR USER-LIMAN EQ AYK
+if(USER_NAME_A4 == ED01 || == SD01 || == EY01 || == SK03 || == ISTM || == HANT || USER_LIMAN == AYK ){
+
+//// CV
+//Conversion Errortr.com.vbt.java.basic.JavaCopyElement
+
+//// 7.0 LANGUAGE
+=7.0;
+}
+
+////
+
+////
+//
+
+//// D OD
+=D;
+
+//// G GMT-LMT
+=G;
+
+//// MOVE 2.0120703E7 TO T-TARIH
+
+//// MOVE 2.0120703E7 TO T-TARIH
+//MOVE TO T-TARIH 
+
+//// MOVE 2.012073E7 TO T-BIT-TARIH
+
+//// MOVE 2.012073E7 TO T-BIT-TARIH
+//MOVE TO T-BIT-TARIH 
+
+//// MOVE I TO ID
+
+//// MOVE I TO ID
+//MOVE I TO ID 
+
+//// T-KLIM
+T_KLIM=0;
+
+//// MOVE TEQ TO T-KLIM
+
+//// MOVE TEQ TO T-KLIM
+//MOVE TEQ TO T-KLIM 
+
+//// MOVE EG TO T-KOD
+
+//// MOVE EG TO T-KOD
+//MOVE EG TO T-KOD 
+
+//// MOVE ( AD = I ) TO CV
+
+//// MOVE ( AD = I ) TO CV
+//MOVE ( AD = I ) TO CV 
+
+//// END-IF
+
+//// END-IF
+//END-IF 
+
+//// LANGUAGE EQ 7.0
+if(LANGUAGE == 7.0 ){
+
+//// ( AD = MI . ZP = OFF IP = OFF SG = OFF ) 1.0 / 65.0 DAT4E 3.0 / 20.0    FMM MESAJ LISTELEME  / 20.0 X ------------------------- / / 20.0 X KALKIS LIMANI....: T-KLIM / * ( CV = CV ) / 20.0 X VARIS LIMANI.....: T-VLIM / 20.0 X BASLANGIC TARIH..: T-TARIH 2.0 X (YYYYMMDD) / 20.0 X BITIS TARIH......: T-BIT-TARIH 2.0 X (YYYYMMDD) / 20.0 X TASIYICI KODU....: T-KOD 8.0 X (TK, AJ, AT, EG, BR, BT, BK) / 20.0 X SEFER NO.........: T-SEFNO / 20.0 X REG..............: T-REG / 20.0 X FIRMA............: T-FIRMA / 20.0 X IC/DIS UCUSLAR...: ID * / 20.0 X GMT/LMT..........: GMT-LMT 9.0 X (G/L) / 20.0 X DETAY/OZET.......: OD 9.0 X (D/O) / 20.0 X EKRAN/YAZICI/....: EY 9.0 X (E/Y/D) / 20.0 X DOWNLOAD.........: 22.0 / 5.0 PF3-> MENU
+showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",AD));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",MI));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",.));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",ZP));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",OFF));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",IP));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",OFF));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",SG));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",OFF));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",DAT4E));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",   FMM MESAJ LISTELEME ));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",-------------------------));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",KALKIS LIMANI....:));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",T-KLIM));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",CV));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",CV));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",VARIS LIMANI.....:));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",T-VLIM));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",BASLANGIC TARIH..:));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",T-TARIH));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",(YYYYMMDD)));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",BITIS TARIH......:));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",T-BIT-TARIH));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",(YYYYMMDD)));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",TASIYICI KODU....:));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",T-KOD));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",(TK, AJ, AT, EG, BR, BT, BK)));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",SEFER NO.........:));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",T-SEFNO));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",REG..............:));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",T-REG));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",FIRMA............:));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",T-FIRMA));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",IC/DIS UCUSLAR...:));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",ID));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",GMT/LMT..........:));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",GMT-LMT));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",(G/L)));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",DETAY/OZET.......:));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",OD));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",(D/O)));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",EKRAN/YAZICI/....:));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",EY));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",(E/Y/D)));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",DOWNLOAD.........:));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",PF3-> MENU));}
+
+//// ELSE
+else{
+
+//// LANGUAGE EQ 1.0
+if(LANGUAGE == 1.0 ){
+
+//// ( AD = MI . ZP = OFF IP = OFF SG = OFF ) 1.0 / 65.0 DAT4E 3.0 / 20.0        FMM LIST          / 20.0 X ------------------------- / / 20.0 X DEPARTURE STATION: T-KLIM / * ( CV = CV ) / 20.0 X ARRIVAL STATION..: T-VLIM / 20.0 X START DATE.......: T-TARIH 2.0 X (YYYYMMDD) / 20.0 X END DATE.........: T-BIT-TARIH 2.0 X (YYYYMMDD) / 20.0 X CARRIER CODE.....: T-KOD 8.0 X (TK, AJ, AT, EG, BR, BT, BK) / 20.0 X FLIGHT NO........: T-SEFNO / 20.0 X REG..............: T-REG / 20.0 X FIRM.............: T-FIRMA / 20.0 X INSIDE/OUTSIDE FL: ID * / 20.0 X GMT/LMT..........: GMT-LMT 9.0 X (G/L) / 20.0 X DETAIL/SUMMARY...: OD 9.0 X (D/S) / 20.0 X DISPLAY/PRINT/...: EY 9.0 X (E/Y/D) / 20.0 X DOWNLOAD.........: 22.0 / 5.0 PF3-> MENU
+showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",AD));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",MI));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",.));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",ZP));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",OFF));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",IP));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",OFF));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",SG));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",OFF));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",DAT4E));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",       FMM LIST         ));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",-------------------------));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",DEPARTURE STATION:));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",T-KLIM));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",CV));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",CV));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",ARRIVAL STATION..:));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",T-VLIM));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",START DATE.......:));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",T-TARIH));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",(YYYYMMDD)));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",END DATE.........:));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",T-BIT-TARIH));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",(YYYYMMDD)));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",CARRIER CODE.....:));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",T-KOD));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",(TK, AJ, AT, EG, BR, BT, BK)));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",FLIGHT NO........:));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",T-SEFNO));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",REG..............:));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",T-REG));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",FIRM.............:));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",T-FIRMA));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",INSIDE/OUTSIDE FL:));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",ID));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",GMT/LMT..........:));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",GMT-LMT));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",(G/L)));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",DETAIL/SUMMARY...:));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",OD));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",(D/S)));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",DISPLAY/PRINT/...:));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",EY));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",(E/Y/D)));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",X));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",DOWNLOAD.........:));showInput(new HtmlObject(HtmlTagTypes.LABEL,null,"",PF3-> MENU));}
+}
+
+////
+
+////
+//
+
+//// PF-KEY EQ PF3
+if(PF_KEY == PF3 ){
+
+//// ESCAPE_BOTTOM
+//UNDEFINED ELEMENT
+}
+
+////
+
+////
+//
+
+//// T-KLIM NE   * REINPUT LIMANI GIRINIZ. MARK T-KLIM * ELSE
+if(T_KLIM NE   * REINPUT LIMANI GIRINIZ. MARK T_KLIM * ELSE ){
+
+//// ULKE-KODU
+ULKE_KODU=0;
+
+//// FIND LIMAN WITH L-LIMAN-KODU = T-KLIM
+//UNDEFINED ELEMENT
+}
+
+////
+
+////
+//
+
+//// - - - - - - - - - IKI GUN ONCESINI BULUR
+
+//// - - - - - - - - - IKI GUN ONCESINI BULUR
+//- - - - - - - - - IKI GUN ONCESINI BULUR 
+
+//// DATX DATX
+=DATX;
+
+//// DATX DATX - 2.0
+
+////
+
+////
+//
+
+//// T-BIT-TARIH EQ 0.0 T-BIT-TARIH : = T-TARIH
+if(T_BIT_TARIH == 0.0 T_BIT_TARIH : == T_TARIH ){
+}
+
+//// IF NOT ( ISLEM-TIPI EQ F OR EQ T )
+
+//// IF NOT ( ISLEM-TIPI EQ F OR EQ T )
+//IF NOT ( ISLEM-TIPI EQ F OR EQ T ) 
+
+//// IF LANGUAGE EQ 7.0
+
+//// IF LANGUAGE EQ 7.0
+//IF LANGUAGE EQ 
+
+//// INPUT_NO_ERASE ( AD = I )
+
+//// INPUT_NO_ERASE ( AD = I )
+//INPUT_NO_ERASE ( AD = I ) 
+
+//// 1.0 / 39.0 ISLEM TIPINE F, T GIREBILIRSINIZ.!
+
+//// 1.0 / 39.0 ISLEM TIPINE F, T GIREBILIRSINIZ.!
+/// ISLEM TIPINE F, T GIREBILIRSINIZ.! 
+
+//// 2.0 / 39.0 <F> ==>> FMM MESAJI GELMEYEN
+
+//// 2.0 / 39.0 <F> ==>> FMM MESAJI GELMEYEN
+/// <F> ==>> FMM MESAJI GELMEYEN 
+
+//// 5.0 / 39.0 <T> ==>> BUTUN UCUSLAR.
+
+//// 5.0 / 39.0 <T> ==>> BUTUN UCUSLAR.
+/// <T> ==>> BUTUN UCUSLAR. 
+
+//// ELSE IF LANGUAGE EQ 1.0
+
+//// ELSE IF LANGUAGE EQ 1.0
+//ELSE IF LANGUAGE EQ 
+
+//// INPUT_NO_ERASE ( AD = I )
+
+//// INPUT_NO_ERASE ( AD = I )
+//INPUT_NO_ERASE ( AD = I ) 
+
+//// 1.0 / 39.0 ALLOWED VALUES : F, T             
+
+//// 1.0 / 39.0 ALLOWED VALUES : F, T             
+/// ALLOWED VALUES : F, T              
+
+//// 2.0 / 39.0 <F> ==>> FLIGHTS LACK OF FMM DATA
+
+//// 2.0 / 39.0 <F> ==>> FLIGHTS LACK OF FMM DATA
+/// <F> ==>> FLIGHTS LACK OF FMM DATA 
+
+//// 5.0 / 39.0 <T> ==>> ALL FLIGHTS
+
+//// 5.0 / 39.0 <T> ==>> ALL FLIGHTS
+/// <T> ==>> ALL FLIGHTS 
+
+//// END-IF END-IF
+
+//// END-IF END-IF
+//END-IF END-IF 
+
+//// MOVE 1.0 TO SW
+
+//// MOVE 1.0 TO SW
+//MOVE TO SW 
+
+//// ESCAPE_TOP
+
+//// ESCAPE_TOP
+//ESCAPE_TOP 
+
+//// END-IF
+
+//// END-IF
+//END-IF 
+
+//// NOT ( T-KOD = TK OR EQ AJ OR EQ AT OR EQ EG OR EQ BR OR EQ BT OR EQ BK OR EQ   ) * REINPUT * TASIYICI KODA TK, AJ, AT, EG, BR, BT VEYA BOS GECEBILIRSINIZ.! * MARK T-KOD ERR-NUM : = 548.0
+if(NOT ( T_KOD == TK || == AJ || == AT || == EG || == BR || == BT || == BK || ==   ) * REINPUT * TASIYICI KODA TK, AJ, AT, EG, BR, BT VEYA BOS GECEBILIRSINIZ.! * MARK T_KOD ERR_NUM : == 548.0 ){
+
+//// HANMSGN2 ERR-NUM PROGRAM PREFIX SUFFIX STRING
+null(,,,,);
+
+//// STRING MARK T-KOD
+=showDialog(nullSTRINGMARKT-KOD);
+}
+
+//// NOT ( OD = D OR EQ O ) ERR-NUM : = 420.0
+if(NOT ( OD == D || == O ) ERR_NUM : == 420.0 ){
+
+//// HANMSGN2 ERR-NUM PROGRAM PREFIX SUFFIX STRING
+null(,,,,);
+
+//// STRING MARK OD
+=showDialog(nullSTRINGMARKOD);
+}
+
+//// NOT ( GMT-LMT = G OR EQ L ) ERR-NUM : = 547.0
+if(NOT ( GMT_LMT == G || == L ) ERR_NUM : == 547.0 ){
+
+//// HANMSGN2 ERR-NUM PROGRAM PREFIX SUFFIX STRING
+null(,,,,);
+
+//// STRING MARK GMT-LMT
+=showDialog(nullSTRINGMARKGMT-LMT);
+}
+
+//// NOT ( EY = E OR EQ Y OR EQ D ) ERR-NUM : = 403.0
+if(NOT ( EY == E || == Y || == D ) ERR_NUM : == 403.0 ){
+
+//// HANMSGN2 ERR-NUM PROGRAM PREFIX SUFFIX STRING
+null(,,,,);
+
+//// STRING MARK EY
+=showDialog(nullSTRINGMARKEY);
+}
+
+////
+
+////
+//
+
+//// T-KOD EQ AT OR T-KOD EQ EG OR T-KOD EQ BT OR T-KOD EQ BK OR T-KOD EQ BR
+if(T_KOD == AT || T_KOD == EG || T_KOD == BT || T_KOD == BK || T_KOD == BR ){
+
+//// XXX TFK-DVLIM
+=XXX;
+
+//// T-KLIM T-KLM-LIMAN4
+=T_KLIM;
+
+//// T-TARIH T-KLM-TARIH4
+=T_TARIH;
+
+//// 9999.0 T-KLM-SEFNO4
+=9999.0;
+
+//// PERFORM EG-AT-BR-BT-TESELLUM
+EG_AT_BR_BT_TESELLUM();
+}
+
+//// ELSE
+else{
+
+//// TK-AJ
+
+//// TK-AJ
+//TK-AJ 
+
+//// T-TARIH-A8 GT IKI-GUN-ONCE * AND ( T-KOD EQ TK OR EQ AJ )
+if(T_TARIH_A8 GT IKI_GUN_ONCE * && ( T_KOD == TK || == AJ ) ){
+
+//// T-TARIH-A8 UHT-SCTRH
+=T_TARIH_A8;
+
+//// T-BIT-TARIH UHM-BITIS-TARIHI
+=T_BIT_TARIH;
+
+//// T-KLIM UHM-KLIM
+=T_KLIM;
+
+//// T-VLIM UHM-VLIM
+=T_VLIM;
+
+//// T-REG UHM-REG
+=T_REG;
+
+//// PERFORM UHM-ACILIS1-SORGULAMA
+UHM_ACILIS1_SORGULAMA();
+}
+
+//// ELSE
+else{
+
+//// T-KLIM EQ  
+if(T_KLIM ==   ){
+
+//// PERFORM TUM-LIMANLARI-SORGULAMA
+TUM_LIMANLARI_SORGULAMA();
+}
+
+//// ELSE
+else{
+
+//// GMT-LMT EQ G
+if(GMT_LMT == G ){
+
+//// PERFORM TEK-LIMAN-SORGULAMA
+TEK_LIMAN_SORGULAMA();
+}
+
+//// ELSE
+else{
+
+//// PERFORM TEK-LIMAN-SORGULAMA-LMT
+TEK_LIMAN_SORGULAMA_LMT();
+}
+}
+}
+}
+
+////
+
+////
+//
+
+////
+
+////
+//
+
+//// DERECE-ADEDI NE 0.0 ORTALAMA-DERECE : = TOPLAM-DERECE / DERECE-ADEDI ORTALAMA-YOGUNLUK : = TOPLAM-YOGUNLUK / DERECE-ADEDI
+if(DERECE_ADEDI NE 0.0 ORTALAMA_DERECE : == TOPLAM_DERECE / DERECE_ADEDI ORTALAMA_YOGUNLUK : == TOPLAM_YOGUNLUK / DERECE_ADEDI ){
+}
+
+//// LANGUAGE EQ 7.0
+if(LANGUAGE == 7.0 ){
+
+//// EY = E
+if(EY == E ){
+
+//// / 10.0 X ORTALAMA ISI......................: ( I ) ORTALAMA-DERECE C* / 10.0 X ORTALAMA YOGUNLUK.................: ( I ) ORTALAMA-YOGUNLUK / 10.0 X TOPLAM UPLIFT (LIT)...............: ( I ) TOPLAM-UPLIFT1 / 10.0 X               (KG)................: ( I ) TOPLAM-UPLIFT2 / 10.0 X TOPLAM TESELLUM MIKTAR (LIT)......: ( I ) TOPLAM-MIKTAR / / 10.0 X TOPLAM TESELLUM SAYISI............: ( I ) TOPLAM-TESELLUM-SAYISI ADET ( I ) / 10.0 X CEKILEN FMM SAYISI................: ( I ) CEKILEN-FMM-SAYISI ADET ( I ) / 10.0 X CEKILMEYEN FMM SAYISI.............: ( I ) CEKILMEYEN-FMM-SAYISI ADET ( I )
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null,""));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X ORTALAMA ISI......................: I ORTALAMA-DERECE C*"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X ORTALAMA YOGUNLUK.................: I ORTALAMA-YOGUNLUK"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X TOPLAM UPLIFT (LIT)...............: I TOPLAM-UPLIFT1"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X               (KG)................: I TOPLAM-UPLIFT2"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X TOPLAM TESELLUM MIKTAR (LIT)......: I TOPLAM-MIKTAR"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null,""));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X TOPLAM TESELLUM SAYISI............: I TOPLAM-TESELLUM-SAYISI ADET I"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X CEKILEN FMM SAYISI................: I CEKILEN-FMM-SAYISI ADET I"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+}
+
+//// ELSE
+else{
+
+//// ( 3.0 ) / / / / 10.0 X ORTALAMA ISI......................: ORTALAMA-DERECE C* / 10.0 X ORTALAMA YOGUNLUK.................: ORTALAMA-YOGUNLUK / 10.0 X TOPLAM UPLIFT (LIT)...............: TOPLAM-UPLIFT1 / 10.0 X               (KG)................: TOPLAM-UPLIFT2 / 10.0 X TOPLAM TESELLUM MIKTAR (LIT)......: TOPLAM-MIKTAR / / 10.0 X TOPLAM TESELLUM SAYISI............: TOPLAM-TESELLUM-SAYISI ADET / 10.0 X CEKILEN FMM SAYISI................: CEKILEN-FMM-SAYISI ADET / 10.0 X CEKILMEYEN FMM SAYISI.............: CEKILMEYEN-FMM-SAYISI ADET CLOSE_PRINTER ( 3.0 )
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null,""));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null,""));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null,""));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null,""));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X ORTALAMA ISI......................: ORTALAMA-DERECE C*"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X ORTALAMA YOGUNLUK.................: ORTALAMA-YOGUNLUK"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X TOPLAM UPLIFT (LIT)...............: TOPLAM-UPLIFT1"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X               (KG)................: TOPLAM-UPLIFT2"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X TOPLAM TESELLUM MIKTAR (LIT)......: TOPLAM-MIKTAR"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null,""));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X TOPLAM TESELLUM SAYISI............: TOPLAM-TESELLUM-SAYISI ADET"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X CEKILEN FMM SAYISI................: CEKILEN-FMM-SAYISI ADET"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+}
+}
+
+//// ELSE
+else{
+
+//// LANGUAGE2 NE 7.0
+
+//// LANGUAGE2 NE 7.0
+//LANGUAGE2 NE 
+
+//// EY = E
+if(EY == E ){
+
+//// / / 10.0 X AVERAGE TEMPERATURE...............: ( I ) ORTALAMA-DERECE C* / 10.0 X AVERAGE DENSITY  .................: ( I ) ORTALAMA-YOGUNLUK / 10.0 X TOTAL  UPLIFT (LIT)...............: ( I ) TOPLAM-UPLIFT1 / 10.0 X               (KG)................: ( I ) TOPLAM-UPLIFT2 / 10.0 X TOTAL RECEIPT AMOUNT   (LIT)......: ( I ) TOPLAM-MIKTAR / / 10.0 X TOPLAM RECEIPT NUMBER ............: ( I ) TOPLAM-TESELLUM-SAYISI NUMBER ( I ) / 10.0 X FMM RECORDS NUMBER................: ( I ) CEKILEN-FMM-SAYISI NUMBER ( I ) / 10.0 X MISSING FMM RECORD NUMBER.........: ( I ) CEKILMEYEN-FMM-SAYISI NUMBER ( I )
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null,""));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null,""));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X AVERAGE TEMPERATURE...............: I ORTALAMA-DERECE C*"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X AVERAGE DENSITY  .................: I ORTALAMA-YOGUNLUK"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X TOTAL  UPLIFT (LIT)...............: I TOPLAM-UPLIFT1"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X               (KG)................: I TOPLAM-UPLIFT2"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X TOTAL RECEIPT AMOUNT   (LIT)......: I TOPLAM-MIKTAR"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null,""));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X TOPLAM RECEIPT NUMBER ............: I TOPLAM-TESELLUM-SAYISI NUMBER I"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X FMM RECORDS NUMBER................: I CEKILEN-FMM-SAYISI NUMBER I"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+}
+
+//// ELSE
+else{
+
+//// ( 3.0 ) / / / / 10.0 X AVERAGE TEMPERATURE...............: ORTALAMA-DERECE C* / 10.0 X AVERAGE DENSITY  .................: ORTALAMA-YOGUNLUK / 10.0 X TOTAL  UPLIFT (LIT)...............: TOPLAM-UPLIFT1 / 10.0 X               (KG)................: TOPLAM-UPLIFT2 / 10.0 X TOTAL RECEIPT AMOUNT   (LIT)......: TOPLAM-MIKTAR / / 10.0 X TOPLAM RECEIPT NUMBER ............: TOPLAM-TESELLUM-SAYISI NUMBER / 10.0 X FMM RECORDS NUMBER................: CEKILEN-FMM-SAYISI NUMBER / 10.0 X MISSING FMM RECORD NUMBER.........: CEKILMEYEN-FMM-SAYISI NUMBER CLOSE_PRINTER ( 3.0 )
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null,""));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null,""));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null,""));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null,""));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X AVERAGE TEMPERATURE...............: ORTALAMA-DERECE C*"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X AVERAGE DENSITY  .................: ORTALAMA-YOGUNLUK"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X TOTAL  UPLIFT (LIT)...............: TOPLAM-UPLIFT1"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X               (KG)................: TOPLAM-UPLIFT2"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X TOTAL RECEIPT AMOUNT   (LIT)......: TOPLAM-MIKTAR"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null,""));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X TOPLAM RECEIPT NUMBER ............: TOPLAM-TESELLUM-SAYISI NUMBER"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+write(new HtmlObject(HtmlTagTypes.LABEL,null, null," X FMM RECORDS NUMBER................: CEKILEN-FMM-SAYISI NUMBER"));
+write(new HtmlObject(HtmlTagTypes.BR,null, null,""));
+}
+}
+}
+
+}
+}

@@ -1,0 +1,25 @@
+1)
+		// ORGANIZATION IS RELATIVE
+	    // ACCESS MODE IS DYNAMIC
+	    //Direct Read
+		/*READ SupplierFile
+          INVALID KEY DISPLAY "SUPP STATUS :-", SupplierStatus
+        END-READ*/
+        
+		
+		
+2)		
+		// ORGANIZATION IS RELATIVE
+	    // ACCESS MODE IS DYNAMIC
+		/* Sequeantial Read
+		 * 
+		 *  READ SupplierFile NEXT RECORD
+            	AT END SET EndOfFile TO TRUE
+        	END-READ
+	        	 PERFORM UNTIL EndOfFile
+	            PERFORM DisplayRecord
+	            READ SupplierFile NEXT RECORD
+	                AT END SET EndOfFile TO TRUE
+	            END-READ
+        	END-PERFORM
+		 */

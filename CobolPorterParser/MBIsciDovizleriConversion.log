@@ -1,0 +1,4 @@
+19:50:58.286 MB İŞÇİ DÖVİZLERİ [main] DEBUG t.c.v.c.c.TransferFromNaturalToJavaMain - Conversion Aborted For FileIDGPMUSS WITH ERROR
+java.lang.NullPointerException: null
+	at tr.com.vbt.cobol.convert.TransferFromNaturalToJavaMain.driveTransfer(TransferFromNaturalToJavaMain.java:145) ~[classes/:na]
+	at tr.com.vbt.cobol.convert.TransferFromNaturalToJavaMain.main(TransferFromNaturalToJavaMain.java:109) ~[classes/:na]

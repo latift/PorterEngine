@@ -1,0 +1,40 @@
+Örnek: 
+	ADD 1 TO JJ --> ADD
+ 	MOVE CCX TO CC1  --> COPY_TO
+******************************************************************************************
+1) TOKENİZE: tr.com.vbt.token.OzelKelimeler e ozelKelime ekle	
+
+
+1) PARSE COMMAND:
+	tr.com.vbt.patern.PatternX.java Yaz
+		Constructror a patterni yaz.
+		createElement yaz.
+		setTokenToElement
+	tr.com.vbt.cobol.parser.ElementX.java
+		 patern e ait parameterleri ekle.
+		 exportCommands yaz.
+		 getElementTokenSize yaz.
+	tr.com.vbt.pattern.PaternManagerImpl
+		patterni ekle
+	
+		 	 
+
+******************************************************************************************
+1) CREATE COBOL TREE: tr.com.vbt.cobol.parser altına ElementMove.java yazılır.
+	 2.1) parse metodu yazılır.
+	 2.2) exportContents yazılır.
+	 2.3) detailedCobolName constructor da set edilir.
+2) CREATE COBOL TREE: ParentCobolElementinin(Örnek ElementProcedureDivision) parse metoduna if eklenir.  
+
+
+******************************************************************************************
+1) CREATE_JAVA: LanguageToLanguageRule.xlsx rule eklenir.
+3) CREATE_JAVA: tr.com.vbt.java altına JavaCopyElement.java yazılır.
+	 3.1)	writeJavaToStream override edilir.
+4) CREATE_JAVA:CreateProcessOperator.operateRule 
+		veya CreateArrayItemProcessOperator.operateRule
+		veya SetParameterProcessOperator.operateRule metoduna if eklenir.
+		
+******************************************************************************************
+ 
+ 

@@ -1,0 +1,604 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x0000000060ecc306, pid=2536, tid=7216
+#
+# JRE version: 7.0_21-b11
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (23.21-b01 mixed mode windows-amd64 compressed oops)
+# Problematic frame:
+# V  [jvm.dll+0x1cc306]
+#
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.sun.com/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x000000000b661800):  VMThread [stack: 0x000000000c750000,0x000000000c850000] [id=7216]
+
+siginfo: ExceptionCode=0xc0000005, reading address 0x000000000000000a
+
+Registers:
+RAX=0x0000000000000000, RBX=0x000000000c84eba0, RCX=0x000000000c84eba0, RDX=0x0000000000000028
+RSP=0x000000000c84e8f0, RBP=0x0000000000000001, RSI=0x0000000000000000, RDI=0x000000000c84f250
+R8 =0x0000000000000000, R9 =0x0000000000000000, R10=0x000000077e527af8, R11=0x00000000612170a8
+R12=0x0000000000000028, R13=0x000000000b661801, R14=0x0000000000000000, R15=0x6666666666666667
+RIP=0x0000000060ecc306, EFLAGS=0x0000000000010206
+
+Top of Stack: (sp=0x000000000c84e8f0)
+0x000000000c84e8f0:   0000000000000000 0000000000000000
+0x000000000c84e900:   0000000000000000 0000000000000000
+0x000000000c84e910:   0000000000000000 0000000000000000
+0x000000000c84e920:   0000000000000000 0000000000000000
+0x000000000c84e930:   0000000000000000 0000000000000000
+0x000000000c84e940:   0000000000000000 0000000000000000
+0x000000000c84e950:   0000000000000000 0000000000000000
+0x000000000c84e960:   0000000000000000 0000000000000000
+0x000000000c84e970:   0000000000000000 0000000000000000
+0x000000000c84e980:   0000000000000000 0000000000000000
+0x000000000c84e990:   0000000000000000 0000000000000000
+0x000000000c84e9a0:   0000000000000000 0000000000000000
+0x000000000c84e9b0:   0000000000000000 0000000000000000
+0x000000000c84e9c0:   0000000000000000 0000000000000000
+0x000000000c84e9d0:   0000000000000000 0000000060ecc353
+0x000000000c84e9e0:   0000000000000000 0000000000000000 
+
+Instructions: (pc=0x0000000060ecc306)
+0x0000000060ecc2e6:   01 00 00 48 8b 05 b0 80 4c 00 48 33 c4 48 89 84
+0x0000000060ecc2f6:   24 20 01 00 00 4c 63 41 10 48 8b 41 08 48 8b d9
+0x0000000060ecc306:   42 38 54 00 0a 74 33 44 0f be c2 48 8d 4c 24 20
+0x0000000060ecc316:   48 8d 15 2b 26 36 00 e8 9e 5f e3 ff 48 8d 0d d7 
+
+
+Register to memory mapping:
+
+RAX=0x0000000000000000 is an unknown value
+RBX=0x000000000c84eba0 is an unknown value
+RCX=0x000000000c84eba0 is an unknown value
+RDX=0x0000000000000028 is an unknown value
+RSP=0x000000000c84e8f0 is an unknown value
+RBP=0x0000000000000001 is an unknown value
+RSI=0x0000000000000000 is an unknown value
+RDI=0x000000000c84f250 is an unknown value
+R8 =0x0000000000000000 is an unknown value
+R9 =0x0000000000000000 is an unknown value
+R10=0x000000077e527af8 is an oop
+{constant pool} 
+ - klass: {other class}
+ - holder: 0x000000077e46f718
+ - cache: 0x000000077e528818
+ -   1 :  : 'tr/com/vbt/lexer/AbstractLexing'
+ -   2 :  : 'tr/com/vbt/lexer/AbstractLexing'
+ -   3 :  : 'java/lang/Object'
+ -   4 :  : 'java/lang/Object'
+ -   5 :  : 'currentTokenizer'
+ -   6 :  : 'Ltr/com/vbt/lexer/CustomStreamTokenizer;'
+ -   7 :  : 'tokenListesi'
+ -   8 :  : 'Ljava/util/List;'
+ -   9 :  : 'Signature'
+ -  10 :  : 'Ljava/util/List<Ltr/com/vbt/token/AbstractToken;>;'
+ -  11 :  : 'ozelKelimeler'
+ -  12 :  : 'Ltr/com/vbt/token/OzelKelimeler;'
+ -  13 :  : '<init>'
+ -  14 :  : '()V'
+ -  15 :  : 'Code'
+ -  16 :  : klass_index=3 name_and_type_index=17
+ -  17 :  : name_index=13 signature_index=14
+ -  18 :  : klass_index=1 name_and_type_index=19
+ -  19 :  : name_index=5 signature_index=6
+ -  20 :  : 'java/util/ArrayList'
+ -  21 :  : 'java/util/ArrayList'
+ -  22 :  : klass_index=20 name_and_type_index=17
+ -  23 :  : klass_index=1 name_and_type_index=24
+ -  24 :  : name_index=7 signature_index=8
+ -  25 :  : 'tr/com/vbt/token/OzelKelimeler'
+ -  26 :  : 'tr/com/vbt/token/OzelKelimeler'
+ -  27 :  : klass_index=25 name_and_type_index=17
+ -  28 :  : klass_index=1 name_and_type_index=29
+ -  29 :  : name_index=11 signature_index=12
+ -  30 :  : 'LineNumberTable'
+ -  31 :  : 'LocalVariableTable'
+ -  32 :  : 'this'
+ -  33 :  : 'Ltr/com/vbt/lexer/AbstractLexing;'
+ -  34 :  : 'tokenizeSourceFile'
+ -  35 :  : '(Ljava/lang/String;)V'
+ -  36 :  : 'java/io/FileInputStream'
+ -  37 :  : 'java/io/FileInputStream'
+ -  38 :  : klass_index=36 name_and_type_index=39
+ -  39 :  : name_index=13 signature_index=35
+ -  40 :  : 'java/io/InputStreamReader'
+ -  41 :  : 'java/io/InputStreamReader'
+ -  42 :  : klass_index=40 name_and_type_index=43
+ -  43 :  : name_index=13 signature_index=44
+ -  44 :  : '(Ljava/io/InputStream;)V'
+ -  45 :  : 'tr/com/vbt/lexer/CustomStreamTokenizer'
+ -  46 :  : 'tr/com/vbt/lexer/CustomStreamTokenizer'
+ -  47 :  : klass_index=45 name_and_type_index=48
+ -  48 :  : name_index=13 signature_index=49
+ -  49 :  : '(Ljava/io/Reader;)V'
+ -  50 :  : klass_index=45 name_and_type_index=51
+ -  51 :  : name_index=52 signature_index=53
+ -  52 :  : 'eolIsSignificant'
+ -  53 :  : '(Z)V'
+ -  54 :  : klass_index=45 name_and_type_index=55
+ -  55 :  : name_index=56 signature_index=57
+ -  56 :  : 'quoteChar'
+ -  57 :  : '(I)V'
+ -  58 :  : klass_index=45 name_and_type_index=59
+ -  59 :  : name_index=60 signature_index=61
+ -  60 :  : 'whitespaceChars'
+ -  61 :  : '(II)V'
+ -  62 :  : klass_index=45 name_and_type_index=63
+ -  63 :  : name_index=64 signature_index=65
+ -  64 :  : 'nextToken'
+ -  65 :  : '()I'
+ -  66 :  : klass_index=67 name_and_type_index=69
+ -  67 :  : 'java/lang/System'
+ -  68 :  : 'java/lang/System'
+ -  69 :  : name_index=70 signature_index=71
+ -  70 :  : 'out'
+ -  71 :  : 'Ljava/io/PrintStream;'
+ -  72 :  : 'java/lang/StringBuilder'
+ -  73 :  : 'java/lang/StringBuilder'
+ -  74 :  : "Token:" {0xd67f1f00}
+ -  75 :  : 'Token:'
+ -  76 :  : klass_index=72 name_and_type_index=39
+ -  77 :  : klass_index=72 name_and_type_index=78
+ -  78 :  : name_index=79 signature_index=80
+ -  79 :  : 'append'
+ -  80 :  : '(I)Ljava/lang/StringBuilder;'
+ -  81 :  : "Sval:" {0xd67f1f78}
+ -  82 :  : 'Sval:'
+ -  83 :  : klass_index=72 name_and_type_index=84
+ -  84 :  : name_index=79 signature_index=85
+ -  85 :  : '(Ljava/lang/String;)Ljava/lang/StringBuilder;'
+ -  86 :  : klass_index=45 name_and_type_index=87
+ -  87 :  : name_index=88 signature_index=89
+ -  88 :  : 'sval'
+ -  89 :  : 'Ljava/lang/String;'
+ -  90 :  : " NVal:" {0xd67f1fb0}
+ -  91 :  : ' NVal:'
+ -  92 :  : klass_index=45 name_and_type_index=93
+ -  93 :  : name_index=94 signature_index=95
+ -  94 :  : 'nval'
+ -  95 :  : 'D'
+ -  96 :  : klass_index=72 name_and_type_index=97
+ -  97 :  : name_index=79 signature_index=98
+ -  98 :  : '(D)Ljava/lang/StringBuilder;'
+ -  99 :  : klass_index=72 name_and_type_index=100
+ - 100 :  : name_index=101 signature_index=102
+ - 101 :  : 'toString'
+ - 102 :  : '()Ljava/lang/String;'
+ - 103 :  : klass_index=104 name_and_type_index=106
+ - 104 :  : 'java/io/PrintStream'
+ - 105 :  : 'java/io/PrintStream'
+ - 106 :  : name_index=107 signature_index=35
+ - 107 :  : 'println'
+ - 108 :  : "End of File encountered." {0xd688f190}
+ - 109 :  : 'End of File encountered.'
+ - 110 :  : "End of Line encountered." {0xd688f1e8}
+ - 111 :  : 'End of Line encountered.'
+ - 112 :  : 'tr/com/vbt/token/SatirBasiToken'
+ - 113 :  : 'tr/com/vbt/token/SatirBasiToken'
+ - 114 :  : klass_index=45 name_and_type_index=115
+ - 115 :  : name_index=116 signature_index=65
+ - 116 :  : 'lineno'
+ - 117 :  : klass_index=112 name_and_type_index=118
+ - 118 :  : name_index=13 signature_index=57
+ - 119 :  : klass_index=120 name_and_type_index=122
+ - 120 :  : 'java/util/List'
+ - 121 :  : 'java/util/List'
+ - 122 :  : name_index=123 signature_index=124
+ - 123 :  : 'add'
+ - 124 :  : '(Ljava/lang/Object;)Z'
+ - 125 :  : "Word: " {0xd688f240}
+ - 126 :  : 'Word: '
+ - 127 :  : klass_index=25 name_and_type_index=128
+ - 128 :  : name_index=129 signature_index=130
+ - 129 :  : 'boslukluOzelKelimeler'
+ - 130 :  : 'Ljava/util/HashSet;'
+ - 131 :  : klass_index=132 name_and_type_index=134
+ - 132 :  : 'java/util/HashSet'
+ - 133 :  : 'java/util/HashSet'
+ - 134 :  : name_index=135 signature_index=124
+ - 135 :  : 'contains'
+ - 136 :  : klass_index=137 name_and_type_index=139
+ - 137 :  : 'java/lang/String'
+ - 138 :  : 'java/lang/String'
+ - 139 :  : name_index=140 signature_index=141
+ - 140 :  : 'valueOf'
+ - 141 :  : '(Ljava/lang/Object;)Ljava/lang/String;'
+ - 142 :  : " " {0xd6739be0}
+ - 143 :  : ' '
+ - 144 :  : klass_index=25 name_and_type_index=145
+ - 145 :  : name_index=11 signature_index=130
+ - 146 :  : klass_index=25 name_and_type_index=147
+ - 147 :  : name_index=148 signature_index=130
+ - 148 :  : 'keyValueOzelKelimeler'
+ - 149 :  : 'tr/com/vbt/token/KeyValueOzelKelimeToken'
+ - 150 :  : 'tr/com/vbt/token/KeyValueOzelKelimeToken'
+ - 151 :  : klass_index=149 name_and_type_index=152
+ - 152 :  : name_index=13 signature_index=153
+ - 153 :  : '(Ljava/lang/Object;Ljava/lang/Object;III)V'
+ - 154 :  : 'tr/com/vbt/token/OzelKelimeToken'
+ - 155 :  : 'tr/com/vbt/token/OzelKelimeToken'
+ - 156 :  : klass_index=154 name_and_type_index=157
+ - 157 :  : name_index=13 signature_index=158
+ - 158 :  : '(Ljava/lang/Object;III)V'
+ - 159 :  : "PARAGRAPH" {0xd6745150}
+ - 160 :  : 'PARAGRAPH'
+ - 161 :  : 'tr/com/vbt/token/KelimeToken'
+ - 162 :  : 'tr/com/vbt/token/KelimeToken'
+ - 163 :  : klass_index=161 name_and_type_index=157
+ - 164 :  : 'tr/com/vbt/token/SayiToken'
+ - 165 :  : 'tr/com/vbt/token/SayiToken'
+ - 166 :  : klass_index=167 name_and_type_index=169
+ - 167 :  : 'java/lang/Double'
+ - 168 :  : 'java/lang/Double'
+ - 169 :  : name_index=140 signature_index=170
+ - 170 :  : '(D)Ljava/lang/Double;'
+ - 171 :  : klass_index=164 name_and_type_index=157
+ - 172 :  : 'tr/com/vbt/token/KarakterToken'
+ - 173 :  : 'tr/com/vbt/token/KarakterToken'
+ - 174 :  : klass_index=175 name_and_type_index=177
+ - 175 :  : 'java/lang/Character'
+ - 176 :  : 'java/lang/Character'
+ - 177 :  : name_index=140 signature_index=178
+ - 178 :  : '(C)Ljava/lang/Character;'
+ - 179 :  : klass_index=172 name_and_type_index=157
+ - 180 :  : 'tr/com/vbt/token/TanimlanamayanToken'
+ - 181 :  : 'tr/com/vbt/token/TanimlanamayanToken'
+ - 182 :  : klass_index=180 name_and_type_index=157
+ - 183 :  : klass_index=184 name_and_type_index=186
+ - 184 :  : 'java/io/Reader'
+ - 185 :  : 'java/io/Reader'
+ - 186 :  : name_index=187 signature_index=14
+ - 187 :  : 'close'
+ - 188 :  : klass_index=189 name_and_type_index=191
+ - 189 :  : 'java/lang/Exception'
+ - 190 :  : 'java/lang/Exception'
+ - 191 :  : name_index=192 signature_index=14
+ - 192 :  : 'printStackTrace'
+ - 193 :  : klass_index=1 name_and_type_index=194
+ - 194 :  : name_index=195 signature_index=14
+ - 195 :  : 'setReservedLineNumberTokens'
+ - 196 :  : klass_index=1 name_and_type_index=197
+ - 197 :  : name_index=198 signature_index=14
+ - 198 :  : 'removeReservedLineNumberTokens'
+ - 199 :  : klass_index=1 name_and_type_index=200
+ - 200 :  : name_index=201 signature_index=14
+ - 201 :  : 'removeSatiBasiTokens'
+ - 202 :  : klass_index=1 name_and_type_index=203
+ - 203 :  : name_index=204 signature_index=14
+ - 204 :  : 'addParagraghMainKeyword'
+ - 205 :  : klass_index=1 name_and_type_index=206
+ - 206 :  : name_index=207 signature_index=14
+ - 207 :  : 'addVirtualEndingKeywords'
+ - 208 :  : 'sourceFileFullName'
+ - 209 :  : 'inputStream'
+ - 210 :  : 'Ljava/io/InputStream;'
+ - 211 :  : 'inputStreamReader'
+ - 212 :  : 'Ljava/io/Reader;'
+ - 213 :  : 'eof'
+ - 214 :  : 'Z'
+ - 215 :  : 'eol'
+ - 216 :  : 'inComment'
+ - 217 :  : 'satirdakiTokenSirasi'
+ - 218 :  : 'I'
+ - 219 :  : 'token'
+ - 220 :  : 'tokenVal'
+ - 221 :  : 'tokenVal2'
+ - 222 :  : 'ex'
+ - 223 :  : 'Ljava/lang/Exception;'
+ - 224 :  : klass_index=120 name_and_type_index=225
+ - 225 :  : name_index=226 signature_index=227
+ - 226 :  : 'iterator'
+ - 227 :  : '()Ljava/util/Iterator;'
+ - 228 :  : klass_index=229 name_and_type_index=231
+ - 229 :  : 'java/util/Iterator'
+ - 230 :  : 'java/util/Iterator'
+ - 231 :  : name_index=232 signature_index=233
+ - 232 :  : 'next'
+ - 233 :  : '()Ljava/lang/Object;'
+ - 234 :  : 'tr/com/vbt/token/AbstractToken'
+ - 235 :  : 'tr/com/vbt/token/AbstractToken'
+ - 236 :  : klass_index=237 name_and_type_index=239
+ - 237 :  : 'tr/com/vbt/token/TokenTipi'
+ - 238 :  : 'tr/com/vbt/token/TokenTipi'
+ - 239 :  : name_index=240 signature_index=241
+ - 240 :  : 'SatirNumaralariIcinRezerve'
+ - 241 :  : 'Ltr/com/vbt/token/TokenTipi;'
+ - 242 :  : klass_index=234 name_and_type_index=243
+ - 243 :  : name_index=244 signature_index=245
+ - 244 :  : 'setTip'
+ - 245 :  : '(Ltr/com/vbt/token/TokenTipi;)V'
+ - 246 :  : klass_index=234 name_and_type_index=247
+ - 247 :  : name_index=248 signature_index=249
+ - 248 :  : 'getTip'
+ - 249 :  : '()Ltr/com/vbt/token/TokenTipi;'
+ - 250 :  : klass_index=237 name_and_type_index=251
+ - 251 :  : name_index=252 signature_index=241
+ - 252 :  : 'SatirBasi'
+ - 253 :  : klass_index=237 name_and_type_index=254
+ - 254 :  : name_index=255 signature_index=124
+ - 255 :  : 'equals'
+ - 256 :  : klass_index=237 name_and_type_index=257
+ - 257 :  : name_index=258 signature_index=241
+ - 258 :  : 'Sayi'
+ - 259 :  : klass_index=229 name_and_type_index=260
+ - 260 :  : name_index=261 signature_index=262
+ - 261 :  : 'hasNext'
+ - 262 :  : '()Z'
+ - 263 :  : 'it'
+ - 264 :  : 'Ljava/util/Iterator;'
+ - 265 :  : 'astBefore'
+ - 266 :  : 'Ltr/com/vbt/token/AbstractToken;'
+ - 267 :  : 'astCurrent'
+ - 268 :  : 'astAfter'
+ - 269 :  : 'LocalVariableTypeTable'
+ - 270 :  : 'Ljava/util/Iterator<Ltr/com/vbt/token/AbstractToken;>;'
+ - 271 :  : klass_index=120 name_and_type_index=272
+ - 272 :  : name_index=273 signature_index=65
+ - 273 :  : 'size'
+ - 274 :  : klass_index=120 name_and_type_index=275
+ - 275 :  : name_index=276 signature_index=277
+ - 276 :  : 'get'
+ - 277 :  : '(I)Ljava/lang/Object;'
+ - 278 :  : klass_index=120 name_and_type_index=279
+ - 279 :  : name_index=280 signature_index=277
+ - 280 :  : 'remove'
+ - 281 :  : 'i'
+ - 282 :  : 'printTokenList'
+ - 283 :  : "*****************************************************************" {0xd688f278}
+ - 284 :  : '*****************************************************************'
+ - 285 :  : "TOKEN LISTESI BA^LANGI�" {0xd688f328}
+ - 286 :  : 'TOKEN LISTESI BAŞLANGIÇ'
+ - 287 :  : klass_index=234 name_and_type_index=100
+ - 288 :  : "TOKEN LISTESI SON    Size:" {0xd688f380}
+ - 289 :  : 'TOKEN LISTESI SON    Size:'
+ - 290 :  : 'ast'
+ - 291 :  : klass_index=234 name_and_type_index=292
+ - 292 :  : name_index=293 signature_index=233
+ - 293 :  : 'getDeger'
+ - 294 :  : klass_index=295 name_and_type_index=297
+ - 295 :  : 'tr/com/vbt/lexer/ReservedCobolKeywords'
+ - 296 :  : 'tr/com/vbt/lexer/ReservedCobolKeywords'
+ - 297 :  : name_index=298 signature_index=89
+ - 298 :  : 'PROCEDURE_DIVISION'
+ - 299 :  : klass_index=3 name_and_type_index=254
+ - 300 :  : klass_index=237 name_and_type_index=301
+ - 301 :  : name_index=302 signature_index=241
+ - 302 :  : 'OzelKelime'
+ - 303 :  : "MAIN_PARAGRAPH" {0xd688f3e0}
+ - 304 :  : 'MAIN_PARAGRAPH'
+ - 305 :  : klass_index=120 name_and_type_index=306
+ - 306 :  : name_index=123 signature_index=307
+ - 307 :  : '(ILjava/lang/Object;)V'
+ - 308 :  : 'tokenPosition'
+ - 309 :  : 'addMainParagraphKeyword'
+ - 310 :  : 'sonrakiKelime'
+ - 311 :  : 'exportLexedData'
+ - 312 :  : '(Ljava/lang/String;)Ljava/lang/StringBuffer;'
+ - 313 :  : 'java/lang/StringBuffer'
+ - 314 :  : 'java/lang/StringBuffer'
+ - 315 :  : klass_index=313 name_and_type_index=17
+ - 316 :  : klass_index=104 name_and_type_index=317
+ - 317 :  : name_index=107 signature_index=14
+ - 318 :  : "
+" {0xd688f428}
+ - 319 :  : '
+'
+ - 320 :  : klass_index=313 name_and_type_index=321
+ - 321 :  : name_index=79 signature_index=312
+ - 322 :  : klass_index=237 name_and_type_index=323
+ - 323 :  : name_index=324 signature_index=241
+ - 324 :  : 'KeyValueOzelKelime'
+ - 325 :  : klass_index=72 name_and_type_index=17
+ - 326 :  : klass_index=72 name_and_type_index=327
+ - 327 :  : name_index=79 signature_index=328
+ - 328 :  : '(Ljava/lang/Object;)Ljava/lang/StringBuilder;'
+ - 329 :  : "  Uzunluk:" {0xd688f458}
+ - 330 :  : '  Uzunluk:'
+ - 331 :  : klass_index=234 name_and_type_index=332
+ - 332 :  : name_index=333 signature_index=65
+ - 333 :  : 'getUzunluk'
+ - 334 :  : " Satir No:" {0xd688f498}
+ - 335 :  : ' Satir No:'
+ - 336 :  : klass_index=234 name_and_type_index=337
+ - 337 :  : name_index=338 signature_index=65
+ - 338 :  : 'getSatirNumarasi'
+ - 339 :  : " Tipi:" {0xd688f4d8}
+ - 340 :  : ' Tipi:'
+ - 341 :  : klass_index=149 name_and_type_index=342
+ - 342 :  : name_index=343 signature_index=233
+ - 343 :  : 'getValue'
+ - 344 :  : klass_index=345 name_and_type_index=347
+ - 345 :  : 'tr/com/vbt/util/WriteToFile'
+ - 346 :  : 'tr/com/vbt/util/WriteToFile'
+ - 347 :  : name_index=348 signature_index=349
+ - 348 :  : 'writeToFile'
+ - 349 :  : '(Ljava/lang/StringBuffer;Ljava/lang/String;)V'
+ - 350 :  : klass_index=351 name_and_type_index=191
+ - 351 :  : 'java/io/IOException'
+ - 352 :  : 'java/io/IOException'
+ - 353 :  : 'fullTokenizeFileName'
+ - 354 :  : 'sb'
+ - 355 :  : 'Ljava/lang/StringBuffer;'
+ - 356 :  : 'keyValueToken'
+ - 357 :  : 'Ltr/com/vbt/token/KeyValueOzelKelimeToken;'
+ - 358 :  : 'e'
+ - 359 :  : 'Ljava/io/IOException;'
+ - 360 :  : 'SourceFile'
+ - 361 :  : 'AbstractLexing.java'
+ - 362 :  : " Sval:" {0xd688f510}
+ - 363 :  : ' Sval:'
+
+R11=0x00000000612170a8 is an unknown value
+R12=0x0000000000000028 is an unknown value
+R13=0x000000000b661801 is an unknown value
+R14=0x0000000000000000 is an unknown value
+R15=0x6666666666666667 is an unknown value
+
+
+Stack: [0x000000000c750000,0x000000000c850000],  sp=0x000000000c84e8f0,  free space=1018k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x1cc306]
+
+VM_Operation (0x000000000d49f180): GetOrSetLocal, mode: safepoint, requested by thread 0x000000000b6ef000
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x000000000b71a000 JavaThread "Service Thread" daemon [_thread_blocked, id=5324, stack(0x000000000dc60000,0x000000000dd60000)]
+  0x000000000b70f800 JavaThread "C2 CompilerThread1" daemon [_thread_blocked, id=780, stack(0x000000000daa0000,0x000000000dba0000)]
+  0x000000000b709800 JavaThread "C2 CompilerThread0" daemon [_thread_blocked, id=3364, stack(0x000000000d740000,0x000000000d840000)]
+  0x000000000b6fc800 JavaThread "JDWP Command Reader" daemon [_thread_in_native, id=6852, stack(0x000000000d980000,0x000000000da80000)]
+  0x000000000b6fb800 JavaThread "JDWP Event Helper Thread" daemon [_thread_blocked, id=7484, stack(0x000000000d850000,0x000000000d950000)]
+  0x000000000b6ef000 JavaThread "JDWP Transport Listener: dt_socket" daemon [_thread_blocked, id=4876, stack(0x000000000d3a0000,0x000000000d4a0000)]
+  0x000000000b6e8800 JavaThread "Attach Listener" daemon [_thread_blocked, id=8324, stack(0x000000000ce20000,0x000000000cf20000)]
+  0x000000000b6e1000 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=5160, stack(0x000000000caf0000,0x000000000cbf0000)]
+  0x0000000002213800 JavaThread "Finalizer" daemon [_thread_blocked, id=6908, stack(0x000000000cbf0000,0x000000000ccf0000)]
+  0x0000000002211800 JavaThread "Reference Handler" daemon [_thread_blocked, id=8920, stack(0x000000000c940000,0x000000000ca40000)]
+  0x000000000211f000 JavaThread "main" [_thread_blocked, id=5524, stack(0x0000000002430000,0x0000000002530000)]
+
+Other Threads:
+=>0x000000000b661800 VMThread [stack: 0x000000000c750000,0x000000000c850000] [id=7216]
+  0x000000000b72a800 WatcherThread [stack: 0x000000000d570000,0x000000000d670000] [id=924]
+
+VM state:at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x000000000211d000] Threads_lock - owner thread: 0x000000000b661800
+
+Heap
+ PSYoungGen      total 37248K, used 1917K [0x00000007d66b0000, 0x00000007d9040000, 0x0000000800000000)
+  eden space 31936K, 6% used [0x00000007d66b0000,0x00000007d688f548,0x00000007d85e0000)
+  from space 5312K, 0% used [0x00000007d8b10000,0x00000007d8b10000,0x00000007d9040000)
+  to   space 5312K, 0% used [0x00000007d85e0000,0x00000007d85e0000,0x00000007d8b10000)
+ ParOldGen       total 85184K, used 0K [0x0000000783400000, 0x0000000788730000, 0x00000007d66b0000)
+  object space 85184K, 0% used [0x0000000783400000,0x0000000783400000,0x0000000788730000)
+ PSPermGen       total 21248K, used 3236K [0x000000077e200000, 0x000000077f6c0000, 0x0000000783400000)
+  object space 21248K, 15% used [0x000000077e200000,0x000000077e529178,0x000000077f6c0000)
+
+Card table byte_map: [0x0000000005530000,0x0000000005940000] byte_map_base: 0x000000000193f000
+
+Polling page: 0x0000000000220000
+
+Code Cache  [0x0000000002530000, 0x00000000027a0000, 0x0000000005530000)
+ total_blobs=200 nmethods=1 adapters=159 free_code_cache=48759Kb largest_free_block=49915136
+
+Compilation events (2 events):
+Event: 0.647 Thread 0x000000000b709800    1             java.lang.String::hashCode (55 bytes)
+Event: 0.658 Thread 0x000000000b709800 nmethod 1 0x00000000025925d0 code [0x0000000002592700, 0x0000000002592898]
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (0 events):
+No events
+
+Internal exceptions (10 events):
+Event: 0.543 Thread 0x000000000211f000 Threw 0x00000007d6705f30 at C:\jdk7u2_64p\jdk7u21\hotspot\src\share\vm\prims\jvm.cpp:1166
+Event: 0.569 Thread 0x000000000211f000 Threw 0x00000007d670e1f8 at C:\jdk7u2_64p\jdk7u21\hotspot\src\share\vm\prims\jvm.cpp:1166
+Event: 0.579 Thread 0x000000000211f000 Threw 0x00000007d670fd78 at C:\jdk7u2_64p\jdk7u21\hotspot\src\share\vm\prims\jvm.cpp:1166
+Event: 0.594 Thread 0x000000000211f000 Threw 0x00000007d6717bc8 at C:\jdk7u2_64p\jdk7u21\hotspot\src\share\vm\prims\jvm.cpp:1166
+Event: 0.597 Thread 0x000000000211f000 Threw 0x00000007d671a428 at C:\jdk7u2_64p\jdk7u21\hotspot\src\share\vm\prims\jvm.cpp:1166
+Event: 0.599 Thread 0x000000000211f000 Threw 0x00000007d671dba0 at C:\jdk7u2_64p\jdk7u21\hotspot\src\share\vm\prims\jvm.cpp:1166
+Event: 0.608 Thread 0x000000000211f000 Threw 0x00000007d6720190 at C:\jdk7u2_64p\jdk7u21\hotspot\src\share\vm\prims\jvm.cpp:1166
+Event: 0.609 Thread 0x000000000211f000 Threw 0x00000007d6722070 at C:\jdk7u2_64p\jdk7u21\hotspot\src\share\vm\prims\jvm.cpp:1166
+Event: 0.699 Thread 0x000000000211f000 Threw 0x00000007d673d500 at C:\jdk7u2_64p\jdk7u21\hotspot\src\share\vm\prims\jvm.cpp:1166
+Event: 0.716 Thread 0x000000000211f000 Threw 0x00000007d674f950 at C:\jdk7u2_64p\jdk7u21\hotspot\src\share\vm\prims\jvm.cpp:1166
+
+Events (10 events):
+Event: 5.601 Executing VM operation: ChangeBreakpoints done
+Event: 5.610 Executing VM operation: EnterInterpOnlyMode
+Event: 5.610 Executing VM operation: EnterInterpOnlyMode done
+Event: 5.615 Executing VM operation: GetCurrentLocation
+Event: 5.616 Executing VM operation: GetCurrentLocation done
+Event: 5.616 Executing VM operation: ChangeSingleStep
+Event: 5.616 Executing VM operation: ChangeSingleStep done
+Event: 5.617 Executing VM operation: ChangeSingleStep
+Event: 5.617 Executing VM operation: ChangeSingleStep done
+Event: 5.696 Executing VM operation: GetOrSetLocal
+
+
+Dynamic libraries:
+0x000000013fda0000 - 0x000000013fdd3000 	C:\Program Files\Java\jdk1.7.0_21\bin\javaw.exe
+0x0000000077c90000 - 0x0000000077e39000 	C:\WINDOWS\SYSTEM32\ntdll.dll
+0x0000000077a70000 - 0x0000000077b90000 	C:\WINDOWS\system32\kernel32.dll
+0x000007fefdd40000 - 0x000007fefddab000 	C:\WINDOWS\system32\KERNELBASE.dll
+0x0000000075740000 - 0x00000000757c7000 	C:\WINDOWS\System32\SYSFER.DLL
+0x000007fefeb90000 - 0x000007fefec6b000 	C:\WINDOWS\system32\ADVAPI32.dll
+0x000007fefeda0000 - 0x000007fefee3f000 	C:\WINDOWS\system32\msvcrt.dll
+0x000007feff6c0000 - 0x000007feff6df000 	C:\WINDOWS\SYSTEM32\sechost.dll
+0x000007fefec70000 - 0x000007fefed9d000 	C:\WINDOWS\system32\RPCRT4.dll
+0x0000000077b90000 - 0x0000000077c8a000 	C:\WINDOWS\system32\USER32.dll
+0x000007feffba0000 - 0x000007feffc07000 	C:\WINDOWS\system32\GDI32.dll
+0x000007feff190000 - 0x000007feff19e000 	C:\WINDOWS\system32\LPK.dll
+0x000007fefeee0000 - 0x000007fefefa9000 	C:\WINDOWS\system32\USP10.dll
+0x000007fefbe60000 - 0x000007fefc054000 	C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.7601.18837_none_fa3b1e3d17594757\COMCTL32.dll
+0x000007feffc40000 - 0x000007feffcb1000 	C:\WINDOWS\system32\SHLWAPI.dll
+0x000007feffc10000 - 0x000007feffc3e000 	C:\WINDOWS\system32\IMM32.DLL
+0x000007feff6e0000 - 0x000007feff7e9000 	C:\WINDOWS\system32\MSCTF.dll
+0x000000006c970000 - 0x000000006ca41000 	C:\Program Files\Java\jdk1.7.0_21\jre\bin\msvcr100.dll
+0x0000000060d00000 - 0x0000000061421000 	C:\Program Files\Java\jdk1.7.0_21\jre\bin\server\jvm.dll
+0x000007fefa330000 - 0x000007fefa339000 	C:\WINDOWS\system32\WSOCK32.dll
+0x000007feff330000 - 0x000007feff37d000 	C:\WINDOWS\system32\WS2_32.dll
+0x000007feffd80000 - 0x000007feffd88000 	C:\WINDOWS\system32\NSI.dll
+0x000007fefbaf0000 - 0x000007fefbb2b000 	C:\WINDOWS\system32\WINMM.dll
+0x0000000077e60000 - 0x0000000077e67000 	C:\WINDOWS\system32\PSAPI.DLL
+0x000000006a870000 - 0x000000006a87f000 	C:\Program Files\Java\jdk1.7.0_21\jre\bin\verify.dll
+0x0000000067980000 - 0x00000000679a8000 	C:\Program Files\Java\jdk1.7.0_21\jre\bin\java.dll
+0x000000006cb40000 - 0x000000006cb75000 	C:\Program Files\Java\jdk1.7.0_21\jre\bin\jdwp.dll
+0x000000006f280000 - 0x000000006f288000 	C:\Program Files\Java\jdk1.7.0_21\jre\bin\npt.dll
+0x00000000697f0000 - 0x0000000069805000 	C:\Program Files\Java\jdk1.7.0_21\jre\bin\zip.dll
+0x000000006f270000 - 0x000000006f279000 	C:\Program Files\Java\jdk1.7.0_21\jre\bin\dt_socket.dll
+0x000007fefb400000 - 0x000007fefb415000 	C:\WINDOWS\system32\NLAapi.dll
+0x000007fef9030000 - 0x000007fef9045000 	C:\WINDOWS\system32\napinsp.dll
+0x000007fef9010000 - 0x000007fef9029000 	C:\WINDOWS\system32\pnrpnsp.dll
+0x000007fefd150000 - 0x000007fefd1a5000 	C:\WINDOWS\System32\mswsock.dll
+0x000007fefcfe0000 - 0x000007fefd03b000 	C:\WINDOWS\system32\DNSAPI.dll
+0x000007fef9000000 - 0x000007fef900b000 	C:\WINDOWS\System32\winrnr.dll
+0x000007fef8ff0000 - 0x000007fef9000000 	C:\WINDOWS\system32\wshbth.dll
+0x000007fef94a0000 - 0x000007fef94cf000 	C:\Program Files\Common Files\Microsoft Shared\Windows Live\WLIDNSP.DLL
+0x000007fefa150000 - 0x000007fefa177000 	C:\WINDOWS\system32\IPHLPAPI.DLL
+0x000007fefa140000 - 0x000007fefa14b000 	C:\WINDOWS\system32\WINNSI.DLL
+0x000007fef9f30000 - 0x000007fef9f83000 	C:\WINDOWS\System32\fwpuclnt.dll
+0x000007fef9490000 - 0x000007fef9498000 	C:\WINDOWS\system32\rasadhlp.dll
+0x000007fefcba0000 - 0x000007fefcba7000 	C:\WINDOWS\System32\wshtcpip.dll
+0x00000000679c0000 - 0x00000000679d9000 	C:\Program Files\Java\jdk1.7.0_21\jre\bin\net.dll
+0x000007fefd2a0000 - 0x000007fefd2a7000 	C:\WINDOWS\System32\wship6.dll
+0x0000000067960000 - 0x0000000067971000 	C:\Program Files\Java\jdk1.7.0_21\jre\bin\nio.dll
+0x000007fefc490000 - 0x000007fefc5b5000 	C:\WINDOWS\system32\dbghelp.dll
+
+VM Arguments:
+jvm_args: -agentlib:jdwp=transport=dt_socket,suspend=y,address=localhost:56111 -Dfile.encoding=UTF-8 
+java_command: tr.com.vbt.cobol.convert.TransferFromCobolToJavaMain Latif VLMOKUC
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=C:\Program Files\Java\jdk1.7.0_21
+CLASSPATH=.;C:\Program Files\Java\jdk1.7.0_21\bin;C:\MinGW\bin
+PATH=C:\Program Files\Java\jdk1.7.0_21\jre\bin;C:/Program Files/Java/jdk1.7.0_21/bin/../jre/bin/server;C:/Program Files/Java/jdk1.7.0_21/bin/../jre/bin;C:/Program Files/Java/jdk1.7.0_21/bin/../jre/lib/amd64;C:\Program Files\Java\jdk1.7.0_21\bin;C:\Program Files\Common Files\Microsoft Shared\Windows Live;C:\Program Files (x86)\Common Files\Microsoft Shared\Windows Live;C:\app\47159500\product\11.2.0\client_2\bin;C:\app\47159500\product\11.2.0\client_1;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Microsoft Application Virtualization Client;C:\Program Files\TortoiseSVN\bin;JAVA_HOME\bin;C:\Program Files\apache-maven-3.0.5\bin;C:\Program Files (x86)\QuickTime\QTSystem\;C:\Program Files (x86)\Windows Live\Shared;C:\Program Files\TortoiseGit\bin;C:\MinGW\bin;C:\MinGW\msys\1.0\bin;C:\Program Files\nodejs\;C:\Users\47159500\AppData\Roaming\npm;C:\eclipse;
+USERNAME=47159500
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 37 Stepping 5, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 7 , 64 bit Build 7601 Service Pack 1
+
+CPU:total 4 (2 cores per cpu, 2 threads per core) family 6 model 37 stepping 5, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, ht, tsc, tscinvbit
+
+Memory: 4k page, physical 8175032k(3540304k free), swap 16348208k(10926380k free)
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (23.21-b01) for windows-amd64 JRE (1.7.0_21-b11), built on Apr  4 2013 08:11:28 by "java_re" with unknown MS VC++:1600
+
+time: Wed Mar 16 14:25:38 2016
+elapsed time: 5 seconds
+

@@ -1,0 +1,13 @@
+@Override
+public List<Tiptalcek> findByHescinsi_Doviz_Hesno_Musno1_Musno2_Krx_kod_Cekno_Sirano(NHESCINS,PDOVIZ,PHESNO,PDMUSNO1,PDMUSNO2,PDHESNIT,PBIS,1.0){
+Criteria main_crit = getSession().createCriteria(getPersistentClass());
+main_crit.add(Restrictions.eq(HESCINSI, NHESCINS));
+main_crit.add(Restrictions.eq(DOVIZ, PDOVIZ));
+main_crit.add(Restrictions.eq(HESNO, PHESNO));
+main_crit.add(Restrictions.eq(MUSNO1, PDMUSNO1));
+main_crit.add(Restrictions.eq(MUSNO2, PDMUSNO2));
+main_crit.add(Restrictions.eq(KRX_KOD, PDHESNIT));
+main_crit.add(Restrictions.eq(CEKNO, PBIS));
+main_crit.add(Restrictions.eq(SIRANO, 1.0));
+return main_crit.list()
+}

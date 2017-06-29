@@ -1,0 +1,181 @@
+								SIMPLE IF BLOCKS
+1) Simple With Then And End-İf
+		 IF VAC-OKEY3 = 1 THEN                                        			02525900
+		025260       DISPLAY ' VAC OKUMADA PROBLEM -- L1 -- X3 '                02526000
+		025261       DISPLAY 'FILE STATUS ====> '  FS2                          02526100
+		025262       MOVE 08 TO RETURN-CODE                                     02526238
+		025263       STOP RUN                                                   02526300
+		025264     END-IF.    
+		
+2) If Without EndIf, without Then and With Dot.
+		000500     IF PARM-DATE NOT NUMERIC OR PARM-DATE = '00000'              00039700
+		000600          CALL 'GETIPLDT' USING HOLD-DATE                         00039800
+		000700          MOVE '(LAST IPL)' TO H2-DATE-TYPE                       00039900
+		000800     ELSE                                                         00040000
+		000900          MOVE PARM-DATE TO HOLD-DATE                             00050000
+		001000          MOVE '(PARM VALUE)' TO H2-DATE-TYPE.                    00060000
+			
+			
+			
+								INNER IF BLOCKS
+3) Inner If Without Else, Without End-İf
+		025260	  IF VAC-OKEY3 = 1 THEN                         				02525900
+		025260       DISPLAY ' VAC OKUMADA PROBLEM '			                02526000
+		025261       IF VAC-OKEY3 = 1 THEN  									02526000
+		025261				DISPLAY 'FILE STATUS '                  	        02526100
+		025262       		MOVE 08 TO RETURN-CODE.                             02526238
+		    
+						
+3) Inner If with End_İf and Then			
+		
+		010800       IF V-DISK-ADI = '3380' OR V-DISK-ADI = '3390' OR           01080002
+		010810          V-LCU-ADI = ' LCU'                                      01081002
+		010900        THEN                                                      01090000
+		010910          IF V-LCU-ADI = ' LCU' THEN                              01091002
+		011000            MOVE '0000'  TO V-VOLUME-NO                           01100002
+		011001           ELSE                                                   01100102
+		011002            MOVE RMF-RECORD(11:4)  TO V-VOLUME-NO                 01100202
+		011003          END-IF                                                  01100302
+		011004          IF V-LCU-ADI = ' LCU' THEN                              01100402
+		011010            MOVE RMF-RECORD(31:6)  TO V-VOLUME-ADI                01101002
+		011020           ELSE                                                   01102002
+		011021            MOVE RMF-RECORD(25:6)  TO V-VOLUME-ADI                01102102
+		011030          END-IF                                                  01103002
+		011100          MOVE RMF-RECORD(48:3)  TO V-RESP                        01110000
+		011400          SET I-IND TO 1                                          01140000
+		011500          SEARCH VOLUME-T AT END                                  01150000
+		011600              ADD 1 TO II                                         01160000
+		011700              MOVE V-VOLUME-ADI TO T-VOLUME-ADI(II)               01170000
+		011710              MOVE V-VOLUME-NO  TO T-VOLUME-NO(II)                01171001
+		011800              MOVE 1 TO T-SAYAC (II)                              01180000
+		011900              MOVE V-RESP TO T-RESP (II)                          01190000
+		012000              WHEN V-VOLUME-ADI = T-VOLUME-ADI (I-IND)            01200000
+		012100                 ADD 1 TO T-SAYAC(I-IND)                          01210000
+		012200                 COMPUTE T-RESP (I-IND) = T-RESP (I-IND) + V-RESP 01220000
+		012300          END-SEARCH                                              01230000
+		012400        END-IF                                                    01240000
+			
+4) Inner IF without Then With End-If
+		015800              IF I = 9                                            01580057
+		015900                IF V-BIR(6:1) = 'K'                               01590057
+		016000                   COMPUTE T-IOC (JJ) = V-SON * 100               01600057
+		016100                  ELSE                                            01610057
+		016200                   MOVE V-SON TO T-IOC (JJ)                       01620057
+		016300                END-IF                                            01630057
+		016400               ELSE                                               01640057
+		016500                IF V-BIR(6:1) = 'K'                               01650057
+		016600                   COMPUTE T-IOC (JJ) = V-SON * 1000              01660057
+		016700                  ELSE                                            01670057
+		016800                   MOVE V-SON TO T-IOC (JJ)                       01680057
+		016900                END-IF                                            01690057	
+		
+5) Inner If Without End-İf
+		002100     IF IR-POS-7-17 = 'MEMBER NAME'                               00210000
+		002200        MOVE IR-POS-21-28 TO L1-MODULE                            00220000
+		002300     ELSE                                                         00230000
+		002400         IF IR-POS-83 = '/' AND                                   00240000
+		002500            IR-POS-81-82 NUMERIC AND                              00250000
+		002600            IR-POS-84-86 NUMERIC                                  00260000
+		002700                MOVE IR-POS-81-82 TO COMPARE-YEAR                 00270000
+		002800                MOVE IR-POS-84-86 TO COMPARE-DAY                  00280000
+		002900                IF COMPARE-DATE < HOLD-DATE                       00290000
+		003000                    NEXT SENTENCE                                 00300000
+		003100                ELSE                                              00310000
+		003200                    MOVE 'TRANS' TO L1-CHANGE-TYPE                00320000
+		003300                    MOVE COMPARE-YEAR TO L1-CHANGE-YEAR           00330000
+		003400                    MOVE COMPARE-DAY  TO L1-CHANGE-DAY            00340000
+		003401                    MOVE IR-POS-12-19 TO L1-CSECT                 00340100
+		003402                    MOVE SPACES TO L1-IDR-INFO                    00340200
+		003403                    PERFORM 170-DISPLAY-LINE                      00340300
+							 ADD_END_IF
+		003404        ELSE                                                      00340400
+		003405            IF IR-POS-52 = '/'   AND                              00340500
+		003406   	         IR-POS-50-51 NUMERIC AND                              00340600
+		003407        		 IR-POS-53-55 NUMERIC                                  00340700
+		003408                	MOVE IR-POS-50-51 TO COMPARE-YEAR                 00340800
+		003409                	MOVE IR-POS-53-55 TO COMPARE-DAY                  00340900
+		003410                	IF COMPARE-DATE < HOLD-DATE                       00341000
+		003411                    	NEXT SENTENCE                                 00341100
+		003412                	ELSE                                              00341200
+		003413                    	MOVE 'ZAP' TO L1-CHANGE-TYPE                  00341300
+		003414                    	MOVE COMPARE-YEAR TO L1-CHANGE-YEAR           00341400
+		003415                    	MOVE COMPARE-DAY TO L1-CHANGE-DAY             00341500
+		003416                    	MOVE IR-POS-22-29 TO L1-CSECT                 00341600
+		003417                    	MOVE IR-POS-76-83 TO L1-IDR-INFO              00341700
+		003418                    	PERFORM 170-DISPLAY-LINE                      00341800
+								ADD_END_IF
+		003419        		ELSE                                                      00341900
+		003420            		IF IR-POS-44-57 = 'LINKAGE EDITOR'                    00342000
+		003421                		MOVE IR-POS-92-94 TO COMPARE-DAY                  00342100
+		003422                		MOVE IR-POS-104-105 TO COMPARE-YEAR               00342200
+		003423                		IF COMPARE-DATE < HOLD-DATE                       00342300
+		003424                   		 NEXT SENTENCE                                 00342400
+		003425                		ELSE                                              00342500
+		003426                    		MOVE 'LINK' TO L1-CHANGE-TYPE                 00342600
+		003427                    		MOVE COMPARE-YEAR TO L1-CHANGE-YEAR           00342700
+		003428                    		MOVE COMPARE-DAY  TO L1-CHANGE-DAY            00342800
+		003435                    		MOVE SPACES TO L1-CSECT                       00343500
+		003436                    		MOVE SPACES TO L1-IDR-INFO                    00343600
+		003437                    		PERFORM 170-DISPLAY-LINE
+									ADD_END_IF
+								ADD_END_IF	
+							ADD_END_IF
+						ADD_END_IF	
+					ADD_END_IF										.                     00343700
+		003438     PERFORM 200-READ-AMBLIST.                                    00343800 
+		
+Özet: IF mecburi
+	  Then olmayabilir, Then yoksa özel kelime varsa yine biter(And ve Or Hariç).
+	  End-İf yoksa Dot olmak zorunda
+	  Inner İf ler de End-İf yoksa en son if yada else den sonra gelen son basic verb den sonra nokta gelir.
+
+
+	 
+Sorun: Then Yok:
+Çözüm: Tokenlara ayrıldıktan sonra commanda parse edilmeden önce çalışmalıdır. Then ve End-İf Ekler:
+	 Then Yoksanın Çözümü: addThen: 
+	 			Algoritma:
+	 			1) If den sonra gelen tokenlar gezilir. Bulunan ilk özel kelime AND, OR,THEN değilse bu kelimeden önce bir THEN konur.
+	 
+Sorun: EndIf Yok:
+Çözümü: addEndİf: 
+	 			 
+			Algoritma:
+				1) If görürsen Buffer a Enf-İf koy.
+				2) End-İf görürsen bufferdan bir tane sil. (End-if i programcı koydu ise)
+				3) Nokta görürsen(Complex Inner If serisinin sonuna gelinmiştir.) buffer daki tüm end-ifleri ekle
+				4)  Else den sonra Else görürsen Else den önce End-İf ekle.
+
+Sorun: If EndIf de ifin enderi EndIf,
+	   If Else EndIf de Else ender ı EndIf ama If in Enderi yok.
+Çözümü: addEndIfBeforeElse:
+				Else gördü isen öncesinde EndIfBeforeElse ekle.
+
+Sorun IF ve Then Arası Condition Nesnesi
+Çözüm: PaternIf AbstractPatternFromXToYWithCarriageReturn extend edecek.
+
+Commands:
+ElementIf:(AbstractMultipleLinesCommand)
+	PaternIf: (AbstractPatternFromXToYWithCarriageReturn)
+		If:ÖzelKelime
+		Condition:
+		Then: ÖzelKelime
+	Ender: Else yada End-If
+		
+ElementElse(AbstractMultipleLinesCommand)
+	PaternElse: (AbstractPAttern) 
+		Else:ÖzelKelime
+		
+ElementEndIf(AbstractEndingCommand)
+	PaternEndIf: 
+		Else:END_IF
+
+ElementEndIfBeforeElse		
+	PaternEndIfBeforeElse: 
+		Else:END_IF_BEFORE_ELSE
+		
+	
+		
+		
+			 
+	 	  		

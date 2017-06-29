@@ -1,0 +1,10 @@
+*S**1 TESL2 VIEW OF AYK-TESL   			DB Ana Grup Değişken(VIEW OF AYK-TESL)	//*S**1 TESL2 VIEW OF AYK-TESL				PaternDBViewOfGroupNatural				ElementDBViewOfNatural
+*S**  03 REDEFINE T-USER-DATE-TIME    	DB Redefine Grup Değ.					  03 REDEFINE T-USER-DATE-TIME  			PaternDBRedefineDataGroupNatural		ElementDBRedefineDataGroupNatural
+*S**    03 T-TARIH2-N (N8) 	 			DB Redefine Değ							  02 T-BLOCKFUEL (N8) //N8 optional			PaternDBDataTypeNatural					ElementDBDataTypeNatural
+*S**  02 T-LOG-USER (1:50)				DB MU Grup Değişkeni					  02 T-LOG-USER (1:50)						PaternDBMultipleUnitDataTypeNatural		ElementDBMultipleUnitDataTypeNatural
+
+
+*S**1 #T-USER     (A8)  	 Local Normal Değişken									1 #T-USER     (A8)						PaternProgramDataTypeNatural			ElementProgramDataTypeNatural
+*S**1 REDEFINE #TFK-SEFNO    Local Normal Redefine Grup Değ.             			1 REDEFINE #TFK-SEFNO  					PaternProgramRedefineGroupNatural 		ElementProgramRedefineGrupNatural                                                      
+*S**1 #DIZI-KLIM(A3/1:500)   Local Normal Dizi Tanımı								1 #DIZI-KLIM(A3/1:500)					PaternProgramArrayNatural 				ElementProgramArrayNatural
+

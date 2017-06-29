@@ -1,0 +1,6 @@
+@Override
+public List<Tdoviz> findByDovkod(DOVIZKISA2){
+Criteria main_crit = getSession().createCriteria(getPersistentClass());
+main_crit.add(Restrictions.eq(DOVKOD, DOVIZKISA2));
+return main_crit.list()
+}

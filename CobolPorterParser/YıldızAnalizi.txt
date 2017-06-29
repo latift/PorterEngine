@@ -1,0 +1,12 @@
+
+Yıldız Analizi:
+IF *LANGUAGE EQ 7  (SystemVariableBelirten, Sonrasında Sistem Variable var.)
+
+REINPUT 'LIMANI GIRINIZ.' MARK *#T-KLIM (ReInput İçinde, Sonrasında Diyez Var Mutlaka) 
+
+#FARK1 :=#FARK1 * -1  (Çarpı İşlemi)
+
+Diyez Analizi:
+Diyez varsa sonraki kelime local değişkendir.
+
+

@@ -1,0 +1,25 @@
+package tr.com.vbt.lexer;
+
+public enum THYModules {
+	TPS,
+	PERS,
+	MEIKRAM,
+	MEUCRETL,
+	MEUCRETV,
+	MEPERSAG,
+	DEVTES,
+	MEDEVLOK,
+	MEYTLDUZ,
+	MEGIDER,
+	THY2005,
+	TEKNIKMH,
+	PERSEC,
+	MDV,
+	MDVTK,
+	YMHOTEL,
+	BUTCELV,
+	BUTCEMK,
+	BUTCEPR,
+	MUHBATCH,
+	TRANSFER
+}

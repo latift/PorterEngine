@@ -1,0 +1,453 @@
+
+////
+package tr.com.generated ;
+
+//// DEFINE_DATA
+import tr.com.vbt.natural.core.*;
+public class TemporaryClassName_RefactorWithNaturalProgramName  extends AbstractNaturalProgram implements NaturalProgram {
+
+////
+
+////
+//
+
+//// 1.0 T-KLMTARSEF2 ( A15 )
+String T_KLMTARSEF2;
+
+//// 1.0 REDEFINE
+//UNDEFINED ELEMENT
+
+//// 2.0 T-KLM-LIMAN ( A3 )
+String T_KLM_LIMAN;
+
+//// 2.0 T-KLM-TARIH ( N8 )
+String T_KLM_TARIH;
+
+//// 3.0 T-KLM-TARIH-A ( A8 )
+String T_KLM_TARIH_A;
+
+//// 2.0 T-KLM-SEFNO ( N4 )
+String T_KLM_SEFNO;
+
+//// 1.0 T-KLMTARSEF3 ( A15 )
+String T_KLMTARSEF3;
+
+//// 2.0 T-KLM-LIMAN3 ( A3 )
+String T_KLM_LIMAN3;
+
+//// 2.0 T-KLM-TARIH3 ( N8 )
+String T_KLM_TARIH3;
+
+//// 2.0 T-KLM-SEFNO3 ( N4 )
+String T_KLM_SEFNO3;
+
+//// 1.0 T-KLMTARSEF4 ( A15 )
+String T_KLMTARSEF4;
+
+//// 2.0 T-KLM-LIMAN4 ( A3 )
+String T_KLM_LIMAN4;
+
+//// 2.0 T-KLM-TARIH4 ( N8 )
+String T_KLM_TARIH4;
+
+//// 2.0 T-KLM-SEFNO4 ( N4 )
+String T_KLM_SEFNO4;
+
+//// 1.0 T-KLMTARSEF-ARA ( A15 )
+String T_KLMTARSEF_ARA;
+
+//// 1.0 T-KLMTARSEF5 ( A15 )
+String T_KLMTARSEF5;
+
+//// 2.0 T-KLM-LIMAN5 ( A3 )
+String T_KLM_LIMAN5;
+
+//// 2.0 T-KLM-TARIH5 ( N8 )
+String T_KLM_TARIH5;
+
+//// 2.0 T-KLM-SEFNO5 ( N4 )
+String T_KLM_SEFNO5;
+
+//// 1.0 T-KLIM ( A3 )
+String T_KLIM;
+
+//// 1.0 T-VLIM ( A3 )
+String T_VLIM;
+
+//// 1.0 T-FIRMA ( A3 )
+String T_FIRMA;
+
+//// 1.0 T-UTIP ( A3 )
+String T_UTIP;
+
+//// 1.0 T-REG ( A3 )
+String T_REG;
+
+//// 1.0 T-REG-3 ( A3 )
+String T_REG_3;
+
+//// 1.0 T-TARIH ( N8 )
+String T_TARIH;
+
+//// 2.0 T-TARIH-A8 ( A8 )
+String T_TARIH_A8;
+
+//// 1.0 T-SEFNO ( N4 )
+String T_SEFNO;
+
+//// 2.0 T-SEFNO-A4 ( A4 )
+String T_SEFNO_A4;
+
+//// 1.0 TFK-SW ( N1 )
+String TFK_SW;
+
+//// 1.0 TFK-REG ( A3 )
+String TFK_REG;
+
+//// 1.0 TFK-KEY ( A15 )
+String TFK_KEY;
+
+//// 1.0 TFK-SCLMTTARIH-SEFNO-KLIM ( A15 )
+String TFK_SCLMTTARIH_SEFNO_KLIM;
+
+//// 1.0 TFK-KAYIT-SAYISI ( N2 )
+String TFK_KAYIT_SAYISI;
+
+//// 1.0 T-BIT-TARIH ( N8 )
+String T_BIT_TARIH;
+
+//// 2.0 T-BIT-TARIH-A8 ( A8 )
+String T_BIT_TARIH_A8;
+
+//// 1.0 TFK-ADTRH ( N8 )
+String TFK_ADTRH;
+
+//// 2.0 TFK-ADTRH-A ( A8 )
+String TFK_ADTRH_A;
+
+//// 1.0 TFK-SCTRH ( N8 )
+String TFK_SCTRH;
+
+//// 2.0 TFK-SCTRH-A ( A8 )
+String TFK_SCTRH_A;
+
+//// 1.0 TFK-DVLIM ( A3 )
+String TFK_DVLIM;
+
+//// 1.0 TFK-SEFNO ( N4 )
+String TFK_SEFNO;
+
+//// 2.0 TFK-SEFNO-A4 ( A4 )
+String TFK_SEFNO_A4;
+
+//// 1.0 TFK-ADUTIP ( A3 )
+String TFK_ADUTIP;
+
+//// 1.0 TFK-OPCODE ( N2 )
+String TFK_OPCODE;
+
+//// 1.0 TOPLAM-TESELLUM-SAYISI ( N5 )
+String TOPLAM_TESELLUM_SAYISI;
+
+//// 1.0 CEKILEN-FMM-SAYISI ( N5 )
+String CEKILEN_FMM_SAYISI;
+
+//// 1.0 CEKILMEYEN-FMM-SAYISI ( N5 )
+String CEKILMEYEN_FMM_SAYISI;
+
+//// 1.0 T-USER ( A8 )
+String T_USER;
+
+//// 1.0 T-TERM ( A8 )
+String T_TERM;
+
+//// 1.0 T-DATE ( N8 )
+String T_DATE;
+
+//// 1.0 T-TIME ( N7 )
+String T_TIME;
+
+//// 2.0 T-TIME-N4 ( N4 )
+String T_TIME_N4;
+
+//// 1.0 ACIKLAMA ( A12 )
+String ACIKLAMA;
+
+//// 1.0 U-REG ( A3 )
+String U_REG;
+
+//// 1.0 DATX ( D )
+String DATX;
+
+//// 1.0 DATD ( D )
+String DATD;
+
+//// 1.0 IKI-GUN-ONCE ( A8 )
+String IKI_GUN_ONCE;
+
+//// 1.0 LTIGUG ( A2 )
+String LTIGUG;
+
+//// 1.0 COUNTER2 ( P7 )
+String COUNTER2;
+
+//// 1.0 CARSEF ( A7 )
+String CARSEF;
+
+//// 1.0 MADIO ( P4 )
+String MADIO;
+
+//// 1.0 ISLEM-TIPI ( A1 )
+String ISLEM_TIPI;
+
+//// 1.0 EY ( A1 )
+String EY;
+
+//// 1.0 KLIM-UKODU ( A2 )
+String KLIM_UKODU;
+
+//// 1.0 VLIM-UKODU ( A2 )
+String VLIM_UKODU;
+
+//// 1.0 L-LIMAN-KODU ( A3 )
+String L_LIMAN_KODU;
+
+//// 1.0 KLIM ( A3 )
+String KLIM;
+
+//// 1.0 VLIM ( A3 )
+String VLIM;
+
+//// 1.0 ID ( A1 )
+String ID;
+
+//// 1.0 TG ( A1 )
+String TG;
+
+//// 1.0 OD ( A1 )
+String OD;
+
+//// 1.0 GMT-LMT ( A1 )
+String GMT_LMT;
+
+//// 1.0 SW ( N1 )
+String SW;
+
+//// 1.0 SECIM ( N1 )
+String SECIM;
+
+//// 1.0 FARK ( N3 )
+String FARK;
+
+//// 1.0 FARK1 ( N6 )
+String FARK1;
+
+//// 1.0 FARK-ISARET ( A1 )
+String FARK_ISARET;
+
+//// 1.0 DERECE-ADEDI ( N5 )
+String DERECE_ADEDI;
+
+//// 1.0 TOPLAM-DERECE ( N6 )
+String TOPLAM_DERECE;
+
+//// 1.0 ORTALAMA-DERECE ( N6 )
+String ORTALAMA_DERECE;
+
+//// 1.0 TOPLAM-UPLIFT1 ( N12 )
+String TOPLAM_UPLIFT1;
+
+//// 1.0 TOPLAM-UPLIFT2 ( N12 )
+String TOPLAM_UPLIFT2;
+
+//// 1.0 TOPLAM-MIKTAR ( N12 )
+String TOPLAM_MIKTAR;
+
+//// 1.0 ERR-NUM ( N4 )
+String ERR_NUM;
+
+//// 1.0 PROGRAM ( A8 )
+String PROGRAM;
+
+//// 1.0 PREFIX ( A40 )
+String PREFIX;
+
+//// 1.0 SUFFIX ( A40 )
+String SUFFIX;
+
+//// 1.0 STRING ( A70 )
+String STRING;
+
+//// 2.0 STRING-A ( A16 )
+String STRING_A;
+
+//// 2.0 STRING-B ( A27 )
+String STRING_B;
+
+//// 2.0 STRING-C ( A27 )
+String STRING_C;
+
+//// 1.0 YETKI ( N1 )
+String YETKI;
+
+//// 1.0 C-MESAJ ( A90 )
+String C_MESAJ;
+
+//// 1.0 CV ( C )
+String CV;
+
+//// 1.0 USER ( A8 )
+String USER;
+
+//// 2.0 USER-LIMAN ( A3 )
+String USER_LIMAN;
+
+//// 2.0 USER-NAME-A4 ( A4 )
+String USER_NAME_A4;
+
+//// 1.0 UHT-SCTRH ( A8 )
+String UHT_SCTRH;
+
+//// 2.0 UHT-SCTRH-N ( N8 )
+String UHT_SCTRH_N;
+
+//// 1.0 K ( N3 )
+String K;
+
+//// 1.0 KK ( N3 )
+String KK;
+
+//// 1.0 L ( N3 )
+String L;
+
+//// 1.0 LL ( N3 )
+String LL;
+
+//// 1.0 UHM-BITIS-TARIHI ( N8 )
+String UHM_BITIS_TARIHI;
+
+//// 2.0 UHM-BITIS-TARIHI-A ( A8 )
+String UHM_BITIS_TARIHI_A;
+
+//// 1.0 UHM-KLIM ( A3 )
+String UHM_KLIM;
+
+//// 1.0 UHM-VLIM ( A3 )
+String UHM_VLIM;
+
+//// 1.0 UHM-REG ( A3 )
+String UHM_REG;
+
+//// 1.0 KAYIT-SW ( N1 )
+String KAYIT_SW;
+
+//// 1.0 FMM-VAR ( N1 )
+String FMM_VAR;
+
+//// 1.0 KONTROL-REG ( A3 )
+String KONTROL_REG;
+
+//// 1.0 KONTROL-TARIH ( A8 )
+String KONTROL_TARIH;
+
+//// 1.0 I ( N5 )
+String I;
+
+//// 1.0 SAYAC ( N5 )
+String SAYAC;
+
+//// 1.0 TES-VAR ( N1 )
+String TES_VAR;
+
+//// 1.0 NOREC-SW ( N1 )
+String NOREC_SW;
+
+//// 1.0 ISN-A8 ( A8 )
+String ISN_A8;
+
+//// 1.0 F ( N4 )
+String F;
+
+//// 1.0 FMM-ADET ( N5 )
+String FMM_ADET;
+
+//// 1.0 LOCAL-TARIH ( N8 )
+String LOCAL_TARIH;
+
+//// 1.0 T-KOD ( A2 )
+String T_KOD;
+
+//// 1.0 ULKE-KODU ( A2 )
+String ULKE_KODU;
+
+//// 1.0 T-UAD ( A3 )
+String T_UAD;
+
+//// 1.0 T-TARIH-TESNO ( A16 )
+String T_TARIH_TESNO;
+
+//// 2.0 T-MATBU-TARIH ( A8 )
+String T_MATBU_TARIH;
+
+//// 2.0 T-MATBU-TESNO ( N8 )
+String T_MATBU_TESNO;
+
+//// 1.0 FRM-MATBU-NO ( N8 )
+String FRM_MATBU_NO;
+
+//// 1.0 FRM-MATBU-TARIH ( N8 )
+String FRM_MATBU_TARIH;
+
+//// 1.0 FRM-MIKTAR ( P8 )
+String FRM_MIKTAR;
+
+//// 1.0 TABLO-KEY ( A10 )
+String TABLO_KEY;
+
+//// 1.0 NEXT-KEY ( A20 )
+String NEXT_KEY;
+
+//// 2.0 NEXT-KEY-ID ( A1 )
+String NEXT_KEY_ID;
+
+//// 2.0 NEXT-KEY-LIMAN ( A3 )
+String NEXT_KEY_LIMAN;
+
+//// 2.0 NEXT-KEY-TARIH ( A8 )
+String NEXT_KEY_TARIH;
+
+//// 2.0 NEXT-KEY-SAAT ( A4 )
+String NEXT_KEY_SAAT;
+
+//// 2.0 NEXT-KEY-SEFNO ( A4 )
+String NEXT_KEY_SEFNO;
+
+//// MAIN_START
+public static void main(String[] args){
+
+////
+
+////
+//
+
+////
+
+////
+//
+
+}
+//// MAIN_START
+public static void main(String[] args){
+
+////
+
+////
+//
+
+////
+
+////
+//
+
+}
+}
