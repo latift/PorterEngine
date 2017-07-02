@@ -15,18 +15,27 @@
 		<com.oracle.ojdbc.version>10.2.0.4.0</com.oracle.ojdbc.version>
   </properties>	
   <modules>
-    <module>Commons</module>
   	<module>CobolPorterLexer</module>
   	<module>CobolPorterParser</module>
   	<module>CobolPorterSemantic</module>
   </modules>
 	
   <dependencies>
-  		<dependency>
-				<groupId>javassist</groupId>
-				<artifactId>javassist</artifactId>
-				<version>3.8.0.GA</version>
-		</dependency>
+		  		<dependency>
+				   <artifactId>Commons</artifactId>
+				   <groupId>tr.com.vbt.porter.lexer</groupId>
+				   <version>0.0.1-SNAPSHOT</version>
+				</dependency>
+						<dependency>
+					<artifactId>THY_COMMON_DAL</artifactId>
+					<groupId>tr.com.thy.dal</groupId>
+					<version>0.0.1-SNAPSHOT</version>
+				</dependency>
+		  		<dependency>
+						<groupId>javassist</groupId>
+						<artifactId>javassist</artifactId>
+						<version>3.8.0.GA</version>
+				</dependency>
 			
 				<dependency>
 				    <groupId>net.sf.jasperreports</groupId>

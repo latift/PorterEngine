@@ -55,6 +55,8 @@ public IkiliOzelKelimelerNatural() {
 	ikiliKelimeler.add(new DoubleWordKeyword("CLOSE","PRINTER"));
 	ikiliKelimeler.add(new DoubleWordKeyword("FETCH","RETURN"));
 	ikiliKelimeler.add(new DoubleWordKeyword("GIVING","INDEX"));
+	ikiliKelimeler.add(new DoubleWordKeyword("GIVING","LENGTH"));
+	ikiliKelimeler.add(new DoubleWordKeyword("GIVING","NUMBER"));
 	ikiliKelimeler.add(new DoubleWordKeyword("DEFINE","WINDOW"));
 	ikiliKelimeler.add(new DoubleWordKeyword("CONTROL","WINDOW"));
 	ikiliKelimeler.add(new DoubleWordKeyword("CONTROL","SCREEN"));
@@ -70,6 +72,7 @@ public IkiliOzelKelimelerNatural() {
 	ikiliKelimeler.add(new DoubleWordKeyword("USING","MAP"));
 	ikiliKelimeler.add(new DoubleWordKeyword("END","TRANSACTION"));
 	ikiliKelimeler.add(new DoubleWordKeyword("REPEAT","UNTIL"));
+	ikiliKelimeler.add(new DoubleWordKeyword("REPEAT","WHILE"));
 	ikiliKelimeler.add(new DoubleWordKeyword("DECIDE","ON"));
 	ikiliKelimeler.add(new DoubleWordKeyword("WITH","TEXT"));
 	ikiliKelimeler.add(new DoubleWordKeyword("ON","ERROR"));
@@ -81,6 +84,8 @@ public IkiliOzelKelimelerNatural() {
 	ikiliKelimeler.add(new DoubleWordKeyword("STACK","TOP"));
 	ikiliKelimeler.add(new DoubleWordKeyword("LOGICAL","DESCENDING"));
 	ikiliKelimeler.add(new DoubleWordKeyword("LOGICAL","ASCENDING"));
+	ikiliKelimeler.add(new DoubleWordKeyword("NO","ERASE"));
+	ikiliKelimeler.add(new DoubleWordKeyword("COMPUTE","ROUNDED"));
 }
 
 }

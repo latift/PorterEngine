@@ -3,13 +3,10 @@ package tr.com.vbt.java.utils;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.joda.time.LocalDate;
@@ -645,152 +642,9 @@ public class ConvertUtilities {
 		return false;
 	}
 
-	/**
-	 * MOVE EDITED JJ(EM=999) TO #TBNP(JJ)
-	 * 
-	 * @param deger
-	 * @param length
-	 * @return
-	 */
-	public static int basaSifirEkleInt(int deger, int length) {
-		StringBuffer sb = new StringBuffer(String.valueOf(deger));
-		for (int i = sb.toString().length(); i < length; i++) {
-			sb.insert(0, "0");
-		}
-		return Integer.valueOf(sb.toString());
-	}
 
 
-	public static String formatTarih(String deger) {
-		StringBuffer sb = null;
-		try {
-			sb = new StringBuffer(deger);
-			for (int i = 0 ; i < sb.toString().length(); i++) {
-				if(i==4 || i== 7)
-				sb.insert(i, "/");
-			}
 
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return sb.toString();
-	}
-
-	
-
-
-	public static String tlAyarlaStr(float deger, int virguldenSonra) {
-		String parts[] = String.valueOf(deger).split((Pattern.quote(".")));
-		int virguldenOnce = parts[0].length();
-		return tlAyarlaStr(deger, virguldenOnce, virguldenSonra);
-	}
-	public static String tlAyarlaStr(float deger, int virguldenOnce, int virguldenSonra) {
-		StringBuffer sb1 = null;
-		StringBuffer sb2 = null;
-		String parts[] = String.valueOf(deger).split((Pattern.quote(".")));
-		String virguldenOnceStr = parts[0];
-		String virguldenSonraStr = parts[1];
-
-		try {
-			if (Integer.valueOf(virguldenOnceStr) == 0) {
-				virguldenOnceStr = " ";
-				if (Integer.valueOf(virguldenSonraStr) == 0) {
-					virguldenSonraStr = " ";
-				}
-			}
-
-			sb1 = new StringBuffer(virguldenOnceStr);
-			for (int i = sb1.toString().length(); i < virguldenOnce; i++) {
-				sb1.insert(0, " ");
-			}
-			sb2 = new StringBuffer(virguldenSonraStr);
-			for (int i = sb2.toString().length(); i < virguldenSonra; i++) {
-				if (virguldenSonraStr.equals(" ")) {
-					sb2.insert(sb2.toString().length(), " ");
-				} else {
-					sb2.insert(sb2.toString().length(), "0");
-				}
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		String stringTL = "";
-		if (deger == 0) {
-			stringTL = sb1.toString() + " " + sb2.toString();
-		} else if(deger<1){
-			stringTL = sb1.toString().substring(0,sb1.length()-1) + "0." + sb2.toString();
-		}else {
-			stringTL = sb1.toString() + "." + sb2.toString();
-		}
-		return stringTL;
-	}
-
-	public static String strAyarlaStr(String deger, int karakterSayisi) {
-		if (deger == null || deger.isEmpty()) {
-			deger = "";
-		}
-		StringBuffer sb = null;
-		try {
-			sb = new StringBuffer(deger);
-			for (int i = sb.toString().length(); i < karakterSayisi; i++) {
-				sb.insert(0, " ");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return sb.toString();
-	}
-
-	public static float yuvarla(float deger) {
-		BigDecimal decimal = new BigDecimal(deger + "");
-		decimal = decimal.setScale(2, RoundingMode.HALF_UP);
-		deger = decimal.floatValue();
-		return deger;
-	}
-	
-	public static float yuvarlaAsagi(float deger) {
-		BigDecimal decimal = new BigDecimal(deger + "");
-		decimal = decimal.setScale(2, RoundingMode.HALF_DOWN);
-		deger = decimal.floatValue();
-		return deger;
-	}
-
-	public static String strSonaBoslukAt(String deger, int karakterSayisi) {
-		if (deger == null || deger.isEmpty()) {
-			deger = "";
-		}
-		StringBuffer sb = null;
-		try {
-			sb = new StringBuffer(deger);
-			for (int i = sb.toString().length(); i < karakterSayisi; i++) {
-				sb.insert(sb.toString().length(), " ");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return sb.toString();
-	}
-	
-	public static String strSonaAltTireAt(float sayi, int karakterSayisi) {
-		String deger = String.valueOf(sayi);
-		if (deger == null || deger.isEmpty()) {
-			deger = "";
-		}
-		StringBuffer sb = null;
-		try {
-			sb = new StringBuffer(deger);
-			for (int i = sb.toString().length(); i < karakterSayisi; i++) {
-				sb.insert(sb.toString().length(), "_");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return sb.toString();
-	}
-	
-	
 	public static String strSonaAltTireAt(String str, int karakterSayisi) {
 		if(str==null){
 			str="";
@@ -1125,61 +979,23 @@ public class ConvertUtilities {
 		return false;
 	}
 
-	public static String SubstringAlma(String deger, int baslangic, int sonDeger) {
-		
-		if(deger.length()<baslangic){
-			return deger;
-		}else{
-			if(sonDeger>deger.length()){
-				return deger.substring(baslangic, deger.length());
-			}else{
-				return deger.substring(baslangic,sonDeger);
-			}
-			
-		}
-		// TODO Auto-generated method stub
-	}
 
 
-	public static String srtTarihToSlash(String rawTarih){
-		if(rawTarih!=null)
-		return rawTarih.substring(0, 4) + "/" + rawTarih.substring(4,6) + "/" + rawTarih.substring(6);
-		return "";
+
+
 		
-	}
-	public static String sonaAltCizgiEkle(String str,int count){
-		if(str==null){
-			str="";
-		}
-			for(int i=str.length();i<count;i++){
-				str+="_";
-			}
-			return str;
-		}
-		
-		
-		
-	
-	public static String basaAltCizgiEkle(String str,int count){
-		if(str==null){
-			str="";
-		}
-			for(int i=str.length();i<count;i++){
-				str="_"+str;
-			}
-			return str;
-		}
-	
+
 	
  
 public static void main(String[] args) {
 	String a="19981212";
 	String b="199";
-	System.out.println(srtTarihToSlash(a));
-	System.out.println(basaAltCizgiEkle(b,5));
-	System.out.println(sonaAltCizgiEkle(b,5));
+	//System.out.println(srtTarihToSlash(a));
+	//System.out.println(basaAltCizgiEkle(b,5));
+	//System.out.println(sonaAltCizgiEkle(b,5));
 }
 
-	
+
+
 
 }

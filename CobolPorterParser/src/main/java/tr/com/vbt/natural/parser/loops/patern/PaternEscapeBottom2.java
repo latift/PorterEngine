@@ -9,6 +9,7 @@ import tr.com.vbt.patern.AbstractPattern;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.GenelTipToken;
 import tr.com.vbt.token.KarakterToken;
+import tr.com.vbt.token.KelimeToken;
 import tr.com.vbt.token.OzelKelimeToken;
 
 /**
@@ -47,6 +48,10 @@ public class PaternEscapeBottom2 extends AbstractPattern{
 		//)
 		AbstractToken astSource6=new KarakterToken(')', 0,0,0);
 		patternTokenList.add(astSource6);
+
+		AbstractToken immediate=new OzelKelimeToken("IMMEDIATE", 0, 0, 0);
+		immediate.setOptional(true);
+		patternTokenList.add(immediate);
 		
 	}
 	

@@ -1,4 +1,4 @@
-package tr.com.vbt.cobol.parser.basicverbs.patern;
+package tr.com.vbt.natural.parser.basicverbs.patern;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,7 @@ import tr.com.vbt.cobol.parser.basicverbs.ElementSubtract;
 import tr.com.vbt.lexer.ReservedCobolKeywords;
 import tr.com.vbt.patern.AbstractPattern;
 import tr.com.vbt.token.AbstractToken;
+import tr.com.vbt.token.GenelTipToken;
 import tr.com.vbt.token.KelimeToken;
 import tr.com.vbt.token.OzelKelimeToken;
 
@@ -37,10 +38,11 @@ public class PaternSubtract extends AbstractPattern{
 		
 		//SUBTRACT
 		AbstractToken astKeyword=new OzelKelimeToken("SUBTRACT", 0, 0, 0);
+		astKeyword.setSourceFieldName("FIRST_COMMAND");
 		patternTokenList.add(astKeyword);
 		
 		//A
-		AbstractToken astSource=new KelimeToken<String>();
+		AbstractToken astSource=new GenelTipToken();
 		astSource.setSourceFieldName("sourceNum");
 		patternTokenList.add(astSource);
 		
@@ -49,7 +51,7 @@ public class PaternSubtract extends AbstractPattern{
 		patternTokenList.add(astKeyword2);
 		
 		// B
-		AbstractToken astDest=new KelimeToken<String>();
+		AbstractToken astDest=new GenelTipToken<String>();
 		astDest.setTekrarlayabilir("+");
 		astDest.setSourceFieldName("destNum");
 		patternTokenList.add(astDest);
@@ -77,26 +79,26 @@ public class PaternSubtract extends AbstractPattern{
 			
 			matchedCommandAdd.getSourceNum().add(currentTokenForMatch);
 			
-			List<String> sourceList;
+			List<AbstractToken> sourceList;
 			if(matchedCommandAdd.getParameters().get("sourceNum")!=null){
-				sourceList=(List<String>) matchedCommandAdd.getParameters().get("sourceNum");
+				sourceList=(List<AbstractToken>) matchedCommandAdd.getParameters().get("sourceNum");
 			}else{
-				sourceList=new ArrayList<String>();
+				sourceList=new ArrayList<AbstractToken>();
 			}
-			sourceList.add((String) currentTokenForMatch.getDeger());
+			sourceList.add(currentTokenForMatch);
 			matchedCommandAdd.getParameters().put("sourceNum", sourceList);
 			
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("destNum")){
 			
 			matchedCommandAdd.getSourceNum().add( currentTokenForMatch);
 			
-			List<String> sourceList;
+			List<AbstractToken> sourceList;
 			if(matchedCommandAdd.getParameters().get("destNum")!=null){
-				sourceList=(List<String>) matchedCommandAdd.getParameters().get("destNum");
+				sourceList=(List<AbstractToken>) matchedCommandAdd.getParameters().get("destNum");
 			}else{
-				sourceList=new ArrayList<String>();
+				sourceList=new ArrayList<AbstractToken>();
 			}
-			sourceList.add((String) currentTokenForMatch.getDeger());
+			sourceList.add( currentTokenForMatch);
 			matchedCommandAdd.getParameters().put("destNum", sourceList);
 		}
 	}

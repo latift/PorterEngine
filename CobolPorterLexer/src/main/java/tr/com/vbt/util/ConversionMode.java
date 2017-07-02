@@ -1,9 +1,0 @@
-package tr.com.vbt.util;
-
-public enum ConversionMode {
-
-	ALL_SOURCE_CODES,
-	SOURCE_CODES_WITHOUT_GENERATED_JAVA,
-	SOURCE_CODES_WITHOUT_GENERATED_LEX
-	
-}

@@ -558,9 +558,10 @@ public class NaturalCommandList extends AbstractCommandList {
 					&& !nextCommand.getCommandName().equals(ReservedNaturalKeywords.PROGRAM_REDEFINE_GROUP)
 					&& !nextCommand.getCommandName().equals(ReservedNaturalKeywords.PROGRAM_REDEFINE_DATA_TYPE)
 					&& !nextCommand.getCommandName().equals(ReservedNaturalKeywords.PROGRAM_ARRAY_DATA_TYPE)
+					&& !nextCommand.getCommandName().equals(ReservedNaturalKeywords.PROGRAM_TWO_DIMENSION_ARRAY_DATA_TYPE)
 					&& !nextCommand.getCommandName().equals(ReservedNaturalKeywords.MU_DATA_TYPE)
 					&& !nextCommand.getCommandName().equals(ReservedNaturalKeywords.PROGRAM_ONE_DIMENSION_REDEFINE_ARRAY_OF_SIMPLE)
-					&& !nextCommand.getCommandName().equals(ReservedNaturalKeywords.PROGRAM_TWO_DIMENSION_ARRAY_DATA_TYPE)
+					&& !nextCommand.getCommandName().equals(ReservedNaturalKeywords.PROGRAM_TWO_DIMENSION_REDEFINE_ARRAY_DATA_TYPE)
 					&& !nextCommand.getCommandName().equals(ReservedNaturalKeywords.VIEW_OF)
 					&& !nextCommand.getCommandName().equals(ReservedNaturalKeywords.DB_DATA_TYPE)
 					&& !nextCommand.getCommandName().equals(ReservedNaturalKeywords.DB_REDEFINE_GROUP_DATA)
@@ -776,8 +777,18 @@ public class NaturalCommandList extends AbstractCommandList {
 			// 1) current.GroupDataType=true, --> putToBuffer
 			if (DataTypesCommandsUtility.isGroupDataType(currentCommand) && DataTypesCommandsUtility.isGroupDataType(nextCommand) && currentCommand.getLevelOfCode()==nextCommand.getLevelOfCode()) {
 				
-				currentLevelable = new ElementEndGroupDataType(ReservedCobolKeywords.END_GROUP_DATA_TYPE, "",
-						currentLevelable.getLevelNumber());
+				try {
+					if(currentLevelable==null){
+						currentLevelable = new ElementEndGroupDataType(ReservedCobolKeywords.END_GROUP_DATA_TYPE, "",
+								1);
+					}else{
+						currentLevelable = new ElementEndGroupDataType(ReservedCobolKeywords.END_GROUP_DATA_TYPE, "",
+								currentLevelable.getLevelNumber());
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				commandList.add(index+1, (AbstractCommand) currentLevelable);
 
 			}else if (DataTypesCommandsUtility.isGroupDataType(currentCommand)) {

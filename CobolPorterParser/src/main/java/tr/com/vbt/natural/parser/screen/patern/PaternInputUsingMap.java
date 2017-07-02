@@ -44,6 +44,10 @@ public class PaternInputUsingMap extends AbstractPattern{
 		astSource.setSourceFieldName("mapName");
 		patternTokenList.add(astSource);
 		
+		AbstractToken astNoErase=new OzelKelimeToken(ReservedNaturalKeywords.NO_ERASE, 0, 0, 0);
+		astNoErase.setOptional(true);
+		patternTokenList.add(astNoErase);
+		
 	}
 	
 	@Override

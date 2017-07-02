@@ -31,7 +31,7 @@ public class PaternReInput extends AbstractPattern{
 	
 	protected AbstractToken markToken;
 	
-	protected AbstractToken markValueToken;
+	protected AbstractToken markValueToken, alarmToken;
 	
 	
 	protected AbstractToken enderToken;
@@ -72,6 +72,11 @@ public class PaternReInput extends AbstractPattern{
 		markValueToken.setSourceFieldName("markValue");
 		markValueToken.setOptional(true);
 		patternTokenList.add(markValueToken);
+		
+		//ALARM
+		this.alarmToken=new OzelKelimeToken("ALARM", 0, 0, 0);
+		alarmToken.setOptional(true);
+		patternTokenList.add(alarmToken);
 		
 		
 		//Ender
@@ -175,8 +180,6 @@ public class PaternReInput extends AbstractPattern{
 				if(currentTokenForMatch.tokenMatchs(markToken)){
 					logger.info(" MATCHED: "+currentTokenForMatch.getDeger());
 					setTokenToElement(matchedCommand, currentTokenForMatch,markToken);
-					currentTokenForMatch=tokenListIterator.next();
-					matchedCommand.increaseCommandsMatchPoint();
 					break;
 				}else if(currentTokenForMatch.tokenMatchs(enderToken)){
 		
@@ -206,24 +209,34 @@ public class PaternReInput extends AbstractPattern{
 				}
 		}
 		
-		
+		currentTokenForMatch=tokenListIterator.next();
+		matchedCommand.increaseCommandsMatchPoint();
 		if(currentTokenForMatch.tokenMatchs(markValueToken)){
 			logger.info(" MATCHED: "+currentTokenForMatch.getDeger());
 			setTokenToElement(matchedCommand, currentTokenForMatch,markValueToken);
+		}else{
+			return null;
 		}
-		matchedCommand.increaseCommandsMatchPoint();
+		
+		
 		currentTokenForMatch=tokenListIterator.next();
-		return matchedCommand;
+		matchedCommand.increaseCommandsMatchPoint();
+		if(currentTokenForMatch.tokenMatchs(alarmToken)){ //Alarm optional
+			logger.info(" MATCHED: "+currentTokenForMatch.getDeger());
+			setTokenToElement(matchedCommand, currentTokenForMatch,alarmToken);
+			currentTokenForMatch=tokenListIterator.next();
+			matchedCommand.increaseCommandsMatchPoint();
+		}
+		
+	
+		if(currentTokenForMatch.tokenMatchs(enderToken)){
+			logger.info(" MATCHED: "+currentTokenForMatch.getDeger());
+			setTokenToElement(matchedCommand, currentTokenForMatch,enderToken);
+			return matchedCommand;
+		}else{
+			return null;
+		}
+		
 	}
-
-
-	
-	
-	
-
-	
-	
-	
-	
 
 }

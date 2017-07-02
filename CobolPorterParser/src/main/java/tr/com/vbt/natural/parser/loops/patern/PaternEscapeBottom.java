@@ -7,6 +7,7 @@ import tr.com.vbt.lexer.ReservedNaturalKeywords;
 import tr.com.vbt.natural.parser.loops.ElementEscapeBottom;
 import tr.com.vbt.patern.AbstractPattern;
 import tr.com.vbt.token.AbstractToken;
+import tr.com.vbt.token.KelimeToken;
 import tr.com.vbt.token.OzelKelimeToken;
 
 /**
@@ -32,6 +33,10 @@ public class PaternEscapeBottom extends AbstractPattern{
 		AbstractToken astKeyword=new OzelKelimeToken("ESCAPE_BOTTOM", 0, 0, 0);
 		astKeyword.setSourceFieldName("FIRST_COMMAND");
 		patternTokenList.add(astKeyword);
+		
+		AbstractToken immediate=new OzelKelimeToken("IMMEDIATE", 0, 0, 0);
+		immediate.setOptional(true);
+		patternTokenList.add(immediate);
 				
 		
 	}

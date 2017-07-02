@@ -17,8 +17,7 @@ public abstract class  AbsctractConditionalJavaElement extends AbstractJavaEleme
 	
 	protected List<AbstractToken> conditionList;
 	
-
-
+	protected IteratorNameManager itNameManager=new IteratorNameManager();
 	
 
 	protected void convertConditionsToFilters() {

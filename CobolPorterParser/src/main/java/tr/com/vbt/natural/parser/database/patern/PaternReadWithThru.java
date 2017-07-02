@@ -11,35 +11,25 @@ import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.lexer.ReservedCobolKeywords;
 import tr.com.vbt.lexer.ReservedNaturalKeywords;
 import tr.com.vbt.natural.parser.database.ElementReadBy;
+import tr.com.vbt.patern.AbstractPattern;
 import tr.com.vbt.patern.carriage_return.AbstractPatternFromXToYWithoutCarriageReturn;
 import tr.com.vbt.token.AbstractToken;
+import tr.com.vbt.token.GenelTipToken;
 import tr.com.vbt.token.KarakterToken;
 import tr.com.vbt.token.KelimeToken;
 import tr.com.vbt.token.OzelKelimeToken;
-import tr.com.vbt.token.SayiToken;
 import tr.com.vbt.token.TokenTipi;
 
 /**
  * 
- *  *S**READ UHM-ACILIS1 BY UHT-SCTARIH EQ #UHT-SCTRH-N
+*S**  READ ISTASYON BY S-ISTASYON-KODU=#ISTASYON-KODU-BAS
+*S**      THRU #ISTASYON-KODU-BIT THEN
  *  
- *  
- * READ  Uzunluk:0 Satir No:2 Tipi:OzelKelime
-UHM-ACILIS1  Uzunluk:0 Satir No:2 Tipi:Kelime
-BY  Uzunluk:0 Satir No:2 Tipi:OzelKelime
-UHT-SCTARIH  Uzunluk:0 Satir No:2 Tipi:Kelime
-EQ  Uzunluk:0 Satir No:2 Tipi:OzelKelime
-UHT-SCTRH-N  Uzunluk:0 Satir No:2 Tipi:Kelime
 
-private String viewName;//UHM-ACILIS1
-	
-	private String columnName; //UHT-SCTARIH
-	
-	private String columnValue; //UHT-SCTRH-N
  */
-public class PaternReadWith extends AbstractPatternFromXToYWithoutCarriageReturn {
+public class PaternReadWithThru extends AbstractPatternFromXToYWithoutCarriageReturn {
 
-	final static Logger logger = LoggerFactory.getLogger(PaternReadWith.class);
+	final static Logger logger = LoggerFactory.getLogger(PaternReadWithThru.class);
 	/**
 	 * @param args
 	 */
@@ -48,9 +38,9 @@ public class PaternReadWith extends AbstractPatternFromXToYWithoutCarriageReturn
 
 	}
 	
-	AbstractToken astViewName,astKeywordWith, astParOpen, astRecordNum, astParClose;
+	AbstractToken astViewName,astKeywordWith,astKeywordThru,astThru;
 
-	public PaternReadWith() {
+	public PaternReadWithThru() {
 		super();
 
 		// FIND
@@ -59,18 +49,6 @@ public class PaternReadWith extends AbstractPatternFromXToYWithoutCarriageReturn
 		starterToken.setSourceFieldName("FIRST_COMMAND");
 		patternTokenList.add(starterToken);
 
-		astParOpen=new KarakterToken('(', 0,0,0);
-		astParOpen.setOptional(true);
-		patternTokenList.add(astParOpen);
-		
-		astRecordNum=new SayiToken<>();
-		astRecordNum.setOptional(true);
-		patternTokenList.add(astRecordNum);
-		
-		astParClose=new KarakterToken(')', 0,0,0);
-		astParClose.setOptional(true);
-		patternTokenList.add(astParClose);
-		
 		// LIMAN
 		astViewName = new KelimeToken<String>();
 		astViewName.setSourceFieldName("viewName");
@@ -81,14 +59,24 @@ public class PaternReadWith extends AbstractPatternFromXToYWithoutCarriageReturn
 		patternTokenList.add(astKeywordWith);
 
 		//conditionList
-		midfieldToken=new KelimeToken<String>();
+		midfieldToken=new GenelTipToken();
 		midfieldToken.setTekrarlayabilir("+");
 		midfieldToken.setSourceFieldName("conditionList");
 		patternTokenList.add(midfieldToken);
 		
+		// THRU
+		astKeywordThru = new OzelKelimeToken("THRU", 0, 0, 0);
+		patternTokenList.add(astKeywordThru);
+		
+		// ISTASYON-KODU-BIT
+		astThru = new KelimeToken<String>();
+		astThru.setSourceFieldName("astThru");
+		patternTokenList.add(astThru);
+		
 		//Ender
 		enderToken=new OzelKelimeToken(ReservedCobolKeywords.THEN,0,0,0);
 		patternTokenList.add(enderToken);
+
 
 	}
 
@@ -127,6 +115,10 @@ public class PaternReadWith extends AbstractPatternFromXToYWithoutCarriageReturn
 			
 			sourceList.add(currentTokenForMatch);
 			matchedCommandAdd.getParameters().put("conditionList", sourceList);
+			
+		}else if (abstractTokenInPattern.getSourceFieldName().equals("astThru")) {
+			matchedCommandAdd.setThru(currentTokenForMatch);
+			matchedCommandAdd.getParameters().put("astThru",matchedCommandAdd.getThru());
 			
 		}
 	}
@@ -168,31 +160,13 @@ public class PaternReadWith extends AbstractPatternFromXToYWithoutCarriageReturn
 		setTokenToElement(matchedCommand, currentTokenForMatch,starterToken);
 		logger.info(" MATCHED: "+currentTokenForMatch.getDeger());
 		
-		
-		
-		// (
-		currentTokenForMatch=tokenListIterator.next();
-		matchedCommand.increaseCommandsMatchPoint();
-		if(currentTokenForMatch.tokenMatchs(astParOpen)){
-			
-			// 1
+		while(tokenListIterator.hasNext())	{ //Satir Başı bu paternlerde önemli ancak bitişte önemli başlangıçta bunu atlıyoruz.
 			currentTokenForMatch=tokenListIterator.next();
 			matchedCommand.increaseCommandsMatchPoint();
-			if(!currentTokenForMatch.tokenMatchs(astRecordNum)){
-				return null;
+			if(!currentTokenForMatch.getTip().equals(TokenTipi.SatirBasi)){
+				break;
 			}
-			
-			// )
-			currentTokenForMatch=tokenListIterator.next();
-			matchedCommand.increaseCommandsMatchPoint();
-			if(!currentTokenForMatch.tokenMatchs(astParClose)){
-				return null;
-			}
-			
-			currentTokenForMatch=tokenListIterator.next();
-			matchedCommand.increaseCommandsMatchPoint();
 		}
-		
 		
 		
 		//VIEW Name
@@ -228,12 +202,13 @@ public class PaternReadWith extends AbstractPatternFromXToYWithoutCarriageReturn
 					&&!currentTokenForMatch.getDeger().equals(ReservedCobolKeywords.IS)
 					&&!currentTokenForMatch.getDeger().equals(ReservedCobolKeywords.IS_NUMERIC)
 					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.STARTING_FROM)
+					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.ENDING_AT)
 					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.EQ)
 					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.NE)
 					&&!currentTokenForMatch.getDeger().equals(ReservedCobolKeywords.NUMERIC)){ //IFElement için eklendi
-				if(currentTokenForMatch.tokenMatchs(enderToken)){
+				if(currentTokenForMatch.tokenMatchs(astKeywordThru)){
 					logger.info(" MATCHED: "+currentTokenForMatch.getDeger());
-					return matchedCommand;
+					break;
 				}else{
 					return null;
 				}
@@ -241,13 +216,33 @@ public class PaternReadWith extends AbstractPatternFromXToYWithoutCarriageReturn
 			else if(currentTokenForMatch.getTip().equals(TokenTipi.Nokta)||currentTokenForMatch.getTip().equals(TokenTipi.SatirBasi)){
 				continue;
 			}
+			else if(currentTokenForMatch.isOzelKelime(ReservedNaturalKeywords.THRU)){
+				break;
+			}
 			else{
 					logger.info(" MATCHED"+currentTokenForMatch.getDeger());
 					matchedCommand.setSourceCodeSentence(matchedCommand.getSourceCodeSentence(),currentTokenForMatch);
 					setTokenToElement(matchedCommand, currentTokenForMatch,midfieldToken);
 				}
 		}
-		return null;
+		
+		//ISTASYON-KODU-BIT
+		currentTokenForMatch=tokenListIterator.next();
+		matchedCommand.increaseCommandsMatchPoint();
+		if(!currentTokenForMatch.tokenMatchs(astThru)){
+			return null;
+		}
+		logger.info(" MATCHED"+currentTokenForMatch.getDeger());
+		
+		//THEN
+		currentTokenForMatch=tokenListIterator.next();
+		matchedCommand.increaseCommandsMatchPoint();
+		if(!currentTokenForMatch.tokenMatchs(enderToken)){
+			return null;
+		}
+		logger.info(" MATCHED"+currentTokenForMatch.getDeger());
+		
+		return matchedCommand;
 	}
 
 }

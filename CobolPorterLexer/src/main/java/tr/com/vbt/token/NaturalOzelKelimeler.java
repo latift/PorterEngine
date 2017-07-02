@@ -45,6 +45,7 @@ public NaturalOzelKelimeler() {
 	ozelKelimeler.add("DELETE");
 	ozelKelimeler.add("REPEAT");
 	ozelKelimeler.add("UNTIL");
+	ozelKelimeler.add("WHILE");
 	
 	ozelKelimeler.add("INPUT");
 	ozelKelimeler.add("USING");
@@ -126,6 +127,8 @@ public NaturalOzelKelimeler() {
 	ozelKelimeler.add("GIVING");
 	ozelKelimeler.add("INDEX");
 	ozelKelimeler.add("WINDOW");
+	ozelKelimeler.add("LENGTH");
+	ozelKelimeler.add("IN");
 	
 	ozelKelimeler.add("BACKOUT");
 	ozelKelimeler.add("TRANSACTION");
@@ -186,6 +189,14 @@ public NaturalOzelKelimeler() {
 	ozelKelimeler.add("DOWNLOAD");
 	ozelKelimeler.add("AMPERSAND");
 	ozelKelimeler.add("STOP");
+	ozelKelimeler.add("IMMEDIATE");
+	ozelKelimeler.add("ALARM");
+	ozelKelimeler.add("NAME"); //MOVE BY NAME
+	ozelKelimeler.add("RIGHT");
+	ozelKelimeler.add("LEFT");
+	ozelKelimeler.add("JUSTIFIED");
+	ozelKelimeler.add("ROUNDED");
+	ozelKelimeler.add("SUBTRACT");
 	/*
 	ozelKelimeler.add("PF1");
 	ozelKelimeler.add("PF2");

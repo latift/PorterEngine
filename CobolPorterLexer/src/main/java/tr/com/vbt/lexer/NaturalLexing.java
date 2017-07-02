@@ -106,6 +106,8 @@ public class NaturalLexing extends AbstractLexing {
 		addThenForModeStatement(ReservedCobolKeywords.ELSE_IF);
 
 		addThenForModeStatement(ReservedNaturalKeywords.REPEAT_UNTIL);
+		
+		addThenForModeStatement(ReservedNaturalKeywords.REPEAT_WHILE);
 
 		addThenForModeStatement(ReservedNaturalKeywords.UNTIL);
 		
@@ -126,7 +128,7 @@ public class NaturalLexing extends AbstractLexing {
 		AbstractToken astCurrent, astWith;
 
 		boolean ifFound = false;
-		for (int i = 0; i < tokenListesi.size() - 1; i++) {
+		for (int i = 0; i < tokenListesi.size(); i++) {
 
 			astCurrent = tokenListesi.get(i);
 			
@@ -148,6 +150,7 @@ public class NaturalLexing extends AbstractLexing {
 							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.EQUAL)
 							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.MASK)
 							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.SUBSTR)
+							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.WITH)
 							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.THRU)
 							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.STARTING_FROM)
 							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.ENDING_AT)
@@ -440,7 +443,12 @@ public class NaturalLexing extends AbstractLexing {
 			if(astExamineReached  && (!astCurrent.getTip().equals(TokenTipi.OzelKelime) ||  
 						astCurrent.isOzelKelime(ReservedNaturalKeywords.WITH)||
 						astCurrent.isOzelKelime(ReservedNaturalKeywords.FOR)||
+						astCurrent.isOzelKelime(ReservedNaturalKeywords.GIVING)||
 						astCurrent.isOzelKelime(ReservedNaturalKeywords.GIVING_INDEX)||
+						astCurrent.isOzelKelime(ReservedNaturalKeywords.GIVING_INDEX_IN)||
+						astCurrent.isOzelKelime(ReservedNaturalKeywords.GIVING_NUMBER)||
+						astCurrent.isOzelKelime(ReservedNaturalKeywords.GIVING_LENGTH)||
+						astCurrent.isOzelKelime(ReservedNaturalKeywords.GIVING_LENGTH_IN)||
 						astCurrent.isOzelKelime(ReservedNaturalKeywords.DELETE)||
 						astCurrent.isOzelKelime(ReservedNaturalKeywords.ON))) {
 
@@ -604,70 +612,32 @@ public class NaturalLexing extends AbstractLexing {
 
 
 	private void addEnderForReInput() {
-		AbstractToken astDisplay;
-		AbstractToken displayParam;
-		AbstractToken displayEnder;
-		List<Integer> addDisplayEnderList = new ArrayList<Integer>();
-		boolean endOfTokenListReached = false;
+		
+		AbstractToken astCurrent;
+		
+		boolean astFormatReached=false;
+	
 		for (int i = 0; i < tokenListesi.size() - 1; i++) {
 
-			astDisplay = tokenListesi.get(i);
+			astCurrent = tokenListesi.get(i);
 
-			if (astDisplay.getTip().equals(TokenTipi.OzelKelime) && astDisplay.getDeger() != null
-					&& (astDisplay.getDeger().equals(ReservedNaturalKeywords.REINPUT)
-							|| astDisplay.getDeger().equals(ReservedNaturalKeywords.REINPUT_WITH))) { // REINPUT
-																										// varsa
+			if(astFormatReached  && astCurrent.isOneOfOzelKelime(ReservedNaturalKeywords.MARK,ReservedNaturalKeywords.WITH,ReservedNaturalKeywords.ALARM)) {
 
-				if (i == tokenListesi.size() - 1) {
-					endOfTokenListReached = true;
-					break;
-				}
-				i++;
-				displayParam = tokenListesi.get(i);
-
-				System.out.println(displayParam);
-				while (displayParam.getTip().equals(TokenTipi.Kelime) || displayParam.getTip().equals(TokenTipi.Array)
-						|| displayParam.getTip().equals(TokenTipi.SatirBasi)
-						|| displayParam.getTip().equals(TokenTipi.Nokta)
-						|| displayParam.getTip().equals(TokenTipi.Karakter)) {
-
-					if (i == tokenListesi.size() - 1) {
-						endOfTokenListReached = true;
-						break;
-					}
-					i++;
-					displayParam = tokenListesi.get(i);
-					System.out.println(displayParam);
-
-				}
-
-				if (endOfTokenListReached) {
-					break;
-				}
-				if (displayParam.getTip().equals(TokenTipi.OzelKelime)
-						&& displayParam.getDeger().equals(ReservedNaturalKeywords.MARK)) {
-					i = i + 2;
-				}
-				if (displayParam.getTip().equals(TokenTipi.OzelKelime)
-						&& displayParam.getDeger().equals(ReservedNaturalKeywords.WITH)) {
-					i = i + 2;
-				}
-
-				displayEnder = new OzelKelimeToken<String>(ReservedNaturalKeywords.END_REINPUT, 0, 0, 0,true);
-				tokenListesi.add(i, displayEnder);
+				continue;
+		
+			}else if(astFormatReached && astCurrent.isOzelKelime()){
+			
+				tokenListesi.add(i, new OzelKelimeToken<String>(ReservedNaturalKeywords.END_REINPUT, astCurrent.getSatirNumarasi(), 0, 0,true));
+				
+				astFormatReached=false;
+			}else if (astCurrent.isOzelKelime(ReservedNaturalKeywords.REINPUT)||astCurrent.isOzelKelime(ReservedNaturalKeywords.REINPUT_WITH)) { // DIPSLAY
+							// varsa
+			astFormatReached=true;
+			
 			}
 
 		}
 
-		/*
-		 * while(!addDisplayEnderList.isEmpty()){ displayEnder=new
-		 * OzelKelimeToken<String>(ReservedNaturalKeywords.END_REINPUT, 0,0,0);
-		 * tokenListesi.add(addDisplayEnderList.get(addDisplayEnderList.size()-1
-		 * ), displayEnder); addDisplayEnderList.remove
-		 * (addDisplayEnderList.size()-1); //RemoveLast
-		 * 
-		 * }
-		 */
 	}
 
 	private void addEnderForInput() {
@@ -1106,11 +1076,12 @@ public class NaturalLexing extends AbstractLexing {
 
 			logger.debug(current.getDeger() + " " + next.getDeger());
 			logger.debug("");
-			if ((current.getDeger() instanceof String) && (next.getDeger() instanceof String)) {
+			if ((current.getDeger() instanceof String) && (next.getDeger() instanceof String) && !current.isConstantVariableWithQuota()) {
 
 				currentDeger = (String) current.getDeger();
 				nextDeger = (String) next.getDeger();
 
+				
 				for (KeyValueOzelKelimelerNatural.KeyValueKeyword keyValueKeyword : keyValueOzelKelimeler.keyValueKeywords) {
 					if (currentDeger.equals(keyValueKeyword.getKey())) {
 
@@ -2743,6 +2714,16 @@ public class NaturalLexing extends AbstractLexing {
 				tokenListesi.remove(i + 1);
 				tokenListesi.add(i + 1, newMapToken);
 			}
+			
+			//INDEX varsa ve önceki kelimesi GIVING değilse (EXAMINE KOD(*) FOR B-GAZETE GIVING INDEX INDEX)
+			if(!previousToken.isOzelKelime(ReservedNaturalKeywords.GIVING) && curToken.isOzelKelime("INDEX")){
+				newMapToken = new KelimeToken(
+						curToken.getDeger().toString() + "_"
+								+ curToken.getDeger().toString()
+										.substring(curToken.getDeger().toString().length() - 1),
+						curToken.getSatirNumarasi(), curToken.getUzunluk() + 1, curToken.getSatirdakiTokenSirasi());
+				tokenListesi.set(i+1, newMapToken);
+			}
 		}
 
 		// onceki kelime SUBROUTINE se ve current kelime ozelKelime ise
@@ -2786,53 +2767,32 @@ public class NaturalLexing extends AbstractLexing {
 		}
 	}
 
+	
 	private void addEnderForCompute() {
-		AbstractToken astCompute;
-		AbstractToken computeParam = null;
-		AbstractToken computeEnder;
-		List<Integer> addComputeEnderList = new ArrayList<Integer>();
-		boolean endOfTokenListReached = false;
+		
+		AbstractToken astCurrent;
+		
+		boolean astFormatReached=false;
+	
 		for (int i = 0; i < tokenListesi.size() - 1; i++) {
 
-			astCompute = tokenListesi.get(i);
+			astCurrent = tokenListesi.get(i);
 
-			if (astCompute.getTip().equals(TokenTipi.OzelKelime) && astCompute.getDeger() != null
-					&& astCompute.getDeger().equals(ReservedCobolKeywords.COMPUTE)) { // DIPSLAY
-																						// varsa
-
-				if (i == tokenListesi.size() - 1) {
-					endOfTokenListReached = true;
-					break;
-				}
-
-				do {
-					i++;
-					computeParam = tokenListesi.get(i);
-
-					if (i == tokenListesi.size() - 1) {
-						endOfTokenListReached = true;
-						break;
-					}
-
-				} while (!computeParam.getTip().equals(TokenTipi.OzelKelime));
-
-				addComputeEnderList.add(i);
-				if (endOfTokenListReached) {
-					break;
-				}
-
-				i--; // Compute dan hemen sonra bir daha compute gelirse
-						// yakalamak icin.
+			if(astFormatReached && astCurrent.isOzelKelime()){
+			
+				tokenListesi.add(i, new OzelKelimeToken<String>(ReservedNaturalKeywords.END_COMPUTE, astCurrent.getSatirNumarasi(), 0, 0,true));
+				
+				astFormatReached=false;
+			}else if (astCurrent.isOzelKelime(ReservedNaturalKeywords.COMPUTE)||astCurrent.isOzelKelime(ReservedNaturalKeywords.COMPUTE_ROUNDED)) { // DIPSLAY
+							// varsa
+				astFormatReached=true;
+			
 			}
 
 		}
 
-		while (!addComputeEnderList.isEmpty()) {
-			computeEnder = new OzelKelimeToken<String>(ReservedNaturalKeywords.END_COMPUTE, computeParam.getSatirNumarasi(), 0, 0,true);
-			tokenListesi.add(addComputeEnderList.get(addComputeEnderList.size() - 1), computeEnder);
-			addComputeEnderList.remove(addComputeEnderList.size() - 1); // RemoveLast
-		}
 	}
+
 
 	private void addEnderForBecomesEqualTo() {
 
@@ -3746,6 +3706,28 @@ public class NaturalLexing extends AbstractLexing {
 																		// set
 																		// et.
 				astCurrent.setLocalVariable(true);
+			}
+		}
+		
+		
+		for (int i = 0; i < tokenListesi.size() - 2; i++) {
+
+			astCurrent = tokenListesi.get(i);
+			astNext = tokenListesi.get(i + 1);
+
+			if (i > 0) {
+				astPrevious = tokenListesi.get(i - 1);
+			}
+
+			logger.debug(astCurrent.toString());
+
+			if (astNext.isKarakter('#')
+					&& (astCurrent.isKelime())) {
+				tokenListesi.remove(i+1);
+				astCurrent.setDeger(astCurrent.getDeger()+"_DIYEZ");  // 
+				astCurrent.setLocalVariable(true);
+				astCurrent.setTip(TokenTipi.Kelime);
+				// FMM-ISN(*)
 			}
 		}
 	}

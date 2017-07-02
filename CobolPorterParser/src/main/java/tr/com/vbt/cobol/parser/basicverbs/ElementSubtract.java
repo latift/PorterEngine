@@ -14,9 +14,9 @@ import tr.com.vbt.token.AbstractToken;
  */
 public class ElementSubtract extends AbstractCommand{
 	
-	private List<String> sourceNum=new ArrayList<String>();
+	private List<AbstractToken> sourceNum=new ArrayList<AbstractToken>();
 	
-	private List<String> destNum=new ArrayList<String>();
+	private List<AbstractToken> destNum=new ArrayList<AbstractToken>();
 	
 	
 	
@@ -44,12 +44,12 @@ public class ElementSubtract extends AbstractCommand{
 		StringBuilder sb=new StringBuilder();
 		sb.append(" "+ReservedCobolKeywords.SUBTRACT +"=\"");
 		sb.append("SOURCE: ");
-		for (String src : sourceNum) {
-			sb.append(src+" ");
+		for (AbstractToken src : sourceNum) {
+			sb.append(src.getDeger()+" ");
 		}
 		sb.append("DESTINATION: ");
-		for (String src : destNum) {
-			sb.append(src+" ");
+		for (AbstractToken src : destNum) {
+			sb.append(src.getDeger()+" ");
 		}
 		sb.append("\"\n");
 		return sb.toString();
@@ -61,12 +61,12 @@ public class ElementSubtract extends AbstractCommand{
 		StringBuilder sb=new StringBuilder();
 		sb.append(" "+ReservedCobolKeywords.SUBTRACT +"=\"");
 		sb.append("SOURCE: ");
-		for (String src : sourceNum) {
-			sb.append(src+" ");
+		for (AbstractToken src : sourceNum) {
+			sb.append(src.getDeger()+" ");
 		}
 		sb.append("DESTINATION: ");
-		for (String src : destNum) {
-			sb.append(src+" ");
+		for (AbstractToken src : destNum) {
+			sb.append(src.getDeger()+" ");
 		}
 		sb.append("\"\n");
 		return sb.toString();
@@ -78,23 +78,21 @@ public class ElementSubtract extends AbstractCommand{
 				return false;
 	}
 
-	public List<String> getSourceNum() {
+	public List<AbstractToken> getSourceNum() {
 		return sourceNum;
 	}
 
-	public void setSourceNum(List<String> sourceNum) {
+	public void setSourceNum(List<AbstractToken> sourceNum) {
 		this.sourceNum = sourceNum;
 	}
 
-	public List<String> getDestNum() {
+	public List<AbstractToken> getDestNum() {
 		return destNum;
 	}
 
-	public void setDestNum(List<String> destNum) {
+	public void setDestNum(List<AbstractToken> destNum) {
 		this.destNum = destNum;
 	}
-
-	
 
 	
 }

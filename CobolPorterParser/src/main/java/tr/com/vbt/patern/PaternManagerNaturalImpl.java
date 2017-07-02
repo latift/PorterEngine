@@ -13,11 +13,16 @@ import tr.com.vbt.natural.parser.basicverbs.patern.PaternCommentEntry;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternCompress;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternCompressFull;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternCompute;
+import tr.com.vbt.natural.parser.basicverbs.patern.PaternComputeRounded;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternDelete;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternDisplay;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternDivide;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternExamineForDelete;
+import tr.com.vbt.natural.parser.basicverbs.patern.PaternExamineForGiving;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternExamineForGivingIndex;
+import tr.com.vbt.natural.parser.basicverbs.patern.PaternExamineForGivingLength;
+import tr.com.vbt.natural.parser.basicverbs.patern.PaternExamineForGivingLengthIn;
+import tr.com.vbt.natural.parser.basicverbs.patern.PaternExamineForGivingNumber;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternExamineReplaceWith;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternFetch;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternFetchReturn;
@@ -26,6 +31,9 @@ import tr.com.vbt.natural.parser.basicverbs.patern.PaternFormatWithNumber;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternInclude;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternMove;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternMoveAD;
+import tr.com.vbt.natural.parser.basicverbs.patern.PaternMoveByName;
+import tr.com.vbt.natural.parser.basicverbs.patern.PaternMoveLeftJustified;
+import tr.com.vbt.natural.parser.basicverbs.patern.PaternMoveRightJustified;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternPerform;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternRedefine;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternReset;
@@ -36,6 +44,7 @@ import tr.com.vbt.natural.parser.basicverbs.patern.PaternSetWindow;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternSlashStarComment;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternStop;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternStore;
+import tr.com.vbt.natural.parser.basicverbs.patern.PaternSubtract;
 import tr.com.vbt.natural.parser.conditions.patern.PaternAccept;
 import tr.com.vbt.natural.parser.conditions.patern.PaternAcceptIf;
 import tr.com.vbt.natural.parser.conditions.patern.PaternDecideOn;
@@ -68,6 +77,7 @@ import tr.com.vbt.natural.parser.database.patern.PaternReadBy;
 import tr.com.vbt.natural.parser.database.patern.PaternReadByLogicalDescending;
 import tr.com.vbt.natural.parser.database.patern.PaternReadByThru;
 import tr.com.vbt.natural.parser.database.patern.PaternReadWith;
+import tr.com.vbt.natural.parser.database.patern.PaternReadWithThru;
 import tr.com.vbt.natural.parser.database.patern.PaternSelect;
 import tr.com.vbt.natural.parser.enders.patern.PaternEndAtEndOfPage;
 import tr.com.vbt.natural.parser.enders.patern.PaternEndDefineData;
@@ -104,6 +114,7 @@ import tr.com.vbt.natural.parser.loops.patern.PaternNewPage;
 import tr.com.vbt.natural.parser.loops.patern.PaternNewPage2;
 import tr.com.vbt.natural.parser.loops.patern.PaternRepeat;
 import tr.com.vbt.natural.parser.loops.patern.PaternRepeatUntil;
+import tr.com.vbt.natural.parser.loops.patern.PaternRepeatWhile;
 import tr.com.vbt.natural.parser.loops.patern.PaternReturn;
 import tr.com.vbt.natural.parser.loops.patern.PaternStackCommand;
 import tr.com.vbt.natural.parser.loops.patern.PaternStackTop;
@@ -137,6 +148,7 @@ public class PaternManagerNaturalImpl  extends AbstractPaternManagerNatural{
 		super();
 		  
 		
+		commmandPatternList.add(new PaternExamineForGivingNumber());
 		
 		//General
 		commmandPatternList.add(new PaternSlashStarComment());
@@ -158,6 +170,7 @@ public class PaternManagerNaturalImpl  extends AbstractPaternManagerNatural{
 		commmandPatternList.add(new PaternBackoutTransaction());
 		commmandPatternList.add(new PaternEndOfTransaction());
 		commmandPatternList.add(new PaternCompute());
+		commmandPatternList.add(new PaternComputeRounded());
 		commmandPatternList.add(new PaternAssign());
 		commmandPatternList.add(new PaternEndTransaction());
 		commmandPatternList.add(new PaternStore());
@@ -176,11 +189,18 @@ public class PaternManagerNaturalImpl  extends AbstractPaternManagerNatural{
 		commmandPatternList.add(new PaternEndDisplay());
 		commmandPatternList.add(new PaternExamineForDelete());
 		commmandPatternList.add(new PaternExamineForGivingIndex());
+		commmandPatternList.add(new PaternExamineForGivingLength());
+		commmandPatternList.add(new PaternExamineForGivingLengthIn());
+		commmandPatternList.add(new PaternExamineForGiving());
+		commmandPatternList.add(new PaternExamineForGivingNumber());
 		commmandPatternList.add(new PaternExamineReplaceWith());
 		commmandPatternList.add(new PaternAdd());
 		commmandPatternList.add(new PaternPerform());
 		commmandPatternList.add(new PaternMove());
 		commmandPatternList.add(new PaternMoveAD()); //Ne olduğunu anlamalıyız.
+		commmandPatternList.add(new PaternMoveByName());
+		commmandPatternList.add(new PaternMoveLeftJustified());
+		commmandPatternList.add(new PaternMoveRightJustified());
 		commmandPatternList.add(new PaternReset());
 		commmandPatternList.add(new PaternFormat());
 		commmandPatternList.add(new PaternAmpersand());
@@ -204,6 +224,7 @@ public class PaternManagerNaturalImpl  extends AbstractPaternManagerNatural{
 		commmandPatternList.add(new PaternNewPage());
 		commmandPatternList.add(new PaternNewPage2());
 		commmandPatternList.add(new PaternTerminate());
+		commmandPatternList.add(new PaternSubtract());
 		
 		
 		
@@ -228,6 +249,7 @@ public class PaternManagerNaturalImpl  extends AbstractPaternManagerNatural{
 		//Loops
 		commmandPatternList.add(new PaternRepeat());
 		commmandPatternList.add(new PaternRepeatUntil());
+		commmandPatternList.add(new PaternRepeatWhile());
 		commmandPatternList.add(new PaternUntil());
 		commmandPatternList.add(new PaternEndRepeat());
 		commmandPatternList.add(new PaternEscapeTop());
@@ -277,6 +299,7 @@ public class PaternManagerNaturalImpl  extends AbstractPaternManagerNatural{
 		commmandPatternList.add(new PaternReadByThru());
 		commmandPatternList.add(new PaternReadByLogicalDescending());
 		commmandPatternList.add(new PaternReadWith());
+		commmandPatternList.add(new PaternReadWithThru());
 		commmandPatternList.add(new PaternEndRead());
 		commmandPatternList.add(new PaternFindWith());
 		commmandPatternList.add(new PaternFindOneWith());

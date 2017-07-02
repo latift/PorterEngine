@@ -55,7 +55,10 @@ public UcluOzelKelimelerNatural() {
 	ucluKelimeler.add(new TripleWordKeyword("IF","NO","RECORD"));
 	ucluKelimeler.add(new TripleWordKeyword("STACK","TOP","COMMAND"));
 	ucluKelimeler.add(new TripleWordKeyword("LEAVING","NO","SPACE"));
-	 
+	ucluKelimeler.add(new TripleWordKeyword("MOVE","BY","NAME"));
+	ucluKelimeler.add(new TripleWordKeyword("MOVE","RIGHT","JUSTIFIED"));
+	ucluKelimeler.add(new TripleWordKeyword("MOVE","LEFT","JUSTIFIED"));
+	ucluKelimeler.add(new TripleWordKeyword("GIVING","LENGTH","IN"));
 
 }
 

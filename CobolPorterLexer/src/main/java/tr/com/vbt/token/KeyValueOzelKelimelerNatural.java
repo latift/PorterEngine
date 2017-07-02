@@ -33,7 +33,7 @@ public class KeyValueOzelKelimelerNatural {
 		keyValueKeywords.add(new KeyValueKeyword("SOURCE-COMPUTER"));
 		keyValueKeywords.add(new KeyValueKeyword("OBJECT-COMPUTER"));
 		keyValueKeywords.add(new KeyValueKeyword("ASSIGN_TO"));
-		keyValueKeywords.add(new KeyValueKeyword("EXIT"));
+		//keyValueKeywords.add(new KeyValueKeyword("EXIT"));
 		keyValueKeywords.add(new KeyValueKeyword("ORGANIZATION_IS"));
 		keyValueKeywords.add(new KeyValueKeyword("ACCESS_MODE_IS"));
 		keyValueKeywords.add(new KeyValueKeyword("FILE_STATUS_IS"));

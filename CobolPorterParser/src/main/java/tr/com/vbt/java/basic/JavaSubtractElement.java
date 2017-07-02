@@ -10,6 +10,7 @@ import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaClassElement;
 import tr.com.vbt.java.general.JavaConstants;
 import tr.com.vbt.java.utils.ConvertUtilities;
+import tr.com.vbt.token.AbstractToken;
 
 
 //SUBTRACT A B FROM C D --> C=C-(A+B); D:D-(A+B);
@@ -22,26 +23,26 @@ public class JavaSubtractElement extends  AbstractJavaElement {
 	final static Logger logger = LoggerFactory.getLogger(JavaSubtractElement.class);
 	
 	
-	private List<String> sourceNum=new ArrayList<String>();
+	private List<AbstractToken> sourceNum=new ArrayList<AbstractToken>();
 	
-	private List<String> destNum=new ArrayList<String>();
+	private List<AbstractToken> destNum=new ArrayList<AbstractToken>();
 	
 	public boolean writeJavaToStream() throws Exception{ super.writeJavaToStream();
-		sourceNum=(List<String>) this.getParameters().get("sourceNum");
+		sourceNum=(List<AbstractToken>) this.getParameters().get("sourceNum");
 		
-		destNum=(List<String>) this.getParameters().get("destNum");
+		destNum=(List<AbstractToken>) this.getParameters().get("destNum");
 		
 		try{
 				String srcNumList="(";
-				for (String srcNum1 : sourceNum) {
-					srcNumList=srcNumList+srcNum1+"+";
+				for (AbstractToken srcNum1 : sourceNum) {
+					srcNumList=srcNumList+srcNum1.getDeger()+"+";
 				}
 				srcNumList=srcNumList.substring(0,srcNumList.length()-1); // Sondaki + yi kaldir.
 				srcNumList=srcNumList+")";
 				
 				 
-				for (String destNum1 : destNum) {
-					JavaClassElement.javaCodeBuffer.append(destNum1+"="+destNum1+"-"+srcNumList);
+				for (AbstractToken destNum1 : destNum) {
+					JavaClassElement.javaCodeBuffer.append(destNum1.getDeger()+"="+destNum1.getDeger()+"-"+srcNumList);
 					JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
 				}
 		} catch (Exception e) {

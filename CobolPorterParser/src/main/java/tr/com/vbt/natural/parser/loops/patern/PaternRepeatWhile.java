@@ -1,13 +1,12 @@
-package tr.com.vbt.natural.parser.conditions.patern;
+package tr.com.vbt.natural.parser.loops.patern;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
-import tr.com.vbt.lexer.ReservedCobolKeywords;
 import tr.com.vbt.lexer.ReservedNaturalKeywords;
-import tr.com.vbt.natural.parser.conditions.ElementAcceptIf;
-import tr.com.vbt.natural.parser.conditions.ElementIf;
+import tr.com.vbt.natural.parser.loops.ElementRepeatUntil;
+import tr.com.vbt.natural.parser.loops.ElementRepeatWhile;
 import tr.com.vbt.patern.carriage_return.AbstractPatternFromXToYWithoutCarriageReturn;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.KelimeToken;
@@ -16,10 +15,16 @@ import tr.com.vbt.token.OzelKelimeToken;
 /**
  *  	If:ÖzelKelime
 		Condition:
-		Then: ÖzelKelime
+		Then: ÖzelKelimes
+		
+		  REPEAT UNTIL B-L(CNT) < '0' OR B-L(CNT) > '9'
+		    ITEM := ITEM * 10  + B-N(CNT)
+		    IF ITEM > 40 THEN ESCAPE BOTTOM END-IF
+		    ADD 1 TO CNT
+		  END-REPEAT
  *
  */
-public class PaternAcceptIf extends AbstractPatternFromXToYWithoutCarriageReturn{
+public class PaternRepeatWhile extends AbstractPatternFromXToYWithoutCarriageReturn{
 
 	/**
 	 * @param args
@@ -30,11 +35,11 @@ public class PaternAcceptIf extends AbstractPatternFromXToYWithoutCarriageReturn
 	}
 	
 
-	public PaternAcceptIf() {
+	public PaternRepeatWhile() {
 		super();
 		
 		//IF
-		starterToken=new OzelKelimeToken("ACCEPT_IF", 0, 0, 0);
+		starterToken=new OzelKelimeToken("REPEAT_WHILE", 0, 0, 0);
 		starterToken.setSourceFieldName("FIRST_COMMAND");
 		starterToken.setTekrarlayabilir("+");
 		patternTokenList.add(starterToken);
@@ -47,7 +52,7 @@ public class PaternAcceptIf extends AbstractPatternFromXToYWithoutCarriageReturn
 		patternTokenList.add(midfieldToken);
 		
 		//Ender
-		enderToken=new OzelKelimeToken(ReservedCobolKeywords.THEN,0,0,0);
+		enderToken=new OzelKelimeToken(ReservedNaturalKeywords.THEN,0,0,0);
 		patternTokenList.add(enderToken);
 						
 		
@@ -55,7 +60,7 @@ public class PaternAcceptIf extends AbstractPatternFromXToYWithoutCarriageReturn
 	
 	@Override
 	public AbstractCommand createElement(){
-		ElementAcceptIf elementDisplay = new ElementAcceptIf(ReservedNaturalKeywords.ACCEPT_IF,"GENERAL.*.ACCEPT_IF");
+		ElementRepeatWhile elementDisplay = new ElementRepeatWhile(ReservedNaturalKeywords.REPEAT_WHILE,"GENERAL.*.REPEAT_WHILE");
 		return elementDisplay;
 	}
 
@@ -65,7 +70,7 @@ public class PaternAcceptIf extends AbstractPatternFromXToYWithoutCarriageReturn
 			AbstractToken currentTokenForMatch,
 			AbstractToken abstractTokenInPattern) {
 		
-		ElementAcceptIf matchedCommandAdd=(ElementAcceptIf) matchedCommand;
+		ElementRepeatWhile matchedCommandAdd=(ElementRepeatWhile) matchedCommand;
 		
 		super.setSatirNumarasi(matchedCommand,currentTokenForMatch, abstractTokenInPattern);if(abstractTokenInPattern.getSourceFieldName()==null){
 		

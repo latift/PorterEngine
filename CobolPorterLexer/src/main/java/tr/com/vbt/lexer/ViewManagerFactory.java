@@ -22,6 +22,8 @@ public class ViewManagerFactory {
 				instance = ViewManagerIKR.getInstance();
 			}else if(ConversionLogModel.getInstance().getModuleOnly().equals(THYModules.MEUCRETL.toString())){
 				instance = ViewManagerUCR.getInstance();
+			}else if(ConversionLogModel.getInstance().getModuleOnly().equals(THYModules.MEGIDER.toString())){
+				instance = ViewManagerGDR.getInstance();
 			}else{
 				logger.debug("Module Bilgisi Hatali:"+ConversionLogModel.getInstance().getModuleOnly());
 			}
