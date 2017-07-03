@@ -198,7 +198,12 @@ public class Utility {
 		
 			result.append(recordToken.getDeger().toString().replace('-', '_'));  //MAP_DIZISI
 			result.append(".");
-			result.append(recordToken.getLinkedToken().getDeger().toString().replace('-', '_')); //D_SIRA
+			try {
+				result.append(recordToken.getLinkedToken().getDeger().toString().replace('-', '_')); //D_SIRA
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			if(recordToken.getLinkedToken().getTip().equals(TokenTipi.Array)){
 				arrayToken=(ArrayToken) recordToken.getLinkedToken();
 				firstDimension=arrayToken.getFirstDimension();

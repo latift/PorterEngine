@@ -176,8 +176,11 @@ public class JavaWriteUtilities {
 	private static Object toCustomRedefinedVariableString(AbstractToken token) {
 	
 		if(token.isRedefinedVariableDimensionToSimple()){
-			
-			return token.getDeger().toString()+".getValue("+((ArrayToken)token).getFirstDimension().getDeger().toString()+"-1)";
+			if(token instanceof ArrayToken){
+				return token.getDeger().toString()+".getValue("+((ArrayToken)token).getFirstDimension().getDeger().toString()+"-1)";
+			}else{
+				return token.getDeger().toString()+".getValue("+token.getDeger().toString()+"-1)";
+			}
 				
 		}
 		return token.getDeger().toString()+".getValue()";
