@@ -1142,7 +1142,10 @@ public class NaturalCommandList extends AbstractCommandList {
 
 						redefineGroupCommandLevel2 = (ElementProgramRedefineGrupNatural) nextElement;
 
-					} else {
+					} else if(nextElement.getLevelNumber()==command.getLevelNumber()){
+						break;
+					}else {
+					
 
 						programDataTypeElement = (ElementProgramDataTypeNatural) nextElement;
 
