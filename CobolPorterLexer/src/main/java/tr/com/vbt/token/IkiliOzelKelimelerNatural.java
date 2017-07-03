@@ -2,6 +2,8 @@ package tr.com.vbt.token;
 
 import java.util.HashSet;
 
+import tr.com.vbt.lexer.ConversionLogModel;
+import tr.com.vbt.lexer.NaturalMode;
 import tr.com.vbt.token.UcluOzelKelimelerNatural.TripleWordKeyword;
 
 
@@ -77,7 +79,11 @@ public IkiliOzelKelimelerNatural() {
 	ikiliKelimeler.add(new DoubleWordKeyword("WITH","TEXT"));
 	ikiliKelimeler.add(new DoubleWordKeyword("ON","ERROR"));
 	ikiliKelimeler.add(new DoubleWordKeyword("INPUT","MAP"));
-	ikiliKelimeler.add(new DoubleWordKeyword("ELSE","IF"));
+	
+	//TODO REPORTING MODDADA GEREK DUYULMAMASI LAZIM
+	if(ConversionLogModel.getInstance().getMode().equals(NaturalMode.REPORTING)){
+		ikiliKelimeler.add(new DoubleWordKeyword("ELSE","IF"));
+	}
 	ikiliKelimeler.add(new DoubleWordKeyword("ACCEPT","IF"));
 	ikiliKelimeler.add(new DoubleWordKeyword("REJECT","IF"));
 	ikiliKelimeler.add(new DoubleWordKeyword("STACK","COMMAND"));
