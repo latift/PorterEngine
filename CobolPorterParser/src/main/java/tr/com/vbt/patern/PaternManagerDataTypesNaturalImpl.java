@@ -38,6 +38,9 @@ public class PaternManagerDataTypesNaturalImpl  extends AbstractPaternManagerNat
 	public PaternManagerDataTypesNaturalImpl() {
 		//super(); Super in cons u çalışmamalı.
 		
+		commmandPatternList.add(new PaternDBViewOfGroupNatural());
+		commmandPatternList.add(new PaternDBViewGroupNatural());
+		
 		commmandPatternList.add(new PaternCommentEntry());
 		
 		

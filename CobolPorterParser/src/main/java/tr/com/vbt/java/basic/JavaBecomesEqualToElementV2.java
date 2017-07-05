@@ -122,10 +122,10 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 		
 		DDM ddm= DDMList.getInstance().getDDM(copyTo);
 		if(ddm==null){
-			JavaClassElement.javaCodeBuffer.append("ConvertUtilities.copyArrayToPojoSubTable("
+			JavaClassElement.javaCodeBuffer.append("FrameworkConvertUtilities.copyArrayToPojoSubTable("
 				+ JavaWriteUtilities.toCustomString(copyFrom.get(0)) + "," + JavaWriteUtilities.pojosSubTablesArray(copyTo)+",\" \""+")");
 		}else{
-			JavaClassElement.javaCodeBuffer.append("ConvertUtilities.copyArrayToPojoSubTable("
+			JavaClassElement.javaCodeBuffer.append("FrameworkConvertUtilities.copyArrayToPojoSubTable("
 					+ JavaWriteUtilities.toCustomString(copyFrom.get(0)) + "," + JavaWriteUtilities.pojosSubTablesArray(copyTo)+",\""+ddm.getName()+"\""+")");
 		}
 		
@@ -137,10 +137,17 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 		
 		DDM ddm= DDMList.getInstance().getDDM(copyFrom.get(0));
 		
-		JavaClassElement.javaCodeBuffer.append("ConvertUtilities.copyPojoSubTableToArray("
+		if(ddm==null){
+		JavaClassElement.javaCodeBuffer.append("FrameworkConvertUtilities.copyPojoSubTableToArray("
 				+ JavaWriteUtilities.pojosSubTablesArray(copyFrom.get(0))
-				+",\""+ddm.getName() + "\","
+				+",\""+copyFrom.get(0) + "\","
 				+ JavaWriteUtilities.toCustomString(copyTo)+")");
+		}else{
+			JavaClassElement.javaCodeBuffer.append("FrameworkConvertUtilities.copyPojoSubTableToArray("
+					+ JavaWriteUtilities.pojosSubTablesArray(copyFrom.get(0))
+					+",\""+ddm.getName() + "\","
+					+ JavaWriteUtilities.toCustomString(copyTo)+")");
+		}
 		
 	}
 	
@@ -153,12 +160,12 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 		//dimensions=copyTo.get(0).getPojosDimension().getColumnNameToken().getDeger().toString().split(":");
 	
 		if(ddm==null){
-			JavaClassElement.javaCodeBuffer.append("ConvertUtilities.copyPojoSubTableToArray("
+			JavaClassElement.javaCodeBuffer.append("FrameworkConvertUtilities.copyPojoSubTableToArray("
 					+ JavaWriteUtilities.pojosSubTablesArray(copyFrom.get(0))
 					+",\""+copyFrom.get(0) + "\","
 					+copyTo.getDeger().toString()+")");
 		}else{
-			JavaClassElement.javaCodeBuffer.append("ConvertUtilities.copyPojoSubTableToArray("
+			JavaClassElement.javaCodeBuffer.append("FrameworkConvertUtilities.copyPojoSubTableToArray("
 					+ JavaWriteUtilities.pojosSubTablesArray(copyFrom.get(0))
 					+",\""+ddm.getName() + "\","
 					+copyTo.getDeger().toString()+")");
@@ -179,7 +186,7 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 		
 //		dimensions=copyTo.getPojosDimension().getDeger().toString().split(":");
 		if(ddm==null){
-			JavaClassElement.javaCodeBuffer.append("ConvertUtilities.copyArrayToPojoSubTable("
+			JavaClassElement.javaCodeBuffer.append("FrameworkConvertUtilities.copyArrayToPojoSubTable("
 					+ JavaWriteUtilities.toCustomString(copyFrom.get(0)) 
 					+ "," 
 					+ JavaWriteUtilities.pojosSubTablesArray(copyTo)
@@ -187,7 +194,7 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 					+copyFrom.get(0)
 					+"\")");
 		}else{
-		JavaClassElement.javaCodeBuffer.append("ConvertUtilities.copyArrayToPojoSubTable("
+		JavaClassElement.javaCodeBuffer.append("FrameworkConvertUtilities.copyArrayToPojoSubTable("
 				+ JavaWriteUtilities.toCustomString(copyFrom.get(0)) 
 				+ "," 
 				+ JavaWriteUtilities.pojosSubTablesArray(copyTo)

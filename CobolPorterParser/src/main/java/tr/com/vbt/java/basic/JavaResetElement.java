@@ -113,7 +113,7 @@ public class JavaResetElement extends  AbstractJavaElement {
 					JavaClassElement.javaCodeBuffer.append("//TODO POJO RESETLEME ARRAY VAR DİKKAT!");
 				}else{
 					
-					JavaClassElement.javaCodeBuffer.append("ConvertUtilities.resetArray("+JavaWriteUtilities.toCustomString(variable)+");");
+					JavaClassElement.javaCodeBuffer.append("FrameworkConvertUtilities.resetArray("+JavaWriteUtilities.toCustomString(variable)+");");
 				}
 
 			}

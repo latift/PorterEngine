@@ -94,19 +94,19 @@ public class TransferFromNaturalSubProgramsToJava {
 						logger.warn("**********************************************************************");
 						logger.warn("*****************************START**************************************");
 						logger.warn("**********************************************************************");
-						logger.warn("Conversion Started For File " + logModel.getFileName());
+						logger.warn("Conversion Statu: Started For File " + logModel.getFileName());
 						transferDriver = new TransferFromNaturalSubProgramsToJava();
 						MDC.put("InputFileForConversion", logModel.getFileName());
 						logModel.setClientInteracting(false);
 						transferDriver.driveTransfer(logModel);
 						transferDriver.writeDalCodes(logModel);
 						transferDriver.writeDalHibernateCodes(logModel);
-						logger.warn("Conversion Ended For File " + logModel.getFileName());
+						logger.warn("Conversion Statu: Ended For File " + logModel.getFileName());
 						logger.warn("**********************************************************************");
 						logger.warn("******************************END***************************************");
 						logger.warn("**********************************************************************");
 					} catch (Exception e) {
-						logger.warn("Conversion Aborted For File " + logModel.getFileName() + " WITH ERROR+");
+						logger.warn("Conversion Statu: Aborted For File " + logModel.getFileName() + " WITH ERROR+");
 						logger.warn("", e);
 						logger.warn("**********************************************************************");
 						logger.warn("****************************ERROR END***********************************");
@@ -124,7 +124,7 @@ public class TransferFromNaturalSubProgramsToJava {
 					logger.warn("**********************************************************************");
 					logger.warn("*****************************START**************************************");
 					logger.warn("**********************************************************************");
-					logger.warn("Conversion Started For File " + logModel.getFileName());
+					logger.warn("Conversion Statu: Started For File " + logModel.getFileName());
 					
 					i++;
 					if(args[i].equals("ClientInteracting")){
@@ -140,12 +140,12 @@ public class TransferFromNaturalSubProgramsToJava {
 					transferDriver.driveTransfer(logModel);
 					transferDriver.writeDalCodes(logModel);
 					transferDriver.writeDalHibernateCodes(logModel);
-					logger.warn("Conversion Ended For File " +logModel.getFileName());
+					logger.warn("Conversion Statu: Ended For File " +logModel.getFileName());
 					logger.warn("**********************************************************************");
 					logger.warn("******************************END***************************************");
 					logger.warn("**********************************************************************");
 				} catch (Exception e) {
-					logger.warn("Conversion Aborted For File " + logModel.getFileName() + " WITH ERROR", e);
+					logger.warn("Conversion Statu: Aborted For File " + logModel.getFileName() + " WITH ERROR", e);
 					logger.warn("**********************************************************************");
 					logger.warn("****************************ERROR END***********************************");
 					logger.warn("**********************************************************************");

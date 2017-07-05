@@ -11,15 +11,15 @@ import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.KelimeToken;
 import tr.com.vbt.token.TokenTipi;
 
-public class ViewManagerIKR extends AbtractViewManager implements ViewManager{
+public class ViewManagerImpl extends AbtractViewManager implements ViewManager{
 
-	final static Logger logger = LoggerFactory.getLogger(ViewManagerIKR.class);
+	final static Logger logger = LoggerFactory.getLogger(ViewManagerImpl.class);
 	
-	private static ViewManagerIKR instance;
+	private static ViewManagerImpl instance;
 	
-	public static ViewManagerIKR getInstance() {
+	public static ViewManagerImpl getInstance() {
 		if (instance == null) {
-			instance = new ViewManagerIKR();
+			instance = new ViewManagerImpl();
 		}
 		return instance;
 	}

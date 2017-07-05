@@ -75,7 +75,11 @@ public abstract class AbtractViewManager {
 				break;
 			}
 			
-			if(tokenListesi.get(i).isOzelKelime(ReservedNaturalKeywords.VIEW_OF) || tokenListesi.get(i).isOzelKelime(ReservedNaturalKeywords.VIEW)){
+			if(tokenListesi.get(i).isOzelKelime(ReservedNaturalKeywords.VIEW) && tokenListesi.get(i+1).isOzelKelime("OF")){
+				viewName=tokenListesi.get(i-1);
+				tableName=tokenListesi.get(i+2);
+				viewSynonymMap.put(viewName.getDeger().toString(),tableName.getDeger().toString());
+			}else if(tokenListesi.get(i).isOzelKelime(ReservedNaturalKeywords.VIEW)){
 				viewName=tokenListesi.get(i-1);
 				tableName=tokenListesi.get(i+1);
 				viewSynonymMap.put(viewName.getDeger().toString(),tableName.getDeger().toString());

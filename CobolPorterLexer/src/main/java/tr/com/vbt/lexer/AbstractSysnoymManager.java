@@ -14,7 +14,7 @@ public abstract class AbstractSysnoymManager implements SynonymManager{
 	
 	protected static Map<String, String> synonymToRealTableNameMap = new HashMap<>();
 	
-	final static Logger logger = LoggerFactory.getLogger(SysnonymManagerMEIKRAM.class);
+	final static Logger logger = LoggerFactory.getLogger(AbstractSysnoymManager.class);
 	
 	protected abstract void loadSynoymMap();
 
