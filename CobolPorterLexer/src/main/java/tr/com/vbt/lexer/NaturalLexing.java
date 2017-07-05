@@ -1577,7 +1577,7 @@ public class NaturalLexing extends AbstractLexing {
 		}
 	}
 
-	public void tokenizeSourceFile(String sourceFileFullName, String module) throws Exception {
+	public void tokenizeSourceFile(String sourceFileFullName, String module, String customer) throws Exception {
 		try {
 			InputStream inputStream = new FileInputStream(sourceFileFullName);
 			Reader inputStreamReader = new InputStreamReader(inputStream);
@@ -1722,11 +1722,11 @@ public class NaturalLexing extends AbstractLexing {
 		
 		setIncludedFiles(); //includedFiles Listesini doldurur.
 		
-		loadTableColumnReferanses(module); //Include edilen using dosyalarından columnreferans degerlerini toplayıp NaturalLExing in columnReferansına ekler.
+		loadTableColumnReferanses(customer,module); //Include edilen using dosyalarından columnreferans degerlerini toplayıp NaturalLExing in columnReferansına ekler.
 		
-		loadIncludedFields(module);  //Include edilen dosyalardaki fieldleri includedFieldList te toplar.
+		loadIncludedFields(customer,module);  //Include edilen dosyalardaki fieldleri includedFieldList te toplar.
 		
-		loadRedefinedTableColumns(module); //Include edilen using dosyalarından columnreferans degerlerini toplayıp NaturalLExing in columnReferansına ekler.
+		loadRedefinedTableColumns(customer,module); //Include edilen using dosyalarından columnreferans degerlerini toplayıp NaturalLExing in columnReferansına ekler.
 				
 		//Include filename i onune ekler.
 		addIncludeFileNameForVariablesDefinedInIncludeFile();
@@ -2217,7 +2217,7 @@ public class NaturalLexing extends AbstractLexing {
 		
 	}
 
-	private void loadIncludedFields(String module) throws Exception {
+	private void loadIncludedFields(String customer, String module) throws Exception {
 		module = module.toLowerCase();
 		module = module.replaceAll("/seperatedprograms", "");
 			Object includedFileObject;
@@ -2226,10 +2226,10 @@ public class NaturalLexing extends AbstractLexing {
 	
 				
 				try {
-					includedFileObject = Class.forName("tr.com."+module+".dal.variables.global." + fileName)
+					includedFileObject = Class.forName("tr.com."+customer+".dal.variables.global." + fileName)
 							.newInstance();
 				} catch (Exception e) {
-					includedFileObject = Class.forName("tr.com."+module+".dal.variables.local." + fileName)
+					includedFileObject = Class.forName("tr.com."+customer+".dal.variables.local." + fileName)
 							.newInstance();
 				}
 	
@@ -2247,7 +2247,7 @@ public class NaturalLexing extends AbstractLexing {
 		
 	}
 	
-	private void loadTableColumnReferanses(String module) throws Exception{
+	private void loadTableColumnReferanses(String customer, String module) throws Exception{
 		
 		module = module.toLowerCase();
 		module = module.replaceAll("/seperatedprograms", "");
@@ -2260,10 +2260,10 @@ public class NaturalLexing extends AbstractLexing {
 
 					
 				try {
-					includedFileObject = Class.forName("tr.com."+module+".dal.variables.global." + fileName)
+					includedFileObject = Class.forName("tr.com."+customer+".dal.variables.global." + fileName)
 							.newInstance();
 				} catch (Exception e) {
-					includedFileObject = Class.forName("tr.com."+module+".dal.variables.local." + fileName)
+					includedFileObject = Class.forName("tr.com."+customer+".dal.variables.local." + fileName)
 							.newInstance();
 				}
 
@@ -2281,7 +2281,7 @@ public class NaturalLexing extends AbstractLexing {
 		
 	}
 	
-	private void loadRedefinedTableColumns(String module) throws Exception{
+	private void loadRedefinedTableColumns(String customer, String module) throws Exception{
 		
 		module = module.toLowerCase();
 		
@@ -2295,10 +2295,10 @@ public class NaturalLexing extends AbstractLexing {
 
 					
 				try {
-					includedFileObject = Class.forName("tr.com."+module+".dal.variables.global." + fileName)
+					includedFileObject = Class.forName("tr.com."+customer+".dal.variables.global." + fileName)
 							.newInstance();
 				} catch (Exception e) {
-					includedFileObject = Class.forName("tr.com."+module+".dal.variables.local." + fileName)
+					includedFileObject = Class.forName("tr.com."+customer+".dal.variables.local." + fileName)
 							.newInstance();
 				}
 

@@ -269,7 +269,7 @@ public class TransferFromNaturalSubProgramsToJava {
 			conversionLogger.logConversion(logModel);
 			
 			// 1 Tokenize Source File
-			lexer.tokenizeSourceFile(logModel.getFullNaturalInputFileName(), logModel.getModule());
+			lexer.tokenizeSourceFile(logModel.getFullNaturalInputFileName(), logModel.getModule(),logModel.getCustomer());
 
 			// 1.1 Alter Midlines
 			// TODO: open below code

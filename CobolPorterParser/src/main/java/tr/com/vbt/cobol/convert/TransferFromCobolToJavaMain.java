@@ -67,7 +67,7 @@ public class TransferFromCobolToJavaMain {
 		{
 			
 			//1 Tokenize Source File
-			lexer.tokenizeSourceFile(logModel.getFullInputFileName(), logModel.getModule());
+			lexer.tokenizeSourceFile(logModel.getFullInputFileName(), logModel.getModule(),logModel.getCustomer());
 			
 			//1.1 Alter Midlines
 			//TODO: open below code

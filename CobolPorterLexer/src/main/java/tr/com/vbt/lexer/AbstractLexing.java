@@ -21,7 +21,7 @@ public abstract class AbstractLexing {
 		super();
 	}
 	
-	public abstract void tokenizeSourceFile(String sourceFileFullName, String module ) throws Exception;
+	public abstract void tokenizeSourceFile(String sourceFileFullName, String module , String customer) throws Exception;
 	
 	public abstract StringBuilder exportLexedData(String fullTokenizeFileName);
 	
