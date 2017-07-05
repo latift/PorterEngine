@@ -2226,10 +2226,10 @@ public class NaturalLexing extends AbstractLexing {
 	
 				
 				try {
-					includedFileObject = Class.forName("tr.com."+customer+".dal.variables.global." + fileName)
+					includedFileObject = Class.forName("tr.com."+customer.toLowerCase()+".dal.variables.global." + fileName)
 							.newInstance();
 				} catch (Exception e) {
-					includedFileObject = Class.forName("tr.com."+customer+".dal.variables.local." + fileName)
+					includedFileObject = Class.forName("tr.com."+customer.toLowerCase()+".dal.variables.local." + fileName)
 							.newInstance();
 				}
 	
@@ -2260,10 +2260,10 @@ public class NaturalLexing extends AbstractLexing {
 
 					
 				try {
-					includedFileObject = Class.forName("tr.com."+customer+".dal.variables.global." + fileName)
+					includedFileObject = Class.forName("tr.com."+customer.toLowerCase()+".dal.variables.global." + fileName)
 							.newInstance();
 				} catch (Exception e) {
-					includedFileObject = Class.forName("tr.com."+customer+".dal.variables.local." + fileName)
+					includedFileObject = Class.forName("tr.com."+customer.toLowerCase()+".dal.variables.local." + fileName)
 							.newInstance();
 				}
 
@@ -2295,10 +2295,10 @@ public class NaturalLexing extends AbstractLexing {
 
 					
 				try {
-					includedFileObject = Class.forName("tr.com."+customer+".dal.variables.global." + fileName)
+					includedFileObject = Class.forName("tr.com."+customer.toLowerCase()+".dal.variables.global." + fileName)
 							.newInstance();
 				} catch (Exception e) {
-					includedFileObject = Class.forName("tr.com."+customer+".dal.variables.local." + fileName)
+					includedFileObject = Class.forName("tr.com."+customer.toLowerCase()+".dal.variables.local." + fileName)
 							.newInstance();
 				}
 
