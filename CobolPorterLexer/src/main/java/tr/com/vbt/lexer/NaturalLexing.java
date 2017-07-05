@@ -1755,8 +1755,8 @@ public class NaturalLexing extends AbstractLexing {
 										// MAP_DIZISI.D_SECIM yapar ve D_SECIM
 										// in flagini işaretler
 		
+		controlDiyezToken();
 		setViewOfColumns();
-		
 		controlPojo();
 
 		setAllElementsOfPojoFlag();
@@ -1805,6 +1805,46 @@ public class NaturalLexing extends AbstractLexing {
 	}
 
 	
+	private void controlDiyezToken() {
+		// TODO Auto-generated method stub
+		AbstractToken astCurrent, astNext, astNexter, astPrevious = null, astControl;
+
+		boolean isGlobalVariable;
+
+		boolean ifFound = false;
+		for (int i = 0; i < tokenListesi.size() - 2; i++) {
+
+			astCurrent = tokenListesi.get(i);
+			astNext = tokenListesi.get(i + 1);
+
+			if (i > 0) {
+				astPrevious = tokenListesi.get(i - 1);
+			}
+
+			logger.debug(astCurrent.toString());
+
+		 // # den sonra kelime varsa # i listeden çıkar ve kelimenin local
+				// değişken özelliğini true set et.
+		 if (astCurrent.isKarakter('#') && astNext.isKarakter('#')) {
+				tokenListesi.remove(i);
+				tokenListesi.remove(i);
+				astNexter = tokenListesi.get(i);
+				astNexter.setDeger("DIYEZ_DIYEZ_" + astNexter.getDeger());
+				astNexter.setLocalVariable(true);
+				// FMM-ISN(*)
+			} else if (astCurrent.isKarakter('#')
+					&& (astNext.isKelime()|| astNext.isOzelKelime())) {
+				tokenListesi.remove(i);
+				astNext.setDeger("DIYEZ_" + astNext.getDeger());  // #DO varsa bu DO ozelkelimede olsa normal kelime olarak düsünülmeli.
+				astNext.setLocalVariable(true);
+				astNext.setTip(TokenTipi.Kelime);
+				// FMM-ISN(*)
+			}
+		}
+		
+	
+	}
+
 	private void setAmpersand() {
 		
 		AmpersandManager.operateAmpersands(tokenListesi);
