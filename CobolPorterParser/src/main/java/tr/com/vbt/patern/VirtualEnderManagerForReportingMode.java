@@ -163,7 +163,7 @@ public class VirtualEnderManagerForReportingMode {
 			}
 			
 			////	  	1.1  If ve Do görürsen buffera END-IF koy.  Mode unu IF+DO set et. LastItemMode u IF+DO set et.
-			if(curCommand.isOneOfCommands(ReservedCobolKeywords.IF,ReservedCobolKeywords.ELSE,ReservedCobolKeywords.ELSE_IF,ReservedNaturalKeywords.REJECT_IF,ReservedNaturalKeywords.ACCEPT_IF,ReservedNaturalKeywords.IF_NO_RECORDS,ReservedNaturalKeywords.IF_NO)
+			if(curCommand.isOneOfCommands(ReservedCobolKeywords.IF,ReservedCobolKeywords.ELSE,ReservedCobolKeywords.ELSE_IF,ReservedNaturalKeywords.IF_NO_RECORDS,ReservedNaturalKeywords.IF_NO)
 					&& nextCommand.commandNameEquals(ReservedNaturalKeywords.DO)){
 				currentLevel++;
 				currentMode="IF+DO";
@@ -202,7 +202,7 @@ public class VirtualEnderManagerForReportingMode {
 				
 			}
 			//		1.3  DO suz if görürsen buffera END-IF koy.
-			else if(curCommand.isOneOfCommands(ReservedCobolKeywords.IF,ReservedCobolKeywords.ELSE_IF,ReservedCobolKeywords.ELSE,ReservedNaturalKeywords.REJECT_IF,ReservedNaturalKeywords.ACCEPT_IF,ReservedNaturalKeywords.IF_NO_RECORDS,ReservedNaturalKeywords.IF_NO)
+			else if(curCommand.isOneOfCommands(ReservedCobolKeywords.IF,ReservedCobolKeywords.ELSE_IF,ReservedCobolKeywords.ELSE,ReservedNaturalKeywords.IF_NO_RECORDS,ReservedNaturalKeywords.IF_NO)
 					&& !nextCommand.commandNameEquals(ReservedNaturalKeywords.DO)){
 //				Mode unu IF set et.    LastItemMode u IF set et. Levelini kaydet.
 				currentMode="IF";
