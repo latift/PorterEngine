@@ -71,7 +71,7 @@ public class TransferFromNaturalToJavaMainAllElements {
 		argsForSubprogram[3]=args[3];
 		argsForSubprogram[4]=args[4];
 		argsForSubprogram[5]="SUBPROGRAM";
-		argsForSubprogram[6]=args[5];
+		argsForSubprogram[6]=args[5]; 
 		if(argsForSubprogram[6].equals("Folder")) {
 			
 			argsForSubprogram[7]=args[6];
