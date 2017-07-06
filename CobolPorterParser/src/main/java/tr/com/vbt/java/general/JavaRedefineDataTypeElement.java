@@ -118,7 +118,10 @@ public class JavaRedefineDataTypeElement extends AbstractJavaElement {
 					
 				redefineEndIndex= (int) this.parameters.get("redefineEndIndex");
 			} catch (Exception e) {
-				
+				dataType="A";
+				redefinedDataType="A";
+				dataName="TEST";
+				redefinedDataName="TEST";
 				logger.debug(e.getMessage(),e);
 				
 				redefineStartIndex=0;
