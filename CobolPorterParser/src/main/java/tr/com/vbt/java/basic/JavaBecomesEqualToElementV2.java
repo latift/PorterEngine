@@ -44,7 +44,7 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 	private List<AbstractToken> aritmethicOperators = new ArrayList<AbstractToken>();
 
 	public boolean writeJavaToStream() throws Exception{
-		super.writeJavaToStream();
+		super.writeJavaToStream(); 
 		try {
 			copyFrom = (List<AbstractToken>) this.parameters.get("copyFrom");
 			copyTo = (AbstractToken) this.parameters.get("FIRST_COMMAND");
