@@ -813,7 +813,12 @@ public class JavaWriteUtilities {
 			tempCodeBuffer.append("["+arrayToken.getFirstDimension().getDeger()+"-1]");
 		}
 		else{
-			tempCodeBuffer.append("["+(int)arrayToken.getFirstDimension().getDeger()+"-1]");
+			if(arrayToken.getFirstDimension().isKarakter('*')) {
+				tempCodeBuffer.append("["+arrayToken.getFirstDimension().getDeger()+"-1]");
+			}else {
+				
+				tempCodeBuffer.append("["+(int)arrayToken.getFirstDimension().getDeger()+"-1]");
+			}
 		}
 		tempCodeBuffer.append(".");
 		tempCodeBuffer.append(token.getLinkedToken().getDeger().toString()); //D_SIRA

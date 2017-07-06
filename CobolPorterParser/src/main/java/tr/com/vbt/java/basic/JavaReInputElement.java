@@ -40,9 +40,14 @@ public class JavaReInputElement extends AbstractJavaElement {
 			markValueToken = null;
 		}
 
-		for (AbstractToken item : dataToDisplay) {
+		try {
+			for (AbstractToken item : dataToDisplay) {
 
-			dataToDisplayAsStr = dataToDisplayAsStr + JavaWriteUtilities.toCustomString(item);
+				dataToDisplayAsStr = dataToDisplayAsStr + JavaWriteUtilities.toCustomString(item);
+			}
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+//			e1.printStackTrace();
 		}
 		changeDoubleQuotaToSingleQuota();
 		try {
