@@ -54,7 +54,11 @@ public class TransferFromNaturalToJavaMain {
 
 	// Latif WINDOWS MB Map Files IDGM0004
 	public static void main(String[] args) throws FileNotFoundException {
-
+		operateConversion(args);
+	}
+	
+	
+	public static void operateConversion(String[] args) throws FileNotFoundException {
 		ConversionLogModel logModel = ConversionLogModel.getInstance();
 		String convertOperationType;
 		TransferFromNaturalToJavaMain transferDriver = null;

@@ -53,6 +53,11 @@ public class TransferFromNaturalSubProgramsToJava {
 
 	// Latif WINDOWS MB Map Files IDGM0004
 	public static void main(String[] args) throws FileNotFoundException {
+		operateConversionSubPrograms(args);
+	}
+	
+	
+	public static void operateConversionSubPrograms(String[] args) throws FileNotFoundException {
 
 		ConversionLogModel logModel = ConversionLogModel.getInstance();
 		String convertOperationType;
