@@ -48,7 +48,20 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 		try {
 			copyFrom = (List<AbstractToken>) this.parameters.get("copyFrom");
 			copyTo = (AbstractToken) this.parameters.get("FIRST_COMMAND");
-
+			if(copyFrom==null ) {
+				return true;
+			}
+			if(copyFrom.get(0)==null) {
+				return true;
+			}
+			
+			if(copyTo==null) {
+				return true;
+			}
+			
+			if(copyTo.getLinkedToken()==null) {
+				return true;
+			}
 			if(copyFrom.get(0).getLinkedToken()!=null&& copyFrom.get(0).getLinkedToken().isAllArrayItems()){
 				copyFrom.get(0).setAllArrayItems(true);
 			}
