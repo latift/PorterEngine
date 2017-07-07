@@ -88,7 +88,9 @@ public class JavaInputElement extends AbstractJavaElement {
 			removeAdParameters();
 			
 			removeParantezI();
-
+			if(inputParameters==null || inputParameters.size()<3) {
+				return true;
+			}
 			for (int index = 0; index < inputParameters.size(); index++) {
 
 					currToken = inputParameters.get(index);
@@ -613,7 +615,9 @@ public class JavaInputElement extends AbstractJavaElement {
 	private void removeParantezI() {
 		
 		AbstractToken IKelimesi, parantezOpenToken,parantezCloseParameters;
-		
+		if(inputParameters==null || inputParameters.size()<3) {
+			return ;
+		}
 		for (int index = 0; index < inputParameters.size() - 2; index++) {
 			
 			parantezOpenToken=inputParameters.get(index);
@@ -640,6 +644,9 @@ public class JavaInputElement extends AbstractJavaElement {
 				noktaOrTireToken;
 
 		StringBuffer ADParameter;
+		if(inputParameters==null || inputParameters.size()<4) {
+			return ;
+		}
 		for (int index = 0; index < inputParameters.size() - 3; index++) {
 			try {
 				ADParameter = new StringBuffer();

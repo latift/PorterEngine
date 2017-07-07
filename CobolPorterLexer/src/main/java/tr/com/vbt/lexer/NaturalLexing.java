@@ -1712,6 +1712,8 @@ public class NaturalLexing extends AbstractLexing {
 		
 		setNaturalMode();
 		
+		
+		
 		setAmpersand();
 		
 		changeLastDotToEnd(); //Bazen kodu . ile bitiriyorlar. Bu durumda END ile replace ediyoruz.
@@ -1738,6 +1740,10 @@ public class NaturalLexing extends AbstractLexing {
 		// setReservedLineNumberTokens();
 
 		removeFirstFourChar();
+		//Birden fazla loop sorun çıkıyor o yüzden commentledim CEM
+//		if(ConversionLogModel.getInstance().getMode().equals(NaturalMode.REPORTING)){
+//			structureCorrection();
+//		}
 		
 		ViewManagerFactory.getInstance().setTypeNameOfViews(tokenListesi);
 		
@@ -1805,6 +1811,78 @@ public class NaturalLexing extends AbstractLexing {
 	}
 
 	
+	private void structureCorrection() {
+		// TODO Auto-generated method stub
+
+		// TODO Auto-generated method stub
+		AbstractToken astCurrent = null, astNext = null,astSecond = null,astThird,astFour;
+		List<AbstractToken> carryTokenList = null ;
+		carryTokenList = new ArrayList<AbstractToken>();
+		boolean searchOneOfToken=true;
+		boolean searchToken=false;
+		int indexOfSubroutine=0;
+		int indexTut=0;
+
+		for (int i = indexTut; i < tokenListesi.size() - 5; i++) {
+			astCurrent=tokenListesi.get(i);
+			astNext=tokenListesi.get(i+1);
+			astSecond=tokenListesi.get(i+2);
+			astThird=tokenListesi.get(i+3);
+			astFour=tokenListesi.get(i+4);
+			if(astCurrent.isOzelKelime(ReservedNaturalKeywords.SUBROUTINE) && searchOneOfToken ) {
+				
+				indexOfSubroutine=astCurrent.getSatirNumarasi();
+				searchOneOfToken=false;
+			}
+			
+			if((astCurrent.isOneOfOzelKelime("RETURN") || astCurrent.isOneOfOzelKelime(ReservedNaturalKeywords.END_SUBROUTINE) )) {
+				
+				while((!astSecond.getDeger().equals("DEFINE") || !astThird.isOzelKelime(ReservedNaturalKeywords.SUBROUTINE) ||  !astSecond.isOzelKelime(ReservedNaturalKeywords.END)) && !astFour.isKelime()) {
+					astCurrent=tokenListesi.get(i);
+					astNext=tokenListesi.get(i+1);
+					
+					i++;
+					
+					if(i>tokenListesi.size()-2) {
+						break;
+					}
+					if(astCurrent.isSatirBasi() && !searchToken ) {
+						continue;
+					}
+					
+				if(!astNext.getDeger().equals("DEFINE")) {
+						if(tokenListesi.get(i).getDeger().equals("RETURN")) {
+							
+						}else {
+							carryTokenList.add(tokenListesi.get(i));
+							
+						}
+						searchToken=true;
+					}else if(astNext.isOneOfKelime(ReservedNaturalKeywords.END)) {
+						carryTokenList.add(tokenListesi.get(i+1));
+					} else if(astNext.getDeger().equals("DEFINE")) {
+						carryTokenList.add(astNext);
+						indexTut=astCurrent.getSatirNumarasi();
+						break;
+					}
+					
+				}
+				
+			}else {
+				carryTokenList.add(tokenListesi.get(i));
+			}
+		
+		}
+		
+//		for(int index=carryTokenList.size();index>0;index--) {
+//			tokenListesi.add(index, carryTokenList.get(indexOfSubroutine));
+//		}
+		tokenListesi=carryTokenList;
+		
+	 logger.debug("GELDİ");
+	
+	}
+
 	private void controlDiyezToken() {
 		// TODO Auto-generated method stub
 		AbstractToken astCurrent, astNext, astNexter, astPrevious = null, astControl;

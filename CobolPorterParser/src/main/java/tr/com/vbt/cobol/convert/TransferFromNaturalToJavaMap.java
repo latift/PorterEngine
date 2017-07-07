@@ -47,6 +47,11 @@ public class TransferFromNaturalToJavaMap {
 
 	// Latif WINDOWS MB Map Files IDGM0004
 	public static void main(String[] args) throws FileNotFoundException {
+		operateConversionMAP(args);
+	}
+	
+	
+	public static void operateConversionMAP(String[] args) throws FileNotFoundException {
 
 		ConversionLogModel logModel = ConversionLogModel.getInstance();
 		String convertOperationType;
