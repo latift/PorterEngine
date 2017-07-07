@@ -26,6 +26,10 @@ public class AmpersandManager {
 		Line 37: *S**  +KOD2 = 'ISIM130'
 		Line 40: *S**  +KOD1 = 'ISIM230'
 		Line 41: *S**  +KOD2 = 'ISIM230'
+		
+		
+			&WITH
+	 	    &KOSUL
 	 */
 	public static void operateAmpersands(List<AbstractToken> tokenListesi) {
 
@@ -110,10 +114,22 @@ public class AmpersandManager {
 					tokenListesi.remove(i);
 					tokenListesi.remove(i);
 					tokenListesi.add(i, new KelimeToken("SICNO30", satirNo, 0, 0));
+				}else if (tokenListesi.get(i + 1).isKelime("WITH")) {
+					//*S**  +KOD2 = 'SICNO30'
+					satirNo = tokenListesi.get(i).getSatirNumarasi();
+					tokenListesi.remove(i);
+					tokenListesi.remove(i);
+					tokenListesi.add(i, new KelimeToken("ELLE_SET_ET_WITH", satirNo, 0, 0));
+				}else if (tokenListesi.get(i + 1).isKelime("KOSUL")) {
+					//*S**  +KOD2 = 'SICNO30'
+					satirNo = tokenListesi.get(i).getSatirNumarasi();
+					tokenListesi.remove(i);
+					tokenListesi.remove(i);
+					tokenListesi.add(i, new KelimeToken("ELLE_SET_ET_KOSUL", satirNo, 0, 0));
 				}
 			}
 
-			else if (tokenListesi.get(i).isKarakter('+') && tokenListesi.get(i + 1).isOneOfKelime("FIELD0","FIELD1","FIELD2","FIELD3","FIELD4","FIELD5","KOD1","KOD2")) {
+			else if (tokenListesi.get(i).isKarakter('+') && tokenListesi.get(i + 1).isOneOfKelime("FIELD0","FIELD1","FIELD2","FIELD3","FIELD4","FIELD5","KOD1","KOD2","WITH","KOSUL")) {
 				tokenListesi.remove(i);
 				
 			}
