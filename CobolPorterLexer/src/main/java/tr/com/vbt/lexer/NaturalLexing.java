@@ -1740,7 +1740,11 @@ public class NaturalLexing extends AbstractLexing {
 		// setReservedLineNumberTokens();
 
 		removeFirstFourChar();
-		structureCorrection();
+		//Birden fazla loop sorun çıkıyor o yüzden commentledim CEM
+//		if(ConversionLogModel.getInstance().getMode().equals(NaturalMode.REPORTING)){
+//			structureCorrection();
+//		}
+		
 		ViewManagerFactory.getInstance().setTypeNameOfViews(tokenListesi);
 		
 		SysnonymManagerFactory.getInstance().setSynonymsRealTableName(tokenListesi);
