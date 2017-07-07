@@ -64,13 +64,17 @@ public class JavaNaturalClassElement extends  AbstractJavaElement{
 		//import tr.com.thy.dal.meucretl.dal.pojo.*;
 		AbstractJavaElement.javaCodeBuffer.append("import tr.com.vbt.natural.html.*;"+JavaConstants.NEW_LINE);
 		AbstractJavaElement.javaCodeBuffer.append("import tr.com.thy."+module+".web.interfaces.*;"+JavaConstants.NEW_LINE);
-		AbstractJavaElement.javaCodeBuffer.append("import tr.com.vbt.util.Configuration;"+JavaConstants.NEW_LINE);
+		AbstractJavaElement.javaCodeBuffer.append("import tr.com.vbt.util.FrameworkConfiguration;"+JavaConstants.NEW_LINE);
 		AbstractJavaElement.javaCodeBuffer.append("import tr.com.vbt.java.utils.*;"+JavaConstants.NEW_LINE);
 		AbstractJavaElement.javaCodeBuffer.append("import tr.com.vbt.lexer.*;"+JavaConstants.NEW_LINE);
 		
 		AbstractJavaElement.javaCodeBuffer.append("import javax.annotation.*;"+JavaConstants.NEW_LINE);
 		AbstractJavaElement.javaCodeBuffer.append("import tr.com.thy.dal.variables.global.*;"+JavaConstants.NEW_LINE);
 		AbstractJavaElement.javaCodeBuffer.append("import tr.com.thy.dal.variables.local.*;"+JavaConstants.NEW_LINE);
+		
+		if(logModel.isSubProgram()){
+			AbstractJavaElement.javaCodeBuffer.append("import tr.com.thy."+module+".web.*;"+JavaConstants.NEW_LINE);
+		}
 		
 		
 

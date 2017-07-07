@@ -1,9 +1,12 @@
 package tr.com.vbt.lexer;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
-import tr.com.vbt.util.ConverterConfiguration;
+import tr.com.vbt.ddm.DDM;
 import tr.com.vbt.util.ConversionMode;
+import tr.com.vbt.util.ConverterConfiguration;
 
 public class ConversionLogModel {
 
@@ -42,6 +45,8 @@ public class ConversionLogModel {
 	private boolean subProgram;
 	
 	private boolean isClientInteracting;
+	
+	private Map<String, String> undefinedDDMList=new HashMap<>();
 	
 	public static ConversionLogModel getInstance() {
 		if (instance==null){
@@ -178,10 +183,11 @@ public class ConversionLogModel {
 	}
 
 	public String getFullLoadedDDMListFile() {
-		if(isProgramOrMap!=null && isProgramOrMap.equalsIgnoreCase("MAP")){
-			return folderPath+"/Map/"+"output"+"/"+"DDMList"+".txt";
-		}
 		return folderPath+"/output"+"/"+"DDMList"+".txt";
+	}
+	
+	public String getUndefinedDDMListFile() {
+		return folderPath+"/output"+"/"+"DDM_Undefined_List"+".txt";
 	}
 	
 	public String getFullDDMFolder() {
@@ -358,6 +364,25 @@ public class ConversionLogModel {
 
 	public void setFolderPathMap(String folderPathMap) {
 		this.folderPathMap = folderPathMap;
+	}
+
+	public Map<String, String> getUndefinedDDMList() {
+		return undefinedDDMList;
+	}
+
+	public void setUndefinedDDMList(Map<String, String> undefinedDDMList) {
+		this.undefinedDDMList = undefinedDDMList;
+	}
+
+	public void resetUndefinedList() {
+	
+		this.undefinedDDMList=new HashMap<>();
+	}
+
+	public String getFullModuleReportFile() {
+		
+		return folderMainPath+"/ConversionFullReport.txt";
+	
 	}
 
 

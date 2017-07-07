@@ -41,8 +41,14 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 			} else if (curToken.isFilterName()) {
 				filterName = curToken;
 				index++;
+				if(conditionList.size()==index){
+					return;
+				}
 				filterOperator = conditionList.get(index);
 				index++;
+				if(conditionList.size()==index){
+					return;
+				}
 				filterValue = conditionList.get(index);
 
 				fl = new Filter(filterName, filterOperator, filterValue);

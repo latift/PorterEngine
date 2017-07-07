@@ -12,6 +12,8 @@ import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import tr.com.vbt.cobol.parser.AbstractCommand;
+import tr.com.vbt.java.general.JavaConstants;
 import tr.com.vbt.lexer.ConversionLogModel;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.util.WriteToFile;
@@ -223,8 +225,9 @@ public class DDMList {
 		}
 		ddm=dDMMap.get(key);
 		if(ddm==null){
-			return null;
-			//throw new RuntimeException("DDM_Bulunamadı_Aranan_Key:"+key);
+			ddm=registerUndefinedDDM(key, copyTo);
+			
+			return ddm;
 		}
 		if(ddm.getFirstLevelDDM()!=null &&ddm.getFirstLevelDDM().getT().equals("G")){ //Grupsa
 			ddm.setL(ddm.getFirstLevelDDM().getL());
@@ -234,11 +237,36 @@ public class DDMList {
 		
 	}
 	
-	public DDM getDDMByKey(String key) {
+	public DDM getDDMByKey(String key,AbstractCommand command ) {
 		
 		DDM ddm;
 		
 		ddm=dDMMap.get(key);
+		
+		if(ddm==null){
+			
+			ddm=registerUndefinedDDM(key, command.getSatirNumarasi());
+			
+			return ddm;
+		}
+		
+		return ddm;
+		
+		
+	}
+	
+public DDM getDDMByKey(String key,AbstractToken curToken ) {
+		
+		DDM ddm;
+		
+		ddm=dDMMap.get(key);
+		
+		if(ddm==null){
+			
+			ddm=registerUndefinedDDM(key, curToken.getSatirNumarasi());
+			
+			return ddm;
+		}
 		
 		return ddm;
 		
@@ -257,7 +285,10 @@ public class DDMList {
 		}
 		ddm=dDMMap.get(key);
 		if(ddm==null){
-			return null;
+			
+			ddm=registerUndefinedDDM(key,copyTo);
+			
+			return ddm;
 		}
 		if(ddm.getL().equals("1")){
 			return ddm;
@@ -265,6 +296,79 @@ public class DDMList {
 		return ddm.getFirstLevelDDM();
 	}
 	
+	
+	private static DDM registerUndefinedDDM(String key, AbstractToken token) {
+		
+		return registerUndefinedDDM(key,token.getSatirNumarasi());
+
+	}
+	
+	
+	private static DDM registerUndefinedDDM(String key, int satirNumarasi) {
+		
+		String module=ConversionLogModel.getInstance().getModule();
+		
+		String programName=ConversionLogModel.getInstance().getFileName();
+		
+		String value=module+"\t\t"+programName+"\t\t"+satirNumarasi;
+		
+		ConversionLogModel.getInstance().getUndefinedDDMList().put(key, value);
+		
+		DDM ddm=new DDM("TESTDB", "TTTTT", "LLLLL", "DDDDD", "NNNNN");
+		
+		return ddm;
+	}
+	public static void writeUndefinedDDMList(){
+		
+		 	Map<String, String> undefinedDDMList=ConversionLogModel.getInstance().getUndefinedDDMList();
+			try {
+				StringBuilder sb=new StringBuilder();
+
+				for (Map.Entry<String, String> entry : undefinedDDMList.entrySet())
+				{
+					//			DDM d1 = new DDM(TableName,T,L,DB,Name);
+					if(entry.getKey().length()>40){
+						sb.append(entry.getKey() + "\t:" + entry.getValue()+"\n");
+					}else if(entry.getKey().length()>35){
+						sb.append(entry.getKey() + "\t\t:" + entry.getValue()+"\n");
+					}else if(entry.getKey().length()>30){
+						sb.append(entry.getKey() + "\t\t\t:" + entry.getValue()+"\n");
+					}else if(entry.getKey().length()>25){
+						sb.append(entry.getKey() + "\t\t\t:" + entry.getValue()+"\n");
+					}else if(entry.getKey().length()>20){
+						sb.append(entry.getKey() + "\t\t\t\t:" + entry.getValue()+"\n");
+					}else if(entry.getKey().length()>15){
+						sb.append(entry.getKey() + "\t\t\t\t\t:" + entry.getValue()+"\n");
+					}else if(entry.getKey().length()>10){
+						sb.append(entry.getKey() + "\t\t\t\t\t\t:" + entry.getValue()+"\n");
+					}else if(entry.getKey().length()>5){
+						sb.append(entry.getKey() + "\t\t\t\t\t\t\t:" + entry.getValue()+"\n");
+					}else if(entry.getKey().length()>0){
+						sb.append(entry.getKey() + "\t\t\t\t\t\t\t\t:" + entry.getValue()+"\n");
+					}
+				}
+				sb.append(JavaConstants.NEW_LINE);
+				
+				WriteToFile.writeHeaderToFile(createHeader(), ConversionLogModel.getInstance().getUndefinedDDMListFile());
+			
+				WriteToFile.appendToFile(sb.toString(),ConversionLogModel.getInstance().getUndefinedDDMListFile());
+				
+			} catch (IOException e) {
+				logger.debug(e.getMessage(),e);
+			}
+			
+			ConversionLogModel.getInstance().resetUndefinedList();
+	}
+
+	private static StringBuffer createHeader() {
+		StringBuffer header=new StringBuffer();
+		header.append("DDM								Modül			Programı		SatırNumarası");
+		header.append(JavaConstants.NEW_LINE);
+		header.append("--------------------------------------------------------------------------");
+		header.append(JavaConstants.NEW_LINE);
+		return header;
+	}
+
 	
 
 }

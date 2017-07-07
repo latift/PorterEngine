@@ -186,7 +186,7 @@ public class ConvertUtilities {
 			 else if (abstractCommand instanceof ElementDBDataTypeNatural) {
 					dbDataType = (ElementDBDataTypeNatural) abstractCommand;
 					if (dbDataType.getDataName().equals(variableDeger)) {
-						ddm = DDMList.getInstance().getDDMByKey(dbDataType.getDataName());
+						ddm = DDMList.getInstance().getDDMByKey(dbDataType.getDataName(),abstractCommand);
 						if(ddm==null|| ddm.getF()==null){
 							return "StringString";
 						}else{
@@ -432,11 +432,11 @@ public class ConvertUtilities {
 			interfaceHeader.append(JavaConstants.NEW_LINE);
 		}
 
-		interfaceHeader.append(JavaConstants.PACKAGE + " " + "tr.com.thy."+logModel.getModuleOnly().toLowerCase()+".dal.generated" + " "
+		interfaceHeader.append(JavaConstants.PACKAGE + " " + "tr.com.thy.dal."+logModel.getModuleOnly().toLowerCase()+".dal.generated" + " "
 				+ JavaConstants.DOT_WITH_COMMA + JavaConstants.NEW_LINE);
 
-		interfaceHeader.append("import tr.com.thy."+logModel.getModuleOnly().toLowerCase()+".dal.*;" + JavaConstants.NEW_LINE);
-		interfaceHeader.append("import tr.com.thy."+logModel.getModuleOnly().toLowerCase()+".dal.pojo.*;" + JavaConstants.NEW_LINE);
+		interfaceHeader.append("import tr.com.thy.dal."+logModel.getModuleOnly().toLowerCase()+".dal.*;" + JavaConstants.NEW_LINE);
+		interfaceHeader.append("import tr.com.thy.dal."+logModel.getModuleOnly().toLowerCase()+".dal.pojo.*;" + JavaConstants.NEW_LINE);
 		interfaceHeader.append("import java.util.*;" + JavaConstants.NEW_LINE);
 
 		interfaceHeader.append(JavaConstants.NEW_LINE);
@@ -467,15 +467,15 @@ public class ConvertUtilities {
 		}
 
 		// package tr.com.mb.dal.hibernate.generated;
-		implClassHeader.append(JavaConstants.PACKAGE + " " + "tr.com.thy."+logModel.getModuleOnly().toLowerCase()+".dal.hibernate.generated"
+		implClassHeader.append(JavaConstants.PACKAGE + " " + "tr.com.thy.dal."+logModel.getModuleOnly().toLowerCase()+".dal.hibernate.generated"
 				+ JavaConstants.DOT_WITH_COMMA + JavaConstants.NEW_LINE);
 
 		implClassHeader.append("import org.hibernate.Criteria;" + JavaConstants.NEW_LINE);
 		implClassHeader.append("import org.hibernate.criterion.Restrictions;" + JavaConstants.NEW_LINE);
 		implClassHeader.append("import org.springframework.stereotype.*;" + JavaConstants.NEW_LINE);
-		implClassHeader.append("import tr.com.thy."+logModel.getModuleOnly().toLowerCase()+".dal.generated.*;" + JavaConstants.NEW_LINE);
-		implClassHeader.append("import tr.com.thy."+logModel.getModuleOnly().toLowerCase()+".dal.hibernate.*;" + JavaConstants.NEW_LINE);
-		implClassHeader.append("import tr.com.thy."+logModel.getModuleOnly().toLowerCase()+".dal.pojo.*;" + JavaConstants.NEW_LINE);
+		implClassHeader.append("import tr.com.thy.dal."+logModel.getModuleOnly().toLowerCase()+".dal.generated.*;" + JavaConstants.NEW_LINE);
+		implClassHeader.append("import tr.com.thy.dal."+logModel.getModuleOnly().toLowerCase()+".dal.hibernate.*;" + JavaConstants.NEW_LINE);
+		implClassHeader.append("import tr.com.thy.dal."+logModel.getModuleOnly().toLowerCase()+".dal.pojo.*;" + JavaConstants.NEW_LINE);
 		implClassHeader.append("import java.util.*;" + JavaConstants.NEW_LINE);
 
 		// public class TAFAIZHibernateDAOGenerated extends TafaizHibernateDAO
@@ -586,21 +586,7 @@ public class ConvertUtilities {
 
 	
 
-	public static boolean compareThru(String string, int i, int j) {
-		// TODO Auto-generated method stub
-		if (string == null || string.isEmpty()) {
-			return false;
-		}
-
-		try {
-			if (Integer.valueOf(string) > i && Integer.valueOf(string) < j) {
-				return true;
-			}
-		} catch (NumberFormatException e) {
-			return false;
-		}
-		return false;
-	}
+	
 
 	public static boolean hasArrayNullOrEmtyValue(String[] array) {
 		for (int i = 0; i < array.length; i++) {
@@ -776,211 +762,7 @@ public class ConvertUtilities {
 		arrayTo=arrayFrom;
 	}
 
-	////NATURAL CODE:605   :ASSIGN TAX-EXC-DEST ( *) = SCR-EXC-DEST ( *) 
 	
-	//-->ConvertUtilities.copyArrayToArray(SCREEN.SCR_EXC_DEST,KET_TAX.getKetTaxAls(),"TAX_EXC_DEST" );
-	public static void copyArrayToPojoSubTable(String[] sourceArray, List destObjectList, String destColumn){
-
-		try {
-			Object destObject;
-			String sourceColumnSetter;
-			Method m;
-			
-			for(int i=0; i<destObjectList.size();i++){
-				
-				destObject=destObjectList.get(i);
-				
-				Class clz=destObject.getClass();
-				
-				sourceColumnSetter=Utility.viewNameToPojoSetterName(destColumn);
-				m=clz.getDeclaredMethod(sourceColumnSetter, null);
-				
-				m.invoke(destObject, sourceArray[i]);
-				
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-	
-	//-->ConvertUtilities.copyArrayToArray(SCREEN.SCR_EXC_DEST,KET_TAX.getKetTaxAls(),"TAX_EXC_DEST" );
-	public static void copyArrayToPojoSubTable(int[] sourceArray, List destObjectList, String destColumn) throws Exception{
-		String sourceColumnSetter;
-		Object destObject;
-		
-		Method m;
-		
-		for(int i=0; i<destObjectList.size();i++){
-			
-			destObject=destObjectList.get(i);
-			
-			Class clz=destObject.getClass();
-			sourceColumnSetter=Utility.viewNameToPojoSetterName(destColumn);
-			m=clz.getDeclaredMethod(sourceColumnSetter, null);
-			
-			m.invoke(destObject, sourceArray[i]);
-			
-		}
-		
-	}
-
-	public static void copyArrayToPojoSubTable(float[] sourceArray, List destObjectList, String destColumn){
-
-		try {
-			Object destObject;
-			String sourceColumnSetter;
-			Method m;
-			
-			for(int i=0; i<destObjectList.size();i++){
-				
-				destObject=destObjectList.get(i);
-				
-				Class clz=destObject.getClass();
-				sourceColumnSetter=Utility.viewNameToPojoSetterName(destColumn);
-				m=clz.getDeclaredMethod(sourceColumnSetter, null);
-				
-				m.invoke(destObject, sourceArray[i]);
-				
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-	public static void copyPojoSubTableToArray(List sourceList, String sourceColumn, int[] destArray) {
-		
-		try {
-			Object sourceObj;
-			
-			String sourceColumnGetter;
-			
-			Method columnGetterMethod;
-			
-			Object result;
-			
-			for(int i=0;i<sourceList.size();i++){
-				
-				sourceObj=sourceList.get(i);
-				
-				sourceColumnGetter=Utility.viewNameToPojoGetterName(sourceColumn);
-				
-				columnGetterMethod=sourceObj.getClass().getMethod(sourceColumnGetter,null);
-				
-				result= columnGetterMethod.invoke(sourceObj, null);
-				
-				destArray[i]=(int) result;
-				
-				
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-	
-	public static void copyPojoSubTableToArray(List sourceList, String sourceColumn, float[] destArray) {
-		
-		try {
-			Object sourceObj;
-			
-			String sourceColumnGetter;
-			
-			Method columnGetterMethod;
-			
-			Object result;
-			BigDecimal resultsValue;
-			
-			  
-			for(int i=0;i<sourceList.size();i++){
-				
-				sourceObj=sourceList.get(i);
-				
-				sourceColumnGetter=Utility.viewNameToPojoGetterName(sourceColumn);
-				
-				columnGetterMethod=sourceObj.getClass().getMethod(sourceColumnGetter,null);
-				
-				result= columnGetterMethod.invoke(sourceObj, null);
-				if(result instanceof BigDecimal){
-					resultsValue=(BigDecimal) result;
-					destArray[i]=resultsValue.intValue();
-				}else{
-					destArray[i]=(int) result;
-				}
-				
-				
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-
-	public static void copyPojoSubTableToArray(List sourceList, String sourceColumn, String[] destArray){
-		
-		try {
-			Object sourceObj;
-			
-			String sourceColumnGetter;
-			
-			Method columnGetterMethod;
-			
-			Object result;
-			
-			for(int i=0;i<sourceList.size();i++){
-				
-				sourceObj=sourceList.get(i);
-				
-				sourceColumnGetter=Utility.viewNameToPojoGetterName(sourceColumn);
-				
-				columnGetterMethod=sourceObj.getClass().getMethod(sourceColumnGetter,null);
-				
-				result= columnGetterMethod.invoke(sourceObj, null);
-				
-				destArray[i]=(String) result;
-				
-				
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-
-	public static boolean isSubArrayContains(List sourceList, String sourceColumn, String first_PI)  {
-		// TODO Auto-generated method stub
-		Object source,returnValue;
-		Method m;
-		try {
-			for(int i=0;i<sourceList.size();i++){
-				
-				source=sourceList.get(i);
-				
-				String sourceColumnGetter=Utility.viewNameToPojoGetterName(sourceColumn);
-				
-				m=source.getClass().getDeclaredMethod(sourceColumnGetter, null);
-				
-				returnValue=m.invoke(source, null);
-				if(returnValue.equals(first_PI)){
-					return true;
-				}
-				
-				
-			}
-		}catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-
-
 
 
 		

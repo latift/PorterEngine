@@ -78,6 +78,8 @@ public class TransferFromNaturalSubProgramsToJava {
 
 			for (int i = 0; i < listOfFiles.length; i++) {
 				
+				logModel.setFolderPath(ConverterConfiguration.getSubFolderPath());
+				
 				if(listOfFiles[i].getName().equals(".gitignore")){
 					continue;
 				}
@@ -99,6 +101,7 @@ public class TransferFromNaturalSubProgramsToJava {
 						MDC.put("InputFileForConversion", logModel.getFileName());
 						logModel.setClientInteracting(false);
 						transferDriver.driveTransfer(logModel);
+						logModel.setFolderPath(ConverterConfiguration.getFolderPath());
 						transferDriver.writeDalCodes(logModel);
 						transferDriver.writeDalHibernateCodes(logModel);
 						logger.warn("Conversion Statu: Ended For File " + logModel.getFileName());
@@ -120,6 +123,7 @@ public class TransferFromNaturalSubProgramsToJava {
 				try {
 					ConverterConfiguration.className = args[i];
 					logModel.setFileName(args[i]);
+					logModel.setFolderPath(ConverterConfiguration.getSubFolderPath());
 					
 					logger.warn("**********************************************************************");
 					logger.warn("*****************************START**************************************");
@@ -138,6 +142,7 @@ public class TransferFromNaturalSubProgramsToJava {
 					transferDriver = new TransferFromNaturalSubProgramsToJava();
 					MDC.put("InputFileForConversion", logModel.getFileName());
 					transferDriver.driveTransfer(logModel);
+					logModel.setFolderPath(ConverterConfiguration.getFolderPath());
 					transferDriver.writeDalCodes(logModel);
 					transferDriver.writeDalHibernateCodes(logModel);
 					logger.warn("Conversion Statu: Ended For File " +logModel.getFileName());

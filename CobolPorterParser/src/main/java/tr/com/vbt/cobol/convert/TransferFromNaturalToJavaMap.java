@@ -111,7 +111,7 @@ public class TransferFromNaturalToJavaMap {
 						logger.info("**********************************************************************");
 						logger.info("*****************************START**************************************");
 						logger.info("**********************************************************************");
-						ConverterConfiguration.className = listOfFiles[i].getName();
+						ConverterConfiguration.className = listOfFiles[i].getName().replaceAll(".txt", "");
 						logger.info("Conversion Started For File" + listOfFiles[i].getName());
 						transferDriver = new TransferFromNaturalToJavaMap();
 						MDC.put("InputFileForConversion", logModel.getFileName());

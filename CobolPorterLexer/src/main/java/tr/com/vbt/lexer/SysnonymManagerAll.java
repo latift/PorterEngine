@@ -54,6 +54,7 @@ public class SysnonymManagerAll extends AbstractSysnoymManager implements Synony
 		synonymToRealTableNameMap.put(ConverterConfiguration.DEFAULT_SCHEMA+"_TAR_UCAK",ConverterConfiguration.DEFAULT_SCHEMA+"_TAR_SEFOP");
 		synonymToRealTableNameMap.put(ConverterConfiguration.DEFAULT_SCHEMA+"_TAR_UPSEKTOR",ConverterConfiguration.DEFAULT_SCHEMA+"_TAR_SEKTOR");
 		synonymToRealTableNameMap.put(ConverterConfiguration.DEFAULT_SCHEMA+"_THY_CAT_1",ConverterConfiguration.DEFAULT_SCHEMA+"_THY_CAT");
+		synonymToRealTableNameMap.put(ConverterConfiguration.DEFAULT_SCHEMA+"_IKR_ISTASYON",ConverterConfiguration.DEFAULT_SCHEMA+"_IKR_FIRMA");
 		
 		synonymToRealTableNameMap.put("IKR_FATURA","GZT_IRSALIYE");
 		synonymToRealTableNameMap.put("IKR_FRM_ICMAL","GZT_IRSALIYE");
@@ -70,7 +71,9 @@ public class SysnonymManagerAll extends AbstractSysnoymManager implements Synony
 		synonymToRealTableNameMap.put("TAR_UCAK","TAR_SEFOP");
 		synonymToRealTableNameMap.put("TAR_UPSEKTOR","TAR_SEKTOR");
 		synonymToRealTableNameMap.put("THY_CAT_1","THY_CAT");
+		synonymToRealTableNameMap.put("IKR_ISTASYON","IKR_FIRMA");
 		
+
 	}
 
 	

@@ -11,11 +11,13 @@ import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.ddm.DDM;
 import tr.com.vbt.ddm.DDMList;
 import tr.com.vbt.java.util.Utility;
+import tr.com.vbt.lexer.ConversionLogModel;
 import tr.com.vbt.lexer.RedefinedColumn;
 import tr.com.vbt.natural.parser.datalayout.program.ElementProgramGrupNatural;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.ArrayToken;
 import tr.com.vbt.token.TokenTipi;
+import tr.com.vbt.util.WriteToFile;
 
 public class JavaWriteUtilities {
 	
@@ -424,7 +426,7 @@ public class JavaWriteUtilities {
 		
 		String key=token.getDeger().toString()+"."+token.getColumnNameToken().getRedefinedColumn().getColumn().toString();
 		
-		DDM ddm=DDMList.getInstance().getDDMByKey(key);
+		DDM ddm=DDMList.getInstance().getDDMByKey(key,token);
 		
 		if(ddm.getT().isEmpty()&& ddm.getL().equals("1")){
 			return ruleEmtpy_1_RedefinedColumn(ddm, token);
@@ -447,7 +449,7 @@ public class JavaWriteUtilities {
 		
 		String key=token.getDeger().toString()+"."+token.getColumnNameToken().getRedefinedColumn().getColumn().toString();
 		
-		DDM ddm=DDMList.getInstance().getDDMByKey(key);
+		DDM ddm=DDMList.getInstance().getDDMByKey(key,token);
 		
 		if(ddm.getT().isEmpty()&& ddm.getL().equals("1")){
 			return ruleEmtpy_1_RedefinedColumnSetter(ddm, token);
@@ -915,6 +917,7 @@ public class JavaWriteUtilities {
 		DDM ddm= DDMList.getInstance().getFirstLevelDDM(copyTo);
 		
 		if(ddm==null){
+			
 			tempCodeBuffer.append(copyTo.getDeger().toString()); //KETTAX;
 			
 			tempCodeBuffer.append(".");
@@ -937,6 +940,11 @@ public class JavaWriteUtilities {
 		return tempCodeBuffer.toString();
 		
 	}
+
+
+
+
+
 
 
 }

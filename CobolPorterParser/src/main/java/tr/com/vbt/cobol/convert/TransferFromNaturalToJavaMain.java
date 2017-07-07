@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
+import tr.com.vbt.ddm.DDMList;
 import tr.com.vbt.java.database.IteratorNameManager;
 import tr.com.vbt.java.general.JavaClassElement;
 import tr.com.vbt.java.general.JavaClassGeneral;
@@ -18,6 +19,7 @@ import tr.com.vbt.java.util.RuleNotFoundException;
 import tr.com.vbt.java.utils.ConvertUtilities;
 import tr.com.vbt.lexer.AbstractLexing;
 import tr.com.vbt.lexer.ConversionLogModel;
+import tr.com.vbt.lexer.ConversionLogReport;
 import tr.com.vbt.lexer.NaturalLexing;
 import tr.com.vbt.lexer.Phase;
 import tr.com.vbt.natural.parser.general.ElementNaturalProgram;
@@ -93,6 +95,9 @@ public class TransferFromNaturalToJavaMain {
 				if(listOfFiles[i].getName().equals(".gitignore")){
 					continue;
 				}
+				
+				ConversionLogReport.getInstance().programConversionStart();
+				
 				ConverterConfiguration.className = listOfFiles[i].getName().replaceAll(".txt", "");
 				logModel.setFileName(ConverterConfiguration.className);
 				
@@ -121,6 +126,9 @@ public class TransferFromNaturalToJavaMain {
 						logger.warn("**********************************************************************");
 						logger.warn("******************************END***************************************");
 						logger.warn("**********************************************************************");
+						
+						ConversionLogReport.getInstance().programConversionSuccess();
+						
 					} catch (Exception e) {
 						logger.warn("Conversion Statu: Aborted For File " + logModel.getFileName() + " WITH ERROR+");
 						logger.warn(e.getMessage(), e);
@@ -134,6 +142,9 @@ public class TransferFromNaturalToJavaMain {
 		} else if (convertOperationType.equals("Files")) {
 			for (int i = 7; i < args.length; i++) {
 				try {
+					
+					ConversionLogReport.getInstance().programConversionStart();
+					
 					ConverterConfiguration.className = args[i];
 					logModel.setFileName(args[i]);
 					
@@ -152,6 +163,9 @@ public class TransferFromNaturalToJavaMain {
 					logger.warn("**********************************************************************");
 					logger.warn("******************************END***************************************");
 					logger.warn("**********************************************************************");
+					
+					ConversionLogReport.getInstance().programConversionSuccess();
+					
 				} catch (Exception e) {
 					logger.warn(e.getMessage(), e);
 					logger.warn("Conversion Statu: Aborted For File " + logModel.getFileName() + " WITH ERROR", e);
@@ -526,9 +540,8 @@ public class TransferFromNaturalToJavaMain {
 			javaTreeElement.resetSourceCode();
 			IteratorNameManager.resetIteratorNameManager();
 			sb = javaTreeElement.writeJavaBaslat(logModel.getFullJavaFileName());
-
-
-
+			DDMList.getInstance().writeUndefinedDDMList();
+			
 		}
 
 	}
