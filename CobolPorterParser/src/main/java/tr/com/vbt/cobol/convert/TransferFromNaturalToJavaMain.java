@@ -18,6 +18,7 @@ import tr.com.vbt.java.general.JavaClassGeneral;
 import tr.com.vbt.java.util.RuleNotFoundException;
 import tr.com.vbt.java.utils.ConvertUtilities;
 import tr.com.vbt.lexer.AbstractLexing;
+import tr.com.vbt.lexer.ConversionFileType;
 import tr.com.vbt.lexer.ConversionLogModel;
 import tr.com.vbt.lexer.ConversionLogReport;
 import tr.com.vbt.lexer.NaturalLexing;
@@ -56,43 +57,75 @@ public class TransferFromNaturalToJavaMain {
 
 	// Latif WINDOWS MB Map Files IDGM0004
 	public static void main(String[] args) throws FileNotFoundException {
-		operateConversion(args);
-	}
-	
-	
-	public static void operateConversion(String[] args) throws FileNotFoundException {
+		ConversionLogReport.getInstance().reset();
+		
 		ConversionLogModel logModel = ConversionLogModel.getInstance();
-		String convertOperationType;
-		TransferFromNaturalToJavaMain transferDriver = null;
-
+		
 		logModel.setUser(args[0]);
 		logModel.setOPERATING_SYSTEM(args[1]);
 		logModel.setCustomer(args[2]);
 		logModel.setModule(args[3]);
 		logModel.setSchemaName(args[4]);
-		logModel.setIsProgramOrMap(args[5]);
-		convertOperationType = args[6];
-		ConverterConfiguration.customer = logModel.getCustomer();
-		ConverterConfiguration.OPERATING_SYSTEM = logModel.getOPERATING_SYSTEM();
-		logModel.setFolderPath(ConverterConfiguration.getFolderPath());
-		logModel.setFolderMainPath(ConverterConfiguration.getMainFolderPath());
-
-		if (convertOperationType.equals("Folder")) {
+		
+		
+	
+		if(args[5].equals(ConversionFileType.PROGRAM.toString())){
+			logModel.setConversionFileType(ConversionFileType.PROGRAM);
+		}else if(args[5].equals(ConversionFileType.SUBPROGRAM.toString())){
+			logModel.setConversionFileType(ConversionFileType.SUBPROGRAM);
+		}else if(args[5].equals(ConversionFileType.MAP.toString())){
+			logModel.setConversionFileType(ConversionFileType.MAP);
+		}else{
+			throw new RuntimeException("Conversion File Type Set Edilmeli: Degerler: 	PROGRAM 	SUBPROGRAM  	MAP"	);
+		}
+	
+	
+		
+		logModel.setConvertOperationType(args[6]);
+		if(logModel.getConvertOperationType().equals("Folder")){
 			
-			String conversionMode=args[7];
-			
-			if(conversionMode.equals(ConversionMode.ALL_SOURCE_CODES.toString())){
+			if(args[7].equals(ConversionMode.ALL_SOURCE_CODES.toString())){
 				logModel.setConversionMode(ConversionMode.ALL_SOURCE_CODES);
-			}else if(conversionMode.equals(ConversionMode.SOURCE_CODES_WITHOUT_GENERATED_JAVA.toString())){
+			}else if(args[7].equals(ConversionMode.SOURCE_CODES_WITHOUT_GENERATED_JAVA.toString())){
 				logModel.setConversionMode(ConversionMode.SOURCE_CODES_WITHOUT_GENERATED_JAVA);
-			}else if(conversionMode.equals(ConversionMode.SOURCE_CODES_WITHOUT_GENERATED_LEX.toString())){
+			}else if(args[7].equals(ConversionMode.SOURCE_CODES_WITHOUT_GENERATED_LEX.toString())){
 				logModel.setConversionMode(ConversionMode.SOURCE_CODES_WITHOUT_GENERATED_LEX);
 			}else{
 				throw new RuntimeException("Conversion Mode Set Edilmeli: Degerler: 	ALL_SOURCE_CODES 	SOURCE_CODES_WITHOUT_GENERATED_JAVA  	SOURCE_CODES_WITHOUT_GENERATED_LEX"	);
 			}
+		}
+		
+		operateConversion();
+		ConversionLogReport.getInstance().writeReport();
+	}
+	
+	
+	public static void operateConversion() throws FileNotFoundException {
+		ConversionLogModel logModel = ConversionLogModel.getInstance();
+		TransferFromNaturalToJavaMain transferDriver = null;
 
-			File folder = new File(ConverterConfiguration.getFolderPath());
+	
+		ConverterConfiguration.customer = logModel.getCustomer();
+		ConverterConfiguration.OPERATING_SYSTEM = logModel.getOPERATING_SYSTEM();
+		logModel.setFolderPath(ConverterConfiguration.getFolderPath());
+		logModel.setFolderMainPath(ConverterConfiguration.getMainFolderPath());
+		
+		if (logModel.getConvertOperationType().equals("Folder")) {
+			
+			File folder = null;
+			if(ConversionLogModel.getInstance().isProgram()){
+				folder = new File(ConverterConfiguration.getFolderPath());
+			}else if(ConversionLogModel.getInstance().isSubProgram()){
+				folder = new File(ConverterConfiguration.getSubFolderPath());
+			}else if(ConversionLogModel.getInstance().isMap()){
+				folder = new File(ConverterConfiguration.getFolderPathMap());
+			}
 			File[] listOfFiles = folder.listFiles();
+			
+			if(listOfFiles==null || listOfFiles.length==0){
+				logger.debug("Folder boş yada bulunamadi:"+folder.getAbsolutePath());
+				logger.debug("Folder Adı:"+folder.getName());
+			}
 
 			for (int i = 0; i < listOfFiles.length; i++) {
 				
@@ -100,7 +133,7 @@ public class TransferFromNaturalToJavaMain {
 					continue;
 				}
 				
-				ConversionLogReport.getInstance().programConversionStart();
+				ConversionLogReport.getInstance().conversionStart();
 				
 				ConverterConfiguration.className = listOfFiles[i].getName().replaceAll(".txt", "");
 				logModel.setFileName(ConverterConfiguration.className);
@@ -121,7 +154,10 @@ public class TransferFromNaturalToJavaMain {
 						logger.warn("**********************************************************************");
 						logger.warn("Conversion Statu: Started For File " + logModel.getFileName());
 						transferDriver = new TransferFromNaturalToJavaMain();
-						MDC.put("InputFileForConversion", logModel.getFileName());
+						MDC.put("customer", logModel.getCustomer());
+						MDC.put("module", logModel.getModule());
+						MDC.put("conversionFileType", logModel.getConversionFileType().toString());
+						MDC.put("fileName", logModel.getFileName());
 						logModel.setClientInteracting(true);
 						transferDriver.driveTransfer(logModel);
 						transferDriver.writeDalCodes(logModel);
@@ -131,7 +167,7 @@ public class TransferFromNaturalToJavaMain {
 						logger.warn("******************************END***************************************");
 						logger.warn("**********************************************************************");
 						
-						ConversionLogReport.getInstance().programConversionSuccess();
+						ConversionLogReport.getInstance().conversionSuccess();
 						
 					} catch (Exception e) {
 						logger.warn("Conversion Statu: Aborted For File " + logModel.getFileName() + " WITH ERROR+");
@@ -143,14 +179,14 @@ public class TransferFromNaturalToJavaMain {
 
 				}
 			}
-		} else if (convertOperationType.equals("Files")) {
-			for (int i = 7; i < args.length; i++) {
+		} else if (ConversionLogModel.getInstance().getConvertOperationType().equals("Files")) {
+			for (int i = 0; i < logModel.getFileList().size(); i++) {
 				try {
 					
-					ConversionLogReport.getInstance().programConversionStart();
+					ConversionLogReport.getInstance().conversionStart();
 					
-					ConverterConfiguration.className = args[i];
-					logModel.setFileName(args[i]);
+					ConverterConfiguration.className = ConversionLogModel.getInstance().getFileList().get(i).toString();
+					logModel.setFileName(ConverterConfiguration.className);
 					
 					logger.warn("**********************************************************************");
 					logger.warn("*****************************START**************************************");
@@ -168,7 +204,7 @@ public class TransferFromNaturalToJavaMain {
 					logger.warn("******************************END***************************************");
 					logger.warn("**********************************************************************");
 					
-					ConversionLogReport.getInstance().programConversionSuccess();
+					ConversionLogReport.getInstance().conversionSuccess();
 					
 				} catch (Exception e) {
 					logger.warn(e.getMessage(), e);

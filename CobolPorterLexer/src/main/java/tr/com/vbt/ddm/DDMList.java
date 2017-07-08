@@ -314,7 +314,7 @@ public DDM getDDMByKey(String key,AbstractToken curToken ) {
 		
 		ConversionLogModel.getInstance().getUndefinedDDMList().put(key, value);
 		
-		DDM ddm=new DDM("TESTDB", "TTTTT", "LLLLL", "DDDDD", "NNNNN");
+		DDM ddm=new DDM("XXXXX", "", "1", "XXXXX", "XXXXX");
 		
 		return ddm;
 	}

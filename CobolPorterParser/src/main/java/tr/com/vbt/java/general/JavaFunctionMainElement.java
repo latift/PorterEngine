@@ -29,13 +29,12 @@ public class JavaFunctionMainElement extends  AbstractJavaElement{
 		
 		try {
 			//AbstractJavaElement.javaCodeBuffer.append("public static void main(String[] args)"+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE);
-			if(logModel.getIsProgramOrMap().equals("MAP")){
+			if(logModel.isMap()){
 				AbstractJavaElement.javaCodeBuffer.append("public void parseMap()"+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE);
 				AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 				
 				AbstractJavaElement.javaCodeBuffer.append("TOPADEP5Impl natprog = (TOPADEP5Impl) program"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
 				AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
-				
 				
 			}else{
 				AbstractJavaElement.javaCodeBuffer.append("public void mainProgram()"+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE);
