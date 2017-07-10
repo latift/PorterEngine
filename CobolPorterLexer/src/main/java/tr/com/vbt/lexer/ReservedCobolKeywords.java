@@ -108,6 +108,7 @@ public class ReservedCobolKeywords {
 		public static String DATE_WRITTEN="DATE-WRITTEN";
 		public static String PARAGRAPH="PARAGRAPH";
 		public static String  STOP_RUN="STOP RUN";
+		public static final String RETURN = "RETURN";
 		
 		public static String DISPLAY="DISPLAY";
 		public static String  MOVE = "MOVE";
