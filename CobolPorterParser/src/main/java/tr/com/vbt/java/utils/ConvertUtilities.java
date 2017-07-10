@@ -1,14 +1,11 @@
 package tr.com.vbt.java.utils;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.math.BigDecimal;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.slf4j.Logger;
@@ -17,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.ddm.DDM;
 import tr.com.vbt.ddm.DDMList;
+import tr.com.vbt.exceptions.ConversionException;
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaClassGeneral;
 import tr.com.vbt.java.general.JavaConstants;
@@ -24,6 +22,7 @@ import tr.com.vbt.java.general.JavaGeneralVariableElement;
 import tr.com.vbt.java.general.JavaNaturalClassElement;
 import tr.com.vbt.java.util.Utility;
 import tr.com.vbt.lexer.ConversionLogModel;
+import tr.com.vbt.lexer.ConversionLogReport;
 import tr.com.vbt.natural.parser.datalayout.db.ElementDBDataTypeNatural;
 import tr.com.vbt.natural.parser.datalayout.program.ElementProgramDataTypeNatural;
 import tr.com.vbt.natural.parser.datalayout.program.ElementProgramGrupNatural;
@@ -188,7 +187,7 @@ public class ConvertUtilities {
 					if (dbDataType.getDataName().equals(variableDeger)) {
 						ddm = DDMList.getInstance().getDDMByKey(dbDataType.getDataName(),abstractCommand);
 						if(ddm==null|| ddm.getF()==null){
-							return "StringString";
+							return "String";
 						}else{
 							return ConvertUtilities.getJavaVariableType(ddm.getF(),0,0);
 						}
@@ -683,26 +682,21 @@ public class ConvertUtilities {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("\n");
-		sb.append("//Conversion Error Log: " + javaElement.getClass() + javaElement.getSourceCode().getSatirNumarasi()
-				+ javaElement.getSourceCode().getCommandName());
-		sb.append("\n");
-		sb.append(e.getMessage());
-		sb.append("\n");
-		sb.append(ExceptionUtils.getStackTrace(e));
-		sb.append("\n");
-
 		try {
 			WriteToFile.appendToFile(sb.toString(), logModel.getFullConversionErrorFileName());
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
+		ConversionLogReport.getInstance().addException(new ConversionException(e));
+		
 		if(ConverterConfiguration.STOP_ENGINE_ON_CONVERSION_ERROR){
 			logger.warn(e.getMessage(),e);
 			throw e;
 		}
 
 	}
+	
+
 
 	public static int getVariableMaxLength(AbstractToken currToken) {
 

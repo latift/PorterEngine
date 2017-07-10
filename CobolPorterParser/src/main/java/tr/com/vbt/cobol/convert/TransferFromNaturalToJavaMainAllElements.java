@@ -66,6 +66,7 @@ public class TransferFromNaturalToJavaMainAllElements {
 			}
 			ConversionLogReport.getInstance().writeReport();
 		}
+		ConversionLogReport.getInstance().writeExceptionReport();
 		
 	
 	}

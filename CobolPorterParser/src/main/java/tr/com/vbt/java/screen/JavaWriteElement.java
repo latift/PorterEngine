@@ -84,7 +84,7 @@ public class JavaWriteElement extends AbstractJavaElement {
 		AbstractToken currToken = null;
 
 		try {
-
+			
 			removeAdParameters();
 			
 			removeParantezI();

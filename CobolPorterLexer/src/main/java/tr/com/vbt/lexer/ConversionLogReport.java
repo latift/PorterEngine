@@ -2,10 +2,14 @@ package tr.com.vbt.lexer;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.Map;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import tr.com.vbt.exceptions.ConversionException;
 import tr.com.vbt.java.general.JavaConstants;
 import tr.com.vbt.util.WriteToFile;
 
@@ -36,6 +40,8 @@ public class ConversionLogReport {
 	private Date modulConversionEndTime;
 	
 	private Long toplamCevrimSuresi;
+	
+	private Map<String,ConversionException> exceptionMap=new HashedMap();
 	
 	
 	public static ConversionLogReport getInstance() {
@@ -80,6 +86,34 @@ public class ConversionLogReport {
 			sb.append("---------------------------------------------------------------------"+JavaConstants.NEW_LINE);
 			
 			return sb.toString();
+	}
+	
+	private String exceptionReport(){
+	
+		StringBuffer sb=new StringBuffer();
+		ConversionException conExc;
+		sb.append(JavaConstants.NEW_LINE);
+		sb.append("---------------------------------------------------------------------"+JavaConstants.NEW_LINE);
+		if(allConversionStartTime!=null){
+			sb.append("  Cevrim Genel Başlama Saati: "+ allConversionStartTime.toString()+JavaConstants.NEW_LINE);
+		}
+		if(allConversionEndTime!=null){
+			try {
+				sb.append("  Cevrim Genel Bitiş Saati: "+ allConversionEndTime.toString()+JavaConstants.NEW_LINE);
+			} catch (Exception e) {
+			
+			}
+		}
+		Iterator iterator = exceptionMap.entrySet().iterator();
+		
+		while (iterator.hasNext()) {
+	            Map.Entry mapEntry = (Map.Entry) iterator.next();
+	            conExc=exceptionMap.get(mapEntry.getKey().toString());
+	            sb.append(conExc.toString()+" Occurance: "+conExc.getOccurance()+JavaConstants.NEW_LINE);
+	        }
+
+		sb.append("---------------------------------------------------------------------"+JavaConstants.NEW_LINE);
+		return sb.toString();
 	}
 
 	private float getMapCevrimOrani() {
@@ -130,6 +164,19 @@ public class ConversionLogReport {
 		}
 	}
 
+
+
+	public void writeExceptionReport() {
+		ConversionLogReport.getInstance().setModulConversionEndTime(new Date());
+		try {
+			WriteToFile.appendToFile(ConversionLogReport.getInstance().exceptionReport(), ConversionLogModel.getInstance().getExceptionReportFileFullPath());
+		} catch (Exception e) {
+			
+		}
+		
+	}
+	
+	
 	public void reset() {
 		instance=null;
 		
@@ -200,6 +247,19 @@ public class ConversionLogReport {
 	public void setAllConversionEndTime(Date allConversionEndTime) {
 		this.allConversionEndTime = allConversionEndTime;
 	}
+	
+	public void addException(ConversionException e){
+		
+		ConversionException curException=exceptionMap.get(e.toString());
+		if(curException!=null){
+			curException.increaseOccurance();
+		}else{
+			e.increaseOccurance();
+			exceptionMap.put(e.toString(), e);
+		}
+	}
+
+	
 	
 	
 	

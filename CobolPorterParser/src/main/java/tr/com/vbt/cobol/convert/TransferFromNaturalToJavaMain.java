@@ -146,15 +146,13 @@ public class TransferFromNaturalToJavaMain {
 					continue;
 				}
 				
-				ConversionLogReport.getInstance().conversionStart();
-				
 				ConverterConfiguration.className = listOfFiles[i].getName().replaceAll(".txt", "");
 				logModel.setFileName(ConverterConfiguration.className);
 				
 				if (listOfFiles[i].isDirectory()){
 					continue;
 				}
-						
+				
 				if (listOfFiles[i].isFile()&& !isInConversionSet(listOfFiles[i])) {
 					logger.warn("Conversion Has Not Been Started For File " + logModel.getFileName()+" is not in conversion set!!!");
 					continue;
@@ -195,8 +193,6 @@ public class TransferFromNaturalToJavaMain {
 		} else if (ConversionLogModel.getInstance().getConvertOperationType().equals("Files")) {
 			for (int i = 0; i < logModel.getFileList().size(); i++) {
 				try {
-					
-					ConversionLogReport.getInstance().conversionStart();
 					
 					ConverterConfiguration.className = ConversionLogModel.getInstance().getFileList().get(i).toString();
 					logModel.setFileName(ConverterConfiguration.className);
@@ -380,6 +376,8 @@ public class TransferFromNaturalToJavaMain {
 																			// uzantılı
 																			// dosyayı
 																			// yaz.
+			
+			ConversionLogReport.getInstance().conversionStart();
 
 		}
 
@@ -559,7 +557,7 @@ public class TransferFromNaturalToJavaMain {
 				JavaClassGeneral.resetInstance();
 
 				
-				logModel.setPhase(Phase.PARSE_TO_SOURCE_TREE);
+				logModel.setPhase(Phase.CONVERT_NATURAL_TREE_TO_JAVA_TREE);
 				MDC.put("phase", logModel.getPhase().toString());
 				logModel.setOutput(sb);
 				conversionLogger.logConversion(logModel);
