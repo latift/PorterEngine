@@ -3,7 +3,9 @@ package tr.com.vbt.cobol.convert;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -93,6 +95,16 @@ public class TransferFromNaturalToJavaMain {
 			}else{
 				throw new RuntimeException("Conversion Mode Set Edilmeli: Degerler: 	ALL_SOURCE_CODES 	SOURCE_CODES_WITHOUT_GENERATED_JAVA  	SOURCE_CODES_WITHOUT_GENERATED_LEX"	);
 			}
+		}
+		
+		if(logModel.getConvertOperationType().equals("Files")) {
+			
+			List<String> fileList=new ArrayList<>();
+			for (int i = 7; i < args.length; i++) {
+				fileList.add(args[i]);
+			}
+			
+			logModel.setFileList(fileList);
 		}
 		
 		operateConversion();
