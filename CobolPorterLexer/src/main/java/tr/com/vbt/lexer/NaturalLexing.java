@@ -1837,7 +1837,7 @@ public class NaturalLexing extends AbstractLexing {
 			
 			if((astCurrent.isOneOfOzelKelime("RETURN") || astCurrent.isOneOfOzelKelime(ReservedNaturalKeywords.END_SUBROUTINE) )) {
 				
-				while((!astSecond.getDeger().equals("DEFINE") || !astThird.isOzelKelime(ReservedNaturalKeywords.SUBROUTINE) ||  !astSecond.isOzelKelime(ReservedNaturalKeywords.END)) && !astFour.isKelime()) {
+				while((!astSecond.getDeger().equals("DEFINE") || !astThird.isOzelKelime(ReservedNaturalKeywords.SUBROUTINE) &&  !astSecond.isOzelKelime(ReservedNaturalKeywords.END)) && !astFour.isKelime()) {
 					astCurrent=tokenListesi.get(i);
 					astNext=tokenListesi.get(i+1);
 					
