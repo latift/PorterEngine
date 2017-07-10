@@ -1,5 +1,9 @@
 package tr.com.vbt.lexer;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,14 +31,66 @@ public class SysnonymManagerAll extends AbstractSysnoymManager implements Synony
 
 	final protected void loadSynoymMap() {
 		
-		loadSynoymIkram();
+	/*	loadSynoymIkram();
 	
 		loadSynoymUcretl();
 		
 		loadSynoymPers();
 		
-		loadSynoymTps();
-			
+		loadSynoymTps();*/
+		
+		allSynonymFileRead();
+
+	}
+
+	private static void allSynonymFileRead() {
+		// TODO Auto-generated method stub
+		//String FILENAME = "C:\\CobolPorterWorkspace2\\CobolPorter\\CobolPorter\\THY\\Synonyms.txt";
+		String FILENAME = ConversionLogModel.getInstance().getFolderMainPath()+"/Synonyms.txt";
+
+		BufferedReader br = null;
+		FileReader fr = null;
+		
+			try {
+
+				fr = new FileReader(FILENAME);
+				br = new BufferedReader(fr);
+
+				String sCurrentLine;
+				
+				String synoym = null;
+				String realTable = null;
+				br = new BufferedReader(new FileReader(FILENAME));
+
+				while ((sCurrentLine = br.readLine()) != null) {
+					String[] parts=sCurrentLine.trim().split(" +");
+					synoym=parts[0];
+					realTable=parts[1].trim();
+					synonymToRealTableNameMap.put(ConverterConfiguration.DEFAULT_SCHEMA+"_"+synoym,ConverterConfiguration.DEFAULT_SCHEMA+"_"+realTable);
+					synonymToRealTableNameMap.put(synoym,realTable);
+				}
+
+			} catch (IOException e) {
+
+				e.printStackTrace();
+
+			} finally {
+
+				try {
+
+					if (br != null)
+						br.close();
+
+					if (fr != null)
+						fr.close();
+
+				} catch (IOException ex) {
+
+					ex.printStackTrace();
+
+				}
+
+			}
 
 	}
 
