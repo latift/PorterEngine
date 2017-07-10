@@ -125,6 +125,7 @@ public class TransferFromNaturalToJavaMain {
 			if(listOfFiles==null || listOfFiles.length==0){
 				logger.debug("Folder boş yada bulunamadi:"+folder.getAbsolutePath());
 				logger.debug("Folder Adı:"+folder.getName());
+				return;
 			}
 
 			for (int i = 0; i < listOfFiles.length; i++) {

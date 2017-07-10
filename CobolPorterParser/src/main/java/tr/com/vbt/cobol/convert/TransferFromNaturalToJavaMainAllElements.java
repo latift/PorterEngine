@@ -1,6 +1,7 @@
 package tr.com.vbt.cobol.convert;
 
 import java.io.FileNotFoundException;
+import java.util.Date;
 
 import tr.com.vbt.lexer.ConversionFileType;
 import tr.com.vbt.lexer.ConversionLogModel;
@@ -33,6 +34,7 @@ public class TransferFromNaturalToJavaMainAllElements {
 		
 		ModuleAndSchema moduleAndSchema;
 		
+		Date conversionGeneralStartDate=new Date();
 		for(int i=3; i<args.length;i++){
 			
 			logModel.getModuleList().add(new ModuleAndSchema(args[i],args[i+1]));
@@ -42,10 +44,11 @@ public class TransferFromNaturalToJavaMainAllElements {
 		TransferFromNaturalToJavaMain  fromNaturalToJavaMain;
 		for(int i=0; i<logModel.getModuleList().size();i++){
 		
-			ConversionLogReport.getInstance().reset();
-			
 			logModel.setModule(logModel.getModuleList().get(i).getModule());
 			logModel.setSchemaName(logModel.getModuleList().get(i).getSchema());
+			
+			ConversionLogReport.getInstance().reset();
+			ConversionLogReport.getInstance().setAllConversionStartTime(conversionGeneralStartDate);
 			
 			fromNaturalToJavaMain=new  TransferFromNaturalToJavaMain();
 			logModel.setConversionFileType(ConversionFileType.PROGRAM);
@@ -57,6 +60,10 @@ public class TransferFromNaturalToJavaMainAllElements {
 			logModel.setConversionFileType(ConversionFileType.MAP);
 			fromNaturalToJavaMain.operateConversion();
 	
+			ConversionLogReport.getInstance().setModulConversionEndTime(new Date());
+			if(i==logModel.getModuleList().size()-1){
+				ConversionLogReport.getInstance().setAllConversionEndTime(new Date());
+			}
 			ConversionLogReport.getInstance().writeReport();
 		}
 		

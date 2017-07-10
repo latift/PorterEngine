@@ -27,6 +27,17 @@ public class ConversionLogReport {
 	
 	private int convertedMapCount;
 	
+	private Date allConversionStartTime;
+	
+	private Date allConversionEndTime;
+	
+	private Date modulConversionStartTime=new Date();
+	
+	private Date modulConversionEndTime;
+	
+	private Long toplamCevrimSuresi;
+	
+	
 	public static ConversionLogReport getInstance() {
 		if (instance==null){
 			instance=new ConversionLogReport();
@@ -37,14 +48,38 @@ public class ConversionLogReport {
 
 	@Override
 	public String toString() {
-		return  "------------------------------------------------------------------------------"+JavaConstants.NEW_LINE+
-				"  Cevrim: Tarihi "+ new Date().toString()+JavaConstants.NEW_LINE+
-				"  Module: "+ ConversionLogModel.getInstance().getModule()+"   Mode:"+ConversionLogModel.getInstance().getMode()+JavaConstants.NEW_LINE+
-				"  Program Sayısı: "+this.programCount+"  Çevrilen:"+this.convertedProgramCount+"  Program Çevrim Oranı:"+getProgramCevrimOrani()+JavaConstants.NEW_LINE+
-				"  SubProgram Sayısı: "+this.subProgramCount+"  Çevrilen:"+this.convertedSubProgramCount+"  SubProgram Çevrim Oranı:"+getSubProgramCevrimOrani()+JavaConstants.NEW_LINE+
-				"  Map Sayısı: "+this.mapCount+"  Çevrilen:"+this.convertedMapCount+"  Map Çevrim Oranı:"+getMapCevrimOrani()+JavaConstants.NEW_LINE+
-				"  Toplam Çevrim Oranı: "+getToplamCevrimOrani()+JavaConstants.NEW_LINE+
-				"------------------------------------------------------------------------------"+JavaConstants.NEW_LINE;
+
+		StringBuffer sb=new StringBuffer();
+			sb.append(JavaConstants.NEW_LINE);
+			sb.append("---------------------------------------------------------------------"+JavaConstants.NEW_LINE);
+			sb.append("  Module: "+ ConversionLogModel.getInstance().getModule()+"   Mode:"+ConversionLogModel.getInstance().getMode()+JavaConstants.NEW_LINE);
+			if(allConversionStartTime!=null){
+				sb.append("  Cevrim Genel Başlama Saati: "+ allConversionStartTime.toString()+JavaConstants.NEW_LINE);
+			}
+			if(allConversionEndTime!=null){
+				try {
+					sb.append("  Cevrim Genel Bitiş Saati: "+ allConversionEndTime.toString()+JavaConstants.NEW_LINE);
+					toplamCevrimSuresi=allConversionEndTime.getTime()-allConversionStartTime.getTime();
+					
+					toplamCevrimSuresi=toplamCevrimSuresi / 1000 / 60; //dakika cinsinden.
+					sb.append("  Toplam Çevrim Süresi: "+ toplamCevrimSuresi.toString()+" dakika."+JavaConstants.NEW_LINE);
+				} catch (Exception e) {
+				
+				}
+			}
+			if(modulConversionStartTime!=null){
+				sb.append("  Modül Çevrim Başlama Saati: "+ modulConversionStartTime.toString()+JavaConstants.NEW_LINE);
+			}
+			if(modulConversionEndTime!=null){
+				sb.append("  Modül Çevrim Bitiş Saati: "+ modulConversionEndTime.toString()+JavaConstants.NEW_LINE);
+			}
+			sb.append("  Program Sayısı: "+this.programCount+"  Çevrilen:"+this.convertedProgramCount+"  Program Çevrim Oranı:"+getProgramCevrimOrani()+JavaConstants.NEW_LINE);
+			sb.append("  SubProgram Sayısı: "+this.subProgramCount+"  Çevrilen:"+this.convertedSubProgramCount+"  SubProgram Çevrim Oranı:"+getSubProgramCevrimOrani()+JavaConstants.NEW_LINE);
+			sb.append("  Map Sayısı: "+this.mapCount+"  Çevrilen:"+this.convertedMapCount+"  Map Çevrim Oranı:"+getMapCevrimOrani()+JavaConstants.NEW_LINE);
+			sb.append("  Modül Toplam Çevrim Oranı: "+getToplamCevrimOrani()+JavaConstants.NEW_LINE);
+			sb.append("---------------------------------------------------------------------"+JavaConstants.NEW_LINE);
+			
+			return sb.toString();
 	}
 
 	private float getMapCevrimOrani() {
@@ -87,7 +122,7 @@ public class ConversionLogReport {
 	}
 
 	public void writeReport(){
-		logger.toString();
+		ConversionLogReport.getInstance().setModulConversionEndTime(new Date());
 		try {
 			WriteToFile.appendToFile(ConversionLogReport.getInstance().toString(), ConversionLogModel.getInstance().getFullModuleReportFile());
 		} catch (IOException e) {
@@ -119,9 +154,53 @@ public class ConversionLogReport {
 			convertedMapCount++;
 		}
 		
-		logger.debug(ConversionLogReport.getInstance().toString());
-		logger.debug("..");
+		logger.warn(ConversionLogReport.getInstance().toString());
 		
 	}
+
+
+
+
+
+	public Date getAllConversionStartTime() {
+		return allConversionStartTime;
+	}
+
+
+	public void setAllConversionStartTime(Date allConversionStartTime) {
+		this.allConversionStartTime = allConversionStartTime;
+	}
+
+
+	public Date getModulConversionStartTime() {
+		return modulConversionStartTime;
+	}
+
+
+	public void setModulConversionStartTime(Date modulConversionStartTime) {
+		this.modulConversionStartTime = modulConversionStartTime;
+	}
+
+
+	public Date getModulConversionEndTime() {
+		return modulConversionEndTime;
+	}
+
+
+	public void setModulConversionEndTime(Date modulConversionEndTime) {
+		this.modulConversionEndTime = modulConversionEndTime;
+	}
+
+
+	public Date getAllConversionEndTime() {
+		return allConversionEndTime;
+	}
+
+
+	public void setAllConversionEndTime(Date allConversionEndTime) {
+		this.allConversionEndTime = allConversionEndTime;
+	}
+	
+	
 	
 }
