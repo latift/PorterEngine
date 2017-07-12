@@ -42,6 +42,9 @@ public class SysnonymManagerAll extends AbstractSysnoymManager implements Synony
 		allSynonymFileRead();
 
 	}
+	public static void main(String[] args) {
+		
+	}
 
 	private static void allSynonymFileRead() {
 		// TODO Auto-generated method stub
