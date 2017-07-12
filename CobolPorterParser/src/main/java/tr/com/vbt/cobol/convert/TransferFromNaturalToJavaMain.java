@@ -119,8 +119,9 @@ public class TransferFromNaturalToJavaMain {
 		ConverterConfiguration.OPERATING_SYSTEM = logModel.getOPERATING_SYSTEM();
 		logModel.setFolderPath(ConverterConfiguration.getFolderPath());
 		logModel.setFolderMainPath(ConverterConfiguration.getMainFolderPath());
-		createOutputFolders();
-
+		if(ConversionLogModel.getInstance().isProgram()) {
+			createOutputFolders();
+		}
 		if (logModel.getConvertOperationType().equals("Folder")) {
 
 			File folder = null;
