@@ -264,24 +264,24 @@ public class TransferFromNaturalToJavaMain {
 		createFileInPath(fILENAME);
 		createFileInPath(fILENAMEMAP);
 		createFileInPath(fILENAMESUBBPROGRAM);
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/output"+ "/generatedhibernate");
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/output"+ "/generatedhibernate/tr");
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/output"+ "/generatedhibernate/tr/com");
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/output"+ "/generatedhibernate/tr/com/thy/");
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/output"+ "/generatedhibernate/tr/com/thy/dal/");
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/output"+ "/generatedhibernate/tr/com/thy/dal/"+ConversionLogModel.getInstance().getModule());
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/output"+ "/generatedhibernate/tr/com/thy/dal/"+ConversionLogModel.getInstance().getModule()+"/dal");
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/output"+ "/generatedhibernate/tr/com/thy/dal/"+ConversionLogModel.getInstance().getModule()+"/dal/hibernate");
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/output"+ "/generatedhibernate/tr/com/thy/dal/"+ConversionLogModel.getInstance().getModule()+"/dal/hibernate/generated");
+		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase() + "/SeperatedPrograms" + "/output"+ "/generatedhibernate");
+		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedhibernate/tr");
+		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedhibernate/tr/com");
+		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedhibernate/tr/com/thy/");
+		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedhibernate/tr/com/thy/dal/");
+		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedhibernate/tr/com/thy/dal/"+ConversionLogModel.getInstance().getModule());
+		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedhibernate/tr/com/thy/dal/"+ConversionLogModel.getInstance().getModule()+"/dal");
+		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedhibernate/tr/com/thy/dal/"+ConversionLogModel.getInstance().getModule()+"/dal/hibernate");
+		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedhibernate/tr/com/thy/dal/"+ConversionLogModel.getInstance().getModule()+"/dal/hibernate/generated");
 
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/output"+ "/generatedinterface");
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/output"+ "/generatedinterface/tr/");
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/output"+ "/generatedinterface/tr/com/");
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/output"+ "/generatedinterface/tr/com/thy/");
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/output"+ "/generatedinterface/tr/com/thy/dal/");
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/output"+ "/generatedinterface/tr/com/thy/dal/"+ConversionLogModel.getInstance().getModule());
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/output"+ "/generatedinterface/tr/com/thy/dal/"+ConversionLogModel.getInstance().getModule()+"/dal");
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/output"+ "/generatedinterface/tr/com/thy/dal/"+ConversionLogModel.getInstance().getModule()+"/dal/generated");
+		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedinterface");
+		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedinterface/tr/");
+		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedinterface/tr/com/");
+		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedinterface/tr/com/thy/");
+		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedinterface/tr/com/thy/dal/");
+		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedinterface/tr/com/thy/dal/"+ConversionLogModel.getInstance().getModule());
+		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedinterface/tr/com/thy/dal/"+ConversionLogModel.getInstance().getModule()+"/dal");
+		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedinterface/tr/com/thy/dal/"+ConversionLogModel.getInstance().getModule()+"/dal/generated");
 
 		String FILENAMESUBBPROGRAM = ConversionLogModel.getInstance().getFolderMainPath() + "/"
 				+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/output"
