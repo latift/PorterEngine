@@ -7,6 +7,7 @@ import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaClassElement;
 import tr.com.vbt.java.general.JavaConstants;
 import tr.com.vbt.java.utils.ConvertUtilities;
+import tr.com.vbt.lexer.ConversionLogModel;
 import tr.com.vbt.token.AbstractToken;
 
 
@@ -35,6 +36,8 @@ public class JavaInputUsingMapElement extends  AbstractJavaElement {
 		try {
 			//JavaClassElement.javaCodeBuffer.append("=openScreen("+mapName+")"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
 			JavaClassElement.javaCodeBuffer.append("inputUsingMap(\""+mapName+"\")"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+			
+			registerMapToProgramMapList();
 		} catch (Exception e) {
 			logger.debug("//Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()+this.getSourceCode().getCommandName());
 			JavaClassElement.javaCodeBuffer.append("/*Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()
@@ -44,6 +47,13 @@ public class JavaInputUsingMapElement extends  AbstractJavaElement {
 		}
 		
 		return true;
+	}
+
+	private void registerMapToProgramMapList() {
+		String programName=ConversionLogModel.getInstance().getFileName();
+		logger.debug("At to Program Map Relation: "+programName+" "+mapName); 
+		ConversionLogModel.getInstance().registerInputUsingMap(programName, mapName);
+		
 	}
 
 	@Override

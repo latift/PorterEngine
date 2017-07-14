@@ -7,6 +7,7 @@ import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.screen.JavaAtEndOfPageElement;
 import tr.com.vbt.java.screen.JavaAtTopOfPageElement;
 import tr.com.vbt.java.utils.ConvertUtilities;
+import tr.com.vbt.lexer.ConversionLogModel;
 
 
 public class JavaFunctionMainElement extends  AbstractJavaElement{
@@ -33,7 +34,13 @@ public class JavaFunctionMainElement extends  AbstractJavaElement{
 				AbstractJavaElement.javaCodeBuffer.append("public void parseMap()"+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE);
 				AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 				
-				AbstractJavaElement.javaCodeBuffer.append("TOPADEP5Impl natprog = (TOPADEP5Impl) program"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+				String implClass=null;
+				try {
+					implClass = ConversionLogModel.getInstance().getMapsProgram(ConversionLogModel.getInstance().getFileName()).getProgramName();
+				} catch (Exception e) {
+					implClass="NATSOURCEYOK";
+				}
+				AbstractJavaElement.javaCodeBuffer.append(implClass+"Impl natprog = ("+implClass+"Impl) program"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
 				AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 				
 			}else{
