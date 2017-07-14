@@ -41,6 +41,8 @@ public class ConversionLogReport {
 	
 	private Long toplamCevrimSuresi;
 	
+	
+	
 	private Map<String,ConversionException> exceptionMap=new HashedMap();
 	
 	

@@ -3,15 +3,19 @@ package tr.com.vbt.cobol.convert;
 import java.io.FileNotFoundException;
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import tr.com.vbt.lexer.ConversionFileType;
 import tr.com.vbt.lexer.ConversionLogModel;
 import tr.com.vbt.lexer.ConversionLogReport;
 import tr.com.vbt.lexer.ModuleAndSchema;
 import tr.com.vbt.util.ConversionMode;
+import tr.com.vbt.util.ConverterConfiguration;
 
 public class TransferFromNaturalToJavaMainAllElements {
 
-	
+	final static Logger logger = LoggerFactory.getLogger(TransferFromNaturalToJavaMainAllElements.class);
 
 	/**
 	 * @param args
@@ -41,7 +45,19 @@ public class TransferFromNaturalToJavaMainAllElements {
 		
 			i++;
 		}
+		
+		
+		ConverterConfiguration.customer = logModel.getCustomer();
+		ConverterConfiguration.OPERATING_SYSTEM = logModel.getOPERATING_SYSTEM();
+		logModel.setFolderMainPath(ConverterConfiguration.getMainFolderPath());
+		
 		TransferFromNaturalToJavaMain  fromNaturalToJavaMain;
+		try {
+			TransferFromNaturalToJavaMain.reCreateOutputFoldersForDAL();
+		} catch (Exception e1) {
+			logger.debug(e1.getMessage(),e1);
+			return;
+		}
 		for(int i=0; i<logModel.getModuleList().size();i++){
 		
 			logModel.setModule(logModel.getModuleList().get(i).getModule());
@@ -51,14 +67,21 @@ public class TransferFromNaturalToJavaMainAllElements {
 			ConversionLogReport.getInstance().setAllConversionStartTime(conversionGeneralStartDate);
 			
 			fromNaturalToJavaMain=new  TransferFromNaturalToJavaMain();
-			logModel.setConversionFileType(ConversionFileType.PROGRAM);
-			fromNaturalToJavaMain.operateConversion();
+			try {
+				logModel.setConversionFileType(ConversionFileType.PROGRAM);
+				fromNaturalToJavaMain.operateConversionForAModule();
+				
+				logModel.setConversionFileType(ConversionFileType.SUBPROGRAM);
+				fromNaturalToJavaMain.operateConversionForAModule();
+				
+				logModel.setConversionFileType(ConversionFileType.MAP);
+				fromNaturalToJavaMain.operateConversionForAModule();
+			} catch (Exception e) {
+				logger.debug(e.getMessage(),e);
+				return;
+			}
 			
-			logModel.setConversionFileType(ConversionFileType.SUBPROGRAM);
-			fromNaturalToJavaMain.operateConversion();
-			
-			logModel.setConversionFileType(ConversionFileType.MAP);
-			fromNaturalToJavaMain.operateConversion();
+
 	
 			ConversionLogReport.getInstance().setModulConversionEndTime(new Date());
 			if(i==logModel.getModuleList().size()-1){

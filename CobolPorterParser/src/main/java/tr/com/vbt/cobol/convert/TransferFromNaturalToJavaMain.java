@@ -21,6 +21,7 @@ import tr.com.vbt.java.general.JavaClassElement;
 import tr.com.vbt.java.general.JavaClassGeneral;
 import tr.com.vbt.java.util.RuleNotFoundException;
 import tr.com.vbt.java.utils.ConvertUtilities;
+import tr.com.vbt.java.utils.WriteFileUtility;
 import tr.com.vbt.lexer.AbstractLexing;
 import tr.com.vbt.lexer.ConversionFileType;
 import tr.com.vbt.lexer.ConversionLogModel;
@@ -60,7 +61,7 @@ public class TransferFromNaturalToJavaMain {
 	// Type2: java Latif Folder
 
 	// Latif WINDOWS MB Map Files IDGM0004
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) {
 		ConversionLogReport.getInstance().reset();
 
 		ConversionLogModel logModel = ConversionLogModel.getInstance();
@@ -106,21 +107,31 @@ public class TransferFromNaturalToJavaMain {
 
 			logModel.setFileList(fileList);
 		}
-
-		operateConversion();
-		ConversionLogReport.getInstance().writeReport();
-	}
-
-	public static void operateConversion() throws FileNotFoundException {
-		ConversionLogModel logModel = ConversionLogModel.getInstance();
-		TransferFromNaturalToJavaMain transferDriver = null;
-
+		
 		ConverterConfiguration.customer = logModel.getCustomer();
 		ConverterConfiguration.OPERATING_SYSTEM = logModel.getOPERATING_SYSTEM();
 		logModel.setFolderPath(ConverterConfiguration.getFolderPath());
 		logModel.setFolderMainPath(ConverterConfiguration.getMainFolderPath());
+
+		try {
+			reCreateOutputFoldersForDAL();
+			operateConversionForAModule();
+		} catch (Exception e) {
+			logger.debug(e.getMessage(),e);
+			return;
+		}
+		ConversionLogReport.getInstance().writeReport();
+	}
+
+	
+	public static void operateConversionForAModule() throws Exception {
+		ConversionLogModel logModel = ConversionLogModel.getInstance();
+		TransferFromNaturalToJavaMain transferDriver = null;
+		
+		logModel.setFolderPath(ConverterConfiguration.getFolderPath());
+
 		if(ConversionLogModel.getInstance().isProgram()) {
-			createOutputFolders();
+			reCreateOutputFoldersForAModule();
 		}
 		if (logModel.getConvertOperationType().equals("Folder")) {
 
@@ -235,110 +246,92 @@ public class TransferFromNaturalToJavaMain {
 	// Module/seperatedPrograms/output dosyasını yaratacak
 	// Module/seperatedPrograms/subprogram/output
 	// Module/seperatedPrograms/map/output
+	// Module/seperatedPrograms/output/java/web dosyasını yaratacak
+	// Module/seperatedPrograms/output/java/web/map dosyasını yaratacak
+	// Module/seperatedPrograms/output/java/web/subprogram dosyasını yaratacak
+	
+	
 
-	// Module/seperatedPrograms/output/generatedhibernate/tr/com/thy/dal/$module/dal/hibernate/generated/
-	// Module/seperatedPrograms/output/generatedinterface/tr/com/thy/dal/$module/dal/generated/
-	private static void createOutputFolders() {
+	private static void reCreateOutputFoldersForAModule() throws Exception {
 		// TODO Auto-generated method stub
 		String FILENAME = ConversionLogModel.getInstance().getFolderMainPath() + "/"
 				+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/output";
 		String FILENAMEMAP = ConversionLogModel.getInstance().getFolderMainPath() + "/"
-				+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/map" + "/output";
+				+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/Map" + "/output";
 		String FILENAMESUBBPROGRAM = ConversionLogModel.getInstance().getFolderMainPath() + "/"
-				+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/subprogram" + "/output";
+				+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/Subprogram" + "/output";
+		String FILENAME_JAVA = ConversionLogModel.getInstance().getFolderMainPath() + "/"
+				+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/output/web";
+		String FILENAME_JAVA_MAP = ConversionLogModel.getInstance().getFolderMainPath() + "/"
+				+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/output/web/map";
+		String FILENAME_JAVA_SUBPROGRAM = ConversionLogModel.getInstance().getFolderMainPath() + "/"
+				+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/output/web/subprogram";
+		
 		File index = new File(FILENAME);
 		File indexSubProgram = new File(FILENAMESUBBPROGRAM);
 		File indexMap = new File(FILENAMEMAP);
-		try {
-			deleteFolder(index);
-			deleteFolder(indexSubProgram);
-			deleteFolder(indexMap);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		createOuputFolder(FILENAME, FILENAMEMAP, FILENAMESUBBPROGRAM);
+		File indexJava = new File(FILENAME_JAVA);
+		File indexJavaMap = new File(FILENAME_JAVA_MAP);
+		File indexJavaSubprogram = new File(FILENAME_JAVA_SUBPROGRAM);
+		
+		WriteFileUtility.deleteFolder(indexJavaSubprogram);
+		WriteFileUtility.deleteFolder(indexJavaMap);
+		WriteFileUtility.deleteFolder(indexJava);
+		WriteFileUtility.deleteFolder(indexSubProgram);
+		WriteFileUtility.deleteFolder(indexMap);
+		WriteFileUtility.deleteFolder(index);
+		
+		WriteFileUtility.createFileInPath(FILENAME);
+		WriteFileUtility.createFileInPath(FILENAMEMAP);
+		WriteFileUtility.createFileInPath(FILENAMESUBBPROGRAM);
+		WriteFileUtility.createFileInPath(FILENAME_JAVA);
+		WriteFileUtility.createFileInPath(FILENAME_JAVA_MAP);
+		WriteFileUtility.createFileInPath(FILENAME_JAVA_SUBPROGRAM);
 
 	}
+	
+	public static void reCreateOutputFoldersForDAL() throws Exception {
+		
+		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedhibernate/tr/com/thy/dal/hibernate/generated"));
+		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedhibernate/tr/com/thy/dal/hibernate"));
+		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedhibernate/tr/com/thy/dal/"));
+		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedhibernate/tr/com/thy/"));
+		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedhibernate/tr/com/"));
+		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedhibernate/tr/"));
+		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedhibernate/"));
+		
+		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/thy/dal/generated"));
+		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/thy/dal/"));
+		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/thy/"));
+		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/"));
+		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/"));
+		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/"));
+		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"));
 
-	private static void createOuputFolder(String fILENAME, String fILENAMEMAP, String fILENAMESUBBPROGRAM) {
-		createFileInPath(fILENAME);
-		createFileInPath(fILENAMEMAP);
-		createFileInPath(fILENAMESUBBPROGRAM);
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase() + "/SeperatedPrograms" + "/output"+ "/generatedhibernate");
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedhibernate/tr");
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedhibernate/tr/com");
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedhibernate/tr/com/thy/");
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedhibernate/tr/com/thy/dal/");
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedhibernate/tr/com/thy/dal/"+ConversionLogModel.getInstance().getModule());
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedhibernate/tr/com/thy/dal/"+ConversionLogModel.getInstance().getModule()+"/dal");
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedhibernate/tr/com/thy/dal/"+ConversionLogModel.getInstance().getModule()+"/dal/hibernate");
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedhibernate/tr/com/thy/dal/"+ConversionLogModel.getInstance().getModule()+"/dal/hibernate/generated");
+		
+		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output");
+		
+		
+		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedhibernate");
+		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedhibernate/tr");
+		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedhibernate/tr/com");
+		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedhibernate/tr/com/thy/");
+		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedhibernate/tr/com/thy/dal/");
+		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedhibernate/tr/com/thy/dal/hibernate");
+		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedhibernate/tr/com/thy/dal/hibernate/generated");
+		
+		
+		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface");
+		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr");
+		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com");
+		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/thy/");
+		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/thy/dal/");
+		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/thy/dal/generated");
 
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedinterface");
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedinterface/tr/");
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedinterface/tr/com/");
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedinterface/tr/com/thy/");
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedinterface/tr/com/thy/dal/");
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedinterface/tr/com/thy/dal/"+ConversionLogModel.getInstance().getModule());
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedinterface/tr/com/thy/dal/"+ConversionLogModel.getInstance().getModule()+"/dal");
-		createFileInPath(ConversionLogModel.getInstance().getFolderMainPath() + "/"	+ ConversionLogModel.getInstance().getModule().toLowerCase()  + "/SeperatedPrograms" + "/output"+ "/generatedinterface/tr/com/thy/dal/"+ConversionLogModel.getInstance().getModule()+"/dal/generated");
-
-		String FILENAMESUBBPROGRAM = ConversionLogModel.getInstance().getFolderMainPath() + "/"
-				+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/output"
-						+ "/generatedhibernate/tr/com/thy/dal/";
-
-
+		
 	}
 
-	private static void createFileInPath(String str) {
-		File file= new File(str);
 
-		boolean result = false;
-		try {
-			file.mkdir();
-			result = true;
-		} catch (SecurityException se) {
-			System.out.println("dosya yaratma izni yok!!!");
-		}
-	}
-
-	public static void deleteFolder(File file) throws IOException {
-
-		if (file.isDirectory()) {
-
-			// directory is empty, then delete it
-			if (file.list().length == 0) {
-
-				file.delete();
-				System.out.println("Directory is deleted : " + file.getAbsolutePath());
-
-			} else {
-
-				// list all the directory contents
-				String files[] = file.list();
-
-				for (String temp : files) {
-					// construct the file structure
-					File fileDelete = new File(file, temp);
-
-					// recursive delete
-					deleteFolder(fileDelete);
-				}
-
-				// check the directory again, if empty then delete it
-				if (file.list().length == 0) {
-					file.delete();
-					System.out.println("Directory is deleted : " + file.getAbsolutePath());
-				}
-			}
-
-		} else {
-			// if file, then delete it
-			file.delete();
-			System.out.println("File is deleted : " + file.getAbsolutePath());
-		}
-	}
 
 	private static boolean isInConversionSet(File file) {
 

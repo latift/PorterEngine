@@ -40,41 +40,37 @@ public class JavaNaturalClassElement extends  AbstractJavaElement{
 		
 		String module=ConversionLogModel.getInstance().getModule().replaceAll("/SeperatedPrograms", "").toLowerCase();
 		
-		AbstractJavaElement.javaCodeBuffer.append("import java.util.*;"+JavaConstants.NEW_LINE);
-		
-		AbstractJavaElement.javaCodeBuffer.append("import tr.com.thy.dal.devtes.dal.pojo.*;"+JavaConstants.NEW_LINE);
-		AbstractJavaElement.javaCodeBuffer.append("import tr.com.thy.dal.medevlok.dal.pojo.*;"+JavaConstants.NEW_LINE);
-		AbstractJavaElement.javaCodeBuffer.append("import tr.com.thy.dal.megider.dal.pojo.*;"+JavaConstants.NEW_LINE);
-		AbstractJavaElement.javaCodeBuffer.append("import tr.com.thy.dal.meikram.dal.pojo.*;"+JavaConstants.NEW_LINE);
-		AbstractJavaElement.javaCodeBuffer.append("import tr.com.thy.dal.meucretl.dal.pojo.*;"+JavaConstants.NEW_LINE);
-		AbstractJavaElement.javaCodeBuffer.append("import tr.com.thy.dal.meytlduz.dal.pojo.*;"+JavaConstants.NEW_LINE);
-		AbstractJavaElement.javaCodeBuffer.append("import tr.com.thy.dal.tps.dal.pojo.*;"+JavaConstants.NEW_LINE);
-		AbstractJavaElement.javaCodeBuffer.append("import tr.com.thy.dal.pers.dal.pojo.*;"+JavaConstants.NEW_LINE);
-		
-		AbstractJavaElement.javaCodeBuffer.append("import tr.com.vbt.natural.core.*;"+JavaConstants.NEW_LINE);
-		
 		AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
+		
+		AbstractJavaElement.javaCodeBuffer.append("import java.util.*;"+JavaConstants.NEW_LINE);
+		AbstractJavaElement.javaCodeBuffer.append("import javax.annotation.*;"+JavaConstants.NEW_LINE);
 	
+		AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
+		
 		AbstractJavaElement.javaCodeBuffer.append("import org.springframework.context.annotation.*;"+JavaConstants.NEW_LINE);
 		AbstractJavaElement.javaCodeBuffer.append("import org.springframework.stereotype.*;"+JavaConstants.NEW_LINE);
 		AbstractJavaElement.javaCodeBuffer.append("import org.springframework.beans.factory.annotation.*;"+JavaConstants.NEW_LINE);
+		
+		AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
+		
 		AbstractJavaElement.javaCodeBuffer.append("import tr.com.vbt.natural.core.*;"+JavaConstants.NEW_LINE);
-		AbstractJavaElement.javaCodeBuffer.append("import tr.com.thy.dal.*;"+JavaConstants.NEW_LINE);
-		AbstractJavaElement.javaCodeBuffer.append("import tr.com.thy.dal."+module+".dal.pojo.*;"+JavaConstants.NEW_LINE);
-		//import tr.com.thy.dal.meucretl.dal.pojo.*;
 		AbstractJavaElement.javaCodeBuffer.append("import tr.com.vbt.natural.html.*;"+JavaConstants.NEW_LINE);
-		AbstractJavaElement.javaCodeBuffer.append("import tr.com.thy."+module+".web.interfaces.*;"+JavaConstants.NEW_LINE);
-		AbstractJavaElement.javaCodeBuffer.append("import tr.com.vbt.util.FrameworkConfiguration;"+JavaConstants.NEW_LINE);
 		AbstractJavaElement.javaCodeBuffer.append("import tr.com.vbt.java.utils.*;"+JavaConstants.NEW_LINE);
 		AbstractJavaElement.javaCodeBuffer.append("import tr.com.vbt.lexer.*;"+JavaConstants.NEW_LINE);
+		AbstractJavaElement.javaCodeBuffer.append("import tr.com.vbt.util.FrameworkConfiguration;"+JavaConstants.NEW_LINE);
 		
-		AbstractJavaElement.javaCodeBuffer.append("import javax.annotation.*;"+JavaConstants.NEW_LINE);
-		AbstractJavaElement.javaCodeBuffer.append("import tr.com.thy.dal.variables.global.*;"+JavaConstants.NEW_LINE);
-		AbstractJavaElement.javaCodeBuffer.append("import tr.com.thy.dal.variables.local.*;"+JavaConstants.NEW_LINE);
+		AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 		
+		AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.*;"+JavaConstants.NEW_LINE);
+		AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.pojo.*;"+JavaConstants.NEW_LINE);
+		AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.variables.global.*;"+JavaConstants.NEW_LINE);
+		AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.variables.local.*;"+JavaConstants.NEW_LINE);
+		AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+"."+module+".web.interfaces.*;"+JavaConstants.NEW_LINE);
 		if(logModel.isSubProgram()){
-			AbstractJavaElement.javaCodeBuffer.append("import tr.com.thy."+module+".web.*;"+JavaConstants.NEW_LINE);
+			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+"."+module+".web.*;"+JavaConstants.NEW_LINE);
 		}
+		
+		
 		
 		
 
