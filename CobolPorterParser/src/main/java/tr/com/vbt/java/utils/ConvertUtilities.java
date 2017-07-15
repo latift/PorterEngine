@@ -431,11 +431,11 @@ public class ConvertUtilities {
 			interfaceHeader.append(JavaConstants.NEW_LINE);
 		}
 
-		interfaceHeader.append(JavaConstants.PACKAGE + " " + "tr.com.thy.dal."+logModel.getModuleOnly().toLowerCase()+".dal.generated" + " "
+		interfaceHeader.append(JavaConstants.PACKAGE + " " + "tr.com.thy.dal.generated" + " "
 				+ JavaConstants.DOT_WITH_COMMA + JavaConstants.NEW_LINE);
 
-		interfaceHeader.append("import tr.com.thy.dal."+logModel.getModuleOnly().toLowerCase()+".dal.*;" + JavaConstants.NEW_LINE);
-		interfaceHeader.append("import tr.com.thy.dal."+logModel.getModuleOnly().toLowerCase()+".dal.pojo.*;" + JavaConstants.NEW_LINE);
+		interfaceHeader.append("import tr.com.thy.dal.*;" + JavaConstants.NEW_LINE);
+		interfaceHeader.append("import tr.com.thy.dal.pojo.*;" + JavaConstants.NEW_LINE);
 		interfaceHeader.append("import java.util.*;" + JavaConstants.NEW_LINE);
 
 		interfaceHeader.append(JavaConstants.NEW_LINE);
@@ -466,15 +466,15 @@ public class ConvertUtilities {
 		}
 
 		// package tr.com.mb.dal.hibernate.generated;
-		implClassHeader.append(JavaConstants.PACKAGE + " " + "tr.com.thy.dal."+logModel.getModuleOnly().toLowerCase()+".dal.hibernate.generated"
+		implClassHeader.append(JavaConstants.PACKAGE + " " + "tr.com.thy.dal.hibernate.generated"
 				+ JavaConstants.DOT_WITH_COMMA + JavaConstants.NEW_LINE);
 
 		implClassHeader.append("import org.hibernate.Criteria;" + JavaConstants.NEW_LINE);
 		implClassHeader.append("import org.hibernate.criterion.Restrictions;" + JavaConstants.NEW_LINE);
 		implClassHeader.append("import org.springframework.stereotype.*;" + JavaConstants.NEW_LINE);
-		implClassHeader.append("import tr.com.thy.dal."+logModel.getModuleOnly().toLowerCase()+".dal.generated.*;" + JavaConstants.NEW_LINE);
-		implClassHeader.append("import tr.com.thy.dal."+logModel.getModuleOnly().toLowerCase()+".dal.hibernate.*;" + JavaConstants.NEW_LINE);
-		implClassHeader.append("import tr.com.thy.dal."+logModel.getModuleOnly().toLowerCase()+".dal.pojo.*;" + JavaConstants.NEW_LINE);
+		implClassHeader.append("import tr.com.thy.dal.generated.*;" + JavaConstants.NEW_LINE);
+		implClassHeader.append("import tr.com.thy.dal.hibernate.*;" + JavaConstants.NEW_LINE);
+		implClassHeader.append("import tr.com.thy.dal.pojo.*;" + JavaConstants.NEW_LINE);
 		implClassHeader.append("import java.util.*;" + JavaConstants.NEW_LINE);
 
 		// public class TAFAIZHibernateDAOGenerated extends TafaizHibernateDAO

@@ -17,7 +17,7 @@
 	</dependency>
 	<dependency>
 	  <groupId>tr.com.thy.dal</groupId>
-	  <artifactId>THY_COMMON_DAL</artifactId>
+	  <artifactId>THY_COMMON_DAL2</artifactId>
 	  <version>0.0.1-SNAPSHOT</version>
 	</dependency>
 	</dependencies>

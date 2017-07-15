@@ -281,8 +281,13 @@ public class TransferFromNaturalToJavaMain {
 		WriteFileUtility.deleteFolder(indexMap);
 		WriteFileUtility.deleteFolder(index);
 		
+		
 		WriteFileUtility.createFileInPath(FILENAME);
-		WriteFileUtility.createFileInPath(FILENAMEMAP);
+		try {
+			WriteFileUtility.createFileInPath(FILENAMEMAP);
+		} catch (Exception e) {
+			logger.debug("Map dosyası create edilemedi. Modüle ait map olmayabilir.",e);
+		}
 		WriteFileUtility.createFileInPath(FILENAMESUBBPROGRAM);
 		WriteFileUtility.createFileInPath(FILENAME_JAVA);
 		WriteFileUtility.createFileInPath(FILENAME_JAVA_MAP);

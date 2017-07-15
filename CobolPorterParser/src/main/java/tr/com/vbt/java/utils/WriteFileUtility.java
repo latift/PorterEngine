@@ -10,7 +10,7 @@ public class WriteFileUtility {
 	
 	final static Logger logger = LoggerFactory.getLogger(WriteFileUtility.class);
 
-	public static boolean createFileInPath(String str) {
+	public static boolean createFileInPath(String str) throws Exception {
 		File file= new File(str);
 
 		boolean result = false;
@@ -19,6 +19,9 @@ public class WriteFileUtility {
 			logger.warn("Directory is Created : " + str);
 		} catch (SecurityException se) {
 			logger.warn("Directory Created Edilemedi: " + str);
+		}
+		if(!result){
+			throw new Exception("Directory Create edilemedi."+str);
 		}
 		return result;
 	}
