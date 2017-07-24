@@ -12,10 +12,13 @@ import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.sun.xml.rpc.processor.config.Configuration;
+
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.java.general.JavaConstants;
 import tr.com.vbt.lexer.ConversionLogModel;
 import tr.com.vbt.token.AbstractToken;
+import tr.com.vbt.util.ConverterConfiguration;
 import tr.com.vbt.util.WriteToFile;
 
 public class DDMList {
@@ -33,8 +36,11 @@ public class DDMList {
 		
 		//final File folder = new File("C:\\CobolPorterWorkspace2\\CobolPorter\\CobolPorter\\THY\\TPS\\SeperatedPrograms\\DDM");
 		final File folder = new File(ConversionLogModel.getInstance().getFullDDMFolder());
-		listFilesForFolder(folder);
-		writeDDMList();
+		if(ConverterConfiguration.pojosAreDefinedInCode){
+			listFilesForFolder(folder);
+			writeDDMList();
+			
+		}
 		
 	}	
 		
@@ -82,18 +88,23 @@ public class DDMList {
 
 	
 	public void listFilesForFolder(final File folder) {
-	    for (final File fileEntry : folder.listFiles()) {
-	        if (fileEntry.isDirectory()) {
-	           //listFilesForFolder(fileEntry);
-	        } else {
-	            System.out.println(fileEntry.getName());
-	            loadDDMFromDDMFiles(folder.getAbsolutePath(), fileEntry.getName());
-	        }
-	    }
+			
+			for (final File fileEntry : folder.listFiles()) {
+			    if (fileEntry.isDirectory()) {
+			       //listFilesForFolder(fileEntry);
+			    } else {
+			        System.out.println(fileEntry.getName());
+			        loadDDMFromDDMFiles(folder.getAbsolutePath(), fileEntry.getName());
+			    }
+			}
 	}
 
 	private void loadDDMFromDDMFiles(String fullDDMFolderPath, String fileName) {
 
+		if(!ConverterConfiguration.pojosAreDefinedInCode){//MB için 
+			
+			return;
+		}
 		BufferedReader br = null;
 		FileReader fr = null;
 		
