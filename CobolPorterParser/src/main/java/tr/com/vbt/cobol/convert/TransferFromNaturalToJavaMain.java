@@ -127,7 +127,7 @@ public class TransferFromNaturalToJavaMain {
 	public static void operateConversionForAModule() throws Exception {
 		ConversionLogModel logModel = ConversionLogModel.getInstance();
 		TransferFromNaturalToJavaMain transferDriver = null;
-		
+	
 		logModel.setFolderPath(ConverterConfiguration.getFolderPath());
 
 		if(ConversionLogModel.getInstance().isProgram()) {
@@ -177,6 +177,7 @@ public class TransferFromNaturalToJavaMain {
 						logger.warn("**********************************************************************");
 						logger.warn("Conversion Statu: Started For File " + logModel.getFileName());
 						transferDriver = new TransferFromNaturalToJavaMain();
+						transferDriver.setConversionConfigurationMode();
 						MDC.put("customer", logModel.getCustomer());
 						MDC.put("module", logModel.getModule());
 						MDC.put("conversionFileType", logModel.getConversionFileType().toString());
@@ -216,6 +217,7 @@ public class TransferFromNaturalToJavaMain {
 
 					logModel.setClientInteracting(true);
 					transferDriver = new TransferFromNaturalToJavaMain();
+					transferDriver.setConversionConfigurationMode();
 					MDC.put("InputFileForConversion", logModel.getFileName());
 					transferDriver.driveTransfer(logModel);
 					transferDriver.writeDalCodes(logModel);
@@ -239,6 +241,15 @@ public class TransferFromNaturalToJavaMain {
 		}
 
 	}
+	private  void setConversionConfigurationMode() {
+		// TODO Auto-generated method stub
+		if(ConversionLogModel.getInstance().getCustomer().toUpperCase().equals("MB")){
+			ConverterConfiguration.pojosAreDefinedInCode=false;
+		}
+		
+	}
+
+
 	// Module/seperatedPrograms/output silinecek
 	// Module/seperatedPrograms/subprogram/output silinecek
 	// Module/seperatedPrograms/map/output silinecek

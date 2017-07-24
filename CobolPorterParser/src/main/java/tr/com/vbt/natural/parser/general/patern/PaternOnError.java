@@ -3,7 +3,10 @@ package tr.com.vbt.natural.parser.general.patern;
 import java.util.List;
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
+import tr.com.vbt.lexer.ConversionLogModel;
+import tr.com.vbt.lexer.NaturalMode;
 import tr.com.vbt.lexer.ReservedNaturalKeywords;
+import tr.com.vbt.natural.parser.general.ElementEndError;
 import tr.com.vbt.natural.parser.general.ElementOnError;
 import tr.com.vbt.patern.AbstractPattern;
 import tr.com.vbt.token.AbstractToken;
@@ -31,6 +34,7 @@ public class PaternOnError extends AbstractPattern{
 	}
 	
 	protected AbstractToken starterToken;
+	protected AbstractToken enderToken;
 	
 
 	public PaternOnError() {
@@ -40,8 +44,15 @@ public class PaternOnError extends AbstractPattern{
 		starterToken=new OzelKelimeToken(ReservedNaturalKeywords.ON_ERROR, 0, 0, 0);
 		starterToken.setSourceFieldName("FIRST_COMMAND");
 		starterToken.setTekrarlayabilir("+");
-		patternTokenList.add(starterToken);						
+		patternTokenList.add(starterToken);	
 		
+		enderToken=new OzelKelimeToken(ReservedNaturalKeywords.END_ERROR, 0, 0, 0);
+		enderToken.setSourceFieldName("END_COMMAND");
+		enderToken.setOptional(true);
+		patternTokenList.add(enderToken);	
+
+		
+	
 	}
 	
 	@Override
@@ -57,6 +68,7 @@ public class PaternOnError extends AbstractPattern{
 			AbstractToken abstractTokenInPattern) {
 		
 		ElementOnError matchedCommandAdd=(ElementOnError) matchedCommand;
+		ElementEndError matchedCommandAddEND=(ElementEndError) matchedCommand;
 		
 		super.setSatirNumarasi(matchedCommand,currentTokenForMatch, abstractTokenInPattern);
 		if(abstractTokenInPattern.getSourceFieldName()==null){

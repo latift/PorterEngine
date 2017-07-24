@@ -135,15 +135,21 @@ public class ConvertUtilities {
 
 	// TODO: İmplement below code
 	public static String getVariableTypeOfString(AbstractToken variable) {
-
+		Double d=0.0;
 		if (variable.getTip().equals(TokenTipi.Sayi)) {
-			Double d = (Double) variable.getDeger();
-			if (d % 1 != 0) {
-				return "float";
-			} else {
-				return "int";
-			}
+			if(variable.getDeger()  instanceof Integer) {
+			 return "int";
+			}else{
+				
+				d = (Double) variable.getDeger();
+				if (d % 1 != 0) {
+					return "float";
+				} else {
+					return "int";
+				}
 
+			}
+			
 		}
 		
 		String variableDeger=variable.getDeger().toString();

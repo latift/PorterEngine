@@ -108,6 +108,7 @@ public NaturalOzelKelimeler() {
 	ozelKelimeler.add("PAGE");
 	
 	ozelKelimeler.add("END-FIND");
+	ozelKelimeler.add("END-ERROR");
 	ozelKelimeler.add("END-NOREC");
 	ozelKelimeler.add("NO");
 	ozelKelimeler.add("RECORDS");
