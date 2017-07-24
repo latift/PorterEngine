@@ -178,12 +178,22 @@ public class ConditionUtilities {
 	 */
 	private List<AbstractToken> processOrCondition(List<AbstractToken> conditionList) {
 		
-		AbstractToken tokenForAdd = null, curToken, nextToken, firstConditionItem;
+		AbstractToken tokenForAdd = null, curToken, nextToken, firstConditionItem = null;
 		
 		List<AbstractToken> resultList=new ArrayList<>();
 		
-		firstConditionItem=conditionList.get(0);
+		try {
+			firstConditionItem=conditionList.get(0);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+//			e.printStackTrace();
+		}
 		
+		if(conditionList==null){
+			 
+		}else{
+			
+	
 		for(int i=0;i<conditionList.size();i++){
 			
 			curToken=conditionList.get(i);
@@ -208,6 +218,7 @@ public class ConditionUtilities {
 				}
 			}
 			
+		}
 		}
 		return resultList;
 	}

@@ -28,13 +28,18 @@ public class JavaCopyElementV2 extends AbstractJavaElement {
 		dataToMove = (AbstractToken) this.parameters.get("dataToMove");
 		String setterString, getterString;
 		try {
-			for (AbstractToken destVar1 : destVariable) {
+			try {
+				for (AbstractToken destVar1 : destVariable) {
 
-				JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(destVar1));
-				JavaClassElement.javaCodeBuffer.append("=");
-				JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(dataToMove));
+					JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(destVar1));
+					JavaClassElement.javaCodeBuffer.append("=");
+					JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(dataToMove));
 
-				JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA + JavaConstants.NEW_LINE);
+					JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA + JavaConstants.NEW_LINE);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+//				e.printStackTrace();
 			}
 		} catch (Exception e) {
 			logger.debug("//Conversion Error" + this.getClass() + this.getSourceCode().getSatirNumarasi()
