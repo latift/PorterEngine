@@ -51,7 +51,7 @@ public class TransferFromNaturalToJavaMainAllElements {
 		ConverterConfiguration.OPERATING_SYSTEM = logModel.getOPERATING_SYSTEM();
 		logModel.setFolderMainPath(ConverterConfiguration.getMainFolderPath());
 		
-		TransferFromNaturalToJavaMain  fromNaturalToJavaMain;
+		TransferFromNaturalToJavaMain  fromNaturalToJavaMain = null;
 		try {
 			TransferFromNaturalToJavaMain.reCreateOutputFoldersForDAL();
 		} catch (Exception e1) {
@@ -89,6 +89,14 @@ public class TransferFromNaturalToJavaMainAllElements {
 			}
 			ConversionLogReport.getInstance().writeReport();
 		}
+		
+		try {
+			fromNaturalToJavaMain.operateConversionForCommonDAL();
+		} catch (Exception e) {
+			logger.debug(e.getMessage(),e);
+			return;
+		}
+		
 		ConversionLogReport.getInstance().writeExceptionReport();
 		
 	

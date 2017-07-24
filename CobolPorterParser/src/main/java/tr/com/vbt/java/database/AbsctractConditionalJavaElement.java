@@ -149,8 +149,8 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 
 	}
 
-	protected String createFindByMethodString() {
-		StringBuffer findByString = new StringBuffer("findBy");
+	protected String createFindByMethodString(String isFindByOrReadBy) {
+		StringBuffer findByString = new StringBuffer(isFindByOrReadBy);
 		AbstractToken curToken;
 		Filter curFilter;
 		AbstractCommand variableDefinition;
@@ -267,8 +267,8 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 	 *    FilterNameve JoinOperatorleriOnce Ekle 
 	 *    Sonra Parantez Açıp FiltreValue ları ekle.
 	 */
-	protected String createFindByString() throws Exception {
-		StringBuffer findByString=new StringBuffer("findBy");
+	protected String createFindByString(String isFindByOrReadBy) throws Exception {
+		StringBuffer findByString=new StringBuffer(isFindByOrReadBy);
 		AbstractToken curToken;
 		Filter curFilter;
 		

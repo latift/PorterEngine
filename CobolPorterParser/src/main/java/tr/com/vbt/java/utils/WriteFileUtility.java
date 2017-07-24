@@ -16,11 +16,13 @@ public class WriteFileUtility {
 		boolean result = false;
 		try {
 			result=file.mkdir();
-			logger.warn("Directory is Created : " + str);
 		} catch (SecurityException se) {
 			logger.warn("Directory Created Edilemedi: " + str);
 		}
-		if(!result){
+		if(result){
+			logger.warn("Directory is Created : " + str);
+		}
+		else{
 			throw new Exception("Directory Create edilemedi."+str);
 		}
 		return result;

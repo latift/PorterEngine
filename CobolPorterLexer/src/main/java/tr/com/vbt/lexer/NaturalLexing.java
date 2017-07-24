@@ -1742,7 +1742,7 @@ public class NaturalLexing extends AbstractLexing {
 		removeFirstFourChar();
 		//Birden fazla loop sorun çıkıyor o yüzden commentledim CEM
 //		if(ConversionLogModel.getInstance().getMode().equals(NaturalMode.REPORTING)){
-//			structureCorrection();
+			structureCorrection();
 //		}
 		
 		ViewManagerFactory.getInstance().setTypeNameOfViews(tokenListesi);

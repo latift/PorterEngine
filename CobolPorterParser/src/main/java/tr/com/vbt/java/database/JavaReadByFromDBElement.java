@@ -107,7 +107,7 @@ public class JavaReadByFromDBElement extends AbsctractConditionalJavaElement {
 	
 	String calculatedResultListName = "";// LIMAN_RESULT_LIST
 	String calculatedDAOName = "";
-	String findByString, findByMethodSignature,itName;
+	String readByString, readByMethodSignature,itName;
 	
 	private AbstractJavaElement javaIfNoRecords;
 	
@@ -145,10 +145,10 @@ public class JavaReadByFromDBElement extends AbsctractConditionalJavaElement {
 
 		calculatedResultListName = "";// LIMAN_RESULT_LIST
 		calculatedDAOName = "";
-		findByString=createFindByString();
-		findByMethodSignature=createFindByMethodString();
-		logger.debug("findByString :"+findByString);
-		logger.debug("findByMethodSignature :"+findByMethodSignature);
+		readByString=createFindByString("readBy");
+		readByMethodSignature=createFindByMethodString("readBy");
+		logger.debug("readByString :"+readByString);
+		logger.debug("findByMethodSignature :"+readByMethodSignature);
 		//itName="it"+pojoName;
 		itName=itNameManager.createIteratorName(pojoName);
 		
@@ -167,7 +167,7 @@ public class JavaReadByFromDBElement extends AbsctractConditionalJavaElement {
 			JavaClassElement.javaCodeBuffer.append("=");
 			JavaClassElement.javaCodeBuffer.append(calculatedDAOName);
 			JavaClassElement.javaCodeBuffer.append(".");
-			JavaClassElement.javaCodeBuffer.append(findByString.replaceAll("-", "_")+ JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
+			JavaClassElement.javaCodeBuffer.append(readByString.replaceAll("-", "_")+ JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
 			
 			//{
 			JavaClassElement.javaCodeBuffer.append("{"+ JavaConstants.NEW_LINE);
@@ -333,10 +333,10 @@ public class JavaReadByFromDBElement extends AbsctractConditionalJavaElement {
 		JavaClassElement.javaDAOInterfaceCodeBuffer.append(JavaConstants.NEW_LINE);
 		JavaClassElement.javaDAOInterfaceCodeBuffer.append("public List<"+pojoName+">");
 		JavaClassElement.javaDAOInterfaceCodeBuffer.append(" ");
-		JavaClassElement.javaDAOInterfaceCodeBuffer.append(findByMethodSignature+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		JavaClassElement.javaDAOInterfaceCodeBuffer.append(readByMethodSignature+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
 		JavaClassElement.javaDAOInterfaceCodeBuffer.append(JavaConstants.NEW_LINE);
 		
-		JavaClassElement.javaDAOInterfaceCodeMap.put(pojoName+" "+findByMethodSignature, JavaClassElement.javaDAOInterfaceCodeBuffer.toString());
+		JavaClassElement.javaDAOInterfaceCodeMap.put(pojoName+" "+readByMethodSignature, JavaClassElement.javaDAOInterfaceCodeBuffer.toString());
 		//folderPath+"output"+"/"+"generatedinterface"+"/"+viewName+"GenDAO.java
 		//StringBuffer interfaceHeader=ConvertUtilities.writeInterfaceHeader(pojoName);
 		//WriteToFile.appendToFileWithHeader(interfaceHeader, JavaClassElement.javaDAOInterfaceCodeBuffer,logModel.getFullJavaDAOInterfaceFileName(pojoName));
@@ -381,7 +381,7 @@ public class JavaReadByFromDBElement extends AbsctractConditionalJavaElement {
 		JavaClassElement.javaHibernateCodeBuffer.append("@Override"+JavaConstants.NEW_LINE);
 		JavaClassElement.javaHibernateCodeBuffer.append("public List<"+pojoName+">");
 		JavaClassElement.javaHibernateCodeBuffer.append(" ");
-		JavaClassElement.javaHibernateCodeBuffer.append(findByMethodSignature+ JavaConstants.OPEN_BRACKET +JavaConstants.NEW_LINE);
+		JavaClassElement.javaHibernateCodeBuffer.append(readByMethodSignature+ JavaConstants.OPEN_BRACKET +JavaConstants.NEW_LINE);
 		JavaClassElement.javaHibernateCodeBuffer.append("Criteria main_crit = currentSession().createCriteria(getPersistentClass());"+JavaConstants.NEW_LINE);
 		for(int index=0; index<conditionListWithFiltersAndParantesiz.size();index++){
 			if(conditionListWithFiltersAndParantesiz.get(index) instanceof AbstractToken){// b) Parantez gördü isen subfonksiyonu çağır. Parantez içindeki ifadenin criterion objesini yarat. 
@@ -445,7 +445,7 @@ public class JavaReadByFromDBElement extends AbsctractConditionalJavaElement {
 		JavaClassElement.javaHibernateCodeBuffer.append(JavaConstants.NEW_LINE+JavaConstants.CLOSE_BRACKET +JavaConstants.NEW_LINE);
 		JavaClassElement.javaHibernateCodeBuffer.append(JavaConstants.NEW_LINE);
 		
-		JavaClassElement.javaHibernateCodeMap.put(pojoName+" "+findByMethodSignature, JavaClassElement.javaHibernateCodeBuffer.toString());
+		JavaClassElement.javaHibernateCodeMap.put(pojoName+" "+readByMethodSignature, JavaClassElement.javaHibernateCodeBuffer.toString());
 		//folderPath+"output"+"/"+"generatedinterface"+"/"+viewName+"GenDAO.java
 		//StringBuffer hibernateHeader=ConvertUtilities.writeDAOImplemantasyonClassHeader(pojoName);
 		//WriteToFile.appendToFileWithHeader(hibernateHeader, JavaClassElement.javaHibernateCodeBuffer,logModel.getFullJavaHibernateFileName(pojoName));

@@ -1,13 +1,13 @@
 package tr.com.vbt.cobol.convert;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -37,8 +37,8 @@ import tr.com.vbt.patern.PaternManagerMapNaturalImpl;
 import tr.com.vbt.patern.PaternManagerNaturalImpl;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.TokenTipi;
-import tr.com.vbt.util.ConverterConfiguration;
 import tr.com.vbt.util.ConversionMode;
+import tr.com.vbt.util.ConverterConfiguration;
 import tr.com.vbt.util.WriteToFile;
 
 public class TransferFromNaturalToJavaMain {
@@ -183,8 +183,8 @@ public class TransferFromNaturalToJavaMain {
 						MDC.put("fileName", logModel.getFileName());
 						logModel.setClientInteracting(true);
 						transferDriver.driveTransfer(logModel);
-						transferDriver.writeDalCodes(logModel);
-						transferDriver.writeDalHibernateCodes(logModel);
+						//transferDriver.writeDalCodes(logModel);
+						//transferDriver.writeDalHibernateCodes(logModel);
 						logger.warn("Conversion Statu: Ended For File " + logModel.getFileName());
 						logger.warn("**********************************************************************");
 						logger.warn("******************************END***************************************");
@@ -218,8 +218,8 @@ public class TransferFromNaturalToJavaMain {
 					transferDriver = new TransferFromNaturalToJavaMain();
 					MDC.put("InputFileForConversion", logModel.getFileName());
 					transferDriver.driveTransfer(logModel);
-					transferDriver.writeDalCodes(logModel);
-					transferDriver.writeDalHibernateCodes(logModel);
+					//transferDriver.writeDalCodes(logModel);
+					//transferDriver.writeDalHibernateCodes(logModel);
 					logger.warn("Conversion Statu: Ended For File " + logModel.getFileName());
 					logger.warn("**********************************************************************");
 					logger.warn("******************************END***************************************");
@@ -297,14 +297,8 @@ public class TransferFromNaturalToJavaMain {
 	
 	public static void reCreateOutputFoldersForDAL() throws Exception {
 		
-		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedhibernate/tr/com/thy/dal/hibernate/generated"));
-		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedhibernate/tr/com/thy/dal/hibernate"));
-		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedhibernate/tr/com/thy/dal/"));
-		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedhibernate/tr/com/thy/"));
-		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedhibernate/tr/com/"));
-		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedhibernate/tr/"));
-		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedhibernate/"));
-		
+		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/thy/dal/hibernate/generated"));
+		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/thy/dal/hibernate"));
 		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/thy/dal/generated"));
 		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/thy/dal/"));
 		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/thy/"));
@@ -316,22 +310,14 @@ public class TransferFromNaturalToJavaMain {
 		
 		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output");
 		
-		
-		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedhibernate");
-		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedhibernate/tr");
-		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedhibernate/tr/com");
-		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedhibernate/tr/com/thy/");
-		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedhibernate/tr/com/thy/dal/");
-		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedhibernate/tr/com/thy/dal/hibernate");
-		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedhibernate/tr/com/thy/dal/hibernate/generated");
-		
-		
 		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface");
 		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr");
 		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com");
 		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/thy/");
 		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/thy/dal/");
 		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/thy/dal/generated");
+		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/thy/dal/hibernate");
+		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/thy/dal/hibernate/generated");
 
 		
 	}
@@ -375,7 +361,7 @@ public class TransferFromNaturalToJavaMain {
 		return false;
 	}
 
-	private void writeDalHibernateCodes(ConversionLogModel logModel) {
+	public void writeDalHibernateCodes() {
 
 		Set<String> keys = JavaClassElement.javaHibernateCodeMap.keySet();
 
@@ -390,7 +376,7 @@ public class TransferFromNaturalToJavaMain {
 			if (!tables.contains(pojoName)) { // Bu pojoyu İlk kez yazacaksa
 				StringBuffer interfaceHeader = ConvertUtilities.writeDAOImplemantasyonClassHeader(pojoName);
 				try {
-					WriteToFile.writeHeaderToFile(interfaceHeader, logModel.getFullJavaHibernateFileName(pojoName));
+					WriteToFile.writeHeaderToFile(interfaceHeader, ConversionLogModel.getInstance().getFullJavaHibernateFileName(pojoName));
 				} catch (IOException e) {
 					logger.warn(
 							"DAL Interface  Write For File" + pojoName + " " + findByMethodSignature + " WITH ERROR+");
@@ -403,7 +389,7 @@ public class TransferFromNaturalToJavaMain {
 			}
 
 			try {
-				WriteToFile.appendToFile(findByMethodSignature, logModel.getFullJavaHibernateFileName(pojoName));
+				WriteToFile.appendToFile(findByMethodSignature, ConversionLogModel.getInstance().getFullJavaHibernateFileName(pojoName));
 			} catch (IOException e) {
 				logger.warn("DAL Interface  Write For File" + pojoName + " " + findByMethodSignature + " WITH ERROR+");
 				logger.warn("", e);
@@ -411,13 +397,11 @@ public class TransferFromNaturalToJavaMain {
 				logger.warn("****************************ERROR END***********************************");
 				logger.warn("**********************************************************************");
 			}
-			endCloseTagGenHibernate(pojoName);
-
 		}
 
 	}
 
-	private void writeDalCodes(ConversionLogModel logModel) throws FileNotFoundException {
+	public void writeDalCodes() throws FileNotFoundException {
 
 		Set<String> keys = JavaClassElement.javaDAOInterfaceCodeMap.keySet();
 
@@ -432,7 +416,7 @@ public class TransferFromNaturalToJavaMain {
 			if (!tables.contains(pojoName)) { // Bu pojoyu İlk kez yazacaksa
 				StringBuffer interfaceHeader = ConvertUtilities.writeInterfaceHeader(pojoName);
 				try {
-					WriteToFile.writeHeaderToFile(interfaceHeader, logModel.getFullJavaDAOInterfaceFileName(pojoName));
+					WriteToFile.writeHeaderToFile(interfaceHeader, ConversionLogModel.getInstance().getFullJavaDAOInterfaceFileName(pojoName));
 				} catch (IOException e) {
 					logger.warn(
 							"DAL Interface  Write For File" + pojoName + " " + findByMethodSignature + " WITH ERROR+");
@@ -445,7 +429,7 @@ public class TransferFromNaturalToJavaMain {
 			}
 
 			try {
-				WriteToFile.appendToFile(findByMethodSignature, logModel.getFullJavaDAOInterfaceFileName(pojoName));
+				WriteToFile.appendToFile(findByMethodSignature, ConversionLogModel.getInstance().getFullJavaDAOInterfaceFileName(pojoName));
 			} catch (IOException e) {
 				logger.warn("DAL Interface  Write For File" + pojoName + " " + findByMethodSignature + " WITH ERROR+");
 				logger.warn("", e);
@@ -453,32 +437,45 @@ public class TransferFromNaturalToJavaMain {
 				logger.warn("****************************ERROR END***********************************");
 				logger.warn("**********************************************************************");
 			}
+			
+			registerPojo(pojoName);
 
-			endCloseTagGenDao(pojoName);
 		}
 
 	}
 
-	private void endCloseTagGenDao(String pojoName) {
-		// TODO Auto-generated method stub
-		try {
-			WriteToFile.appendToFile("}", ConversionLogModel.getInstance().getFullJavaDAOInterfaceFileName(pojoName));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	private void registerPojo(String pojoName) {
+
+		ConversionLogModel.getInstance().registerPojo(pojoName);
+		
 	}
 
-	private void endCloseTagGenHibernate(String pojoName) {
-		// TODO Auto-generated method stub
-		try {
-			WriteToFile.appendToFile("}", ConversionLogModel.getInstance().getFullJavaHibernateFileName(pojoName));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
+	public void endCloseTagGenDao() {
+		
+       Iterator iterator = ConversionLogModel.getInstance().getPojoMap().entrySet().iterator();
+      
+       String fileName,fileNameHibernate;
+       
+       while (iterator.hasNext()) {
+            Map.Entry mapEntry = (Map.Entry) iterator.next();
+            
+            fileName=ConversionLogModel.getInstance().getFullJavaDAOInterfaceFileName(mapEntry.getKey().toString());
+            
+            fileNameHibernate=ConversionLogModel.getInstance().getFullJavaHibernateFileName(mapEntry.getKey().toString());
+            
+			try {
+				WriteToFile.appendToFile("}", fileName);
+				
+				WriteToFile.appendToFile("}", fileNameHibernate);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
 	}
+
+
 
 	private void driveTransfer(ConversionLogModel logModel) throws Exception {
 
@@ -739,8 +736,8 @@ public class TransferFromNaturalToJavaMain {
 
 	private void resetEveryThingForNewConversion() {
 		NaturalCommandList.reset();
-		JavaClassElement.javaHibernateCodeMap.clear();
-		JavaClassElement.javaDAOInterfaceCodeMap.clear();
+		//JavaClassElement.javaHibernateCodeMap.clear();
+		//JavaClassElement.javaDAOInterfaceCodeMap.clear();
 
 	}
 
@@ -753,6 +750,17 @@ public class TransferFromNaturalToJavaMain {
 			}
 		}
 
+	}
+
+
+	public void operateConversionForCommonDAL() throws FileNotFoundException {
+		
+		writeDalCodes();
+		
+		writeDalHibernateCodes();
+		
+		endCloseTagGenDao();
+		
 	}
 
 }

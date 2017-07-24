@@ -135,8 +135,8 @@ public class JavaFindWithElement extends AbsctractConditionalJavaElement {
 
 		calculatedResultListName = "";// LIMAN_RESULT_LIST
 		calculatedDAOName = "";
-		findByString=createFindByString();
-		findByMethodSignature=createFindByMethodString();
+		findByString=createFindByString("findBy");
+		findByMethodSignature=createFindByMethodString("findBy");
 		//itName="it"+pojoName;
 		itName=itNameManager.createIteratorName(pojoName);
 		logger.debug("findByString :"+findByString);

@@ -395,27 +395,32 @@ public class JavaWriteUtilities {
 	 */
 	private static String toCustomPojoVariableString(AbstractToken token) throws Exception {
 		
-		if(token.isColumnRedefiner()){
-			return toCustomRedefinedColumnVariableString(token);
-		}
-		
-		DDM ddm=DDMList.getInstance().getDDM(token);
-		if(ddm==null){
-			return ruleEmtpy_1(ddm, token);
-		}
-		if(token.getDeger().equals(token.getColumnNameToken().getDeger())){
-			token.setColumnNameToken(token.getLinkedToken());
-		}
-		if(((ddm.getT().isEmpty()) && ddm.getL().equals("1")) || (ddm.getT().equals("G")&& ddm.getL().equals("1"))){
-			return ruleEmtpy_1(ddm, token);
-		}else if(ddm.getT().equals("M")&& ddm.getL().equals("1")){
-			return ruleM_1(ddm, token);
-		}else if(ddm.getT().equals("P")&& ddm.getL().equals("1")){
-			return ruleP_1(ddm , token);
-		}else if(ddm.getT().isEmpty()&& ddm.getL().equals("2")){
-			return ruleEmpty_2(ddm ,token);
-		}else if(ddm.getT().equals("M")&& ddm.getL().equals("2")){
-			return ruleM_2(ddm,token);
+		try {
+			if(token.isColumnRedefiner()){
+				return toCustomRedefinedColumnVariableString(token);
+			}
+			
+			DDM ddm=DDMList.getInstance().getDDM(token);
+			if(ddm==null){
+				return ruleEmtpy_1(ddm, token);
+			}
+			if(token.getDeger().equals(token.getColumnNameToken().getDeger())){
+				token.setColumnNameToken(token.getLinkedToken());
+			}
+			if(((ddm.getT().isEmpty()) && ddm.getL().equals("1")) || (ddm.getT().equals("G")&& ddm.getL().equals("1"))){
+				return ruleEmtpy_1(ddm, token);
+			}else if(ddm.getT().equals("M")&& ddm.getL().equals("1")){
+				return ruleM_1(ddm, token);
+			}else if(ddm.getT().equals("P")&& ddm.getL().equals("1")){
+				return ruleP_1(ddm , token);
+			}else if(ddm.getT().isEmpty()&& ddm.getL().equals("2")){
+				return ruleEmpty_2(ddm ,token);
+			}else if(ddm.getT().equals("M")&& ddm.getL().equals("2")){
+				return ruleM_2(ddm,token);
+			}
+		} catch (Exception e) {
+			logger.debug(e.getMessage(),e);
+			return "getPojoValue()";
 		}
 	
 		throw new Exception(token.getDeger().toString()+" DDM bulunamadi.");
@@ -503,7 +508,11 @@ public class JavaWriteUtilities {
 			getterString= "getPojoValue("+"\""+token.getDeger().toString();
 
 		getterString +=".";
-		getterString +=Utility.viewNameToPojoGetterName(token.getColumnNameToken().getDeger().toString());
+		if(token.getColumnNameToken()==null){
+			getterString +=Utility.viewNameToPojoGetterName(token.getDeger().toString());
+		}else{
+			getterString +=Utility.viewNameToPojoGetterName(token.getColumnNameToken().getDeger().toString());
+		}
 		getterString +="()"+"\""+")";
 		return getterString;
 
@@ -524,7 +533,15 @@ public class JavaWriteUtilities {
 			getterString= "getPojoValue("+"\""+token.getDeger().toString();
 		
 		getterString +=".";
-		getterString +=Utility.viewNameToPojoGetterName(rdfColumn.getColumn().toString());
+		if(rdfColumn.getColumn()==null){
+	
+			getterString +=Utility.viewNameToPojoGetterName(rdfColumn.toString());
+			
+		}else{
+			
+			getterString +=Utility.viewNameToPojoGetterName(rdfColumn.getColumn().toString());
+			
+		}
 		getterString +="()";
 		if(rdfColumn.getStartIndex()!=-1){
 			getterString +=".substring(";
@@ -543,7 +560,14 @@ public class JavaWriteUtilities {
 		String setterString;
 			setterString= "getPojoValue("+"\""+token.getDeger().toString();
 		setterString +=".";
-		setterString +=Utility.viewNameToPojoSetterName(token.getColumnNameToken().getDeger().toString())+"\""+")";
+		if(token.getColumnNameToken()==null){
+			
+			setterString +=Utility.viewNameToPojoSetterName(token.getDeger().toString())+"\""+")";
+					
+		}else{
+			
+			setterString +=Utility.viewNameToPojoSetterName(token.getColumnNameToken().getDeger().toString())+"\""+")";
+		}
 		return setterString;
 
 	}
@@ -555,7 +579,11 @@ public class JavaWriteUtilities {
 		String setterString;
 			setterString= "getPojoValue("+"\""+token.getDeger().toString();
 		setterString +=".";
-		setterString +=Utility.viewNameToPojoSetterName(token.getColumnNameToken().getDeger().toString())+"\""+")";
+		if(token.getColumnNameToken()==null){
+			setterString +=Utility.viewNameToPojoSetterName(token.getDeger().toString())+"\""+")";
+		}else{
+			setterString +=Utility.viewNameToPojoSetterName(token.getColumnNameToken().getDeger().toString())+"\""+")";
+		}
 		return setterString;
 
 	}
@@ -571,10 +599,18 @@ public class JavaWriteUtilities {
 		String getterString;//TESKI;
 			getterString= "getPojoValue("+"\""+token.getDeger().toString();
 		getterString +=".";
-		getterString +=Utility.viewNameToPojoGetterName(token.getColumnNameToken().getDeger().toString());
+		if(token.getColumnNameToken()==null){
+			getterString +=Utility.viewNameToPojoGetterName(token.getDeger().toString());
+		}else{
+			getterString +=Utility.viewNameToPojoGetterName(token.getColumnNameToken().getDeger().toString());
+		};
 		getterString +="s()";		//getKetTaxA9s()
 		getterString +=".";
-		getterString +="get("+JavaWriteUtilities.toCustomString(token.getPojosDimension())+"-1)";
+		if(token.getPojosDimension()==null){
+			getterString +="get("+JavaWriteUtilities.toCustomString(token)+"-1)";
+		}else{
+			getterString +="get("+JavaWriteUtilities.toCustomString(token.getPojosDimension())+"-1)";
+		}
 		getterString +=".";
 		getterString +=Utility.viewNameToPojoGetterName(token.getColumnNameToken().getDeger().toString());
 		getterString +="()"+"\""+")";
