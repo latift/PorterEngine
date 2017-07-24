@@ -175,10 +175,10 @@ public class NaturalCommandList extends AbstractCommandList {
 
 			try {
 				
-				includedFileObject = Class.forName("tr.com.thy.dal.variables.local." + fileName)
+				includedFileObject = Class.forName("tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.variables.local." + fileName)
 						.newInstance();
 			} catch (Exception e) {
-				includedFileObject = Class.forName("tr.com.thy.dal.variables.global." + fileName)
+				includedFileObject = Class.forName("tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.variables.global." + fileName)
 						.newInstance();
 				//continue;  //Globallere bakma.
 			}

@@ -1,75 +1,86 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>tr.com.vbt.porter</groupId>
-  <artifactId>PorterEngine</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>pom</packaging>
-  <properties>
-  		<maven.compiler.source>1.7</maven.compiler.source>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>tr.com.vbt.porter</groupId>
+	<artifactId>PorterEngine</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<properties>
+		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.springframework.version3>3.1.0.RELEASE</org.springframework.version3>
-		<org.springframework.version>4.1.6.RELEASE</org.springframework.version> 
+		<org.springframework.version>4.1.6.RELEASE</org.springframework.version>
 		<org.springframework.security.version>3.1.4.RELEASE</org.springframework.security.version>
 		<hibernate.version>4.2.21.Final</hibernate.version>
 		<com.oracle.ojdbc.version>10.2.0.4.0</com.oracle.ojdbc.version>
-  </properties>	
-  <modules>
-  	<module>CobolPorterLexer</module>
-  	<module>CobolPorterParser</module>
-  	<module>CobolPorterSemantic</module>
-  </modules>
-	
-  <dependencies>
-		  		<dependency>
-				   <artifactId>Commons</artifactId>
-				   <groupId>tr.com.vbt.porter.lexer</groupId>
-				   <version>0.0.1-SNAPSHOT</version>
-				</dependency>
-				<dependency>
-					<artifactId>THY_COMMON_DAL2</artifactId>
-					<groupId>tr.com.thy.dal</groupId>
-					<version>0.0.1-SNAPSHOT</version>
-				</dependency>
-		  		<dependency>
-						<groupId>javassist</groupId>
-						<artifactId>javassist</artifactId>
-						<version>3.8.0.GA</version>
-				</dependency>
-			
-				<dependency>
-				    <groupId>net.sf.jasperreports</groupId>
-				    <artifactId>jasperreports</artifactId>
-				    <version>6.1.0</version>
-				</dependency>
-						
-				<!-- Use SLF4J for logging -->
-		
-			 <dependency>
-		        <groupId>ch.qos.logback</groupId>
-		        <artifactId>logback-classic</artifactId>
-		        <version>1.0.13</version>
-		    </dependency>
-				
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-api</artifactId>
-				<version>1.6.1</version>
-			</dependency>
+	</properties>
+	<modules>
+		<module>CobolPorterLexer</module>
+		<module>CobolPorterParser</module>
+		<module>CobolPorterSemantic</module>
+	</modules>
 
-			
-			<dependency>
-			    <groupId>cglib</groupId>
-			    <artifactId>cglib</artifactId>
-			    <version>2.2</version>
-			</dependency>
-			
-			<dependency>
-			  <groupId>joda-time</groupId>
-			  <artifactId>joda-time</artifactId>
-			  <version>2.9.6</version>
-			</dependency>
-			<!-- Spring Dependencies Start -->
+	<dependencies>
+		<dependency>
+			<artifactId>Commons</artifactId>
+			<groupId>tr.com.vbt.porter.lexer</groupId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<artifactId>THY_COMMON_DAL2</artifactId>
+			<groupId>tr.com.thy.dal</groupId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>tr.com.mb.iscidovizleri.dal</groupId>
+			<artifactId>MBIsciDovizleriDAL</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<artifactId>THY_COMMON_DAL2</artifactId>
+			<groupId>tr.com.thy.dal</groupId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.8.0.GA</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>6.1.0</version>
+		</dependency>
+
+		<!-- Use SLF4J for logging -->
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.0.13</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>2.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.9.6</version>
+		</dependency>
+		<!-- Spring Dependencies Start -->
 
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -142,27 +153,27 @@
 			<artifactId>spring-security-config</artifactId>
 			<version>${org.springframework.version3}</version>
 		</dependency>
-		
+
 		<dependency>
-		   <groupId>org.springframework</groupId>
-		   <artifactId>spring-orm</artifactId>
-		   	<version>${org.springframework.version}</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${org.springframework.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 			<version>${org.springframework.version}</version>
 		</dependency>
-		
-		<!-- Spring Dependencies End -->
-		
-		 <dependency>
-	        <groupId>com.sun.xml.ws</groupId>
-	        <artifactId>webservices-rt</artifactId>
-	        <version>1.4</version>
-	        <scope>compile</scope>
-	    </dependency>
-				
 
-  </dependencies>
+		<!-- Spring Dependencies End -->
+
+		<dependency>
+			<groupId>com.sun.xml.ws</groupId>
+			<artifactId>webservices-rt</artifactId>
+			<version>1.4</version>
+			<scope>compile</scope>
+		</dependency>
+
+
+	</dependencies>
 </project>
