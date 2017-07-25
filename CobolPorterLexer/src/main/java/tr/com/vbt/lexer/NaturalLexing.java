@@ -1740,9 +1740,9 @@ public class NaturalLexing extends AbstractLexing {
 		// setReservedLineNumberTokens();
 
 		removeFirstFourChar();
-		//Birden fazla loop sorun çıkıyor o yüzden commentledim CEM
+		//YTLDUZ PROGRAM YAPISI DOĞRU DEĞİLDİ DÜZELTİLDİ TEK MODULKE İÇİN YAPILDI CEM
 //		if(ConversionLogModel.getInstance().getMode().equals(NaturalMode.REPORTING)){
-			structureCorrection();
+//			structureCorrection();
 //		}
 		
 		ViewManagerFactory.getInstance().setTypeNameOfViews(tokenListesi);
