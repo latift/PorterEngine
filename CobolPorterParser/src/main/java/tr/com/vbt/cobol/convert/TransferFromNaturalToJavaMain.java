@@ -177,6 +177,7 @@ public class TransferFromNaturalToJavaMain {
 						logger.warn("**********************************************************************");
 						logger.warn("Conversion Statu: Started For File " + logModel.getFileName());
 						transferDriver = new TransferFromNaturalToJavaMain();
+						transferDriver.setConversionConfigurationMode();
 						MDC.put("customer", logModel.getCustomer());
 						MDC.put("module", logModel.getModule());
 						MDC.put("conversionFileType", logModel.getConversionFileType().toString());
@@ -216,6 +217,7 @@ public class TransferFromNaturalToJavaMain {
 
 					logModel.setClientInteracting(true);
 					transferDriver = new TransferFromNaturalToJavaMain();
+					transferDriver.setConversionConfigurationMode();
 					MDC.put("InputFileForConversion", logModel.getFileName());
 					transferDriver.driveTransfer(logModel);
 					//transferDriver.writeDalCodes(logModel);
@@ -250,7 +252,13 @@ public class TransferFromNaturalToJavaMain {
 	// Module/seperatedPrograms/output/java/web/map dosyasını yaratacak
 	// Module/seperatedPrograms/output/java/web/subprogram dosyasını yaratacak
 	
-	
+	private  void setConversionConfigurationMode() {
+		// TODO Auto-generated method stub
+		if(ConversionLogModel.getInstance().getCustomer().toUpperCase().equals("MB")){
+			ConverterConfiguration.pojosAreDefinedInCode=false;
+		}
+		
+	}
 
 	private static void reCreateOutputFoldersForAModule() throws Exception {
 		// TODO Auto-generated method stub
