@@ -65,7 +65,11 @@ public class JavaNaturalClassElement extends  AbstractJavaElement{
 		AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.pojo.*;"+JavaConstants.NEW_LINE);
 		AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.variables.global.*;"+JavaConstants.NEW_LINE);
 		AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.variables.local.*;"+JavaConstants.NEW_LINE);
-		AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+"."+module+".web.interfaces.*;"+JavaConstants.NEW_LINE);
+		if(logModel.getCustomer().equals("MB")){
+			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".web.interfaces.*;"+JavaConstants.NEW_LINE);
+		}else{
+			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+"."+module+".web.interfaces.*;"+JavaConstants.NEW_LINE);
+		}
 		if(logModel.isSubProgram()){
 			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+"."+module+".web.*;"+JavaConstants.NEW_LINE);
 		}
@@ -91,7 +95,11 @@ public class JavaNaturalClassElement extends  AbstractJavaElement{
 		if(logModel.isMap()){
 			AbstractJavaElement.javaCodeBuffer.append(classSecurity+ " " +JavaConstants.CLASS+ " "+ interfaceName+  " extends AbstractNaturalMap "+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE );
 		}else{
-			AbstractJavaElement.javaCodeBuffer.append(classSecurity+ " " +JavaConstants.CLASS+ " "+ implementsClassName+  " extends AbstractNatural"+module.toUpperCase()+"Program implements "+ interfaceName+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE );
+			if(logModel.getCustomer().equals("MB")){
+				AbstractJavaElement.javaCodeBuffer.append(classSecurity+ " " +JavaConstants.CLASS+ " "+ implementsClassName+  " extends AbstractNaturalIsciDovizleriProgram implements "+ interfaceName+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE );
+			}else{
+				AbstractJavaElement.javaCodeBuffer.append(classSecurity+ " " +JavaConstants.CLASS+ " "+ implementsClassName+  " extends AbstractNatural"+module.toUpperCase()+"Program implements "+ interfaceName+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE );
+			}
 		}
 		addConstructor();
 		this.writeChildrenJavaToStream();

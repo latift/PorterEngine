@@ -32,6 +32,10 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 		conditionListWithFiltersAndParantesiz = new ArrayList();
 		Filter fl;
 		AbstractToken filterName = null, filterOperator, filterValue, curToken;
+		
+		if(conditionList==null){
+			return;
+		}
 		for (int index = 0; index < conditionList.size(); index++) {
 			curToken = conditionList.get(index);
 			logger.debug("curToken:" + curToken.getDeger().toString());
@@ -69,6 +73,10 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 		AbstractToken currentToken = null, nextToken = null, previousToken = null;
 
 		System.out.println(conditionList);
+		
+		if(conditionList==null){
+			return null;
+		}
 
 		for (int index = 0; index < conditionList.size(); index++) {
 
@@ -158,6 +166,15 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 		ElementProgramOneDimensionArrayNatural variableDefinitionOneDimensionArray = null;
 
 		String methodParameterType, methodParameterName;
+		
+		if(conditionListWithFiltersAndParantesiz==null || conditionListWithFiltersAndParantesiz.size()==0){
+			if(isFindByOrReadBy.equals("readBy")){
+				return "readAll()";
+			}else{
+				return "findAll()";
+			}
+			
+		}
 
 		for (int index = 0; index < conditionListWithFiltersAndParantesiz.size(); index++) {
 			curFilter = null;
@@ -181,10 +198,19 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 								curFilter.getFilterName().getColumnNameToken().getDeger().toString()));
 					}
 				} else if (curFilter.getFilterName().isRecordVariable()) {
-					findByString.append(Utility.recordNameToRecordDotRecordFieldName(curFilter.getFilterName()));
+					if (curFilter.getFilterName().getColumnNameToken() == null) {
+						findByString.append(Utility.recordNameToRecordDotRecordFieldName(curFilter.getFilterName()));
+					}else{
+						findByString.append(Utility.recordNameToRecordDotRecordFieldName(curFilter.getFilterName().getColumnNameToken()));
+					}
 				} else {
-					findByString.append(Utility.columnNameToPojoFieldNameWithFirstLetterUpper(
-							curFilter.getFilterName().getDeger().toString()));
+					if (curFilter.getFilterName().getColumnNameToken() == null) {
+						findByString.append(Utility.columnNameToPojoFieldNameWithFirstLetterUpper(
+								curFilter.getFilterName().getDeger().toString()));
+					}else{
+						findByString.append(Utility.columnNameToPojoFieldNameWithFirstLetterUpper(
+								curFilter.getFilterName().getColumnNameToken().getDeger().toString()));
+					}
 				}
 				findByString.append(operatorInfoToMethodName(curFilter));
 
@@ -272,6 +298,14 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 		AbstractToken curToken;
 		Filter curFilter;
 		
+		if(conditionListWithFiltersAndParantesiz==null || conditionListWithFiltersAndParantesiz.size()==0){
+			if(isFindByOrReadBy.equals("readBy")){
+				return "readAll()";
+			}else{
+				return "findAll()";
+			}
+			
+		}
 		for(int index=0; index<conditionListWithFiltersAndParantesiz.size();index++){
 			curFilter=null;
 			curToken=null;
@@ -286,7 +320,15 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 				if(curFilter.getFilterName().isRecordVariable()) {
 					findByString.append( Utility.recordNameToRecordDotRecordFieldName(curFilter.getFilterName()));
 				}else {
-					findByString.append(Utility.columnNameToPojoFieldNameWithFirstLetterUpper(curFilter.getFilterName().getDeger().toString()));
+					if(curFilter.getFilterName().getColumnNameToken()!=null){
+					
+						findByString.append(Utility.columnNameToPojoFieldNameWithFirstLetterUpper(curFilter.getFilterName().getColumnNameToken().getDeger().toString()));
+								
+					}else{
+						
+						findByString.append(Utility.columnNameToPojoFieldNameWithFirstLetterUpper(curFilter.getFilterName().getDeger().toString()));
+				
+					}
 				}
 				
 				if(index<conditionListWithFiltersAndParantesiz.size()-1){

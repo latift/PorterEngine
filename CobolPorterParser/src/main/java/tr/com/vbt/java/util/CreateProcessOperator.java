@@ -93,6 +93,7 @@ import tr.com.vbt.java.loops.JavaOnErrorElement;
 import tr.com.vbt.java.loops.JavaPerformThru;
 import tr.com.vbt.java.loops.JavaRepeatElement;
 import tr.com.vbt.java.loops.JavaRepeatUntilElement;
+import tr.com.vbt.java.loops.JavaRepeatWhileElement;
 import tr.com.vbt.java.loops.JavaWhileElement;
 import tr.com.vbt.java.screen.JavaAtEndOfPageElement;
 import tr.com.vbt.java.screen.JavaAtTopOfPageElement;
@@ -268,6 +269,9 @@ public class CreateProcessOperator extends ProcessOperator {
 			break;
 		case "JavaRepeatUntilElement":
 			elementForCreate = new JavaRepeatUntilElement();
+			break;
+		case "JavaRepeatWhileElement":
+			elementForCreate = new JavaRepeatWhileElement();
 			break;
 		case "JavaEscapeTopElement":
 			elementForCreate = new JavaEscapeTopElement();

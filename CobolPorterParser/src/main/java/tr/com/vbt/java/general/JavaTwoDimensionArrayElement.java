@@ -124,7 +124,7 @@ public class JavaTwoDimensionArrayElement extends AbstractJavaElement {
 			type=ConvertUtilities.getJavaVariableType(dataType, arrayLength, lengthAfterDot);
 			//String[4] SECIM_YURT_ICI_AKARYAKIT=new String[4];
 			//int[15] ROL1=new int[15];  
-			JavaClassElement.javaCodeBuffer.append(type + "[][] ");
+			JavaClassElement.javaCodeBuffer.append("public "+type + "[][] ");
 			if (dataName != null) {
 				JavaClassElement.javaCodeBuffer.append(dataName.replace('-', '_'));
 			} else {

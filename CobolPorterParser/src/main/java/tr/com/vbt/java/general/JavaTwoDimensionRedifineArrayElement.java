@@ -120,7 +120,7 @@ public class JavaTwoDimensionRedifineArrayElement extends AbstractJavaElement {
 			
 			
 			//RedefineOneDimensionToTwoDimension ref1=new RedefineOneDimensionToTwoDimension(SIRALIMAN_DIZI1,60,15,900);
-			JavaClassElement.javaCodeBuffer.append("RedefineOneDimensionToTwoDimension "+(CustomStringUtils.replaceMiddleLineWithSubLine(dataName))+"=new RedefineOneDimensionToTwoDimension("+redefinedCommand.getCommandName()+",60,15,900)");
+			JavaClassElement.javaCodeBuffer.append("public RedefineOneDimensionToTwoDimension "+(CustomStringUtils.replaceMiddleLineWithSubLine(dataName))+"=new RedefineOneDimensionToTwoDimension("+redefinedCommand.getCommandName()+",60,15,900)");
 			
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA);
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);

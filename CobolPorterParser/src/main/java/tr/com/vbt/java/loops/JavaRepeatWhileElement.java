@@ -23,9 +23,9 @@ import tr.com.vbt.token.TokenTipi;
 //IF A = '1' AND A = '2' --> IF (A == '1' && A == '2')
 
 
-public class JavaRepeatUntilElement extends  AbstractJavaElement {
+public class JavaRepeatWhileElement extends  AbstractJavaElement {
 	
-	final static Logger logger = LoggerFactory.getLogger(JavaRepeatUntilElement.class);
+	final static Logger logger = LoggerFactory.getLogger(JavaRepeatWhileElement.class);
 	
 	private List<AbstractToken> conditionList = new ArrayList<AbstractToken>();
 	
@@ -41,8 +41,6 @@ public class JavaRepeatUntilElement extends  AbstractJavaElement {
 
 			JavaClassElement.javaCodeBuffer.append("while ");
 			
-			JavaClassElement.javaCodeBuffer.append("(!");
-			
 			try {
 				conUtilities.writeConditions();
 			} catch (Exception e) {
@@ -54,8 +52,6 @@ public class JavaRepeatUntilElement extends  AbstractJavaElement {
 				logger.error("//Conversion Error:" + e.getMessage(), e);
 				ConvertUtilities.writeconversionErrors(e, this);
 			}
-			
-			JavaClassElement.javaCodeBuffer.append(")");
 
 			if (ConversionLogModel.getInstance().getMode().equals(NaturalMode.STRUCTRURED)) {
 				JavaClassElement.javaCodeBuffer.append(JavaConstants.OPEN_BRACKET);

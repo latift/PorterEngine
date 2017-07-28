@@ -152,56 +152,14 @@ public class JavaFindNumberWithElement extends AbsctractConditionalJavaElement {
 			JavaClassElement.javaCodeBuffer.append(".");
 			JavaClassElement.javaCodeBuffer.append(findByString+ JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
 			
-			//{
-			JavaClassElement.javaCodeBuffer.append("{"+ JavaConstants.NEW_LINE);
-				
-				JavaClassElement.javaCodeBuffer.append("NUMBER="+calculatedResultListName+".size()"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
+			JavaClassElement.javaCodeBuffer.append("NUMBER=0;"+ JavaConstants.NEW_LINE);
 			
-				//finderIndex=true;
-				JavaClassElement.javaCodeBuffer.append("finderIndex=true"+ JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
+			JavaClassElement.javaCodeBuffer.append("if("+calculatedResultListName+"!=null){"+ JavaConstants.NEW_LINE);
 			
-				//while(finderIndex){
-				JavaClassElement.javaCodeBuffer.append("while(finderIndex){"+ JavaConstants.NEW_LINE);
+			JavaClassElement.javaCodeBuffer.append("NUMBER="+calculatedResultListName+".size()"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
 			
-			
-						//	if(LIMAN_RESULT_LIST==null || LIMAN_RESULT_LIST.size==0){
-						JavaClassElement.javaCodeBuffer.append("if("+calculatedResultListName+"==null || "+calculatedResultListName+".size()==0){"+ JavaConstants.NEW_LINE);
-			
-						//
-						if(javaIfNoRecords!=null){
-									this.getChildren().remove(0); //aşağıda tekrar yazılmasın diye listeden çıkarılır.
-									javaIfNoRecords.writeJavaToStream();
-							}
-			
-						//	}else{
-						JavaClassElement.javaCodeBuffer.append("}else{"+ JavaConstants.NEW_LINE);
-				
-								//		Iterotor it=LIMAN_RESULT_LIST.iterator(); 
-								JavaClassElement.javaCodeBuffer.append("Iterator<"+pojoType+"> "+itName+"="+calculatedResultListName+".iterator()"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
-								
-								//		while(it.hasnext()){
-								JavaClassElement.javaCodeBuffer.append("while("+itName+".hasNext()){"+ JavaConstants.NEW_LINE);
-			
-											//			LIMAN=it.next();
-											JavaClassElement.javaCodeBuffer.append(viewName+"="+itName+".next()"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
-											
-											//			ULKE_KODU=LIMAN.getLUlkeKodu();
-											this.writeChildrenJavaToStream();
-			
-								//		}
-								JavaClassElement.javaCodeBuffer.append("}"+"//While Iterator End"+ JavaConstants.NEW_LINE);
-			
-						//	}
-						JavaClassElement.javaCodeBuffer.append("}"+"//Else End"+ JavaConstants.NEW_LINE);
-			
-						//finderIndex=false;
-						JavaClassElement.javaCodeBuffer.append("finderIndex=false"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
-			
-				//}
-				JavaClassElement.javaCodeBuffer.append("}"+ "//While End"+ JavaConstants.NEW_LINE);
-			//}
-			JavaClassElement.javaCodeBuffer.append("}"+ "//Find End"+ JavaConstants.NEW_LINE);
-			
+			JavaClassElement.javaCodeBuffer.append("}"+ JavaConstants.NEW_LINE);
+					
 		} catch (Exception e) {
 			logger.debug("//Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()+this.getSourceCode().getCommandName());
 			JavaClassElement.javaCodeBuffer.append("/*Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()

@@ -112,37 +112,23 @@ public class JavaReadByFromDBElement extends AbsctractConditionalJavaElement {
 	private AbstractJavaElement javaIfNoRecords;
 	
 	public boolean writeJavaToStream() throws Exception{
+	
 		super.writeJavaToStream();
+		
+		try{
 
 		viewName = (AbstractToken) this.getParameters().get("viewName");
 		
 		pojoName=Utility.viewNameToPojoName(viewName.getTypeNameOfView());
-		if(this.parameters.get("conditionList")!=null) {
-			conditionList = (List<AbstractToken>) this.parameters.get("conditionList");
-			
-		}else {
-			
-			JavaClassElement.javaCodeBuffer.append(calculatedResultListName);
-			JavaClassElement.javaCodeBuffer.append("=");
-			JavaClassElement.javaCodeBuffer.append(calculatedDAOName);
-			JavaClassElement.javaCodeBuffer.append(".");
-			JavaClassElement.javaCodeBuffer.append("findAll()"+ JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
-			
-			xxx();
-			
-			return true ;
-		}
+		
 		parseSortList();
 		convertConditions(); // Tek token olmayan filtre operatorlerini tek tokena düşürür.
-		defineConditionTokenTypes();
-		try {
-			convertConditionsToFilters();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		
-
+		defineConditionTokenTypes();
+	
+		convertConditionsToFilters();
+	
+		
 		calculatedResultListName = "";// LIMAN_RESULT_LIST
 		calculatedDAOName = "";
 		readByString=createFindByString("readBy");
@@ -153,175 +139,81 @@ public class JavaReadByFromDBElement extends AbsctractConditionalJavaElement {
 		itName=itNameManager.createIteratorName(pojoName);
 		
 
-		calculatedResultListName = viewName.toCustomString() + "_RESULT_LIST";
-		calculatedDAOName = viewName.getTypeNameOfView() + "_DAO";
+		calculatedResultListName = viewName.getTypeNameOfView().replaceAll("-", "_") + "_RESULT_LIST";
+		calculatedDAOName = viewName.getTypeNameOfView().replaceAll("-", "_") + "_DAO";
 		
 		javaIfNoRecords=this.getChildWithName("JavaIfNoRecords");
 		
 		
-		try {
-
-
-			//LIMAN_RESULT_LIST=LIMAN_DAO.findByMusno2AndReferansSmallerAndOpenParBsicilOrAsicilCloseParAndIslemTar(GecMusno2, Map.refno, 0,0,Guntar);
-			JavaClassElement.javaCodeBuffer.append(calculatedResultListName);
-			JavaClassElement.javaCodeBuffer.append("=");
-			JavaClassElement.javaCodeBuffer.append(calculatedDAOName);
-			JavaClassElement.javaCodeBuffer.append(".");
-			JavaClassElement.javaCodeBuffer.append(readByString.replaceAll("-", "_")+ JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
+		
+		//LIMAN_RESULT_LIST=LIMAN_DAO.findByMusno2AndReferansSmallerAndOpenParBsicilOrAsicilCloseParAndIslemTar(GecMusno2, Map.refno, 0,0,Guntar);
+		JavaClassElement.javaCodeBuffer.append(calculatedResultListName);
+		JavaClassElement.javaCodeBuffer.append("=");
+		JavaClassElement.javaCodeBuffer.append(calculatedDAOName);
+		JavaClassElement.javaCodeBuffer.append(".");
+		JavaClassElement.javaCodeBuffer.append(readByString.replaceAll("-", "_")+ JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
+		
+		//{
+		JavaClassElement.javaCodeBuffer.append("{"+ JavaConstants.NEW_LINE);
+		
+			//finderIndex=true;
+			JavaClassElement.javaCodeBuffer.append("finderIndex=true"+ JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
+		
+			//while(finderIndex){
+			JavaClassElement.javaCodeBuffer.append("while(finderIndex){"+ JavaConstants.NEW_LINE);
+		
+		
+					//	if(LIMAN_RESULT_LIST==null || LIMAN_RESULT_LIST.size==0){
+					JavaClassElement.javaCodeBuffer.append("if("+calculatedResultListName+"==null || "+calculatedResultListName+".size()==0){"+ JavaConstants.NEW_LINE);
+		
+					//
+					if(javaIfNoRecords!=null){
+								this.getChildren().remove(0); //aşağıda tekrar yazılmasın diye listeden çıkarılır.
+								javaIfNoRecords.writeJavaToStream();
+						}
+		
+					//	}else{
+					JavaClassElement.javaCodeBuffer.append("}else{"+ JavaConstants.NEW_LINE);
 			
-			//{
-			JavaClassElement.javaCodeBuffer.append("{"+ JavaConstants.NEW_LINE);
-			
-				//finderIndex=true;
-				JavaClassElement.javaCodeBuffer.append("finderIndex=true"+ JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
-			
-				//while(finderIndex){
-				JavaClassElement.javaCodeBuffer.append("while(finderIndex){"+ JavaConstants.NEW_LINE);
-			
-			
-						//	if(LIMAN_RESULT_LIST==null || LIMAN_RESULT_LIST.size==0){
-						JavaClassElement.javaCodeBuffer.append("if("+calculatedResultListName+"==null || "+calculatedResultListName+".size()==0){"+ JavaConstants.NEW_LINE);
-			
-						//
-						if(javaIfNoRecords!=null){
-									this.getChildren().remove(0); //aşağıda tekrar yazılmasın diye listeden çıkarılır.
-									javaIfNoRecords.writeJavaToStream();
-							}
-			
-						//	}else{
-						JavaClassElement.javaCodeBuffer.append("}else{"+ JavaConstants.NEW_LINE);
-				
-								//		Iterotor it=LIMAN_RESULT_LIST.iterator(); 
-								JavaClassElement.javaCodeBuffer.append("Iterator<"+pojoName+"> "+itName+"="+calculatedResultListName+".iterator()"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
-								
-								//		while(it.hasnext()){
-								JavaClassElement.javaCodeBuffer.append("while("+itName+".hasNext()){"+ JavaConstants.NEW_LINE);
-			
-											//			LIMAN=it.next();
-											JavaClassElement.javaCodeBuffer.append(viewName.toCustomString()+"="+itName+".next()"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
-											
-											JavaClassElement.javaCodeBuffer.append("ISN=(int) "+viewName.toCustomString()+".getIsn()"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
-											
-											//			ULKE_KODU=LIMAN.getLUlkeKodu();
-											this.writeChildrenJavaToStream();
-			
-								//		}
-								JavaClassElement.javaCodeBuffer.append("}"+"//While Iterator End"+ JavaConstants.NEW_LINE);
-			
-						//	}
-						JavaClassElement.javaCodeBuffer.append("}"+"//Else End"+ JavaConstants.NEW_LINE);
-			
-						//finderIndex=false;
-						JavaClassElement.javaCodeBuffer.append("finderIndex=false"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
-			
-				//}
-				JavaClassElement.javaCodeBuffer.append("}"+ "//While End"+ JavaConstants.NEW_LINE);
+							//		Iterotor it=LIMAN_RESULT_LIST.iterator(); 
+							JavaClassElement.javaCodeBuffer.append("Iterator<"+pojoName+"> "+itName+"="+calculatedResultListName+".iterator()"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
+							
+							//		while(it.hasnext()){
+							JavaClassElement.javaCodeBuffer.append("while("+itName+".hasNext()){"+ JavaConstants.NEW_LINE);
+		
+										//			LIMAN=it.next();
+										JavaClassElement.javaCodeBuffer.append(viewName.toCustomString()+"="+itName+".next()"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
+										
+										JavaClassElement.javaCodeBuffer.append("ISN=(int) "+viewName.toCustomString()+".getIsn()"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
+										
+										//			ULKE_KODU=LIMAN.getLUlkeKodu();
+										this.writeChildrenJavaToStream();
+		
+							//		}
+							JavaClassElement.javaCodeBuffer.append("}"+"//While Iterator End"+ JavaConstants.NEW_LINE);
+		
+					//	}
+					JavaClassElement.javaCodeBuffer.append("}"+"//Else End"+ JavaConstants.NEW_LINE);
+		
+					//finderIndex=false;
+					JavaClassElement.javaCodeBuffer.append("finderIndex=false"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
+		
 			//}
-			JavaClassElement.javaCodeBuffer.append("}"+ "//Find End"+ JavaConstants.NEW_LINE);
-			
-		} catch (Exception e) {
-			logger.debug("//Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()+this.getSourceCode().getCommandName());
-			JavaClassElement.javaCodeBuffer.append("/*Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()
-					+this.getSourceCode().getCommandName()+"*/"+JavaConstants.NEW_LINE);
-			logger.error("//Conversion Error:"+e.getMessage(), e); 
-			ConvertUtilities.writeconversionErrors(e, this);
-		}
-
+			JavaClassElement.javaCodeBuffer.append("}"+ "//While End"+ JavaConstants.NEW_LINE);
+		//}
+		JavaClassElement.javaCodeBuffer.append("}"+ "//Find End"+ JavaConstants.NEW_LINE);
+		
+	} catch (Exception e) {
+		logger.debug("//Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()+this.getSourceCode().getCommandName());
+		JavaClassElement.javaCodeBuffer.append("/*Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()
+				+this.getSourceCode().getCommandName()+"*/"+JavaConstants.NEW_LINE);
+		logger.error("//Conversion Error:"+e.getMessage(), e); 
+		ConvertUtilities.writeconversionErrors(e, this);
+	}
+		
 		writeHibernateCode();
 		writeDAOInterfaceCode();
 		return true;
-	}
-
-
-
-	private void xxx() throws Exception {
-		// TODO Auto-generated method stub
-		calculatedResultListName = "";// LIMAN_RESULT_LIST
-		calculatedDAOName = "";
-		//findByString=createFindByString();
-		//findByMethodSignature=createFindByMethodString();
-		//logger.debug("findByString :"+findByString);
-		//logger.debug("findByMethodSignature :"+findByMethodSignature);
-		//itName="it"+pojoName;
-		itName=itNameManager.createIteratorName(pojoName);
-		
-
-		calculatedResultListName = viewName.toCustomString() + "_RESULT_LIST";
-		calculatedDAOName = viewName.getTypeNameOfView() + "_DAO";
-		
-		javaIfNoRecords=this.getChildWithName("JavaIfNoRecords");
-		
-		
-		try {
-
-
-			//LIMAN_RESULT_LIST=LIMAN_DAO.findByMusno2AndReferansSmallerAndOpenParBsicilOrAsicilCloseParAndIslemTar(GecMusno2, Map.refno, 0,0,Guntar);
-			JavaClassElement.javaCodeBuffer.append(calculatedResultListName);
-			JavaClassElement.javaCodeBuffer.append("=");
-			JavaClassElement.javaCodeBuffer.append(calculatedDAOName);
-			JavaClassElement.javaCodeBuffer.append(".");
-			JavaClassElement.javaCodeBuffer.append("findALL()"+ JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
-			
-			//{
-			JavaClassElement.javaCodeBuffer.append("{"+ JavaConstants.NEW_LINE);
-			
-				//finderIndex=true;
-				JavaClassElement.javaCodeBuffer.append("finderIndex=true"+ JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
-			
-				//while(finderIndex){
-				JavaClassElement.javaCodeBuffer.append("while(finderIndex){"+ JavaConstants.NEW_LINE);
-			
-			
-						//	if(LIMAN_RESULT_LIST==null || LIMAN_RESULT_LIST.size==0){
-						JavaClassElement.javaCodeBuffer.append("if("+calculatedResultListName+"==null || "+calculatedResultListName+".size()==0){"+ JavaConstants.NEW_LINE);
-			
-						//
-						if(javaIfNoRecords!=null){
-									this.getChildren().remove(0); //aşağıda tekrar yazılmasın diye listeden çıkarılır.
-									javaIfNoRecords.writeJavaToStream();
-							}
-			
-						//	}else{
-						JavaClassElement.javaCodeBuffer.append("}else{"+ JavaConstants.NEW_LINE);
-				
-								//		Iterotor it=LIMAN_RESULT_LIST.iterator(); 
-								JavaClassElement.javaCodeBuffer.append("Iterator<"+pojoName+"> "+itName+"="+calculatedResultListName+".iterator()"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
-								
-								//		while(it.hasnext()){
-								JavaClassElement.javaCodeBuffer.append("while("+itName+".hasNext()){"+ JavaConstants.NEW_LINE);
-			
-											//			LIMAN=it.next();
-											JavaClassElement.javaCodeBuffer.append(viewName.toCustomString()+"="+itName+".next()"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
-											
-											JavaClassElement.javaCodeBuffer.append("ISN=(int) "+viewName.toCustomString()+".getIsn()"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
-											
-											//			ULKE_KODU=LIMAN.getLUlkeKodu();
-											this.writeChildrenJavaToStream();
-			
-								//		}
-								JavaClassElement.javaCodeBuffer.append("}"+"//While Iterator End"+ JavaConstants.NEW_LINE);
-			
-						//	}
-						JavaClassElement.javaCodeBuffer.append("}"+"//Else End"+ JavaConstants.NEW_LINE);
-			
-						//finderIndex=false;
-						JavaClassElement.javaCodeBuffer.append("finderIndex=false"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
-			
-				//}
-				JavaClassElement.javaCodeBuffer.append("}"+ "//While End"+ JavaConstants.NEW_LINE);
-			//}
-			JavaClassElement.javaCodeBuffer.append("}"+ "//Find End"+ JavaConstants.NEW_LINE);
-			
-		} catch (Exception e) {
-			logger.debug("//Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()+this.getSourceCode().getCommandName());
-			JavaClassElement.javaCodeBuffer.append("/*Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()
-					+this.getSourceCode().getCommandName()+"*/"+JavaConstants.NEW_LINE);
-			logger.error("//Conversion Error:"+e.getMessage(), e); 
-			ConvertUtilities.writeconversionErrors(e, this);
-		}
-
-//		writeHibernateCode();
-//		writeDAOInterfaceCode();
 	}
 
 
@@ -618,6 +510,10 @@ public class JavaReadByFromDBElement extends AbsctractConditionalJavaElement {
 		 */
 		boolean isFiltrename=true;
 		
+		if(conditionList==null){
+			return;
+		}
+		
 		for (int index=0; index<conditionList.size();index++ ) {
 			
 			currentToken=conditionList.get(index);
@@ -662,6 +558,9 @@ public class JavaReadByFromDBElement extends AbsctractConditionalJavaElement {
 		 List<AbstractToken> newConditionList=new ArrayList<AbstractToken>();
 		 List<AbstractToken> newSortList=new ArrayList<AbstractToken>();
 		 boolean sortReached=false;
+		if(conditionList==null){
+			return;
+		}
 		for(int index=0; index<conditionList.size();index++){
 			if(conditionList.get(index).getTip().equals(TokenTipi.Kelime)&& conditionList.get(index).getDeger().equals(ReservedNaturalKeywords.SORTED_BY)){
 				sortReached=true;

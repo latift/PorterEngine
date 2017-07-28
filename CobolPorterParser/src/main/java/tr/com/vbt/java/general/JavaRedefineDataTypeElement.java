@@ -131,6 +131,7 @@ public class JavaRedefineDataTypeElement extends AbstractJavaElement {
 			
 			logModel=ConversionLogModel.getInstance();
 			
+			JavaClassElement.javaCodeBuffer.append("public ");
 			//Eğer dataType Float ise redefinedDataType da Float ise
 			if(dataType.equalsIgnoreCase("N") && redefinedDataType.equalsIgnoreCase("N")){
 			//RedefinedFloatForFloat dataName=new RedefinedFloatForFloat(ShortImpl.this,redefinedDataName,redefineStartIndex,redefineEndIndex);

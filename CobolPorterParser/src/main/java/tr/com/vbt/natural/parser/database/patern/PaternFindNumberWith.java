@@ -96,10 +96,14 @@ public class PaternFindNumberWith extends AbstractPatternFromXToYWithoutCarriage
 			
 		}else if (abstractTokenInPattern.getSourceFieldName().equals("viewName")) {
 			String viewName;
-			viewName = (String) currentTokenForMatch.getDeger();
+			if(currentTokenForMatch.getTypeNameOfView()==null){
+				viewName = (String) currentTokenForMatch.getDeger();
+			}else{
+				viewName = (String) currentTokenForMatch.getTypeNameOfView();
+			}
 			matchedCommandAdd.setViewName(viewName);
 			matchedCommandAdd.getParameters().put("viewName",matchedCommandAdd.getViewName());
-			
+	
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("conditionList")){
 			
 			matchedCommandAdd.getConditionList().add(currentTokenForMatch);

@@ -30,7 +30,7 @@ public class JavaInnerClassElement extends  AbstractJavaElement{
 		
 		className=(String) this.parameters.get("dataName");
 		
-		AbstractJavaElement.javaCodeBuffer.append(JavaConstants.CLASS+ " "+  CustomStringUtils.replaceMiddleLineWithSubLine(className)+ " "+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE );
+		AbstractJavaElement.javaCodeBuffer.append("public "+JavaConstants.CLASS+ " "+  CustomStringUtils.replaceMiddleLineWithSubLine(className)+ " "+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE );
 			if(this.children!=null){
 			for (AbstractJavaElement jge : children) {
 				jge.writeJavaToStream();
