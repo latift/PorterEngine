@@ -305,11 +305,11 @@ public class TransferFromNaturalToJavaMain {
 	
 	public static void reCreateOutputFoldersForDAL() throws Exception {
 		
-		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/thy/dal/hibernate/generated"));
-		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/thy/dal/hibernate"));
-		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/thy/dal/generated"));
-		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/thy/dal/"));
-		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/thy/"));
+		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/"+ConversionLogModel.getInstance().getCustomer().toLowerCase()+"/dal/hibernate/generated"));
+		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/"+ConversionLogModel.getInstance().getCustomer().toLowerCase()+"/dal/hibernate"));
+		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/"+ConversionLogModel.getInstance().getCustomer().toLowerCase()+"/dal/generated"));
+		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/"+ConversionLogModel.getInstance().getCustomer().toLowerCase()+"/dal/"));
+		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/"+ConversionLogModel.getInstance().getCustomer().toLowerCase()+"/"));
 		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/"));
 		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/"));
 		WriteFileUtility.deleteFolder(new File(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/"));
@@ -321,11 +321,11 @@ public class TransferFromNaturalToJavaMain {
 		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface");
 		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr");
 		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com");
-		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/thy/");
-		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/thy/dal/");
-		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/thy/dal/generated");
-		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/thy/dal/hibernate");
-		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/thy/dal/hibernate/generated");
+		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/"+ConversionLogModel.getInstance().getCustomer().toLowerCase()+"/");
+		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/"+ConversionLogModel.getInstance().getCustomer().toLowerCase()+"/dal/");
+		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/"+ConversionLogModel.getInstance().getCustomer().toLowerCase()+"/dal/generated");
+		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/"+ConversionLogModel.getInstance().getCustomer().toLowerCase()+"/dal/hibernate");
+		WriteFileUtility.createFileInPath(ConversionLogModel.getInstance().getCommonDALOutputsFolder() + "/output"+ "/generatedinterface/tr/com/"+ConversionLogModel.getInstance().getCustomer().toLowerCase()+"/dal/hibernate/generated");
 
 		
 	}

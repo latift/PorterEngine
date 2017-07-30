@@ -1787,7 +1787,7 @@ public class NaturalLexing extends AbstractLexing {
 		controlRecords(); // 1034 MAP2.MUSNO1:=+MUSNO1 --> Musno1 i Map2 ye
 							// eleman olarak ekler.
 
-	//	controlTableName(); Schema ismini kaldırıp tablo ismi yapıyor. Ama bu yanlış. Schema ismi IKR-MLYT-KOD VIEW OF IKR-MLYT-KOD
+		controlTableName();// Schema ismini kaldırıp tablo ismi yapıyor. Ama bu yanlış. Schema ismi IKR-MLYT-KOD VIEW OF IKR-MLYT-KOD
 			//örneginde olduğu gibi IKR schema  olabilir ama adabas da schema yok. DB2 da var. Dikkat!!!!!!!!!!!!
 
 		setSubstrFields(); // SUBSTR(SB_ACIKLAMA,1,79) --> bunu SB_ACIKLAMA ya
@@ -2063,6 +2063,7 @@ public class NaturalLexing extends AbstractLexing {
 			astEquals = tokenListesi.get(i + 2);
 			astRight = tokenListesi.get(i + 3); 
 			
+			logger.debug("astLeft"+astLeft+"   astDoubleDot:"+astDoubleDot+"   astEquals:"+astEquals);
 			if(!(astEquals.isKarakter('=') &&astDoubleDot.isKarakter(':'))){
 				continue;
 			}
@@ -2793,7 +2794,18 @@ public class NaturalLexing extends AbstractLexing {
 				}
 				
 				
-				
+				// varsa
+				if (curToken.isOzelKelime("MAP") && !previousToken.isOzelKelime("USING")) { // Oncesinde
+					// USING
+					// yoksa
+					newMapToken = new KelimeToken(
+							curToken.getDeger().toString() + "_"
+									+ curToken.getDeger().toString()
+											.substring(curToken.getDeger().toString().length() - 1),
+							curToken.getSatirNumarasi(), curToken.getUzunluk() + 1, curToken.getSatirdakiTokenSirasi());
+					tokenListesi.remove(i + 1);
+					tokenListesi.add(i + 1, newMapToken);
+				}
 																	// varsa
 				if (!(previousToken.getTip().equals(TokenTipi.OzelKelime))
 						&& (previousToken.getDeger().equals("USING"))) { // Oncesinde
@@ -3413,7 +3425,16 @@ public class NaturalLexing extends AbstractLexing {
 
 	// IDGIDBS-TGECICI --> Tek bir token a çevir. isScheması true olsun. tablo
 	// tokeninin T_Gecici olarak set et.
+	/*
+	 * // Schema ismini kaldırıp tablo ismi yapıyor. Ama bu yanlış. Schema ismi IKR-MLYT-KOD VIEW OF IKR-MLYT-KOD
+			//örneginde olduğu gibi IKR schema  olabilir ama adabas da schema yok. DB2 da var. Dikkat!!!!!!!!!!!!
+	 */
 	private void controlTableName() {
+		
+		if(ConversionLogModel.getInstance().getCustomer().equals("THY")){
+			return;
+		}
+		
 		boolean endDefineReached = false;
 		ArrayToken arrayToken = null;
 		AbstractToken astSchema, astTable;

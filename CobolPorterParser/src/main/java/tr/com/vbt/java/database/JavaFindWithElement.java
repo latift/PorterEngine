@@ -163,7 +163,7 @@ public class JavaFindWithElement extends AbsctractConditionalJavaElement {
 			//{
 			JavaClassElement.javaCodeBuffer.append("{"+ JavaConstants.NEW_LINE);
 			
-				JavaClassElement.javaCodeBuffer.append("NUMBER="+calculatedResultListName+".size()"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
+				JavaClassElement.javaCodeBuffer.append("NUMBER= 0"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
 				//finderIndex=true;
 				JavaClassElement.javaCodeBuffer.append("finderIndex=true"+ JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
 			
@@ -182,6 +182,8 @@ public class JavaFindWithElement extends AbsctractConditionalJavaElement {
 			
 						//	}else{
 						JavaClassElement.javaCodeBuffer.append("}else{"+ JavaConstants.NEW_LINE);
+						
+						JavaClassElement.javaCodeBuffer.append("NUMBER="+calculatedResultListName+".size()"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
 				
 								//		Iterotor it=LIMAN_RESULT_LIST.iterator(); 
 								JavaClassElement.javaCodeBuffer.append("Iterator<"+pojoName+"> "+itName+"="+calculatedResultListName+".iterator()"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);

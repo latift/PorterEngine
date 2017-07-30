@@ -61,18 +61,40 @@ public class JavaNaturalClassElement extends  AbstractJavaElement{
 		
 		AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 		
-		AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.*;"+JavaConstants.NEW_LINE);
-		AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.pojo.*;"+JavaConstants.NEW_LINE);
-		AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.variables.global.*;"+JavaConstants.NEW_LINE);
-		AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.variables.local.*;"+JavaConstants.NEW_LINE);
 		if(logModel.getCustomer().equals("MB")){
+			
+			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.*;"+JavaConstants.NEW_LINE);
+			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.generated.*;"+JavaConstants.NEW_LINE);
+			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.hibernate.*;"+JavaConstants.NEW_LINE);
+			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.hibernate.generated.*;"+JavaConstants.NEW_LINE);
+			String schemaName;
+			for(int i=0; i<ConverterConfiguration.getSchemaList().size();i++){
+				schemaName=ConverterConfiguration.getSchemaList().get(i);
+				AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.pojo."+schemaName.toLowerCase()+".*;"+JavaConstants.NEW_LINE);
+			}
+			
+			
+			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.variables.global.*;"+JavaConstants.NEW_LINE);
+			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.variables.local.*;"+JavaConstants.NEW_LINE);
+			
+			
+			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".web.*;"+JavaConstants.NEW_LINE);
 			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".web.interfaces.*;"+JavaConstants.NEW_LINE);
+		
 		}else{
+		
+			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.*;"+JavaConstants.NEW_LINE);
+			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.pojo.*;"+JavaConstants.NEW_LINE);
+			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.variables.global.*;"+JavaConstants.NEW_LINE);
+			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.variables.local.*;"+JavaConstants.NEW_LINE);
+			
 			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+"."+module+".web.interfaces.*;"+JavaConstants.NEW_LINE);
+	
+			if(logModel.isSubProgram()){
+				AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+"."+module+".web.*;"+JavaConstants.NEW_LINE);
+			}
 		}
-		if(logModel.isSubProgram()){
-			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+"."+module+".web.*;"+JavaConstants.NEW_LINE);
-		}
+	
 		
 		
 		
@@ -167,9 +189,10 @@ public class JavaNaturalClassElement extends  AbstractJavaElement{
 		}
 
 //		public GZTBAS21Impl() {
+		AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 		AbstractJavaElement.javaCodeBuffer.append(classSecurity+ " "+ implementsClassName+JavaConstants.OPEN_NORMAL_BRACKET+JavaConstants.CLOSE_NORMAL_BRACKET+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE);
 //			super();0
-		AbstractJavaElement.javaCodeBuffer.append("super();");
+		AbstractJavaElement.javaCodeBuffer.append("super();"+JavaConstants.NEW_LINE);
 //			this.isClientInteracting=true;
 		AbstractJavaElement.javaCodeBuffer.append("this.isClientInteracting="+ConversionLogModel.getInstance().isClientInteracting()+";"+JavaConstants.NEW_LINE);
 //		}
