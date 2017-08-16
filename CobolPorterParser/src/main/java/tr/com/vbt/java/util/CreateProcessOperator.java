@@ -16,6 +16,8 @@ import tr.com.vbt.java.basic.JavaCopyElementV2;
 import tr.com.vbt.java.basic.JavaDisplayElement;
 import tr.com.vbt.java.basic.JavaDivideElement;
 import tr.com.vbt.java.basic.JavaExamineForGivingIndexElement;
+import tr.com.vbt.java.basic.JavaExamineForGivingPositionElement;
+import tr.com.vbt.java.basic.JavaExamineFullForGivingLengthInElement;
 import tr.com.vbt.java.basic.JavaExitElement;
 import tr.com.vbt.java.basic.JavaGlobalUsing;
 import tr.com.vbt.java.basic.JavaIncludeElement;
@@ -36,6 +38,7 @@ import tr.com.vbt.java.conditions.JavaElseElement;
 import tr.com.vbt.java.conditions.JavaElseIfElement;
 import tr.com.vbt.java.conditions.JavaIfElementV2;
 import tr.com.vbt.java.conditions.JavaIgnoreElement;
+import tr.com.vbt.java.conditions.JavaSwitchDecideFirstCondition;
 import tr.com.vbt.java.conditions.JavaSwitchElementV2;
 import tr.com.vbt.java.conditions.JavaWhen;
 import tr.com.vbt.java.database.JavaDBViewOfDataTypeElement;
@@ -182,6 +185,12 @@ public class CreateProcessOperator extends ProcessOperator {
 		case "JavaExamineForGivingIndexElement":
 			elementForCreate = new JavaExamineForGivingIndexElement();
 			break;
+		case "JavaExamineFullForGivingLengthInElement":
+			elementForCreate = new JavaExamineFullForGivingLengthInElement();
+			break;
+		case "JavaExamineForGivingPositionElement":
+			elementForCreate = new JavaExamineForGivingPositionElement();
+			break;
 		case "JavaCallFunctionElement":
 			elementForCreate = new JavaCallFunctionElement();
 			break;
@@ -295,6 +304,9 @@ public class CreateProcessOperator extends ProcessOperator {
 			break;
 		case "JavaSwitchElement":
 			elementForCreate = new JavaSwitchElementV2();
+			break;
+		case "JavaSwitchDecideFirstCondition":
+			elementForCreate = new JavaSwitchDecideFirstCondition();
 			break;
 		case "JavaCaseElement":
 			elementForCreate = new JavaCaseElement();

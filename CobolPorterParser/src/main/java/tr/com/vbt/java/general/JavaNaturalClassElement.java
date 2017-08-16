@@ -68,11 +68,13 @@ public class JavaNaturalClassElement extends  AbstractJavaElement{
 			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.hibernate.*;"+JavaConstants.NEW_LINE);
 			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.hibernate.generated.*;"+JavaConstants.NEW_LINE);
 			String schemaName;
-			for(int i=0; i<ConverterConfiguration.getSchemaList().size();i++){
+		/*	for(int i=0; i<ConverterConfiguration.getSchemaList().size();i++){
 				schemaName=ConverterConfiguration.getSchemaList().get(i);
 				AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.pojo."+schemaName.toLowerCase()+".*;"+JavaConstants.NEW_LINE);
-			}
-			
+			}*/
+			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.pojo.idgidbs.*;"+JavaConstants.NEW_LINE);
+			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.pojo.common.*;"+JavaConstants.NEW_LINE);
+				
 			
 			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.variables.global.*;"+JavaConstants.NEW_LINE);
 			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.variables.local.*;"+JavaConstants.NEW_LINE);
@@ -80,6 +82,11 @@ public class JavaNaturalClassElement extends  AbstractJavaElement{
 			
 			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".web.*;"+JavaConstants.NEW_LINE);
 			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".web.interfaces.*;"+JavaConstants.NEW_LINE);
+			
+			if(logModel.isMap()){
+				AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+"."+module+".web.*;"+JavaConstants.NEW_LINE);
+			}
+
 		
 		}else{
 		
@@ -100,7 +107,7 @@ public class JavaNaturalClassElement extends  AbstractJavaElement{
 		
 		
 
-		if(ConversionLogModel.getInstance().isClientInteracting()){
+		if(ConversionLogModel.getInstance().isProgram()){
 //			@Component
 			AbstractJavaElement.javaCodeBuffer.append("@Component"+JavaConstants.NEW_LINE);
 //			@Service(value = "TPSFTEP1")

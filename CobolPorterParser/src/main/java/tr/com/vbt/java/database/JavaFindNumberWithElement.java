@@ -6,16 +6,15 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.java.AbstractJavaElement;
+import tr.com.vbt.java.MethodImplementation;
+import tr.com.vbt.java.MethodSignature;
 import tr.com.vbt.java.general.JavaClassElement;
 import tr.com.vbt.java.general.JavaConstants;
 import tr.com.vbt.java.util.Utility;
 import tr.com.vbt.java.utils.ConvertUtilities;
 import tr.com.vbt.lexer.ConversionLogModel;
 import tr.com.vbt.lexer.ReservedNaturalKeywords;
-import tr.com.vbt.natural.parser.datalayout.program.ElementProgramDataTypeNatural;
-import tr.com.vbt.natural.parser.datalayout.program.ElementProgramOneDimensionArrayNatural;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.OzelKelimeToken;
 import tr.com.vbt.token.TokenTipi;
@@ -100,13 +99,14 @@ public class JavaFindNumberWithElement extends AbsctractConditionalJavaElement {
 
 	private String viewName; // LIMAN
 	
-	private String pojoType; // Liman 
-
 	private List<AbstractToken> sortList;
 	
 	String calculatedResultListName = "";// LIMAN_RESULT_LIST
 	String calculatedDAOName = "";
-	String findByString, findByMethodSignature,itName;
+	
+	
+	String findByString,itName; //method call from natural
+
 	
 	private AbstractJavaElement javaIfNoRecords;
 	
@@ -131,7 +131,8 @@ public class JavaFindNumberWithElement extends AbsctractConditionalJavaElement {
 		calculatedResultListName = "";// LIMAN_RESULT_LIST
 		calculatedDAOName = "";
 		findByString=createFindByString("findBy");
-		findByMethodSignature=createFindByMethodString("findBy");
+		findByMethodSignature=createFindByMethodString("findBy", pojoType);
+		
 		//itName="it"+pojoType;
 		itName=itNameManager.createIteratorName(pojoType);
 
@@ -146,6 +147,7 @@ public class JavaFindNumberWithElement extends AbsctractConditionalJavaElement {
 
 
 			//LIMAN_RESULT_LIST=LIMAN_DAO.findByMusno2AndReferansSmallerAndOpenParBsicilOrAsicilCloseParAndIslemTar(GecMusno2, Map.refno, 0,0,Guntar);
+			JavaClassElement.javaCodeBuffer.append("List<"+pojoType+"> ");
 			JavaClassElement.javaCodeBuffer.append(calculatedResultListName);
 			JavaClassElement.javaCodeBuffer.append("=");
 			JavaClassElement.javaCodeBuffer.append(calculatedDAOName);
@@ -173,287 +175,6 @@ public class JavaFindNumberWithElement extends AbsctractConditionalJavaElement {
 		return true;
 	}
 
-
-
-	private void writeDAOInterfaceCode() {
-		
-		JavaClassElement.javaDAOInterfaceCodeBuffer=new StringBuilder();
-		JavaClassElement.javaDAOInterfaceCodeBuffer.append(JavaConstants.NEW_LINE);
-		JavaClassElement.javaDAOInterfaceCodeBuffer.append(JavaConstants.NEW_LINE);
-		JavaClassElement.javaDAOInterfaceCodeBuffer.append("public List<"+pojoType+">");
-		JavaClassElement.javaDAOInterfaceCodeBuffer.append(" ");
-		JavaClassElement.javaDAOInterfaceCodeBuffer.append(findByMethodSignature+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
-		JavaClassElement.javaDAOInterfaceCodeBuffer.append(JavaConstants.NEW_LINE);
-		
-		JavaClassElement.javaDAOInterfaceCodeMap.put(pojoType+" "+findByMethodSignature, JavaClassElement.javaDAOInterfaceCodeBuffer.toString());
-		//folderPath+"output"+"/"+"generatedinterface"+"/"+viewName+"GenDAO.java
-		//StringBuffer interfaceHeader=ConvertUtilities.writeInterfaceHeader(pojoName);
-		//WriteToFile.appendToFileWithHeader(interfaceHeader, JavaClassElement.javaDAOInterfaceCodeBuffer,logModel.getFullJavaDAOInterfaceFileName(pojoName));
-			
-	}
-
-	/*
- * LIMAN_DAO.findByMusno2AndReferansSmallerAndOpenParBsicilOrAsicilCloseParAndIslemTar(GecMusno2, Map.refno, 0,0,Guntar){
- * 			   Criteria main_crit = getSession().createCriteria(getPersistentClass());
-			       Criterion c =Restrictions.eq("id.musno1", sECMUSNO1);
-			       Criterion c2 =Restrictions.eq("id.musno2", sECMUSNO1);
-			       return Restrictions.or(c, c2);
-		       main_crit.add(cParantez);
-		       
-		       main_crit.add(Restrictions.eq("id.doviz", wDOVIZ));
-		       main_crit.add(Restrictions.not(Restrictions.eq("akod1", akod)));
-		       
-		      return crit.list();
-		       
-  5)   a) Criteria crit = getSession().createCriteria(getPersistentClass());
-        b) Parantez gördü isen subfonksiyonu çağır. Parantez içindeki ifadenin criterion objesini yarat. 
-        c) Filtre gördü isen filtreyi yarat. 
-        		fitre Op = ise
-        d)Filtreden sonraki joiner ifadeye göre and ise  crit.add(c3); yap.
-        												or ise  crit.or(c3); yap.
- * }
- */
-	private void writeHibernateCode() {
-		Filter filter;
-		AbstractToken curToken;
-		
-		List conditionListInParantesiz;
-		
-		String criteriaInParantez;
-		
-		boolean orCondition = false;
-		
-		JavaClassElement.javaHibernateCodeBuffer=new StringBuilder();
-		JavaClassElement.javaHibernateCodeBuffer.append(JavaConstants.NEW_LINE);
-		JavaClassElement.javaHibernateCodeBuffer.append("// Generated For Program: "+logModel.getFileName());
-		JavaClassElement.javaHibernateCodeBuffer.append(JavaConstants.NEW_LINE);
-		JavaClassElement.javaHibernateCodeBuffer.append("@Override"+JavaConstants.NEW_LINE);
-		JavaClassElement.javaHibernateCodeBuffer.append("public List<"+pojoType+">");
-		JavaClassElement.javaHibernateCodeBuffer.append(" ");
-		JavaClassElement.javaHibernateCodeBuffer.append(findByMethodSignature+ JavaConstants.OPEN_BRACKET +JavaConstants.NEW_LINE);
-		JavaClassElement.javaHibernateCodeBuffer.append("Criteria main_crit = currentSession().createCriteria(getPersistentClass());"+JavaConstants.NEW_LINE);
-		for(int index=0; index<conditionListWithFiltersAndParantesiz.size();index++){
-			if(conditionListWithFiltersAndParantesiz.get(index) instanceof AbstractToken){// b) Parantez gördü isen subfonksiyonu çağır. Parantez içindeki ifadenin criterion objesini yarat. 
-				curToken=(AbstractToken) conditionListWithFiltersAndParantesiz.get(index);
-				if(curToken.getDeger().equals('(')){
-					conditionListInParantesiz=new ArrayList<>();
-					index++;
-					curToken=null;
-					filter=null;
-					if(conditionListWithFiltersAndParantesiz.get(index) instanceof AbstractToken){
-						curToken=(AbstractToken) conditionListWithFiltersAndParantesiz.get(index);
-					}else if(conditionListWithFiltersAndParantesiz.get(index) instanceof Filter){
-						filter=(Filter) conditionListWithFiltersAndParantesiz.get(index);
-					}
-				
-					do{
-						if(curToken!=null){
-							conditionListInParantesiz.add(curToken);
-						}else{
-							conditionListInParantesiz.add(filter);
-						}
-						curToken=null;
-						filter=null;
-						index++;
-						
-						if(conditionListWithFiltersAndParantesiz.get(index) instanceof AbstractToken){
-							curToken=(AbstractToken) conditionListWithFiltersAndParantesiz.get(index);
-						}else if(conditionListWithFiltersAndParantesiz.get(index) instanceof Filter){
-							filter=(Filter) conditionListWithFiltersAndParantesiz.get(index);
-						}
-					
-					}while(curToken==null||!curToken.getDeger().equals(')'));
-					criteriaInParantez=writeHibernateCodeInParantez(conditionListInParantesiz);
-					JavaClassElement.javaHibernateCodeBuffer.append("main_crit.add("+criteriaInParantez+")"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
-					
-				}
-			}else if(conditionListWithFiltersAndParantesiz.get(index) instanceof Filter){
-				
-					if(index<conditionListWithFiltersAndParantesiz.size()-1){
-						Object nextElement=conditionListWithFiltersAndParantesiz.get(index+1);
-						if(nextElement instanceof AbstractToken){
-							OzelKelimeToken nextToken=(OzelKelimeToken) nextElement;
-							if(nextToken.getDeger().equals("OR")){
-								orCondition=true;
-								break;
-							}
-						}
-					}
-					
-					createFilterWithAndConditions(index);
-					
-				
-					JavaClassElement.javaHibernateCodeBuffer.append(JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
-				
-			}
-		}
-		if(orCondition){
-			createFilterWithOrConditions();
-		}
-		JavaClassElement.javaHibernateCodeBuffer.append("return main_crit.list();");
-		JavaClassElement.javaHibernateCodeBuffer.append(JavaConstants.NEW_LINE+JavaConstants.CLOSE_BRACKET +JavaConstants.NEW_LINE);
-		JavaClassElement.javaHibernateCodeBuffer.append(JavaConstants.NEW_LINE);
-		
-		JavaClassElement.javaHibernateCodeMap.put(pojoType+" "+findByMethodSignature, JavaClassElement.javaHibernateCodeBuffer.toString());
-		//folderPath+"output"+"/"+"generatedinterface"+"/"+viewName+"GenDAO.java
-		//StringBuffer hibernateHeader=ConvertUtilities.writeDAOImplemantasyonClassHeader(pojoName);
-		//WriteToFile.appendToFileWithHeader(hibernateHeader, JavaClassElement.javaHibernateCodeBuffer,logModel.getFullJavaHibernateFileName(pojoName));
-			
-
-
-	}
-	
-	private void createFilterWithOrConditions() {
-		AbstractToken curToken;
-		Filter filter;
-		StringBuffer result=new StringBuffer();
-		result.append("Restrictions.or(");
-		for(int index=0; index<conditionListWithFiltersAndParantesiz.size();index++){
-			if(conditionListWithFiltersAndParantesiz.get(index) instanceof AbstractToken){
-				
-				curToken=(AbstractToken) conditionListWithFiltersAndParantesiz.get(index);
-				
-				result.append(",");
-			
-			}else if(conditionListWithFiltersAndParantesiz.get(index) instanceof Filter){
-		
-					filter=(Filter) conditionListWithFiltersAndParantesiz.get(index);
-					
-					if(filter.filterOperator.getDeger().equals('=')){
-							result.append("Restrictions.eq(\"");
-					}else if(filter.filterOperator.getDeger().equals('>')){
-							result.append("Restrictions.gt(\"");
-					}else if(filter.filterOperator.getDeger().equals('<')){
-							result.append("Restrictions.lt(\"");
-					}else if(filter.filterOperator.getDeger().equals("^=")){
-							result.append("Restrictions.not(Restrictions.eq(\"");
-					}else if(filter.filterOperator.getDeger().equals(">=")){
-							result.append("Restrictions.ge(\"");
-					}else if(filter.filterOperator.getDeger().equals("<=")){
-							result.append("Restrictions.le(\"");
-					}else{
-						result.append("Restrictions.unknown(");
-					}
-					
-					
-					if(filter.getFilterValue().isRecordVariable()){
-						result.append(Utility.columnNameToPojoFieldName(filter.getFilterName().getDeger().toString())+"\", "+filter.getFilterValue().getLinkedToken().getDeger().toString().replaceAll("-","_"));
-					}else if(filter.getFilterValue().isPojoVariable()){
-						result.append(Utility.columnNameToPojoFieldName(filter.getFilterName().getDeger().toString())+"\", "+filter.getFilterValue().getColumnNameToken().getDeger().toString().replaceAll("-","_"));
-					}else{
-						result.append(Utility.columnNameToPojoFieldName(filter.getFilterName().getDeger().toString())+"\", "+filter.getFilterValue().getDeger().toString().replaceAll("-","_"));
-						
-					}
-					
-					result.append(")");
-					if(filter.filterOperator.getDeger().equals("^=")){
-						result.append(")");
-					}
-			}
-		}
-		result.append(")");
-		JavaClassElement.javaHibernateCodeBuffer.append(result.toString());
-		JavaClassElement.javaHibernateCodeBuffer.append(JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
-		
-	}
-
-	private void createFilterWithAndConditions(int index) {
-		Filter filter;
-		filter=(Filter) conditionListWithFiltersAndParantesiz.get(index);
-		if(filter.filterOperator.getDeger().equals('=')){
-			JavaClassElement.javaHibernateCodeBuffer.append("main_crit.add(Restrictions.eq(\"");
-		}else if(filter.filterOperator.getDeger().equals('>')){
-			JavaClassElement.javaHibernateCodeBuffer.append("main_crit.add(Restrictions.gt(\"");
-			
-		}else if(filter.filterOperator.getDeger().equals('<')){
-			JavaClassElement.javaHibernateCodeBuffer.append("main_crit.add(Restrictions.lt(\"");
-			
-		}else if(filter.filterOperator.getDeger().equals("^=")){
-			
-			JavaClassElement.javaHibernateCodeBuffer.append("main_crit.add(Restrictions.not(Restrictions.eq(\"");
-		}else if(filter.filterOperator.getDeger().equals(">=")){
-			
-			JavaClassElement.javaHibernateCodeBuffer.append("main_crit.add(Restrictions.ge(\"");
-		}else if(filter.filterOperator.getDeger().equals("<=")){
-			
-			JavaClassElement.javaHibernateCodeBuffer.append("main_crit.add(Restrictions.le(\"");
-		}else{
-			JavaClassElement.javaHibernateCodeBuffer.append("main_crit.add(Restrictions.unknown(");
-		}
-
-		if(filter.getFilterValue().getTip().equals(TokenTipi.Sayi)){
-			JavaClassElement.javaHibernateCodeBuffer.append(filter.getFilterName().getDeger().toString().replaceAll("-","_").toLowerCase()+"\", "+filter.getFilterName().getDeger().toString().replaceAll("-","_")+")");
-		}else if(filter.getFilterValue().isRecordVariable()){
-			JavaClassElement.javaHibernateCodeBuffer.append(Utility.columnNameToPojoFieldName(filter.getFilterName().getDeger().toString())+"\", "+filter.getFilterValue().getLinkedToken().getDeger().toString().replaceAll("-","_")+")");
-		}else if(filter.getFilterValue().isPojoVariable()){
-			JavaClassElement.javaHibernateCodeBuffer.append(Utility.columnNameToPojoFieldName(filter.getFilterName().getDeger().toString())+"\", "+filter.getFilterValue().getColumnNameToken().getDeger().toString().replaceAll("-","_")+")");
-		}else{
-			JavaClassElement.javaHibernateCodeBuffer.append(Utility.columnNameToPojoFieldName(filter.getFilterName().getDeger().toString())+"\", "+filter.getFilterValue().getDeger().toString().replaceAll("-","_")+")");
-			
-		}
-		
-		JavaClassElement.javaHibernateCodeBuffer.append(")");
-		if(filter.filterOperator.getDeger().equals("^=")){
-			JavaClassElement.javaHibernateCodeBuffer.append(")");
-		}
-		
-	}
-
-
-	//main_crit.add(Restrictions.or(Restrictions.eq("musno1", MUSNO1),Restrictions.eq("musno2", MUSNO2)));
-	// Aşağıdaki method Restrictions.or(Restrictions.eq("musno1", MUSNO1),Restrictions.eq("musno2", MUSNO2)) donmeli.
-	private String writeHibernateCodeInParantez(List conditionListInParantesiz) {
-		
-		AbstractToken curToken;
-		Filter filter;
-		StringBuffer result=new StringBuffer();
-		result.append("Restrictions.or(");
-		for(int index=0; index<conditionListInParantesiz.size();index++){
-			if(conditionListInParantesiz.get(index) instanceof AbstractToken){
-				
-				curToken=(AbstractToken) conditionListInParantesiz.get(index);
-				
-				result.append(",");
-			
-			}else if(conditionListInParantesiz.get(index) instanceof Filter){
-		
-					filter=(Filter) conditionListInParantesiz.get(index);
-					
-					if(filter.filterOperator.getDeger().equals('=')){
-							result.append("Restrictions.eq(\"");
-					}else if(filter.filterOperator.getDeger().equals('>')){
-							result.append("Restrictions.gt(\"");
-					}else if(filter.filterOperator.getDeger().equals('<')){
-							result.append("Restrictions.lt(\"");
-					}else if(filter.filterOperator.getDeger().equals("^=")){
-							result.append("Restrictions.not(Restrictions.eq(\"");
-					}else if(filter.filterOperator.getDeger().equals(">=")){
-							result.append("Restrictions.ge(\"");
-					}else if(filter.filterOperator.getDeger().equals("<=")){
-							result.append("Restrictions.le(\"");
-					}else{
-						result.append("Restrictions.unknown(");
-					}
-					
-					
-					if(filter.getFilterValue().isRecordVariable()){
-						result.append(Utility.columnNameToPojoFieldName(filter.getFilterName().getDeger().toString())+"\", "+filter.getFilterValue().getLinkedToken().getDeger().toString().replaceAll("-","_"));
-					}else if(filter.getFilterValue().isPojoVariable()){
-						result.append(Utility.columnNameToPojoFieldName(filter.getFilterName().getDeger().toString())+"\", "+filter.getFilterValue().getColumnNameToken().getDeger().toString().replaceAll("-","_"));
-					}else{
-						result.append(Utility.columnNameToPojoFieldName(filter.getFilterName().getDeger().toString())+"\", "+filter.getFilterValue().getDeger().toString().replaceAll("-","_"));
-						
-					}
-					
-					result.append(")");
-					if(filter.filterOperator.getDeger().equals("^=")){
-						result.append(")");
-					}
-			}
-		}
-		result.append(")");
-		return result.toString();
-	}
 
 
 

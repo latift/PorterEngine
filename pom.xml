@@ -34,7 +34,7 @@
 		</dependency>
 		<dependency>
 			<artifactId>MBIsciDovizleriDAL</artifactId>
-			<groupId>tr.com.mb.iscidovizleri.dal</groupId>
+			<groupId>tr.com.mb.dal</groupId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>

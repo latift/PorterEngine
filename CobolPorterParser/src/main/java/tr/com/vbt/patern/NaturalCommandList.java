@@ -30,6 +30,7 @@ import tr.com.vbt.lexer.ReservedCobolKeywords;
 import tr.com.vbt.lexer.ReservedNaturalKeywords;
 import tr.com.vbt.natural.parser.conditions.enders.ElementEndNone;
 import tr.com.vbt.natural.parser.conditions.enders.ElementEndValue;
+import tr.com.vbt.natural.parser.conditions.enders.ElementEndWhen;
 import tr.com.vbt.natural.parser.datalayout.db.ElementDBDataTypeNatural;
 import tr.com.vbt.natural.parser.datalayout.db.ElementDBViewOfNatural;
 import tr.com.vbt.natural.parser.datalayout.db.enders.ElementEndLocal;
@@ -63,7 +64,7 @@ public class NaturalCommandList extends AbstractCommandList {
 
 	final private Map<String, Levelable> recordVariablesParentMap = new HashMap<>();
 
-	final private Set<String> GLOBAL_VARIABLES_SET = new HashSet<String>();
+	
 	
 	VirtualEnderManagerForReportingMode enderManagerForReportMode=new VirtualEnderManagerForReportingMode(commandList);
 	
@@ -74,28 +75,9 @@ public class NaturalCommandList extends AbstractCommandList {
 
 	private NaturalCommandList() {
 
-		initGlobalVariablesSet();
 	}
 
-	private void initGlobalVariablesSet() {
-		GLOBAL_VARIABLES_SET.add("MUSNO1");
-		GLOBAL_VARIABLES_SET.add("MUSNO2");
-		GLOBAL_VARIABLES_SET.add("KRX_KOD");
-		GLOBAL_VARIABLES_SET.add("HESCINSI");
-		GLOBAL_VARIABLES_SET.add("DOVIZ");
-		GLOBAL_VARIABLES_SET.add("HESNO");
-		GLOBAL_VARIABLES_SET.add("ISSIC");
-		GLOBAL_VARIABLES_SET.add("ISUSER");
-		GLOBAL_VARIABLES_SET.add("YAZICI");
-		GLOBAL_VARIABLES_SET.add("LAZERYAZICI");
-		GLOBAL_VARIABLES_SET.add("ISSUBE");
-		GLOBAL_VARIABLES_SET.add("ISSERVIS");
-		GLOBAL_VARIABLES_SET.add("GMESAJ");
-		GLOBAL_VARIABLES_SET.add("PIKYAZICI");
-		GLOBAL_VARIABLES_SET.add("HESDOKYAZICI");
-		GLOBAL_VARIABLES_SET.add("SW_PIKYAZ");
 
-	}
 
 	public static AbstractCommandList getInstance(List<AbstractToken> tokenListesi, AbstractLexing lexer) {
 		if (instance == null) {
@@ -381,6 +363,8 @@ public class NaturalCommandList extends AbstractCommandList {
 		
 		addVirtualEndingSubroutine();
 		
+		addVirtualEndingWhen();
+		
 		addVirtualLoopForFindAndRead(); //Read yada Find if yada for gibi bir şeyin icinde ise mutlaka loop la kapatilir. 
 		
 		enderManagerForReportMode.addVirtualEndersForReportMode();
@@ -389,6 +373,40 @@ public class NaturalCommandList extends AbstractCommandList {
 
 
 	
+	private void addVirtualEndingWhen() {
+		ElementEndWhen elementEndWhen;
+
+		AbstractCommand curCommand;
+		AbstractCommand nextCommand;
+
+		for (int index = 0; index < commandList.size() - 1; index++) {
+
+			curCommand = commandList.get(index);
+
+			System.out.println(curCommand.getCommandName());
+
+			if (curCommand.getCommandName().equals(ReservedNaturalKeywords.WHEN)) {
+
+				while (true) {
+					index++;
+					if (index == commandList.size() - 1) {
+						break;
+					}
+					nextCommand = commandList.get(index);
+
+					if (nextCommand.getCommandName().equals(ReservedNaturalKeywords.WHEN)
+							|| nextCommand.getCommandName().equals(ReservedNaturalKeywords.END_DECIDE)) {
+
+						elementEndWhen = new ElementEndWhen("ElementEndWhen", "GENERAL.*.END_WHEN");
+						elementEndWhen.setVisualCommand(true);
+						commandList.add(index, elementEndWhen);
+						break;
+					}
+				}
+			}
+		}
+	}
+
 	private void addVirtualEndingSubroutine() {
 		
 		if(ConversionLogModel.getInstance().getMode().equals(NaturalMode.STRUCTRURED)){
@@ -1669,42 +1687,7 @@ public class NaturalCommandList extends AbstractCommandList {
 		}
 	}
 
-	/**
-	 * + MUSNO1 --> GLOBAL_MUSNO1
-	 * 
-	 * 
-	 * public int GLOBAL_MUSNO1 ; // N 8 public int GLOBAL_MUSNO2; // N 8 public
-	 * int GLOBAL_KRX_KOD; // N 1 public String GLOBAL_HESCINSI =new String();
-	 * // A 1 public int GLOBAL_DOVIZ ; //N 2 public int GLOBAL_HESNO ; //N 8
-	 * public int GLOBAL_ISSIC ; //N 5 public String GLOBAL_ISUSER =new
-	 * String(); // A 8 public String GLOBAL_YAZICI =new String(); // A 8 public
-	 * String GLOBAL_LAZERYAZICI =new String(); //A 8 public int GLOBAL_ISSUBE;
-	 * //N 2 public int GLOBAL_ISSERVIS; //N 3 public String GMESAJ =new
-	 * String(); //A 78 public String GLOBAL_PIKYAZICI =new String(); //A 8
-	 * public String GLOBAL_HESDOKYAZICI =new String(); //A 8 public int
-	 * GLOBAL_SW_PIKYAZ;
-	 */
-	@Override
-	public void replaceGlobalVariables() {
 
-		AbstractToken plusToken, globalVariableToken;
-
-		for (int i = 0; i < tokenListesi.size() - 2; i++) {
-
-			plusToken = tokenListesi.get(i);
-			globalVariableToken = tokenListesi.get(i + 1);
-
-			if (plusToken.getTip().equals(TokenTipi.Karakter) && plusToken.getDeger().equals('+')) {
-
-				if (GLOBAL_VARIABLES_SET.contains(globalVariableToken.getDeger())) {
-					tokenListesi.remove(i); // Remove +
-					globalVariableToken.setDeger("GLOBAL_" + globalVariableToken.getDeger());
-				}
-
-			}
-
-		}
-	}
 
 	public static void reset() {
 		instance = null;

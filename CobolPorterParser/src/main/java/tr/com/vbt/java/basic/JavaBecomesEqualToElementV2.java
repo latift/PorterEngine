@@ -13,6 +13,7 @@ import tr.com.vbt.java.general.JavaClassElement;
 import tr.com.vbt.java.general.JavaConstants;
 import tr.com.vbt.java.utils.ConvertUtilities;
 import tr.com.vbt.java.utils.JavaWriteUtilities;
+import tr.com.vbt.lexer.ConversionLogModel;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.TokenTipi;
 
@@ -59,10 +60,7 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 				return true;
 			}
 			
-			if(copyTo.getLinkedToken()==null) {
-				return true;
-			}
-			if(copyFrom.get(0).getLinkedToken()!=null&& copyFrom.get(0).getLinkedToken().isAllArrayItems()){
+			if(copyTo.getLinkedToken()!=null && copyFrom.get(0).getLinkedToken()!=null&& copyFrom.get(0).getLinkedToken().isAllArrayItems()){
 				copyFrom.get(0).setAllArrayItems(true);
 			}
 			if(copyTo.getLinkedToken()!=null&& copyTo.getLinkedToken().isAllArrayItems()){
@@ -89,18 +87,29 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 				
 				fromPojoToArraySelectedItems();
 				
-			}else if(copyTo.isPojoVariable() || copyTo.isRedefinedVariable()){
-					//*S**ASSIGN TAX-INOUT = SCR-IN-OUT -->KET_TAX.setTaxInout(SCR_IN_OUT);
+			}else if(copyTo.isPojoVariable() && ConversionLogModel.getInstance().isMB()){
+					//7220 IDGIDBS-TGECICI.HSONVALOR:=*DAT4I --> TGECICI.setHSonvalor();
 					
-					JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomSetterString(copyTo));
+					JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomSetterString(copyTo, copyFrom.get(0)));
 					
-					JavaClassElement.javaCodeBuffer.append("(");
-					for (int i = 0; i < copyFrom.size(); i++) {
+				/*	for (int i = 0; i < copyFrom.size(); i++) {
 						JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(copyFrom.get(i)));
-					}
+					}*/
 					
-					JavaClassElement.javaCodeBuffer.append(")");
+					//JavaClassElement.javaCodeBuffer.append(")");
 					
+			}else if(copyTo.isPojoVariable() || copyTo.isRedefinedVariable()){
+				//*S**ASSIGN TAX-INOUT = SCR-IN-OUT -->KET_TAX.setTaxInout(SCR_IN_OUT);
+				
+				JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomSetterString(copyTo));
+				
+				JavaClassElement.javaCodeBuffer.append("(");
+				for (int i = 0; i < copyFrom.size(); i++) {
+					JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(copyFrom.get(i)));
+				}
+				
+				JavaClassElement.javaCodeBuffer.append(")");
+				
 			}else{
 					JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(copyTo));
 					JavaClassElement.javaCodeBuffer.append("=");
@@ -177,6 +186,9 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 					+ JavaWriteUtilities.pojosSubTablesArray(copyFrom.get(0))
 					+",\""+copyFrom.get(0) + "\","
 					+copyTo.getDeger().toString()+")");
+			//4470 MAP_DIZISI.MEBLAG(I):= IDGIDBS-THESAP.ACMEBLAG
+		}else if(copyFrom.get(0).isPojoVariable() && !copyFrom.get(0).isAllArrayItems() && copyTo.isRecordVariable() && copyTo.getLinkedToken().isArray() && !copyTo.getLinkedToken().isAllArrayItems()){
+			JavaClassElement.javaCodeBuffer.append( JavaWriteUtilities.toCustomString(copyTo)+"="+JavaWriteUtilities.toCustomString(copyFrom.get(0)) );
 		}else{
 			JavaClassElement.javaCodeBuffer.append("FrameworkConvertUtilities.copyPojoSubTableToArray("
 					+ JavaWriteUtilities.pojosSubTablesArray(copyFrom.get(0))

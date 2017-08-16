@@ -45,8 +45,6 @@ public interface CommandList {
 
 	public void markRedefinedTokens();
 
-	public void replaceGlobalVariables();
-
 	public PaternManager getPaternManager();
 
 	void setPaternManager(PaternManager paternManager);

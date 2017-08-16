@@ -170,7 +170,6 @@ public NaturalOzelKelimeler() {
 	ozelKelimeler.add("FIRST");
 	ozelKelimeler.add("VALUE");
 	ozelKelimeler.add("NONE");
-	ozelKelimeler.add("TEXT");
 	
 	ozelKelimeler.add("DO");
 	ozelKelimeler.add("DOEND");
@@ -198,6 +197,8 @@ public NaturalOzelKelimeler() {
 	ozelKelimeler.add("JUSTIFIED");
 	ozelKelimeler.add("ROUNDED");
 	ozelKelimeler.add("SUBTRACT");
+	ozelKelimeler.add("POSITION");
+	ozelKelimeler.add("WHEN");
 	/*
 	ozelKelimeler.add("PF1");
 	ozelKelimeler.add("PF2");

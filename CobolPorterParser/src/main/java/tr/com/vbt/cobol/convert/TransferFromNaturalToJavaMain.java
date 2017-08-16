@@ -16,9 +16,12 @@ import org.slf4j.MDC;
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.ddm.DDMList;
+import tr.com.vbt.java.MethodImplementation;
+import tr.com.vbt.java.MethodSignature;
 import tr.com.vbt.java.database.IteratorNameManager;
 import tr.com.vbt.java.general.JavaClassElement;
 import tr.com.vbt.java.general.JavaClassGeneral;
+import tr.com.vbt.java.general.JavaConstants;
 import tr.com.vbt.java.util.RuleNotFoundException;
 import tr.com.vbt.java.utils.ConvertUtilities;
 import tr.com.vbt.java.utils.WriteFileUtility;
@@ -182,7 +185,7 @@ public class TransferFromNaturalToJavaMain {
 						MDC.put("module", logModel.getModule());
 						MDC.put("conversionFileType", logModel.getConversionFileType().toString());
 						MDC.put("fileName", logModel.getFileName());
-						logModel.setClientInteracting(true);
+						logModel.setClientInteracting(logModel.isProgram());
 						transferDriver.driveTransfer(logModel);
 						//transferDriver.writeDalCodes(logModel);
 						//transferDriver.writeDalHibernateCodes(logModel);
@@ -373,21 +376,25 @@ public class TransferFromNaturalToJavaMain {
 
 		Set<String> keys = JavaClassElement.javaHibernateCodeMap.keySet();
 
-		String pojoName, findByMethodSignature;
+		String pojoName;
+		
+		MethodImplementation findByMethodImplemantation;
 
 		Set<String> tables = new HashSet<String>();
 		for (String key : keys) {
 			System.out.println(key);
-			pojoName = key.substring(0, key.indexOf(" "));
-			findByMethodSignature = JavaClassElement.javaHibernateCodeMap.get(key);
-
+			
+			findByMethodImplemantation = JavaClassElement.javaHibernateCodeMap.get(key);
+			
+			pojoName=findByMethodImplemantation.getMethodSignature().getReturnType();
+			
 			if (!tables.contains(pojoName)) { // Bu pojoyu İlk kez yazacaksa
 				StringBuffer interfaceHeader = ConvertUtilities.writeDAOImplemantasyonClassHeader(pojoName);
 				try {
 					WriteToFile.writeHeaderToFile(interfaceHeader, ConversionLogModel.getInstance().getFullJavaHibernateFileName(pojoName));
 				} catch (IOException e) {
 					logger.warn(
-							"DAL Interface  Write For File" + pojoName + " " + findByMethodSignature + " WITH ERROR+");
+							"DAL Interface  Write For File" + pojoName + " " + findByMethodImplemantation.toString() + " WITH ERROR+");
 					logger.warn("", e);
 					logger.warn("**********************************************************************");
 					logger.warn("****************************ERROR END***********************************");
@@ -397,9 +404,10 @@ public class TransferFromNaturalToJavaMain {
 			}
 
 			try {
-				WriteToFile.appendToFile(findByMethodSignature, ConversionLogModel.getInstance().getFullJavaHibernateFileName(pojoName));
+		
+				WriteToFile.appendToFile(findByMethodImplemantation.toString(), ConversionLogModel.getInstance().getFullJavaHibernateFileName(pojoName));
 			} catch (IOException e) {
-				logger.warn("DAL Interface  Write For File" + pojoName + " " + findByMethodSignature + " WITH ERROR+");
+				logger.warn("DAL Interface  Write For File" + pojoName + " " + findByMethodImplemantation.toString() + " WITH ERROR+");
 				logger.warn("", e);
 				logger.warn("**********************************************************************");
 				logger.warn("****************************ERROR END***********************************");
@@ -413,14 +421,19 @@ public class TransferFromNaturalToJavaMain {
 
 		Set<String> keys = JavaClassElement.javaDAOInterfaceCodeMap.keySet();
 
-		String pojoName = null, findByMethodSignature;
+		String pojoName = null;
+		
+		MethodSignature findByMethodSignature;
 
 		Set<String> tables = new HashSet<String>();
 		for (String key : keys) {
 			System.out.println(key);
-			pojoName = key.substring(0, key.indexOf(" "));
+			//pojoName = key.substring(0, key.indexOf(" "));
+			
 			findByMethodSignature = JavaClassElement.javaDAOInterfaceCodeMap.get(key);
 
+			pojoName=findByMethodSignature.getReturnType();
+			
 			if (!tables.contains(pojoName)) { // Bu pojoyu İlk kez yazacaksa
 				StringBuffer interfaceHeader = ConvertUtilities.writeInterfaceHeader(pojoName);
 				try {
@@ -437,7 +450,11 @@ public class TransferFromNaturalToJavaMain {
 			}
 
 			try {
-				WriteToFile.appendToFile(findByMethodSignature, ConversionLogModel.getInstance().getFullJavaDAOInterfaceFileName(pojoName));
+				
+				WriteToFile.appendToFile("//"+findByMethodSignature.writeCallingPrograms()+JavaConstants.NEW_LINE, ConversionLogModel.getInstance().getFullJavaDAOInterfaceFileName(pojoName));
+				
+				WriteToFile.appendToFile(findByMethodSignature.toString(), ConversionLogModel.getInstance().getFullJavaDAOInterfaceFileName(pojoName));
+			
 			} catch (IOException e) {
 				logger.warn("DAL Interface  Write For File" + pojoName + " " + findByMethodSignature + " WITH ERROR+");
 				logger.warn("", e);
@@ -541,7 +558,7 @@ public class TransferFromNaturalToJavaMain {
 				// Command List
 				commandList = NaturalCommandList.getInstance(lexer.tokenListesi, lexer);
 
-				commandList.replaceGlobalVariables();
+				//commandList.replaceGlobalVariables();
 
 				try {
 					commandList.setPaternManager(paternManagerDataType);

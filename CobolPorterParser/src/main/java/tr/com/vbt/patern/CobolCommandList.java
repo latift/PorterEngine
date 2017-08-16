@@ -948,13 +948,6 @@ private void addVirtualEndingCommandsForFileStatements() {
 
 
 
-	@Override
-	public void replaceGlobalVariables() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
 
 	@Override
 	public void markOneDimensionRedefineElementOfSimpleDataType() {

@@ -6,11 +6,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,10 +52,34 @@ public class NaturalLexing extends AbstractLexing {
 	public HashMap<String, RedefinedColumn> tableColumnRedefinersList=new HashMap<>();
 	
 	protected NaturalOzelKelimeler naturalOzelKelimeler;
+	
+	final private Set<String> GLOBAL_VARIABLES_SET = new HashSet<String>();
 
 	public NaturalLexing() {
 		super();
 		naturalOzelKelimeler = new NaturalOzelKelimeler();
+		
+		initGlobalVariablesSet();
+	}
+	
+	private void initGlobalVariablesSet() {
+		GLOBAL_VARIABLES_SET.add("MUSNO1");
+		GLOBAL_VARIABLES_SET.add("MUSNO2");
+		GLOBAL_VARIABLES_SET.add("KRX_KOD");
+		GLOBAL_VARIABLES_SET.add("HESCINSI");
+		GLOBAL_VARIABLES_SET.add("DOVIZ");
+		GLOBAL_VARIABLES_SET.add("HESNO");
+		GLOBAL_VARIABLES_SET.add("ISSIC");
+		GLOBAL_VARIABLES_SET.add("ISUSER");
+		GLOBAL_VARIABLES_SET.add("YAZICI");
+		GLOBAL_VARIABLES_SET.add("LAZERYAZICI");
+		GLOBAL_VARIABLES_SET.add("ISSUBE");
+		GLOBAL_VARIABLES_SET.add("ISSERVIS");
+		GLOBAL_VARIABLES_SET.add("GMESAJ");
+		GLOBAL_VARIABLES_SET.add("PIKYAZICI");
+		GLOBAL_VARIABLES_SET.add("HESDOKYAZICI");
+		GLOBAL_VARIABLES_SET.add("SW_PIKYAZ");
+
 	}
 
 	/**
@@ -114,6 +141,8 @@ public class NaturalLexing extends AbstractLexing {
 		addThenForModeStatement(ReservedNaturalKeywords.READ);
 		
 		addThenForModeStatement(ReservedNaturalKeywords.FIND);
+		
+		addThenForModeStatement(ReservedNaturalKeywords.WHEN);
 		
 		addEndIfBeforeElse();
 	}
@@ -445,6 +474,9 @@ public class NaturalLexing extends AbstractLexing {
 						astCurrent.isOzelKelime(ReservedNaturalKeywords.FOR)||
 						astCurrent.isOzelKelime(ReservedNaturalKeywords.GIVING)||
 						astCurrent.isOzelKelime(ReservedNaturalKeywords.GIVING_INDEX)||
+						astCurrent.isOzelKelime(ReservedNaturalKeywords.GIVING_LENGTH_IN)||
+						astCurrent.isOzelKelime(ReservedNaturalKeywords.EXAMINE_GIVING_POSITION)||
+						astCurrent.isOzelKelime(ReservedNaturalKeywords.GIVING_POSITION)||
 						astCurrent.isOzelKelime(ReservedNaturalKeywords.GIVING_INDEX_IN)||
 						astCurrent.isOzelKelime(ReservedNaturalKeywords.GIVING_NUMBER)||
 						astCurrent.isOzelKelime(ReservedNaturalKeywords.GIVING_LENGTH)||
@@ -460,7 +492,7 @@ public class NaturalLexing extends AbstractLexing {
 				tokenListesi.add(i, new OzelKelimeToken<String>(ReservedNaturalKeywords.END_EXAMINE, astCurrent.getSatirNumarasi(), 0, 0,true));
 				
 				astExamineReached=false;
-			}else if (astCurrent.isOzelKelime(ReservedNaturalKeywords.EXAMINE)) { // DIPSLAY
+			}else if (astCurrent.isOzelKelime(ReservedNaturalKeywords.EXAMINE) || astCurrent.isOzelKelime(ReservedNaturalKeywords.EXAMINE_FULL)) { // DIPSLAY
 							// varsa
 				astExamineReached=true;
 			
@@ -640,66 +672,50 @@ public class NaturalLexing extends AbstractLexing {
 
 	}
 
+
 	private void addEnderForInput() {
-		AbstractToken astInput;
-		AbstractToken inputParam;
-		AbstractToken inputEnder;
-		List<Integer> addInputEnderList = new ArrayList<Integer>();
-		boolean endOfTokenListReached = false;
+		
+		AbstractToken astCurrent;
+		
+		boolean astInputReached=false;
+	
 		for (int i = 0; i < tokenListesi.size() - 1; i++) {
 
-			astInput = tokenListesi.get(i);
-
-			if (astInput.getTip().equals(TokenTipi.OzelKelime) && astInput.getDeger() != null
-					&& (astInput.getDeger().equals(ReservedNaturalKeywords.INPUT)
-							|| astInput.getDeger().equals(ReservedNaturalKeywords.INPUT_NO_ERASE))) { // INPUT
-																										// varsa
-
-				if (i == tokenListesi.size() - 1) {
-					endOfTokenListReached = true;
-					break;
-				}
-
-				do {
-					i++;
-					inputParam = tokenListesi.get(i);
-
-					if (i == tokenListesi.size() - 1) {
-						endOfTokenListReached = true;
-						break;
-					}
-					if (inputParam.getTip().equals(TokenTipi.OzelKelime)
-							&& inputParam.getDeger().toString().equals("ON")) {
-						inputParam.setTip(TokenTipi.Kelime);
-					}
-
-				} while (!inputParam.getTip().equals(TokenTipi.OzelKelime)
-						|| inputParam.getDeger().equals(ReservedNaturalKeywords.WITH_TEXT));
-
-				// 2266 INPUT MARK *MAP.SECKOD USING MAP 'IDGMMUSS' --> Bu
+			astCurrent = tokenListesi.get(i);
+			
+			/**
+			 * 	// 2266 INPUT MARK *MAP.SECKOD USING MAP 'IDGMMUSS' --> Bu
 				// durumda endInput eklenmez. Çünkü bu INPUTUSINGMAP olarak ele
 				// alınmalı.
 				if (inputParam.getTip().equals(TokenTipi.OzelKelime)
 						&& inputParam.getDeger().equals(ReservedNaturalKeywords.MARK)) {
 					return;
 				}
+			 */
+			if(astInputReached  && (astCurrent.isOzelKelime(ReservedNaturalKeywords.MARK))) {
 
-				addInputEnderList.add(i);
-				if (endOfTokenListReached) {
-					break;
-				}
+				astInputReached=false;
+				
 
-				i--; // Compute dan hemen sonra bir daha compute gelirse
-						// yakalamak icin.
+			}else if(astInputReached  && (!astCurrent.isOzelKelime() || astCurrent.isOzelKelime(ReservedNaturalKeywords.WITH_TEXT)|| astCurrent.isOzelKelime("TEXT"))) {
+
+				astCurrent = tokenListesi.get(i);
+				
+
+			}else if(astInputReached){
+			
+				tokenListesi.add(i, new OzelKelimeToken<String>(ReservedNaturalKeywords.END_INPUT, astCurrent.getSatirNumarasi(), 0, 0,true));
+				
+				astInputReached=false;
+			}else if (astCurrent.isOneOfOzelKelime(ReservedNaturalKeywords.INPUT,ReservedNaturalKeywords.INPUT_NO_ERASE)) { // DIPSLAY
+							// varsa
+				astInputReached=true;
+			
 			}
 
 		}
 
-		while (!addInputEnderList.isEmpty()) {
-			inputEnder = new OzelKelimeToken<String>(ReservedNaturalKeywords.END_INPUT, 0, 0, 0,true);
-			tokenListesi.add(addInputEnderList.get(addInputEnderList.size() - 1), inputEnder);
-			addInputEnderList.remove(addInputEnderList.size() - 1); // RemoveLast
-		}
+
 	}
 
 	private void addEnderForWrite() {
@@ -1712,7 +1728,7 @@ public class NaturalLexing extends AbstractLexing {
 		
 		setNaturalMode();
 		
-		
+		replaceGlobalVariables();
 		
 		setAmpersand();
 		
@@ -1762,7 +1778,9 @@ public class NaturalLexing extends AbstractLexing {
 										// in flagini işaretler
 		
 		controlDiyezToken();
+		
 		setViewOfColumns();
+		
 		controlPojo();
 
 		setAllElementsOfPojoFlag();
@@ -1790,6 +1808,8 @@ public class NaturalLexing extends AbstractLexing {
 		controlTableName();// Schema ismini kaldırıp tablo ismi yapıyor. Ama bu yanlış. Schema ismi IKR-MLYT-KOD VIEW OF IKR-MLYT-KOD
 			//örneginde olduğu gibi IKR schema  olabilir ama adabas da schema yok. DB2 da var. Dikkat!!!!!!!!!!!!
 
+		//setPojoVariablesForMB();
+		
 		setSubstrFields(); // SUBSTR(SB_ACIKLAMA,1,79) --> bunu SB_ACIKLAMA ya
 							// çevirir. subStringStartIndex ve subStringEndIndex
 							// set eder.
@@ -2331,9 +2351,16 @@ public class NaturalLexing extends AbstractLexing {
 		module = module.toLowerCase();
 		module = module.replaceAll("/seperatedprograms", "");
 		
-		Object includedFileObject;
+		Object includedFileObject, includedFileObjectInstance;
+		
+		Method loadDefinitions;
 		
 		Field field;
+		
+		
+		Class[] cArg = new Class[2];
+        cArg[0] = String.class;
+        cArg[1] = String.class;
 		
 		for (String fileName : includeFileList.values()) {
 
@@ -2346,12 +2373,21 @@ public class NaturalLexing extends AbstractLexing {
 							.newInstance();
 				}
 
+				
+				Class parameters;
+				loadDefinitions=includedFileObject.getClass().getDeclaredMethod("loadDefinitions",null);
+				loadDefinitions.invoke(includedFileObject, new Object[] {});
+				
 				try {
 					field = includedFileObject.getClass().getDeclaredField("tableColumnReferans");
 				} catch (Exception e) {
 					field = includedFileObject.getClass().getField("tableColumnReferans");
 				}
 
+				//includedFileObjectInstance= //IDGLOZLK.getInstance(sessionId, programName);
+				
+
+				
 				field.setAccessible(true);
 
 				tableColumnReferans.putAll((HashMap) field.get(includedFileObject));
@@ -3106,7 +3142,7 @@ public class NaturalLexing extends AbstractLexing {
 					    String key = entry.getKey();
 					    FieldWrapper fWrapper = entry.getValue();
 					   
-					    if(current.getDeger().equals(fWrapper.getField().getName())){
+					    if(current.getDeger().equals(fWrapper.getField().getName()) && current.isLocalVariable()){
 								
 					    	
 					    	/*if(fWrapper.getFieldOwnerFile().contains("TOPSCRG1")||fWrapper.getFieldOwnerFile().contains("KETLV0G1")){
@@ -3219,6 +3255,49 @@ public class NaturalLexing extends AbstractLexing {
 
 	}
 	
+	private void setPojoVariablesForMB() {
+		
+		if(ConversionLogModel.getInstance().getCustomer().equals("THY")){
+			return;
+		}
+		
+		AbstractToken lastTableToken = null, currentToken, newGeneratedTableNameToken;
+		
+		for (int i = 0; i < tokenListesi.size() - 1; i++) {
+
+			currentToken = tokenListesi.get(i);
+			
+			if(currentToken.isTable()){
+				
+				lastTableToken=currentToken;
+			
+			}else if(!currentToken.isSystemVariable() 
+						&& !currentToken.isConstantVariableWithQuota()
+						&& !currentToken.isGlobalVariable()
+						&& !currentToken.isRecordVariable()
+						&& !currentToken.isRedefinedVariable()
+						&& !currentToken.isRedefinedVariableDimensionToSimple()
+						&& !currentToken.isAmpersand()
+						&& currentToken.isKelime()
+						&& currentToken.isLocalVariable()
+						){
+				
+				if(lastTableToken==null){
+					continue;
+				}
+				newGeneratedTableNameToken=new KelimeToken(lastTableToken.getDeger().toString(), currentToken.getSatirNumarasi(), 0, currentToken.getSatirdakiTokenSirasi());
+				
+				newGeneratedTableNameToken.setColumnNameToken(currentToken);
+				
+				newGeneratedTableNameToken.setPojoVariable(true);
+				
+				logger.debug(currentToken.getDeger().toString()+" kolonuna "+ newGeneratedTableNameToken.getDeger().toString()+" tablo ismi eklendi");
+				
+				tokenListesi.set(i, newGeneratedTableNameToken);
+			}
+		}
+	}
+	
 	/*
 	 * VIEW OF gorursen Sonra 1 gorunceye kadar 
 	 * tum kelimeleri pojoVariable olarak set et.
@@ -3312,6 +3391,7 @@ public class NaturalLexing extends AbstractLexing {
 		
 	}
 	
+	
 	// MFEXIT-KET_COUNTRY.CNT-AREA
 	// IDGIDBS-TGECICI.GEXTRE_SAYFA --> Tek bir token a çevir. isScheması true
 	// olsun. tablo tokeninin T_Gecici olarak set et.
@@ -3353,6 +3433,13 @@ public class NaturalLexing extends AbstractLexing {
 					astSchema.setPojoVariable(true);
 					astSchema.setLocalVariable(false);
 					astTable.setSchemaNameToken(astSchema);
+					
+					if(ConversionLogModel.getInstance().getCustomer().equals("MB")){
+						//idgidbs DISINDAKİ POJOLARDA SCHEMA İSMİ EKLENİR.
+						if(!names[0].toUpperCase().equals("IDGIDBS")){
+							astTable.setDeger(names[0]+tableName);
+						}
+					}	
 					tokenListesi.remove(i + 2); // Column Token
 					tokenListesi.remove(i + 1); // Nokta Token
 					tokenListesi.remove(i); // Schema Token
@@ -3462,7 +3549,13 @@ public class NaturalLexing extends AbstractLexing {
 					astSchema.setDeger(names[0]);
 					astSchema.setPojoVariable(true);
 					astTable.setSchemaNameToken(astSchema);
+					astTable.setTable(true);
 					astTable.setSynoynmsRealTableName(astSchema.getSynoynmsRealTableName());
+					
+					//idgidbs DISINDAKİ POJOLARDA SCHEMA İSMİ EKLENİR.
+					if(!names[0].toUpperCase().equals("IDGIDBS")){
+						astTable.setDeger(names[0]+tableName);
+					}
 					tokenListesi.remove(i);
 					tokenListesi.add(i, astTable);
 				}
@@ -3939,6 +4032,33 @@ public class NaturalLexing extends AbstractLexing {
 		}
 
 	}
+	
+	/**
+	 * + MUSNO1 --> MUSNO1
+	 */
+	
+	public void replaceGlobalVariables() {
+
+		AbstractToken plusToken, globalVariableToken;
+
+		for (int i = 0; i < tokenListesi.size() - 2; i++) {
+
+			plusToken = tokenListesi.get(i);
+			globalVariableToken = tokenListesi.get(i + 1);
+
+			if (plusToken.getTip().equals(TokenTipi.Karakter) && plusToken.getDeger().equals('+')) {
+
+				if (GLOBAL_VARIABLES_SET.contains(globalVariableToken.getDeger())) {
+					tokenListesi.remove(i); // Remove +
+					globalVariableToken.setDeger(globalVariableToken.getDeger());
+					globalVariableToken.setGlobalVariable(true);
+					globalVariableToken.setLocalVariable(true);
+				}
+
+			}
+
+		}
+	}
 
 	private boolean isEndDefineReached(AbstractToken astCurrent) {
 		if (astCurrent != null && astCurrent.getTip().equals(TokenTipi.OzelKelime)
@@ -4011,6 +4131,7 @@ public class NaturalLexing extends AbstractLexing {
 		List<String>  systemVariables=new ArrayList<>();
 		systemVariables.add("PF_KEY");
 		systemVariables.add("DAT");
+		systemVariables.add("DAT4I");
 		systemVariables.add("DAT4E");
 		systemVariables.add("DATE");
 		systemVariables.add("DATN");
@@ -4032,6 +4153,8 @@ public class NaturalLexing extends AbstractLexing {
 		systemVariables.add("LIBRARY_ID");
 		systemVariables.add("CURS_FIELD");
 		systemVariables.add("INIT_ID");
+		systemVariables.add("ERROR_LINE");
+		systemVariables.add("SQLCODE");
 		
 		if(systemVariables.contains(systemVariable.getDeger())){
 			return true;

@@ -72,16 +72,20 @@ public class PaternWhen extends AbstractPatternFromXToYWithoutCarriageReturn{
 		super.setSatirNumarasi(matchedCommand,currentTokenForMatch, abstractTokenInPattern);if(abstractTokenInPattern.getSourceFieldName()==null){
 		
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("conditionList")){
-			matchedCommandAdd.getConditionList().add((String) currentTokenForMatch.getDeger());
 			
-			List<String> sourceList;
+			matchedCommandAdd.getConditionList().add(currentTokenForMatch);
+			
+			List<AbstractToken> conditionList;
 			if(matchedCommandAdd.getParameters().get("conditionList")!=null){
-				sourceList=(List<String>) matchedCommandAdd.getParameters().get("conditionList");
+				conditionList=(List<AbstractToken>) matchedCommandAdd.getParameters().get("conditionList");
 			}else{
-				sourceList=new ArrayList<String>();
+				conditionList=new ArrayList<AbstractToken>();
 			}
-			sourceList.add((String) currentTokenForMatch.getDeger());
-			matchedCommandAdd.getParameters().put("conditionList", sourceList);
+			
+			conditionList.add(currentTokenForMatch);
+			
+			matchedCommandAdd.getParameters().put("conditionList",conditionList);			
+			
 		}
 	}
 		

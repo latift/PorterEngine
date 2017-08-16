@@ -5,6 +5,7 @@ import tr.com.vbt.lexer.ReservedNaturalKeywords;
 import tr.com.vbt.natural.parser.conditions.ElementValue;
 import tr.com.vbt.patern.AbstractPattern;
 import tr.com.vbt.token.AbstractToken;
+import tr.com.vbt.token.GenelTipToken;
 import tr.com.vbt.token.KelimeToken;
 import tr.com.vbt.token.OzelKelimeToken;
 
@@ -33,7 +34,7 @@ public class PaternValue extends AbstractPattern{
 		patternTokenList.add(astKey);
 		
 		//VALUE
-		AbstractToken<String> astValue=new KelimeToken<>();
+		AbstractToken astValue=new GenelTipToken();
 		astValue.setSourceFieldName("VALUE");
 		patternTokenList.add(astValue);
 	

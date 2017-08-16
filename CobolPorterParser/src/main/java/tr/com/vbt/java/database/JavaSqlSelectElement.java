@@ -11,6 +11,7 @@ import tr.com.vbt.java.general.JavaClassElement;
 import tr.com.vbt.java.general.JavaConstants;
 import tr.com.vbt.java.util.Utility;
 import tr.com.vbt.java.utils.ConvertUtilities;
+import tr.com.vbt.java.utils.JavaWriteUtilities;
 import tr.com.vbt.lexer.ReservedNaturalKeywords;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.TokenTipi;
@@ -42,16 +43,21 @@ public class JavaSqlSelectElement extends  AbstractJavaElement{
 		try {
 			queryTokenList = (List<AbstractToken>) this.parameters.get("queryTokenList");
 			
-		
+			if(queryTokenList==null){
+				JavaClassElement.javaCodeBuffer.append("//TODO ENGINE: SQL HATASI ");
+				return true;
+			}
 			for(int i=0; i<queryTokenList.size();i++){
 				
 				curToken=queryTokenList.get(i);
 				
 				if(curToken.getTip().equals(TokenTipi.OzelKelime)&& curToken.getDeger().equals(ReservedNaturalKeywords.INTO)){
-					intoToken=queryTokenList.get(i+1);
-					queryTokenList.remove(i+1); //INTO value
-					queryTokenList.remove(i);   //INTO
-					break;
+					if(i+1<queryTokenList.size()){
+						intoToken=queryTokenList.get(i+1);
+						queryTokenList.remove(i+1); //INTO value
+						queryTokenList.remove(i);   //INTO
+					}
+						break;
 				}
 			}
 			
@@ -64,14 +70,24 @@ public class JavaSqlSelectElement extends  AbstractJavaElement{
 				curToken=queryTokenList.get(i);
 				
 					
-					if(curToken.getTip().equals(TokenTipi.OzelKelime)&&
+					/*if(curToken.getTip().equals(TokenTipi.OzelKelime)&&
 							(curToken.getDeger().equals(ReservedNaturalKeywords.AND)||
 									curToken.getDeger().equals(ReservedNaturalKeywords.OR)		
 									)){
 						// Add +"
 						JavaClassElement.javaCodeBuffer.append("+\" ");
-					}
+					}*/
 					
+					if(curToken.isPojoVariable()){
+						JavaClassElement.javaCodeBuffer.append("\"+ ");
+						
+						JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(curToken));
+						JavaClassElement.javaCodeBuffer.append("+\"");
+						
+					}else{
+						JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(curToken));
+					}
+					/*
 					if(curToken.isPojoVariable()){
 						JavaClassElement.javaCodeBuffer.append(Utility.pojoNameToPojoDotColumnName(curToken));
 					}else if(curToken.isRecordVariable()){
@@ -81,13 +97,13 @@ public class JavaSqlSelectElement extends  AbstractJavaElement{
 					}else{
 						JavaClassElement.javaCodeBuffer.append(curToken.getDeger());
 					}
-					
-					if(curToken.getTip().equals(TokenTipi.Karakter)&& curToken.getDeger().equals('=')){
+					*/
+					/*if(curToken.getTip().equals(TokenTipi.Karakter)&& curToken.getDeger().equals('=')){
 						// Add "+
 						JavaClassElement.javaCodeBuffer.append("\"+");
 					}
 					
-					JavaClassElement.javaCodeBuffer.append(" ");
+					JavaClassElement.javaCodeBuffer.append(" ");*/
 	
 			}
 			

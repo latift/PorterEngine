@@ -57,6 +57,7 @@ public IkiliOzelKelimelerNatural() {
 	ikiliKelimeler.add(new DoubleWordKeyword("CLOSE","PRINTER"));
 	ikiliKelimeler.add(new DoubleWordKeyword("FETCH","RETURN"));
 	ikiliKelimeler.add(new DoubleWordKeyword("GIVING","INDEX"));
+	ikiliKelimeler.add(new DoubleWordKeyword("GIVING","POSITION"));
 	ikiliKelimeler.add(new DoubleWordKeyword("GIVING","LENGTH"));
 	ikiliKelimeler.add(new DoubleWordKeyword("GIVING","NUMBER"));
 	ikiliKelimeler.add(new DoubleWordKeyword("DEFINE","WINDOW"));
@@ -79,6 +80,7 @@ public IkiliOzelKelimelerNatural() {
 	ikiliKelimeler.add(new DoubleWordKeyword("WITH","TEXT"));
 	ikiliKelimeler.add(new DoubleWordKeyword("ON","ERROR"));
 	ikiliKelimeler.add(new DoubleWordKeyword("INPUT","MAP"));
+	ikiliKelimeler.add(new DoubleWordKeyword("EXAMINE","FULL"));
 	
 	//TODO REPORTING MODDADA GEREK DUYULMAMASI LAZIM
 	if(ConversionLogModel.getInstance().getMode().equals(NaturalMode.REPORTING)){

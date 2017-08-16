@@ -23,6 +23,8 @@ import tr.com.vbt.natural.parser.basicverbs.patern.PaternExamineForGivingIndex;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternExamineForGivingLength;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternExamineForGivingLengthIn;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternExamineForGivingNumber;
+import tr.com.vbt.natural.parser.basicverbs.patern.PaternExamineForGivingPosition;
+import tr.com.vbt.natural.parser.basicverbs.patern.PaternExamineFullForGivingLengthIn;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternExamineReplaceWith;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternFetch;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternFetchReturn;
@@ -47,6 +49,7 @@ import tr.com.vbt.natural.parser.basicverbs.patern.PaternStore;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternSubtract;
 import tr.com.vbt.natural.parser.conditions.patern.PaternAccept;
 import tr.com.vbt.natural.parser.conditions.patern.PaternAcceptIf;
+import tr.com.vbt.natural.parser.conditions.patern.PaternDecideForFirstCondition;
 import tr.com.vbt.natural.parser.conditions.patern.PaternDecideOn;
 import tr.com.vbt.natural.parser.conditions.patern.PaternElse;
 import tr.com.vbt.natural.parser.conditions.patern.PaternElseIf;
@@ -148,7 +151,7 @@ public class PaternManagerNaturalImpl  extends AbstractPaternManagerNatural{
 	public PaternManagerNaturalImpl() {
 		super();
 		  
-		
+		commmandPatternList.add(new PaternWhen());
 		commmandPatternList.add(new PaternExamineForGivingNumber());
 		
 		//General
@@ -190,6 +193,8 @@ public class PaternManagerNaturalImpl  extends AbstractPaternManagerNatural{
 		commmandPatternList.add(new PaternEndDisplay());
 		commmandPatternList.add(new PaternExamineForDelete());
 		commmandPatternList.add(new PaternExamineForGivingIndex());
+		commmandPatternList.add(new PaternExamineForGivingPosition());
+		commmandPatternList.add(new PaternExamineFullForGivingLengthIn());
 		commmandPatternList.add(new PaternExamineForGivingLength());
 		commmandPatternList.add(new PaternExamineForGivingLengthIn());
 		commmandPatternList.add(new PaternExamineForGiving());
@@ -239,9 +244,9 @@ public class PaternManagerNaturalImpl  extends AbstractPaternManagerNatural{
 		commmandPatternList.add(new PaternElse());
 		commmandPatternList.add(new PaternElseIf());
 		commmandPatternList.add(new PaternEndEvaluate());
-		commmandPatternList.add(new PaternWhen());
 		commmandPatternList.add(new PaternIgnore());
 		commmandPatternList.add(new PaternDecideOn());
+		commmandPatternList.add(new PaternDecideForFirstCondition());
 		commmandPatternList.add(new PaternEndDecide());
 		commmandPatternList.add(new PaternValue());
 		commmandPatternList.add(new PaternNone());

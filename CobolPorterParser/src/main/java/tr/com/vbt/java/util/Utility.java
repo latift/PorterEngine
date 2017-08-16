@@ -3,19 +3,27 @@ package tr.com.vbt.java.util;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.cobol.parser.Levelable;
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaConstants;
+import tr.com.vbt.java.utils.JavaWriteUtilities;
+import tr.com.vbt.lexer.ConversionLogModel;
 import tr.com.vbt.lexer.THYModules;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.ArrayToken;
 import tr.com.vbt.token.TokenTipi;
+import tr.com.vbt.util.ConverterConfiguration;
 
 public class Utility {
 	
 	public static boolean DEBUG;
 
+	final static Logger logger = LoggerFactory.getLogger(Utility.class);
+	
 		public AbstractJavaElement getChildWithName(AbstractJavaElement parent, String childName){
 			/*
 			for (AbstractJavaElement child : parent.getChildren()) {
@@ -272,24 +280,121 @@ public class Utility {
 		   return null;
 		}
 
-		public static Class findPojoClass(String className) {
-			Class c = null;
-
-
-			THYModules[] modules = THYModules.class.getEnumConstants();
-
-			for(int i=0; i<modules.length;i++){
+		
+	public static String findViewAndColumnNamesReturnType(AbstractToken condition) throws NoSuchMethodException, SecurityException {
+			
+			String getterString, tableName, className, biggerPojoName, columnName, getterMethod;
+			
+			Method primaryKeyGetterMethod,method, pkClassGetterMethod = null;
+			
+			tableName= condition.getDeger().toString(); //TESKI;
+			biggerPojoName=Utility.viewNameToBiggerPojoName(tableName);
+			className=Utility.viewNameToPojoName(tableName);
 				
-				try {
-					  c = Class.forName("tr.com.thy.dal."+modules[i].toString()+".dal"+className);
-				} catch (ClassNotFoundException e) {
+			columnName=condition.getColumnNameToken().getDeger().toString();
+			getterMethod =Utility.viewNameToPojoGetterName(columnName);
+			
+		
+			Class c = null, pkClass=null, returnClass;
+
+			c=findPojoClass(className);
+			
+		    try {
+				method= c.getDeclaredMethod(getterMethod, null);
+				returnClass=method.getReturnType();
+				return returnClass.getSimpleName().toString();
+			} catch (NoSuchMethodException e) {
+				//MEthod yoksa Primary Key dir. O zaman burası koşar.
+				//IDGIDBS-TESKI.MUSNO1 -->TESKI.getId().getMusno1()
+				//TESKI --> getTeskiPK
+				primaryKeyGetterMethod=Utility.primaryKeyGetterMethod(tableName);
 				
-				}
-				if(c!=null){
-					return c;
-				}
+				pkClass=findPojosPkClass(className);
+				
+				pkClassGetterMethod= pkClass.getDeclaredMethod(getterMethod, null);
+				
+				returnClass=pkClassGetterMethod.getReturnType();
+				
+				return returnClass.getSimpleName().toString();
+				
+			} catch (Exception e) {
+				logger.debug(e.getMessage(),e);
 			}
-			return c;
+				
+			
+		   return null;
+		}
+	
+			//THesap --> class(ThesapPK)
+		private static Class findPojosPkClass(String pojoClassName) {
+			
+			if(ConversionLogModel.getInstance().isMB()){
+				
+				String fullPKClassName,schemaName;
+				
+				Class pojoClass = null;
+				
+				fullPKClassName="tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.pojo.idgidbs."+pojoClassName+"PK";
+						
+				try {
+					pojoClass = Class.forName(fullPKClassName);
+							
+					return pojoClass;
+				} catch (ClassNotFoundException e) {
+							
+						return null;
+				}
+					
+			}else{
+			
+				
+				return null;
+			}
+	
+	}
+
+		public static Class findPojoClass(String className) {
+			
+			if(ConversionLogModel.getInstance().isMB()){
+				
+				String fullClassName,schemaName;
+				
+				Class pojoClass = null;
+				
+					for(int i=0; i<ConverterConfiguration.getSchemaList().size();i++){
+						schemaName=ConverterConfiguration.getSchemaList().get(i);
+						fullClassName="tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.pojo."+schemaName.toLowerCase()+"."+className;
+						
+						try {
+							pojoClass = Class.forName(fullClassName);
+							
+							return pojoClass;
+						} catch (ClassNotFoundException e) {
+							
+							continue;
+						}
+					}
+					
+				return null;
+				
+			}else{
+				Class c = null;
+	
+				THYModules[] modules = THYModules.class.getEnumConstants();
+	
+				for(int i=0; i<modules.length;i++){
+					
+					try {
+						  c = Class.forName("tr.com.thy.dal."+modules[i].toString()+".dal"+className);
+					} catch (ClassNotFoundException e) {
+					
+					}
+					if(c!=null){
+						return c;
+					}
+				}
+				return c;
+			}
 		}
 
 		//TESKI --> getTeskiPK
@@ -299,20 +404,13 @@ public class Utility {
 			String result;
 			
 			String pojoName=Utility.viewNameToPojoName(tableName);
-			sb.append("get");
-			sb.append(pojoName);
-			sb.append("PK");
+			sb.append("getId");
 			
 			result=sb.toString();
 			
 			//Bu kısım kodun doğru uretildiğini valide etmek için.
 			Class c = null;
-			/*try {
-				  c = Class.forName("tr.com.thy.tps.dal.pojo."+pojoName);
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
+	
 			c=findPojoClass(pojoName);
 			
 			Method method= c.getDeclaredMethod(result, null);

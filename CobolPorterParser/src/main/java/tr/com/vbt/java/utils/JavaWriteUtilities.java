@@ -16,6 +16,7 @@ import tr.com.vbt.lexer.RedefinedColumn;
 import tr.com.vbt.natural.parser.datalayout.program.ElementProgramGrupNatural;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.ArrayToken;
+import tr.com.vbt.token.KelimeToken;
 import tr.com.vbt.token.TokenTipi;
 import tr.com.vbt.util.WriteToFile;
 
@@ -70,7 +71,58 @@ public class JavaWriteUtilities {
 		return tempCodeBuffer;
 	}
 	
+	public static StringBuilder toCustomSetterString(AbstractToken token, AbstractToken newValueToken) throws Exception {
+		
+		StringBuilder tempCodeBuffer=new StringBuilder();
 
+		if(token.getTip().equals(TokenTipi.SatirBasi)){ 
+			//Do nothing;
+		}else if(token.isRedefinedVariable()){ 
+			
+			tempCodeBuffer.append(toCustomRedefinedVariableSetterString(token));
+			
+		}else if(token.getTip().equals(TokenTipi.Karakter)){
+		
+		}else if(token.isPojoVariable() && ConversionLogModel.getInstance().isMB()){ //MB
+				
+			// IDGIDBS-TGECICI .HSONVALOR : = *DAT4I  --> TGECICI.setHSONVALOR(getSystemVAriable(DAT4I));
+			tempCodeBuffer.append(toCustomPojoDB2VariableSetterString(token, newValueToken));
+			
+		}else if(token.isPojoVariable()){ //MB
+			
+			// IDGIDBS-TGECICI .HSONVALOR : = *DAT4I  --> TGECICI.setHSONVALOR(getSystemVAriable(DAT4I));
+			tempCodeBuffer.append(toCustomPojoVariableSetterString(token));
+			
+		}else if(token.isSystemVariable()){
+	
+			tempCodeBuffer.append(toCustomSystemVariableString(token));
+			
+		}else if(token.isConstantVariableWithQuota()){		
+		
+			
+		}else if(token.isRecordVariable()){
+				
+		
+		}else if(token.isSubstringCommand()){
+			
+		
+		}else if(token.isEdited()){ //DVANATOPMEB(DOVIZGEC) -->DVANATOPMEB[DOVIZGEC]
+			
+			
+		}else if(token.getTip().equals(TokenTipi.Sayi)){
+			
+			
+		}else if(token.getTip().equals(TokenTipi.Array)){ //DVANATOPMEB(DOVIZGEC) -->DVANATOPMEB[DOVIZGEC]
+			
+			
+		}else{
+			
+			tempCodeBuffer.append(toCustomDefaultVariableString(token));
+			
+		}
+		
+		return tempCodeBuffer;
+	}
 
 	public static StringBuilder toCustomString(AbstractToken token) throws Exception  {
 
@@ -81,7 +133,15 @@ public class JavaWriteUtilities {
 		}
 		if(token.isPojoVariable()){
 			
-			tempCodeBuffer.append(toCustomPojoVariableString(token));
+			if(ConversionLogModel.getInstance().isMB()){
+			
+				tempCodeBuffer.append(toCustomPojoDB2VariableString(token));
+				
+			}else{
+				
+				tempCodeBuffer.append(toCustomPojoVariableString(token));
+		
+			}
 			
 		}else if(token.getTip().equals(TokenTipi.Kelime) && token.isInputParameters() ){ 
 		
@@ -143,6 +203,10 @@ public class JavaWriteUtilities {
 		
 	}
 	
+
+
+
+
 	private static Object toCustomInputParametersVariableString(AbstractToken token) {
 	
 		StringBuffer resultList=new StringBuffer("");
@@ -329,6 +393,7 @@ public class JavaWriteUtilities {
 		return 	token.getDeger().toString()+".substring("+token.getSubStringStartIndex()+","+token.getSubStringEndIndex()+")";
 		
 	}
+	
 
 	private static String toCustomRecordVariableString(AbstractToken token) {
 		AbstractCommand variableDefinition;
@@ -353,6 +418,74 @@ public class JavaWriteUtilities {
 
 	private static String toCustomConstantVariableString(AbstractToken token) {
 		return "\""+token.getDeger().toString().trim().toString()+"\"";
+		
+	}
+	
+	// IDGIDBS-TGECICI .HSONVALOR : = *DAT4I --> TGECICI.setHSonValor(getSystemVariable(DAT4I));
+		private static String toCustomPojoDB2VariableSetterString(AbstractToken token, AbstractToken newValueToken) throws Exception{
+			
+			
+			StringBuilder setterString=new StringBuilder();
+			
+			setterString.append(token.getDeger().toString()+".");
+			
+			setterString.append(Utility.viewNameToPojoSetterName(token.getColumnNameToken().getDeger().toString()));
+			
+			setterString.append("(");
+			
+			setterString.append(JavaWriteUtilities.toCustomString(newValueToken));
+			
+			setterString.append(")");
+			
+			return setterString.toString();
+			
+			
+		}
+	
+	// IDGIDBS-TOZLUK.MESLEKID --> TOZLUK.getMeslekId()
+	private static String toCustomPojoDB2VariableString(AbstractToken token) throws NoSuchMethodException, SecurityException {
+		
+		/*String getterString;//TESKI;
+		getterString= "getPojoValue("+"\""+token.getDeger().toString();
+	
+		if(token.getColumnNameToken()!=null){
+			getterString +=".";
+			
+			getterString +=Utility.viewNameToPojoGetterName(token.getColumnNameToken().getDeger().toString());
+		}
+		getterString +="()"+"\""+")";
+		return getterString;*/
+		
+		
+		StringBuilder getterString=new StringBuilder();
+		
+		String columnReturnType=Utility.findViewAndColumnNamesReturnType(token);
+		
+		if(columnReturnType.toLowerCase().equals("string")){
+			
+			getterString.append("getPojoValue(\"");
+		
+		}else if(columnReturnType.toLowerCase().equals("int")){
+			
+			getterString.append("getPojoValueAsInt(\"");
+			
+		}else if(columnReturnType.toLowerCase().equals("float")){
+			
+			getterString.append("getPojoValueAsFloat(\"");
+			
+		}else if(columnReturnType.toLowerCase().equals("long")){
+			
+			getterString.append("getPojoValueAsLong(\"");
+			
+		}else{
+			getterString.append("getPojoValue(\"");
+		}
+		
+		getterString.append(Utility.viewAndColumnNameToPojoAndGetterMethodName(token));
+		
+		getterString.append("\")");
+		return getterString.toString();
+		
 		
 	}
 
@@ -558,15 +691,14 @@ public class JavaWriteUtilities {
 	private static String ruleEmtpy_1_setter(DDM ddm, AbstractToken token) {
 		
 		String setterString;
-			setterString= "getPojoValue("+"\""+token.getDeger().toString();
-		setterString +=".";
+			setterString= "setPojoValue("+"\""+token.getDeger().toString()+"\"";
 		if(token.getColumnNameToken()==null){
 			
-			setterString +=Utility.viewNameToPojoSetterName(token.getDeger().toString())+"\""+")";
+			setterString +=token.getDeger().toString();
 					
 		}else{
 			
-			setterString +=Utility.viewNameToPojoSetterName(token.getColumnNameToken().getDeger().toString())+"\""+")";
+			setterString +=token.getColumnNameToken().getDeger().toString();
 		}
 		return setterString;
 
@@ -841,25 +973,30 @@ public class JavaWriteUtilities {
 		AbstractToken firstDimension;
 		tempCodeBuffer.append(token.getDeger().toString());  //MAP_DIZISI
 		
-		String getterString;//TESKI;
-			tempCodeBuffer.append(token.getDeger().toString());  //MAP_DIZISI
-		
 		logger.debug(token.getLinkedToken().toString());
-		arrayToken=(ArrayToken) token.getLinkedToken();
-		firstDimension=arrayToken.getFirstDimension();
-		if(firstDimension.getDeger() instanceof String){
-			tempCodeBuffer.append("["+arrayToken.getFirstDimension().getDeger()+"-1]");
-		}
-		else{
-			if(arrayToken.getFirstDimension().isKarakter('*')) {
+		if(token.getLinkedToken() instanceof ArrayToken){
+			arrayToken=(ArrayToken) token.getLinkedToken();
+			firstDimension=arrayToken.getFirstDimension();
+			if(firstDimension.getDeger() instanceof String){
 				tempCodeBuffer.append("["+arrayToken.getFirstDimension().getDeger()+"-1]");
-			}else {
-				
-				tempCodeBuffer.append("["+(int)arrayToken.getFirstDimension().getDeger()+"-1]");
 			}
+			else{
+				if(arrayToken.getFirstDimension().isKarakter('*')) {
+					tempCodeBuffer.append("["+arrayToken.getFirstDimension().getDeger()+"-1]");
+				}else {
+					
+					tempCodeBuffer.append("["+(int)arrayToken.getFirstDimension().getDeger()+"-1]");
+				}
+			}
+			tempCodeBuffer.append(".");
+			tempCodeBuffer.append(token.getLinkedToken().getDeger().toString()); //D_SIRA
+		}else if(token.getLinkedToken() instanceof KelimeToken){
+			tempCodeBuffer.append(".");
+			tempCodeBuffer.append(token.getLinkedToken().getDeger().toString()); //D_SIRA
+		}else{
+			tempCodeBuffer.append(".");
+			tempCodeBuffer.append(token.getLinkedToken().getDeger().toString()); //D_SIRA
 		}
-		tempCodeBuffer.append(".");
-		tempCodeBuffer.append(token.getLinkedToken().getDeger().toString()); //D_SIRA
 		
 		return tempCodeBuffer.toString();
 	}
@@ -976,6 +1113,10 @@ public class JavaWriteUtilities {
 		return tempCodeBuffer.toString();
 		
 	}
+
+
+
+
 
 
 

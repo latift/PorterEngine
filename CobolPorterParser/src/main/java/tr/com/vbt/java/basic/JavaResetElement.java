@@ -126,13 +126,11 @@ public class JavaResetElement extends  AbstractJavaElement {
 		ElementProgramOneDimensionArrayNatural oneDimensionArrayChildDefinition;
 		ElementProgramDataTypeNatural programDataTypeDefinition;
 		String type;
-		ArrayToken variableAsArrayToken;
 		if(definitionChild  instanceof ElementProgramOneDimensionArrayNatural){
 			oneDimensionArrayChildDefinition=(ElementProgramOneDimensionArrayNatural) definitionChild;
 			if(!oneDimensionArrayChildDefinition.getDataName().equals(variable.getLinkedToken().getDeger())){
 				return;
 			}
-			variableAsArrayToken=(ArrayToken) variable.getLinkedToken();
 			
 			// 3814   FOR KAYSAY=J TO 10
 			//				RESET MAP.HESCINSI(KAYSAY)

@@ -24,7 +24,7 @@ import tr.com.vbt.token.AbstractToken;
  */
 public class ElementWhen extends AbstractMultipleLinesCommand{
 
-	private List<String> conditionList=new ArrayList<String>();
+	private List<AbstractToken> conditionList=new ArrayList<AbstractToken>();
 	
 	public ElementWhen(AbstractToken baseToken,
 			List<AbstractToken> tokenListesi, AbstractCommand parent) {
@@ -62,12 +62,12 @@ public class ElementWhen extends AbstractMultipleLinesCommand{
 	}
 
 
-	public List<String> getConditionList() {
+	public List<AbstractToken> getConditionList() {
 		return conditionList;
 	}
 
 
-	public void setConditionList(List<String> conditionList) {
+	public void setConditionList(List<AbstractToken> conditionList) {
 		this.conditionList = conditionList;
 	}
 

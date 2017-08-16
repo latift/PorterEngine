@@ -1,6 +1,7 @@
 package tr.com.vbt.java.utils;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -60,15 +61,15 @@ public class ConvertUtilities {
 		// #DATX (D)
 		return 20; // Kayıt bulamazsan sinirlamamak için 20 giriyoruz.
 	}
-	
-	//PERG001.SICIL --> SICIL
-	public static String onlyFieldOfIncludedVariable(String inclVariable){
-		
-		String result=inclVariable;
-		
-		if(inclVariable.contains(".")){
-			int indexOfDot=inclVariable.indexOf(".");
-			result=inclVariable.substring(indexOfDot+1);
+
+	// PERG001.SICIL --> SICIL
+	public static String onlyFieldOfIncludedVariable(String inclVariable) {
+
+		String result = inclVariable;
+
+		if (inclVariable.contains(".")) {
+			int indexOfDot = inclVariable.indexOf(".");
+			result = inclVariable.substring(indexOfDot + 1);
 		}
 		return result;
 	}
@@ -98,10 +99,10 @@ public class ConvertUtilities {
 	 * }
 	 */
 
-	// TODO: İmplement below code
+	
 	public static VariableTypes getVariableType(AbstractToken variable) {
 
-		if(variable.isSayi()){
+		if (variable.isSayi()) {
 			return VariableTypes.LONG_TYPE;
 		}
 		ElementProgramDataTypeNatural programData;
@@ -132,15 +133,14 @@ public class ConvertUtilities {
 		}
 		return VariableTypes.UNDEFINED_TYPE;
 	}
-
-	// TODO: İmplement below code
+	
 	public static String getVariableTypeOfString(AbstractToken variable) {
-		Double d=0.0;
+		Double d = 0.0;
 		if (variable.getTip().equals(TokenTipi.Sayi)) {
-			if(variable.getDeger()  instanceof Integer) {
-			 return "int";
-			}else{
-				
+			if (variable.getDeger() instanceof Integer) {
+				return "int";
+			} else {
+
 				d = (Double) variable.getDeger();
 				if (d % 1 != 0) {
 					return "float";
@@ -149,21 +149,21 @@ public class ConvertUtilities {
 				}
 
 			}
-			
+
 		}
-		
-		String variableDeger=variable.getDeger().toString();
-		
-		if(variable.getDeger().toString().contains(".")){
-			int pointIndex=variable.getDeger().toString().indexOf(".");
-			variableDeger=variable.getDeger().toString().substring(pointIndex+1);
+
+		String variableDeger = variable.getDeger().toString();
+
+		if (variable.getDeger().toString().contains(".")) {
+			int pointIndex = variable.getDeger().toString().indexOf(".");
+			variableDeger = variable.getDeger().toString().substring(pointIndex + 1);
 		}
-		
+
 		ElementProgramDataTypeNatural programData;
 		ElementProgramGrupNatural grupData;
 		ElementProgramOneDimensionArrayNatural arrayItem;
 		ElementDBDataTypeNatural dbDataType;
-		DDM ddm ;
+		DDM ddm;
 		List<AbstractCommand> commandList = NaturalCommandList.getInstance().getCommandListWithIncludedVariables();
 		for (AbstractCommand abstractCommand : commandList) {
 			logger.debug(abstractCommand.toString());
@@ -179,27 +179,26 @@ public class ConvertUtilities {
 				if (grupData.getDataName().equals(variableDeger)) {
 					return VariableTypes.GRUP_TYPE.toString();
 				}
-			}
-			else if (abstractCommand instanceof ElementProgramOneDimensionArrayNatural) {
+			} else if (abstractCommand instanceof ElementProgramOneDimensionArrayNatural) {
 				arrayItem = (ElementProgramOneDimensionArrayNatural) abstractCommand;
 				if (arrayItem.getDataName().equals(variableDeger)) {
 					return ConvertUtilities.getJavaVariableType(arrayItem.getDataType(),
 							arrayItem.getCommandMatchPoint(), arrayItem.getLengthAfterDot());
 				}
 			}
-			
-			 else if (abstractCommand instanceof ElementDBDataTypeNatural) {
-					dbDataType = (ElementDBDataTypeNatural) abstractCommand;
-					if (dbDataType.getDataName().equals(variableDeger)) {
-						ddm = DDMList.getInstance().getDDMByKey(dbDataType.getDataName(),abstractCommand);
-						if(ddm==null|| ddm.getF()==null){
-							return "String";
-						}else{
-							return ConvertUtilities.getJavaVariableType(ddm.getF(),0,0);
-						}
+
+			else if (abstractCommand instanceof ElementDBDataTypeNatural) {
+				dbDataType = (ElementDBDataTypeNatural) abstractCommand;
+				if (dbDataType.getDataName().equals(variableDeger)) {
+					ddm = DDMList.getInstance().getDDMByKey(dbDataType.getDataName(), abstractCommand);
+					if (ddm == null || ddm.getF() == null) {
+						return "String";
+					} else {
+						return ConvertUtilities.getJavaVariableType(ddm.getF(), 0, 0);
 					}
-				} 
-			
+				}
+			}
+
 		}
 		return VariableTypes.UNDEFINED_TYPE.toString();
 	}
@@ -233,21 +232,21 @@ public class ConvertUtilities {
 		if (dataType.equals("A") || dataType.equals("String")) {
 			type = "String";
 		} else if ((dataType.equals("N") && lengthAfterDot == 0) || dataType.equals("int")) {
-			type = "int";
-		} else if ((dataType.equals("N") && lengthAfterDot != 0) || dataType.equals("float")){
+			type = "long";
+		} else if ((dataType.equals("N") && lengthAfterDot != 0) || dataType.equals("float")) {
 			type = "float";
 		} else if (dataType.equals("I")) {
-			type = "int";
-		} else if (dataType.equals("D")|| dataType.equals("Date")) {
+			type = "long";
+		} else if (dataType.equals("D") || dataType.equals("Date")) {
 			type = "Date";
-		} else if (dataType.equals("T")|| dataType.equals("Date")) {
+		} else if (dataType.equals("T") || dataType.equals("Date")) {
 			type = "Date";
-		} else if (dataType.equals("L")|| dataType.equals("boolean")) {
+		} else if (dataType.equals("L") || dataType.equals("boolean")) {
 			type = "boolean";
-		} else if (dataType.equals("C")|| dataType.equals("ControlEnum")) {
+		} else if (dataType.equals("C") || dataType.equals("ControlEnum")) {
 			type = "ControlEnum";
 		} else if (dataType.equals("P")) {
-			type = "int";
+			type = "long";
 		} else {
 			type = "UndefinedDataType";
 		}
@@ -326,8 +325,6 @@ public class ConvertUtilities {
 		return tableName.getDeger().toString().replaceAll("-", "_") + "_DAO";
 	}
 
-	
-
 	public static java.sql.Time stringToSqlTime(String param) {
 
 		try {
@@ -383,15 +380,17 @@ public class ConvertUtilities {
 	public static String getPojosFieldType(AbstractToken currentToken) {
 		// THESAP -->Thesap
 		String className = Utility.viewNameToPojoName(currentToken.getDeger().toString());
-	
+
 		String fieldName = Utility.columnNameToPojoFieldName(currentToken.getColumnNameToken().getDeger().toString());
-		
+
 		Class c = null;
+
+		c = Utility.findPojoClass(className);
 		
-		c=Utility.findPojoClass(className);
+		Field field;
 
 		try {
-			Field field = c.getDeclaredField(fieldName);
+			field = c.getDeclaredField(fieldName);
 			field.setAccessible(true);
 			/*
 			 * if (field.getType().isAssignableFrom(String.class)) { return
@@ -407,15 +406,25 @@ public class ConvertUtilities {
 			 */
 			return field.getType().getSimpleName();
 
-		} catch (NoSuchFieldException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
+		} catch (Exception e) {
+			
+			try {
+				Class cPK = null;
+				
+				cPK = Utility.findPojoClass(className+"PK");
+				
+				field = cPK.getDeclaredField(fieldName);
+				
+				field.setAccessible(true);
+				
+				return field.getType().getSimpleName();
+	
+			} catch (Exception e1) {
+				return "UndefinedPojoFieldType";
+			}
+			
 		}
-		return "";
-
+		
 	}
 
 	public static StringBuffer writeInterfaceHeader(String pojoName) {
@@ -428,7 +437,8 @@ public class ConvertUtilities {
 
 			interfaceHeader.append("/**" + JavaConstants.NEW_LINE);
 			interfaceHeader.append("* " + JavaConstants.CLASS_GENERATION_INFO + JavaConstants.NEW_LINE);
-			interfaceHeader.append("* Engine Version: " + ConverterConfiguration.ENGINE_VERSION + JavaConstants.NEW_LINE);
+			interfaceHeader
+					.append("* Engine Version: " + ConverterConfiguration.ENGINE_VERSION + JavaConstants.NEW_LINE);
 			interfaceHeader.append("* Generation Date: " + ConvertUtilities.getCurrentDate() + JavaConstants.NEW_LINE);
 			interfaceHeader.append("* Conversion User: " + logModel.getUser() + JavaConstants.NEW_LINE);
 			interfaceHeader.append("* OS: " + logModel.getOPERATING_SYSTEM() + JavaConstants.NEW_LINE);
@@ -437,18 +447,43 @@ public class ConvertUtilities {
 			interfaceHeader.append(JavaConstants.NEW_LINE);
 		}
 
-		interfaceHeader.append(JavaConstants.PACKAGE + " " + "tr.com.thy.dal.generated" + " "
-				+ JavaConstants.DOT_WITH_COMMA + JavaConstants.NEW_LINE);
+		interfaceHeader.append(
+				JavaConstants.PACKAGE + " " + "tr.com." + ConversionLogModel.getInstance().getCustomer().toLowerCase()
+						+ ".dal.generated" + " " + JavaConstants.DOT_WITH_COMMA + JavaConstants.NEW_LINE);
 
-		interfaceHeader.append("import tr.com.thy.dal.*;" + JavaConstants.NEW_LINE);
-		interfaceHeader.append("import tr.com.thy.dal.pojo.*;" + JavaConstants.NEW_LINE);
+		if (logModel.getCustomer().equals("MB")) {
+
+			interfaceHeader.append("import tr.com." + ConversionLogModel.getInstance().getCustomer().toLowerCase()
+					+ ".dal.*;" + JavaConstants.NEW_LINE);
+
+			/*String schemaName;
+			for (int i = 0; i < ConverterConfiguration.getSchemaList().size(); i++) {
+				schemaName = ConverterConfiguration.getSchemaList().get(i);
+				interfaceHeader.append("import tr.com." + ConversionLogModel.getInstance().getCustomer().toLowerCase()
+						+ ".dal.pojo." + schemaName.toLowerCase() + ".*;" + JavaConstants.NEW_LINE);
+			}*/
+			
+			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.pojo.idgidbs.*;"+JavaConstants.NEW_LINE);
+			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.pojo.common.*;"+JavaConstants.NEW_LINE);
+
+		} else {
+
+			interfaceHeader.append("import tr.com." + ConversionLogModel.getInstance().getCustomer().toLowerCase()
+					+ ".dal.*;" + JavaConstants.NEW_LINE);
+			interfaceHeader.append("import tr.com." + ConversionLogModel.getInstance().getCustomer().toLowerCase()
+					+ ".dal.pojo.*;" + JavaConstants.NEW_LINE);
+		}
+		
+		
+		interfaceHeader.append("import java.math.BigDecimal;" + JavaConstants.NEW_LINE);
 		interfaceHeader.append("import java.util.*;" + JavaConstants.NEW_LINE);
 
 		interfaceHeader.append(JavaConstants.NEW_LINE);
 		// fileName =fileName
 		// public interface TafaizDAOGenerated extends TafaizDAO {
 		// public interface TbesyilGenDAO extends GenericDAO<Tbesyil,TbesyilPK>{
-		interfaceHeader.append("public interface " + pojoName + "GenDAO extends GenericDAO<" + pojoName + ", Long>" + JavaConstants.OPEN_BRACKET + JavaConstants.NEW_LINE);
+		interfaceHeader.append("public interface " + pojoName + "GenDAO extends GenericDAO<" + pojoName + ", Long>"
+				+ JavaConstants.OPEN_BRACKET + JavaConstants.NEW_LINE);
 		return interfaceHeader;
 	}
 
@@ -462,7 +497,8 @@ public class ConvertUtilities {
 
 			implClassHeader.append("/**" + JavaConstants.NEW_LINE);
 			implClassHeader.append("* " + JavaConstants.CLASS_GENERATION_INFO + JavaConstants.NEW_LINE);
-			implClassHeader.append("* Engine Version: " + ConverterConfiguration.ENGINE_VERSION + JavaConstants.NEW_LINE);
+			implClassHeader
+					.append("* Engine Version: " + ConverterConfiguration.ENGINE_VERSION + JavaConstants.NEW_LINE);
 			implClassHeader.append("* Generation Date: " + ConvertUtilities.getCurrentDate() + JavaConstants.NEW_LINE);
 			implClassHeader.append("* Conversion User: " + logModel.getUser() + JavaConstants.NEW_LINE);
 			implClassHeader.append("* OS: " + logModel.getOPERATING_SYSTEM() + JavaConstants.NEW_LINE);
@@ -472,27 +508,53 @@ public class ConvertUtilities {
 		}
 
 		// package tr.com.mb.dal.hibernate.generated;
-		implClassHeader.append(JavaConstants.PACKAGE + " " + "tr.com.thy.dal.hibernate.generated"
-				+ JavaConstants.DOT_WITH_COMMA + JavaConstants.NEW_LINE);
+		implClassHeader.append(
+				JavaConstants.PACKAGE + " " + "tr.com." + ConversionLogModel.getInstance().getCustomer().toLowerCase()
+						+ ".dal.hibernate.generated" + JavaConstants.DOT_WITH_COMMA + JavaConstants.NEW_LINE);
 
+		implClassHeader.append("import java.util.*;" + JavaConstants.NEW_LINE);
+		implClassHeader.append("import java.math.BigDecimal;" + JavaConstants.NEW_LINE);
+	
 		implClassHeader.append("import org.hibernate.Criteria;" + JavaConstants.NEW_LINE);
 		implClassHeader.append("import org.hibernate.criterion.Restrictions;" + JavaConstants.NEW_LINE);
 		implClassHeader.append("import org.springframework.stereotype.*;" + JavaConstants.NEW_LINE);
-		implClassHeader.append("import tr.com.thy.dal.generated.*;" + JavaConstants.NEW_LINE);
-		implClassHeader.append("import tr.com.thy.dal.hibernate.*;" + JavaConstants.NEW_LINE);
-		implClassHeader.append("import tr.com.thy.dal.pojo.*;" + JavaConstants.NEW_LINE);
-		implClassHeader.append("import java.util.*;" + JavaConstants.NEW_LINE);
 
-		// public class TAFAIZHibernateDAOGenerated extends TafaizHibernateDAO
-		// implements TafaizDAOGenerated{
-		// public class TbesyilGenHibernateDAO extends
-		// AbstractHibernateDAO<Tbesyil, TbesyilPK> implements TbesyilGenDAO {
+		if (logModel.getCustomer().equals("MB")) {
+
+			implClassHeader.append("import tr.com." + ConversionLogModel.getInstance().getCustomer().toLowerCase()
+					+ ".dal.generated.*;" + JavaConstants.NEW_LINE);
+			implClassHeader.append("import tr.com." + ConversionLogModel.getInstance().getCustomer().toLowerCase()
+					+ ".dal.hibernate.*;" + JavaConstants.NEW_LINE);
+
+			String schemaName;
+			/*for (int i = 0; i < ConverterConfiguration.getSchemaList().size(); i++) {
+				schemaName = ConverterConfiguration.getSchemaList().get(i);
+				implClassHeader.append("import tr.com." + ConversionLogModel.getInstance().getCustomer().toLowerCase()
+						+ ".dal.pojo." + schemaName.toLowerCase() + ".*;" + JavaConstants.NEW_LINE);
+			}*/
+			
+			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.pojo.idgidbs.*;"+JavaConstants.NEW_LINE);
+			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.pojo.common.*;"+JavaConstants.NEW_LINE);
+			
+	
+		} else {
+
+			implClassHeader.append("import tr.com." + ConversionLogModel.getInstance().getCustomer().toLowerCase()
+					+ ".dal.generated.*;" + JavaConstants.NEW_LINE);
+			implClassHeader.append("import tr.com." + ConversionLogModel.getInstance().getCustomer().toLowerCase()
+					+ ".dal.hibernate.*;" + JavaConstants.NEW_LINE);
+			implClassHeader.append("import tr.com." + ConversionLogModel.getInstance().getCustomer().toLowerCase()
+					+ ".dal.pojo.*;" + JavaConstants.NEW_LINE);
+			implClassHeader.append("import tr.com." + ConversionLogModel.getInstance().getCustomer().toLowerCase()
+					+ ".dal.*;" + JavaConstants.NEW_LINE);
+		}
 
 		implClassHeader.append(JavaConstants.NEW_LINE);
 		implClassHeader.append("@Repository" + JavaConstants.NEW_LINE);
-		implClassHeader.append("public class " + pojoName + "GenHibernateDAO extends AbstractHibernateDAO<" + pojoName +", Long> implements " + pojoName + "GenDAO" + JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE);
-		
-				return implClassHeader;
+		implClassHeader.append("public class " + pojoName + "GenHibernateDAO extends AbstractHibernateDAO<" + pojoName
+				+ ", Long> implements " + pojoName + "GenDAO" + JavaConstants.OPEN_BRACKET + JavaConstants.NEW_LINE);
+
+		return implClassHeader;
 	}
 
 	public static int examineFullGivingLength(String sBIC, String searchString) {
@@ -511,75 +573,48 @@ public class ConvertUtilities {
 	 * olabilir. Tipi class dır.
 	 */
 	/*
-	public static void setParameter(NaturalProgram program, Parameter parameterToSet, Parameter paramValue) {
-		try {
-			if (parameterToSet.getParamName().contains(".")) {// MAPP.UYARI gibi
-																// {
-				String[] parameterNames = parameterToSet.getParamName().split("\\.");
-				Field f1 = program.getClass().getDeclaredField(parameterNames[0]); // MAPP
-																					// objesini
-																					// al.
-				f1.setAccessible(true);
-				// Field f2 = f1.getField(parameterNames[1]); //UYARI field ini
-				// al.
-				// f2.setAccessible(true);
-				// f2.set(program, paramValue.getParameter());
-			} else {
-				Field f1 = program.getClass().getDeclaredField(parameterToSet.getParamName());
-				f1.setAccessible(true);
-				f1.set(program, paramValue.getParameter());
-			}
-		} catch (NoSuchFieldException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
-	public static void setReturnParameter(NaturalProgram program, Parameter returnParameterToSet,
-			Object paramValueToSet) {
-
-		try {
-			if (returnParameterToSet.getParamName().contains(".")) {// MAPP.UYARI
-																	// gibi {
-				String[] parameterNames = returnParameterToSet.getParamName().split("\\.");
-				Field f1 = program.getClass().getDeclaredField(parameterNames[0]); // MAPP
-																					// objesini
-																					// al.
-				f1.setAccessible(true);
-				// Field f2 = f1.getField(parameterNames[1]); //UYARI field ini
-				// al.
-				// f2.setAccessible(true);
-				// f2.set(program, paramValue.getParameter());
-			} else {
-				Field f1 = program.getClass().getDeclaredField(returnParameterToSet.getParamName());
-				f1.setAccessible(true);
-				f1.set(program, paramValueToSet);
-			}
-		} catch (NoSuchFieldException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}*/
+	 * public static void setParameter(NaturalProgram program, Parameter
+	 * parameterToSet, Parameter paramValue) { try { if
+	 * (parameterToSet.getParamName().contains(".")) {// MAPP.UYARI gibi // {
+	 * String[] parameterNames = parameterToSet.getParamName().split("\\.");
+	 * Field f1 = program.getClass().getDeclaredField(parameterNames[0]); //
+	 * MAPP // objesini // al. f1.setAccessible(true); // Field f2 =
+	 * f1.getField(parameterNames[1]); //UYARI field ini // al. //
+	 * f2.setAccessible(true); // f2.set(program, paramValue.getParameter()); }
+	 * else { Field f1 =
+	 * program.getClass().getDeclaredField(parameterToSet.getParamName());
+	 * f1.setAccessible(true); f1.set(program, paramValue.getParameter()); } }
+	 * catch (NoSuchFieldException e) { // TODO Auto-generated catch block
+	 * e.printStackTrace(); } catch (SecurityException e) { // TODO
+	 * Auto-generated catch block e.printStackTrace(); } catch
+	 * (IllegalArgumentException e) { // TODO Auto-generated catch block
+	 * e.printStackTrace(); } catch (IllegalAccessException e) { // TODO
+	 * Auto-generated catch block e.printStackTrace(); }
+	 * 
+	 * }
+	 * 
+	 * public static void setReturnParameter(NaturalProgram program, Parameter
+	 * returnParameterToSet, Object paramValueToSet) {
+	 * 
+	 * try { if (returnParameterToSet.getParamName().contains(".")) {//
+	 * MAPP.UYARI // gibi { String[] parameterNames =
+	 * returnParameterToSet.getParamName().split("\\."); Field f1 =
+	 * program.getClass().getDeclaredField(parameterNames[0]); // MAPP //
+	 * objesini // al. f1.setAccessible(true); // Field f2 =
+	 * f1.getField(parameterNames[1]); //UYARI field ini // al. //
+	 * f2.setAccessible(true); // f2.set(program, paramValue.getParameter()); }
+	 * else { Field f1 =
+	 * program.getClass().getDeclaredField(returnParameterToSet.getParamName());
+	 * f1.setAccessible(true); f1.set(program, paramValueToSet); } } catch
+	 * (NoSuchFieldException e) { // TODO Auto-generated catch block
+	 * e.printStackTrace(); } catch (SecurityException e) { // TODO
+	 * Auto-generated catch block e.printStackTrace(); } catch
+	 * (IllegalArgumentException e) { // TODO Auto-generated catch block
+	 * e.printStackTrace(); } catch (IllegalAccessException e) { // TODO
+	 * Auto-generated catch block e.printStackTrace(); }
+	 * 
+	 * }
+	 */
 
 	public static int convertMiliSecondToDay(long timeInMiliseconds) {
 		return (int) (timeInMiliseconds / MILISECOND_TO_DAY);
@@ -589,10 +624,6 @@ public class ConvertUtilities {
 		return (int) (date.getTime() / MILISECOND_TO_DAY);
 	}
 
-	
-
-	
-
 	public static boolean hasArrayNullOrEmtyValue(String[] array) {
 		for (int i = 0; i < array.length; i++) {
 			if (array[i] == null || array[i].trim().isEmpty()) {
@@ -601,22 +632,22 @@ public class ConvertUtilities {
 		}
 		return false;
 	}
-	
+
 	public static boolean isArrayContains(String[] array, String value) {
-		if(value == null){
-			value= "";
+		if (value == null) {
+			value = "";
 		}
-		if(array==null){
+		if (array == null) {
 			return false;
 		}
 		for (int i = 0; i < array.length; i++) {
-			if (array[i]!=null && array[i].equals(value)) {
+			if (array[i] != null && array[i].equals(value)) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	public static boolean isArrayContains(String[] array, String value, int startInd, int endInd) {
 		for (int i = startInd; i < endInd; i++) {
 			if (array[i].equals(value)) {
@@ -633,17 +664,14 @@ public class ConvertUtilities {
 		return false;
 	}
 
-
-
-
 	public static String strSonaAltTireAt(String str, int karakterSayisi) {
-		if(str==null){
-			str="";
+		if (str == null) {
+			str = "";
 		}
 		StringBuffer sb = null;
 		try {
 			sb = new StringBuffer(str);
-			if(sb.toString().length()<karakterSayisi){
+			if (sb.toString().length() < karakterSayisi) {
 				for (int i = sb.toString().length(); i < karakterSayisi; i++) {
 					sb.insert(sb.toString().length(), "_");
 				}
@@ -659,18 +687,17 @@ public class ConvertUtilities {
 		Field parameterField = null;
 
 		try {
-			
-		
+
 			parameterField = sourceObj.getClass().getField(paramName);
-			
+
 			// this
-			
+
 		} catch (NoSuchFieldException e) {
 			try {
 				parameterField = sourceObj.getClass().getDeclaredField(paramName);
 				logger.debug("Parametre Init Yapılamadı Normal olabilir:" + e.getMessage());
 			} catch (NoSuchFieldException e1) {
-				if(!paramName.equals("resetProgram") && !paramName.equals("Gonder")){
+				if (!paramName.equals("resetProgram") && !paramName.equals("Gonder")) {
 					e1.printStackTrace();
 				}
 			} catch (SecurityException e1) {
@@ -694,15 +721,13 @@ public class ConvertUtilities {
 			e1.printStackTrace();
 		}
 		ConversionLogReport.getInstance().addException(new ConversionException(e));
-		
-		if(ConverterConfiguration.STOP_ENGINE_ON_CONVERSION_ERROR){
-			logger.warn(e.getMessage(),e);
+
+		if (ConverterConfiguration.STOP_ENGINE_ON_CONVERSION_ERROR) {
+			logger.warn(e.getMessage(), e);
 			throw e;
 		}
 
 	}
-	
-
 
 	public static int getVariableMaxLength(AbstractToken currToken) {
 
@@ -711,9 +736,9 @@ public class ConvertUtilities {
 		ElementProgramDataTypeNatural programData;
 
 		try {
-			
+
 			logger.debug(currToken.toString());
-			
+
 			AbstractCommand dataType = ConvertUtilities.getVariableDefinitinCommand(currToken);
 
 			programData = (ElementProgramDataTypeNatural) dataType;
@@ -725,12 +750,12 @@ public class ConvertUtilities {
 
 		return maxLength;
 	}
-	
+
 	public static int getArrayLength(AbstractToken currToken) {
 
 		ElementProgramOneDimensionArrayNatural programData;
-		
-		int arrayLength=ConverterConfiguration.DEFAULT_ARRAY_LENGTH;
+
+		int arrayLength = ConverterConfiguration.DEFAULT_ARRAY_LENGTH;
 
 		try {
 			AbstractCommand dataType = ConvertUtilities.getVariableDefinitinCommand(currToken);
@@ -739,44 +764,34 @@ public class ConvertUtilities {
 
 			arrayLength = programData.getArrayLength();
 		} catch (Exception e) {
-			 return getLengthOfGlobalArrays(currToken);
-			//Globalde tanımlı ise 
+			return getLengthOfGlobalArrays(currToken);
+			// Globalde tanımlı ise
 		}
 
 		return arrayLength;
 	}
-	
-	public static int getLengthOfGlobalArrays(AbstractToken currToken){
-		if(ConversionLogModel.getInstance().getModule().equals("TPS")){
-			if(currToken.getDeger().equals("SCRLINES")){
+
+	public static int getLengthOfGlobalArrays(AbstractToken currToken) {
+		if (ConversionLogModel.getInstance().getModule().equals("TPS")) {
+			if (currToken.getDeger().equals("SCRLINES")) {
 				return 40;
 			}
 		}
 		return ConverterConfiguration.DEFAULT_ARRAY_LENGTH;
 	}
 
-	
-
 	public static void assingFromArrayToArrayAllItems(String[] arrayFrom, String[] arrayTo) {
-		
-		arrayTo=arrayFrom;
+
+		arrayTo = arrayFrom;
 	}
 
-	
-
-
-		
-
-	
- 
-public static void main(String[] args) {
-	String a="19981212";
-	String b="199";
-	//System.out.println(srtTarihToSlash(a));
-	//System.out.println(basaAltCizgiEkle(b,5));
-	//System.out.println(sonaAltCizgiEkle(b,5));
-}
-
+	public static void main(String[] args) {
+		String a = "19981212";
+		String b = "199";
+		// System.out.println(srtTarihToSlash(a));
+		// System.out.println(basaAltCizgiEkle(b,5));
+		// System.out.println(sonaAltCizgiEkle(b,5));
+	}
 
 
 
