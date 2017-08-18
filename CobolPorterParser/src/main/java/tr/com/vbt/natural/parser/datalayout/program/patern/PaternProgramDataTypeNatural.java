@@ -61,7 +61,7 @@ public class PaternProgramDataTypeNatural extends AbstractDataTypePattern{
 		patternTokenList.add(astSource3);
 		
 		//	*	N8
-		AbstractToken astSource4=new KelimeToken<Integer>();
+		AbstractToken astSource4=new KelimeToken();
 		astSource4.setSourceFieldName("dataType");
 		patternTokenList.add(astSource4);
 		

@@ -27,6 +27,11 @@ public class JavaCopyElementV2 extends AbstractJavaElement {
 		destVariable = (List<AbstractToken>) this.parameters.get("destVariable");
 		dataToMove = (AbstractToken) this.parameters.get("dataToMove");
 		String setterString, getterString;
+		
+		if(controlAndWriteMoveToSubstringCommand()){
+			return true;
+		}
+		
 		try {
 			try {
 				for (AbstractToken destVar1 : destVariable) {
@@ -52,6 +57,40 @@ public class JavaCopyElementV2 extends AbstractJavaElement {
 		}
 		JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 		return true;
+	}
+
+	
+	// NATURAL CODE:801 :.0 MOVE SUBSTR ( PBASVURUTARIHI , 1.0 , 4.0 ) TO SUBSTR ( BASVURUTARIHIGAY , 7.0 , 4.0 )
+	//BASVURUTARIHIGAY = moveToSubstring(BASVURUTARIHIGAY, 6, 4, PBASVURUTARIHI.substring(0, 4));
+	private boolean controlAndWriteMoveToSubstringCommand()  throws Exception{
+	
+		AbstractToken destVariableFirst=destVariable.get(0);
+		
+		if(destVariableFirst==null || !destVariableFirst.isSubstringCommand()){
+			return false;
+		}
+		
+		try {
+				
+				destVariableFirst.setSubstringCommand(false);
+				
+				JavaClassElement.javaCodeBuffer.append("moveToSubstring("+ JavaWriteUtilities.toCustomString(destVariableFirst)+","+destVariableFirst.getSubStringStartIndex()+","+destVariableFirst.getSubStringEndIndex()+",");
+					
+				JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(dataToMove));
+
+				JavaClassElement.javaCodeBuffer.append(")"+JavaConstants.DOT_WITH_COMMA + JavaConstants.NEW_LINE);
+		} catch (Exception e) {
+			logger.debug("//Conversion Error" + this.getClass() + this.getSourceCode().getSatirNumarasi()
+					+ this.getSourceCode().getCommandName());
+			JavaClassElement.javaCodeBuffer
+					.append("/*Conversion Error" + this.getClass() + this.getSourceCode().getSatirNumarasi()
+							+ this.getSourceCode().getCommandName() + "*/" + JavaConstants.NEW_LINE);
+			logger.error("//Conversion Error:" + e.getMessage(), e);
+			ConvertUtilities.writeconversionErrors(e, this);
+		}
+		JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
+		
+		return false;
 	}
 
 	@Override

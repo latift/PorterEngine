@@ -22,7 +22,7 @@ public class JavaUpdateElement extends  AbstractJavaElement {
 			
 			//recNumber=(int) this.getParameters().get("RECNUMBER");
 				
-			JavaClassElement.javaCodeBuffer.append("//update("+recNumber+")"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+			JavaClassElement.javaCodeBuffer.append("update("+recNumber+")"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
 			//JavaClassElement.javaCodeBuffer.append("//"+recNumber+ JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
 			
 		} catch (Exception e) {

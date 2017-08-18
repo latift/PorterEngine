@@ -11,8 +11,7 @@ import tr.com.vbt.java.utils.JavaWriteUtilities;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.util.CustomStringUtils;
 
-
-// //EXAMINE SCRTXT FOR 'YETISKIN' GIVING POSITION LOC  --> LOC=SCRTXT.indexOf(YETISKIN);
+////EXAMINE SCRTXT FOR 'YETISKIN' GIVING POSITION LOC  --> LOC=FrameworkCU.indexOf(SCRTXT,YETISKIN);
 public class JavaExamineForGivingPositionElement extends  AbstractJavaElement {
 	
 	final static Logger logger = LoggerFactory.getLogger(JavaExamineForGivingPositionElement.class);
@@ -39,8 +38,10 @@ public class JavaExamineForGivingPositionElement extends  AbstractJavaElement {
 			//LIMANINDEX=searchArray(
 			JavaClassElement.javaCodeBuffer.append(CustomStringUtils.replaceMiddleLineWithSubLine(resultPosition)+"=");
 			
+			JavaClassElement.javaCodeBuffer.append("FrameworkConvertUtilities.indexOf(");
+			
 			JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(sourceToken));
-			JavaClassElement.javaCodeBuffer.append(".indexOf(");
+			JavaClassElement.javaCodeBuffer.append(",");
 			JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(searchVar));
 			JavaClassElement.javaCodeBuffer.append(")");
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);

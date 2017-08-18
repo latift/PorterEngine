@@ -60,6 +60,7 @@ public UcluOzelKelimelerNatural() {
 	ucluKelimeler.add(new TripleWordKeyword("MOVE","LEFT","JUSTIFIED"));
 	ucluKelimeler.add(new TripleWordKeyword("GIVING","LENGTH","IN"));
 	ucluKelimeler.add(new TripleWordKeyword("FOR","FIRST","CONDITION"));
+	ucluKelimeler.add(new TripleWordKeyword("GIVING","POSITION","IN"));
 
 }
 

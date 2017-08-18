@@ -37,7 +37,7 @@ public class PaternDBDataTypeNatural extends AbstractDataTypePattern{
 		patternTokenList.add(astSource3);
 		
 		//	*	N8
-		AbstractToken astSource4=new KelimeToken<Integer>();
+		AbstractToken astSource4=new KelimeToken();
 		astSource4.setSourceFieldName("dataType");
 		//astSource4.setOptional(true);
 		patternTokenList.add(astSource4);

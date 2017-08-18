@@ -22,7 +22,7 @@ public class JavaDeleteElement extends  AbstractJavaElement{
 			
 			//recNumber=(int) this.getParameters().get("RECNUMBER");
 			//JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
-			JavaClassElement.javaCodeBuffer.append("//delete("+recNumber+")"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+			JavaClassElement.javaCodeBuffer.append("delete("+recNumber+")"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
 			//JavaClassElement.javaCodeBuffer.append("//"+recNumber+ JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
 		} catch (Exception e) {
 			logger.debug("//Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()+this.getSourceCode().getCommandName());

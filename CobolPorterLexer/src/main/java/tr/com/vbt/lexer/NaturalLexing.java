@@ -477,6 +477,7 @@ public class NaturalLexing extends AbstractLexing {
 						astCurrent.isOzelKelime(ReservedNaturalKeywords.GIVING_LENGTH_IN)||
 						astCurrent.isOzelKelime(ReservedNaturalKeywords.EXAMINE_GIVING_POSITION)||
 						astCurrent.isOzelKelime(ReservedNaturalKeywords.GIVING_POSITION)||
+						astCurrent.isOzelKelime(ReservedNaturalKeywords.GIVING_POSITION_IN)||
 						astCurrent.isOzelKelime(ReservedNaturalKeywords.GIVING_INDEX_IN)||
 						astCurrent.isOzelKelime(ReservedNaturalKeywords.GIVING_NUMBER)||
 						astCurrent.isOzelKelime(ReservedNaturalKeywords.GIVING_LENGTH)||
@@ -3206,11 +3207,21 @@ public class NaturalLexing extends AbstractLexing {
 		AbstractToken current, previous;
 
 		String columnName;
+		
+		boolean isDefinitionPart=true;
 
 		
 		for (int i = 0; i < tokenListesi.size() - 1; i++) {
 
 			current = tokenListesi.get(i);
+			
+			if(current.getDeger()!=null && current.getDeger().equals(ReservedNaturalKeywords.END_DEFINE)){
+				isDefinitionPart=false;
+			}
+			
+			if(isDefinitionPart){
+				continue;
+			}
 			
 			if(i>0){
 				previous=tokenListesi.get(i-1);

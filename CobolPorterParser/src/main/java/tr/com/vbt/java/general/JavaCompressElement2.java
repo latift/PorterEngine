@@ -151,7 +151,7 @@ public class JavaCompressElement2 extends AbstractJavaElement {
 
 	private boolean compressToPojo() {
 		
-		JavaClassElement.javaCodeBuffer.append("//TODO: Implement compressToPojo in JavaCompressElement2: " + dest.getDeger());
+		JavaClassElement.javaCodeBuffer.append("TODO:ImplementCompressToPojoInJavaCompressElement2: " + dest.getDeger());
 		
 		return false;
 	}

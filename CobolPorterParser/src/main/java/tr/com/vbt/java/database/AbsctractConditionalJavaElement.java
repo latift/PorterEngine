@@ -516,15 +516,18 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 									orCondition=true;
 									break;
 								}
-							}else if(nextElement instanceof KelimeToken)
+							}else if(nextElement instanceof KelimeToken){
 								
 								nextKelimeToken=(KelimeToken) nextElement;
 								
-								if(nextKelimeToken.getDeger().equals("OR")){
+								if(nextKelimeToken!=null && nextKelimeToken.getDeger()!=null&&nextKelimeToken.getDeger().equals("OR")){
 									orCondition=true;
 									break;
+								}else{
+									logger.debug(nextKelimeToken.toString());
 								}
 							}
+						}
 							
 					}
 					

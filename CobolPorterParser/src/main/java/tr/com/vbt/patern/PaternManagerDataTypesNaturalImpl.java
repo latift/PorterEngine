@@ -54,13 +54,6 @@ public class PaternManagerDataTypesNaturalImpl  extends AbstractPaternManagerNat
 		//BasicVerbs
 		
 		
-		//DB DAtaype
-		commmandPatternList.add(new PaternDBViewOfGroupNatural());
-		commmandPatternList.add(new PaternDBViewGroupNatural());
-		commmandPatternList.add(new PaternDBDataTypeNatural());
-		commmandPatternList.add(new PaternDBRedefineDataGroupNatural());
-		commmandPatternList.add(new PaternDBMultipleUnitDataTypeNatural());
-		
 		//DataType
 		commmandPatternList.add(new PaternProgramRedefineGroupNatural());
 		
@@ -90,6 +83,13 @@ public class PaternManagerDataTypesNaturalImpl  extends AbstractPaternManagerNat
 		commmandPatternList.add(new PaternEndDefineData());//End Define da bu manager ile bulunur. Sonrası Diğer manager ı kayar.
 		commmandPatternList.add(new PaternLocal());
 		commmandPatternList.add(new PaternParameter());
+		
+		//DB DAtaype
+		commmandPatternList.add(new PaternDBViewOfGroupNatural());
+		commmandPatternList.add(new PaternDBViewGroupNatural());
+		commmandPatternList.add(new PaternDBDataTypeNatural());
+		commmandPatternList.add(new PaternDBRedefineDataGroupNatural());
+		commmandPatternList.add(new PaternDBMultipleUnitDataTypeNatural());
 		
 	}
 	

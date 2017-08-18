@@ -131,7 +131,12 @@ public class JavaWriteUtilities {
 		if(token==null){
 			logger.debug("");
 		}
-		if(token.isPojoVariable()){
+		
+		if(token.isSubstringCommand()){
+			
+			tempCodeBuffer.append(toCustomSubstringVariableString(token));
+		
+		}else if(token.isPojoVariable()){
 			
 			if(ConversionLogModel.getInstance().isMB()){
 			
@@ -176,10 +181,6 @@ public class JavaWriteUtilities {
 		}else if(token.isRecordVariable()){
 				
 			tempCodeBuffer.append(toCustomRecordVariableString(token));
-		
-		}else if(token.isSubstringCommand()){
-			
-			tempCodeBuffer.append(toCustomSubstringVariableString(token));
 		
 		}else if(token.isEdited()){ //DVANATOPMEB(DOVIZGEC) -->DVANATOPMEB[DOVIZGEC]
 			
@@ -388,9 +389,12 @@ public class JavaWriteUtilities {
 		 
 	}
 
-	private static String toCustomSubstringVariableString(AbstractToken token) {
+	// SUBSTR(MAP.YAZPK,1,2) --> FrameworkConvertUtilities.SubstringAlma(TOZLUK.getTcyegiris().toString(),6,10)
+	private static String toCustomSubstringVariableString(AbstractToken token) throws Exception {
+		
+		token.setSubstringCommand(false);
 	
-		return 	token.getDeger().toString()+".substring("+token.getSubStringStartIndex()+","+token.getSubStringEndIndex()+")";
+		return 	"FrameworkConvertUtilities.substringAlma("+toCustomString(token)+","+token.getSubStringStartIndex()+","+token.getSubStringEndIndex()+")";
 		
 	}
 	

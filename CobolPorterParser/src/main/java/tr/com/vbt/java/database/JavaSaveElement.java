@@ -25,7 +25,7 @@ public class JavaSaveElement extends  AbstractJavaElement{
 		try {
 			tableName=(AbstractToken) this.parameters.get("tableName");
 			
-			JavaClassElement.javaCodeBuffer.append("//save("+ConvertUtilities.getDAOOfTableWithUnderscore(tableName)+","+tableName.getDeger().toString().replaceAll("-", "_")+")"+JavaConstants.DOT_WITH_COMMA);
+			JavaClassElement.javaCodeBuffer.append("save("+ConvertUtilities.getDAOOfTableWithUnderscore(tableName)+","+tableName.getDeger().toString().replaceAll("-", "_")+")"+JavaConstants.DOT_WITH_COMMA);
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 		} catch (Exception e) {
 			logger.debug("//Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()+this.getSourceCode().getCommandName());
