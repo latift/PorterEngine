@@ -58,18 +58,8 @@ public class JavaDivideElement extends AbstractJavaElement {
 
 				JavaClassElement.javaCodeBuffer.append("/");
 
-				if (bolen.getDeger() instanceof String) {
-					JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(bolen));
-				} else if (bolen.getDeger() instanceof Double) {
-					int bolenInt;
-					double bolenDbl = (Double) bolen.getDeger();
-					if (bolenDbl % 1 == 0) {
-						JavaClassElement.javaCodeBuffer.append((int) bolenDbl);
-					} else {
-						JavaClassElement.javaCodeBuffer.append(bolenDbl);
-					}
-				}
-
+				JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(bolen));
+		
 				JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA + JavaConstants.NEW_LINE);
 			}
 
@@ -92,17 +82,7 @@ public class JavaDivideElement extends AbstractJavaElement {
 
 				JavaClassElement.javaCodeBuffer.append("%");
 
-				if (bolen.getDeger() instanceof String) {
-					JavaClassElement.javaCodeBuffer.append(bolen.getDeger());
-				} else if (bolen.getDeger() instanceof Double) {
-					int bolenInt;
-					double bolenDbl = (Double) bolen.getDeger();
-					if (bolenDbl % 1 == 0) {
-						JavaClassElement.javaCodeBuffer.append((int) bolenDbl);
-					} else {
-						JavaClassElement.javaCodeBuffer.append(bolenDbl);
-					}
-				}
+				JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(bolen));
 
 				JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA + JavaConstants.NEW_LINE);
 			}

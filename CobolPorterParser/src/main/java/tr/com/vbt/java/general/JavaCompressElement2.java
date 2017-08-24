@@ -45,8 +45,7 @@ public class JavaCompressElement2 extends AbstractJavaElement {
 			
 				compressToPojo();
 		
-			} else if (dest instanceof ArrayToken) { // TODO Bu case analiz
-														// edilmeli.
+			} else if (dest instanceof ArrayToken) { // TODO Bu case analiz edilmeli.
 				arrayTypeSource = (ArrayToken) dest;
 		
 				compressToArray(isLeavingNo);
@@ -82,12 +81,60 @@ public class JavaCompressElement2 extends AbstractJavaElement {
 		
 		JavaClassElement.javaCodeBuffer.append(" = ");
 
-		writeFromPartOfCompressCommand(isLeavingNo);
+		writeSourcePart(isLeavingNo);
 
 		return false;
 	}
 
-	private void writeFromPartOfCompressCommand(boolean isLeavingNo) throws Exception {
+	
+
+	private boolean compressToSimple(boolean isLeavingNo) throws Exception {
+		
+		if (dest.isRedefinedVariable()) {
+			JavaClassElement.javaCodeBuffer.append(dest.getDeger().toString().replaceAll("-", "_") + ".setValue(");
+		} else {
+			JavaClassElement.javaCodeBuffer.append(dest.getDeger().toString().replaceAll("-", "_") + " = ");
+		}
+
+		writeSourcePart(isLeavingNo);
+
+		if (dest.isRedefinedVariable()) {
+		
+			JavaClassElement.javaCodeBuffer.append(")");
+		
+		}
+		
+	
+		return true;
+	}
+
+	private boolean compressToArray(boolean isLeavingNo) throws Exception {
+		
+		JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(arrayTypeSource));
+	
+		JavaClassElement.javaCodeBuffer.append(" = ");
+	
+
+		writeSourcePart(isLeavingNo);
+		
+		if (dest.isRedefinedVariable()) {
+		
+			JavaClassElement.javaCodeBuffer.append(")");
+		
+		}
+			return true;
+
+	}
+
+	private boolean compressToPojo() {
+		
+		JavaClassElement.javaCodeBuffer.append("TODO:ImplementCompressToPojoInJavaCompressElement2: " + dest.getDeger());
+		
+		return false;
+	}
+	
+	
+	private void writeSourcePart(boolean isLeavingNo) throws Exception {
 
 		for (int i = 0; i < sourceList.size(); i++) {
 
@@ -109,51 +156,6 @@ public class JavaCompressElement2 extends AbstractJavaElement {
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
 			JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(dest)+" = "+JavaWriteUtilities.toCustomString(dest)+".replaceAll(\"null\", \"\")");
 		}
-	}
-
-	private boolean compressToSimple(boolean isLeavingNo) throws Exception {
-		
-		if (dest.isRedefinedVariable()) {
-			JavaClassElement.javaCodeBuffer.append(dest.getDeger().toString().replaceAll("-", "_") + ".setValue(");
-		} else {
-			JavaClassElement.javaCodeBuffer.append(dest.getDeger().toString().replaceAll("-", "_") + " = ");
-		}
-
-		writeFromPartOfCompressCommand(isLeavingNo);
-
-		if (dest.isRedefinedVariable()) {
-		
-			JavaClassElement.javaCodeBuffer.append(")");
-		
-		}
-		
-	
-		return true;
-	}
-
-	private boolean compressToArray(boolean isLeavingNo) throws Exception {
-		
-		JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(arrayTypeSource));
-	
-		JavaClassElement.javaCodeBuffer.append(" = ");
-	
-
-		writeFromPartOfCompressCommand(isLeavingNo);
-		
-		if (dest.isRedefinedVariable()) {
-		
-			JavaClassElement.javaCodeBuffer.append(")");
-		
-		}
-			return true;
-
-	}
-
-	private boolean compressToPojo() {
-		
-		JavaClassElement.javaCodeBuffer.append("TODO:ImplementCompressToPojoInJavaCompressElement2: " + dest.getDeger());
-		
-		return false;
 	}
 
 }

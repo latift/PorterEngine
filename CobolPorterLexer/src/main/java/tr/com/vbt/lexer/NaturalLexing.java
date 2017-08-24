@@ -802,9 +802,7 @@ public class NaturalLexing extends AbstractLexing {
 
 			astCompress = tokenListesi.get(i);
 
-			if (astCompress.getTip().equals(TokenTipi.OzelKelime) && astCompress.getDeger() != null
-					&& (astCompress.getDeger().equals(ReservedNaturalKeywords.COMPRESS)
-							|| astCompress.getDeger().equals(ReservedNaturalKeywords.COMPRESS_FULL))) { // DIPSLAY
+			if (astCompress.isOneOfOzelKelime(ReservedNaturalKeywords.COMPRESS,ReservedNaturalKeywords.COMPRESS_FULL)) { // DIPSLAY
 																										// varsa
 
 				indexAfterinto = 0;
@@ -824,6 +822,7 @@ public class NaturalLexing extends AbstractLexing {
 						|| compressParam.getTip().equals(TokenTipi.Karakter)
 						|| (compressParam.getTip().equals(TokenTipi.OzelKelime)
 								&& (compressParam.getDeger().equals("INTO")
+										||compressParam.getDeger().equals("FULL")
 										|| compressParam.getDeger().equals("SUBSTR")))) {
 
 					if (indexAfterinto == 1) {

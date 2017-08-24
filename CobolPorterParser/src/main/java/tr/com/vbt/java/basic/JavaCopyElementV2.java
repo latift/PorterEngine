@@ -36,9 +36,13 @@ public class JavaCopyElementV2 extends AbstractJavaElement {
 			try {
 				for (AbstractToken destVar1 : destVariable) {
 
-					JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(destVar1));
-					JavaClassElement.javaCodeBuffer.append("=");
-					JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(dataToMove));
+					if(destVar1.isPojoVariable()){
+						JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomSetterString(destVar1, dataToMove));
+					}else{
+						JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(destVar1));
+						JavaClassElement.javaCodeBuffer.append("=");
+						JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(dataToMove));
+					}
 
 					JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA + JavaConstants.NEW_LINE);
 				}
@@ -90,7 +94,7 @@ public class JavaCopyElementV2 extends AbstractJavaElement {
 		}
 		JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 		
-		return false;
+		return true;
 	}
 
 	@Override

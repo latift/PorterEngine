@@ -127,7 +127,14 @@ public class JavaRedefineDataTypeElement extends AbstractJavaElement {
 				redefineStartIndex=0;
 				
 				redefineEndIndex=0;
-			}		
+			}	
+			
+			if(dataType==null|| dataType.equals("")){
+				dataType="A";
+			}
+			if(redefinedDataType==null){
+				redefinedDataType="A";
+			}
 			
 			logModel=ConversionLogModel.getInstance();
 			

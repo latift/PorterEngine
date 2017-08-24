@@ -68,6 +68,7 @@ import tr.com.vbt.java.file.JavaWriteFileElement;
 import tr.com.vbt.java.general.JavaClassElement;
 import tr.com.vbt.java.general.JavaClassGeneral;
 import tr.com.vbt.java.general.JavaCompressElement2;
+import tr.com.vbt.java.general.JavaCompressElementV3;
 import tr.com.vbt.java.general.JavaFunctionElement;
 import tr.com.vbt.java.general.JavaFunctionMainElement;
 import tr.com.vbt.java.general.JavaGeneralVariableElement;
@@ -234,7 +235,7 @@ public class CreateProcessOperator extends ProcessOperator {
 			elementForCreate = new JavaRedefineElement();
 			break;
 		case "JavaCompressElement":
-			elementForCreate = new JavaCompressElement2();
+			elementForCreate = new JavaCompressElementV3();
 			break;
 		case "JavaUpdateElement":
 			elementForCreate = new JavaUpdateElement();

@@ -29,6 +29,8 @@ public class PaternCompress extends AbstractPattern{
 	final static Logger logger = LoggerFactory.getLogger(PaternCompress.class);
 
     protected AbstractToken starterToken; //COMPRESS
+    
+    protected AbstractToken fullToken; //COMPRESS
 	
 	protected AbstractToken midfieldToken;
 	
@@ -64,6 +66,11 @@ public class PaternCompress extends AbstractPattern{
 		starterToken.setTekrarlayabilir("+");
 		starterToken.setSourceFieldName("FIRST_COMMAND");
 		patternTokenList.add(starterToken);
+		
+		this.fullToken=new OzelKelimeToken("FULL", 0, 0, 0);
+		fullToken.setSourceFieldName("full");
+		fullToken.setOptional(true);
+		patternTokenList.add(fullToken);
 		
 		//IDGIDBS-TOZLUK.ADI ' ' IDGIDBS-TOZLUK.SOYAD
 		this.midfieldToken=new GenelTipToken<String>();
@@ -142,7 +149,11 @@ public class PaternCompress extends AbstractPattern{
 		
 		}
 		
+		else if(abstractTokenInPattern.getSourceFieldName().equals("full")){
+			matchedCommandAdd.setFull(true);
+			matchedCommandAdd.getParameters().put("isFull", "true");
 		
+		}
 		else if(abstractTokenInPattern.getSourceFieldName().equals("dest")){
 				matchedCommandAdd.setDest(currentTokenForMatch);
 				matchedCommandAdd.getParameters().put("dest", matchedCommandAdd.getDest());
@@ -152,7 +163,9 @@ public class PaternCompress extends AbstractPattern{
 			matchedCommandAdd.setDest(currentTokenForMatch);
 			matchedCommandAdd.getParameters().put("dest", matchedCommandAdd.getDest());
 		
-		}else if(abstractTokenInPattern.getSourceFieldName().equals("LEAVING_NO") || abstractTokenInPattern.getSourceFieldName().equals("LEAVE_NO")){
+		}else if(abstractTokenInPattern.getSourceFieldName().equals("LEAVING_NO")
+				|| abstractTokenInPattern.getSourceFieldName().equals("LEAVE_NO")
+				|| abstractTokenInPattern.getSourceFieldName().equals("LEAVING_NO_SPACE")){
 			matchedCommandAdd.setLeavingNo(true);
 			matchedCommandAdd.getParameters().put("isLeavingNo", matchedCommandAdd.isLeavingNo());
 			
@@ -222,11 +235,16 @@ public class PaternCompress extends AbstractPattern{
 		logger.info(" MATCHED: "+currentTokenForMatch.getDeger());
 		
 		
-		
 		while(tokenListIterator.hasNext()){
 			
 			currentTokenForMatch=tokenListIterator.next();
 			matchedCommand.increaseCommandsMatchPoint();
+
+			if(currentTokenForMatch.tokenMatchs(fullToken)){
+				logger.info(" MATCHED: "+currentTokenForMatch.getDeger());
+				setTokenToElement(matchedCommand, currentTokenForMatch,fullToken);
+				continue;
+			}
 			
 			if((currentTokenForMatch.getTip().equals(TokenTipi.OzelKelime)
 					&&!currentTokenForMatch.getDeger().equals(ReservedCobolKeywords.NOT) //IFElement için eklendi

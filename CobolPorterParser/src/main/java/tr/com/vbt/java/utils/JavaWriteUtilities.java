@@ -74,7 +74,7 @@ public class JavaWriteUtilities {
 	public static StringBuilder toCustomSetterString(AbstractToken token, AbstractToken newValueToken) throws Exception {
 		
 		StringBuilder tempCodeBuffer=new StringBuilder();
-
+		
 		if(token.getTip().equals(TokenTipi.SatirBasi)){ 
 			//Do nothing;
 		}else if(token.isRedefinedVariable()){ 
@@ -85,8 +85,8 @@ public class JavaWriteUtilities {
 		
 		}else if(token.isPojoVariable() && ConversionLogModel.getInstance().isMB()){ //MB
 				
-			// IDGIDBS-TGECICI .HSONVALOR : = *DAT4I  --> TGECICI.setHSONVALOR(getSystemVAriable(DAT4I));
-			tempCodeBuffer.append(toCustomPojoDB2VariableSetterString(token, newValueToken));
+				// IDGIDBS-TGECICI .HSONVALOR : = *DAT4I  --> TGECICI.setHSONVALOR(getSystemVAriable(DAT4I));
+				tempCodeBuffer.append(toCustomPojoDB2VariableSetterString(token, newValueToken));
 			
 		}else if(token.isPojoVariable()){ //MB
 			
@@ -394,7 +394,9 @@ public class JavaWriteUtilities {
 		
 		token.setSubstringCommand(false);
 	
-		return 	"FrameworkConvertUtilities.substringAlma("+toCustomString(token)+","+token.getSubStringStartIndex()+","+token.getSubStringEndIndex()+")";
+		int startIndex=token.getSubStringStartIndex();
+		int endIndex=startIndex+token.getSubStringEndIndex();
+		return 	"FrameworkConvertUtilities.substring("+toCustomString(token)+","+startIndex+","+endIndex+")";
 		
 	}
 	
@@ -426,8 +428,16 @@ public class JavaWriteUtilities {
 	}
 	
 	// IDGIDBS-TGECICI .HSONVALOR : = *DAT4I --> TGECICI.setHSonValor(getSystemVariable(DAT4I));
+	//TNAZIM.setUptar(FrameworkConvertUtilities.stringToSqlDate("11111111", "yyyy.MM.dd"));
 		private static String toCustomPojoDB2VariableSetterString(AbstractToken token, AbstractToken newValueToken) throws Exception{
 			
+			String pojosFieldType = "";
+			
+			if(token.isPojoVariable()){
+				
+				pojosFieldType=ConvertUtilities.getPojosFieldType(token);
+			
+			}
 			
 			StringBuilder setterString=new StringBuilder();
 			
@@ -437,7 +447,18 @@ public class JavaWriteUtilities {
 			
 			setterString.append("(");
 			
-			setterString.append(JavaWriteUtilities.toCustomString(newValueToken));
+			if(pojosFieldType.equals("Date")){
+				
+				setterString.append(JavaWriteUtilities.toCustomSqlDateString(newValueToken));
+				
+			}else if(pojosFieldType.equals("Time")){
+				
+				setterString.append(JavaWriteUtilities.toCustomSqlTimeString(newValueToken));
+				
+			}else{
+				
+				setterString.append(JavaWriteUtilities.toCustomString(newValueToken));
+			}
 			
 			setterString.append(")");
 			
@@ -446,6 +467,34 @@ public class JavaWriteUtilities {
 			
 		}
 	
+		//NATURAL CODE:2969   :.0 IDGIDBS-TGECICI .HSDGGIRZAM : = YENIZAMAN 
+		//TGECICI.setHsdggirzam(FrameworkConvertUtilities.stringToSqlTime(YENIZAMAN));
+	private static String toCustomSqlTimeString(AbstractToken newValueToken) throws Exception {
+		
+			StringBuilder sqlTimeString=new StringBuilder();
+		
+			sqlTimeString.append("FrameworkConvertUtilities.stringToSqlTime(");
+			
+			sqlTimeString.append(JavaWriteUtilities.toCustomString(newValueToken)); //"11111111"
+			
+			return sqlTimeString.toString();
+		}
+
+	//FrameworkConvertUtilities.stringToSqlDate("11111111", "yyyy.MM.dd")
+	private static String toCustomSqlDateString(AbstractToken newValueToken) throws Exception {
+			
+			StringBuilder sqlTimeString=new StringBuilder();
+			
+			sqlTimeString.append("FrameworkConvertUtilities.stringToSqlDate(");
+			
+			sqlTimeString.append(JavaWriteUtilities.toCustomString(newValueToken)); //"11111111"
+			
+			sqlTimeString.append(",");
+			sqlTimeString.append("\"yyyy-MM-dd\"");
+			
+			return sqlTimeString.toString();
+		}
+
 	// IDGIDBS-TOZLUK.MESLEKID --> TOZLUK.getMeslekId()
 	private static String toCustomPojoDB2VariableString(AbstractToken token) throws NoSuchMethodException, SecurityException {
 		

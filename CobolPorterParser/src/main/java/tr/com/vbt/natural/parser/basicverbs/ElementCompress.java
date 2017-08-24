@@ -17,6 +17,8 @@ public class ElementCompress extends AbstractCommand{
 	
 	private boolean isLeavingNo;
 	
+	private boolean isFull;
+	
 	public ElementCompress(String elementName,String detailedCobolName) {
 		super(elementName, detailedCobolName);
 	}
@@ -40,12 +42,19 @@ public class ElementCompress extends AbstractCommand{
 	public String exportCommands() {
 		StringBuilder sb=new StringBuilder(); 
 		sb.append(this.satirNumarasi);
-		sb.append(" "+ReservedNaturalKeywords.COMPRESS +"=\"");
+		sb.append(" "+ReservedNaturalKeywords.COMPRESS);
+		if(isFull){
+			sb.append(" FULL");
+		}
+		sb.append(" "+"=\"");
 		for (AbstractToken src : sourceList) {
 			sb.append(src.getDeger()+" ");
 		}
 		sb.append("Into: ");
 		sb.append(dest.getDeger()+" ");
+		if(isLeavingNo){
+			sb.append(" Leaving No");
+		}
 		sb.append("\"\n");
 		return sb.toString();
 	}
@@ -53,13 +62,21 @@ public class ElementCompress extends AbstractCommand{
 
 	@Override
 	public String exportContents() {
-		StringBuilder sb=new StringBuilder();
-		sb.append(" "+ReservedNaturalKeywords.COMPRESS +"=\"");
+		StringBuilder sb=new StringBuilder(); 
+		sb.append(this.satirNumarasi);
+		sb.append(" "+ReservedNaturalKeywords.COMPRESS);
+		if(isFull){
+			sb.append(" FULL");
+		}
+		sb.append(" "+"=\"");
 		for (AbstractToken src : sourceList) {
 			sb.append(src.getDeger()+" ");
 		}
 		sb.append("Into: ");
 		sb.append(dest.getDeger()+" ");
+		if(isLeavingNo){
+			sb.append(" Leaving No");
+		}
 		sb.append("\"\n");
 		return sb.toString();
 	}
@@ -92,5 +109,14 @@ public class ElementCompress extends AbstractCommand{
 	public void setLeavingNo(boolean isLeavingNo) {
 		this.isLeavingNo = isLeavingNo;
 	}
+
+	public boolean isFull() {
+		return isFull;
+	}
+
+	public void setFull(boolean isFull) {
+		this.isFull = isFull;
+	}
+	
 	
 }

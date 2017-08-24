@@ -40,7 +40,9 @@ public class JavaSetKeyElement extends  AbstractJavaElement {
 			String hotKey="";
 			
 			//	protected void registerPFKey(String PFKey, String label, boolean visible, boolean isActive, String shortCut, String hotKey) {
-			JavaClassElement.javaCodeBuffer.append("registerPFKey("+JavaWriteUtilities.toCustomString(parametersOfSetKey.get(0))+",\""+label+"\","+isVisible+ ","+isActive+ ",\""+shortCut+"\",\""+hotKey+"\");"+JavaConstants.NEW_LINE);
+			if(!parametersOfSetKey.get(0).getDeger().toString().toLowerCase().equals("all")){
+				JavaClassElement.javaCodeBuffer.append("registerPFKey("+JavaWriteUtilities.toCustomString(parametersOfSetKey.get(0))+",\""+label+"\","+isVisible+ ","+isActive+ ",\""+shortCut+"\",\""+hotKey+"\");"+JavaConstants.NEW_LINE);
+			}
 			
 		} catch (Exception e) {
 			logger.debug("//Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()+this.getSourceCode().getCommandName());

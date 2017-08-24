@@ -1199,14 +1199,15 @@ public class NaturalCommandList extends AbstractCommandList {
 						
 							} else if (programDataTypeElement.getLevelNumber() == 3) {
 									if(redefineGroupCommandLevel2!=null){
-										try {
-											redefinedElement = (ElementProgramDataTypeNatural) redefineGroupCommandLevel2.getRedefinedCommand();
-										} catch (Exception e) {
-											logger.warn(e.getMessage(),e);
-										}
 										
-										newElement.setRedefinedDataName(redefinedElement.getDataName());
-										newElement.setRedefinedDataType(redefinedElement.getDataType());
+										if(redefineGroupCommandLevel2.getRedefinedCommand() instanceof ElementProgramDataTypeNatural){
+											redefinedElement = (ElementProgramDataTypeNatural) redefineGroupCommandLevel2.getRedefinedCommand();
+											newElement.setRedefinedDataName(redefinedElement.getDataName());
+											newElement.setRedefinedDataType(redefinedElement.getDataType());
+										}else if(redefineGroupCommandLevel2.getRedefinedCommand() instanceof ElementDBViewOfNatural){
+											
+											break;
+										}
 										
 									}else{ //Level2 ise null ise record içinde Redefine var demektir. O zaman Level 1 alttan devam eder.
 										if(redefineGroupCommand.getRedefinedCommand() instanceof ElementProgramDataTypeNatural){
@@ -1409,13 +1410,15 @@ public class NaturalCommandList extends AbstractCommandList {
 						newElement.setArrayLength(programOneDimensionArrayNatural.getArrayLength());
 						newElement.getParameters().put("arrayLength", newElement.getArrayLength());
 
-						
-						newElement.setRedefinedDataType((ElementProgramDataTypeNatural) ((ElementProgramRedefineGrupNatural) redefineGroupCommand).getRedefinedCommand());
-						newElement.getParameters().put("redefinedCommand", newElement.getRedefinedDataType());
+						if(((ElementProgramRedefineGrupNatural) redefineGroupCommand).getRedefinedCommand() instanceof ElementProgramDataTypeNatural){
+							
+							newElement.setRedefinedDataType((ElementProgramDataTypeNatural) ((ElementProgramRedefineGrupNatural) redefineGroupCommand).getRedefinedCommand());
+							newElement.getParameters().put("redefinedCommand", newElement.getRedefinedDataType());
+	
+							commandList.remove(index + 1);
+							commandList.add(index + 1, newElement);
 
-						commandList.remove(index + 1);
-						commandList.add(index + 1, newElement);
-
+						}
 					}
 
 				}

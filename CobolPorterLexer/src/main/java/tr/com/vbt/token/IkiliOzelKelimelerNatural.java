@@ -66,7 +66,6 @@ public IkiliOzelKelimelerNatural() {
 	ikiliKelimeler.add(new DoubleWordKeyword("BACKOUT","TRANSACTION"));
 	ikiliKelimeler.add(new DoubleWordKeyword("SET","CONTROL"));
 	ikiliKelimeler.add(new DoubleWordKeyword("REINPUT","WITH"));
-	ikiliKelimeler.add(new DoubleWordKeyword("COMPRESS","FULL"));
 	ikiliKelimeler.add(new DoubleWordKeyword("IF","NO"));
 	ikiliKelimeler.add(new DoubleWordKeyword("LEAVING","NO"));
 	ikiliKelimeler.add(new DoubleWordKeyword("LEAVE","NO"));

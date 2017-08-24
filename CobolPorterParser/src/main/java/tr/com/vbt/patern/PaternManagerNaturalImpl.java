@@ -11,7 +11,6 @@ import tr.com.vbt.natural.parser.basicverbs.patern.PaternCallNat;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternClosePrinter;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternCommentEntry;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternCompress;
-import tr.com.vbt.natural.parser.basicverbs.patern.PaternCompressFull;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternCompute;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternComputeRounded;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternDelete;
@@ -230,7 +229,6 @@ public class PaternManagerNaturalImpl  extends AbstractPaternManagerNatural{
 		commmandPatternList.add(new PaternRedefine());
 		commmandPatternList.add(new PaternDivide());
 		commmandPatternList.add(new PaternCompress());
-		commmandPatternList.add(new PaternCompressFull());
 		commmandPatternList.add(new PaternNewPage());
 		commmandPatternList.add(new PaternNewPage2());
 		commmandPatternList.add(new PaternTerminate());
