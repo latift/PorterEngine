@@ -16,7 +16,7 @@ public class JavaLocal extends  AbstractJavaElement{
 		
 		try {
 			
-			if(ConversionLogModel.getInstance().isMap()){
+			if(ConversionLogModel.getInstance().isMapOrMapTester()){
 				return true;
 			}
 			

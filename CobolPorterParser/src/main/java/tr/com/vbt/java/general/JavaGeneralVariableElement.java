@@ -45,6 +45,8 @@ public class JavaGeneralVariableElement extends AbstractJavaElement {
 	private String dataName;
 
 	private String visibility;
+	
+	private String initialValue;
 
 	public String getType() {
 		return type;
@@ -102,6 +104,10 @@ public class JavaGeneralVariableElement extends AbstractJavaElement {
 			if(parameters.get("lengthAfterDot")!=null){
 				lengthAfterDot=(int) parameters.get("lengthAfterDot");
 			}
+			if(parameters.get("initialValue")!=null){
+				initialValue= (String) parameters.get("initialValue");
+			}
+			
 
 			// 9 --> int
 
@@ -132,6 +138,18 @@ C 1 Control (whether modified)
 				}*/
 				JavaClassElement.javaCodeBuffer.append("\")");
 			}
+			
+			else if(type.toLowerCase().equals("bigdecimal")){
+				
+				initBigDecimal();
+			
+			}
+			
+			else if(initialValue!=null && !initialValue.trim().isEmpty()){
+				
+				JavaClassElement.javaCodeBuffer.append(" =");
+				JavaClassElement.javaCodeBuffer.append(initialValue);
+			}
 
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA);
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
@@ -145,6 +163,12 @@ C 1 Control (whether modified)
 		return true;
 	}
 
+
+	private void initBigDecimal() {
+	
+		JavaClassElement.javaCodeBuffer.append("=FCU.resetBigDecimal("+lengthAfterDot+")");
+		
+	}
 
 	public int getLengthAfterDot() {
 		return lengthAfterDot;

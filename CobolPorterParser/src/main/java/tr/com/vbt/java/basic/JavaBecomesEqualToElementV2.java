@@ -43,6 +43,8 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 	private AbstractToken copyTo;
 
 	private List<AbstractToken> aritmethicOperators = new ArrayList<AbstractToken>();
+	
+	boolean addCast=false;
 
 	public boolean writeJavaToStream() throws Exception{
 		super.writeJavaToStream(); 
@@ -114,7 +116,15 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 					JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(copyTo));
 					JavaClassElement.javaCodeBuffer.append("=");
 					for (int i = 0; i < copyFrom.size(); i++) {
+						if(copyFrom.get(i).isVal()){
+							addCast=addCast(copyTo,copyFrom.get(i));
+						}
 						JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(copyFrom.get(i)));
+						if(addCast){
+							JavaClassElement.javaCodeBuffer.append(")");
+						}
+						
+						addCast=false;
 					}
 			}
 
@@ -136,6 +146,32 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 
 
 
+	private boolean addCast(AbstractToken copyTo, AbstractToken copyFrom) {
+		
+		String typeOfCopyTo=ConvertUtilities.getTypeOfVariable(copyTo);
+		
+		String typeOfCopyFrom=ConvertUtilities.getTypeOfVariable(copyFrom);
+		
+		//2595   FAIZYENIHESNO:=VAL(FAIZYENIHESNOA) 
+		// Alphabet Numbera atanıyorsa --> Long.valueOf(
+		if(typeOfCopyTo.equals("long") && typeOfCopyFrom.equals("String") ){
+			JavaClassElement.javaCodeBuffer.append("Long.valueOf(");
+			
+			return true;
+		
+		// Alphabet BigDecimala atanıyorsa --> 
+		}else {
+			JavaClassElement.javaCodeBuffer.append("Cast");
+			
+			return true;
+		}
+		
+	}
+
+
+
+
+
 	/*
 	* NATURAL CODE:605   :ASSIGN TAX-EXC-DEST ( *) = SCR-EXC-DEST ( *) 
 	*	-->ConvertUtilities.copyArrayToPojoSubTable(SCREEN.SCR_EXC_DEST,KET_TAX.getKetTaxAls(),"TAX_EXC_DEST" );
@@ -144,10 +180,10 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 		
 		DDM ddm= DDMList.getInstance().getDDM(copyTo);
 		if(ddm==null){
-			JavaClassElement.javaCodeBuffer.append("FrameworkConvertUtilities.copyArrayToPojoSubTable("
+			JavaClassElement.javaCodeBuffer.append("FCU.copyArrayToPojoSubTable("
 				+ JavaWriteUtilities.toCustomString(copyFrom.get(0)) + "," + JavaWriteUtilities.pojosSubTablesArray(copyTo)+",\" \""+")");
 		}else{
-			JavaClassElement.javaCodeBuffer.append("FrameworkConvertUtilities.copyArrayToPojoSubTable("
+			JavaClassElement.javaCodeBuffer.append("FCU.copyArrayToPojoSubTable("
 					+ JavaWriteUtilities.toCustomString(copyFrom.get(0)) + "," + JavaWriteUtilities.pojosSubTablesArray(copyTo)+",\""+ddm.getName()+"\""+")");
 		}
 		
@@ -160,12 +196,12 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 		DDM ddm= DDMList.getInstance().getDDM(copyFrom.get(0));
 		
 		if(ddm==null){
-		JavaClassElement.javaCodeBuffer.append("FrameworkConvertUtilities.copyPojoSubTableToArray("
+		JavaClassElement.javaCodeBuffer.append("FCU.copyPojoSubTableToArray("
 				+ JavaWriteUtilities.pojosSubTablesArray(copyFrom.get(0))
 				+",\""+copyFrom.get(0) + "\","
 				+ JavaWriteUtilities.toCustomString(copyTo)+")");
 		}else{
-			JavaClassElement.javaCodeBuffer.append("FrameworkConvertUtilities.copyPojoSubTableToArray("
+			JavaClassElement.javaCodeBuffer.append("FCU.copyPojoSubTableToArray("
 					+ JavaWriteUtilities.pojosSubTablesArray(copyFrom.get(0))
 					+",\""+ddm.getName() + "\","
 					+ JavaWriteUtilities.toCustomString(copyTo)+")");
@@ -182,7 +218,7 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 		//dimensions=copyTo.get(0).getPojosDimension().getColumnNameToken().getDeger().toString().split(":");
 	
 		if(ddm==null){
-			JavaClassElement.javaCodeBuffer.append("FrameworkConvertUtilities.copyPojoSubTableToArray("
+			JavaClassElement.javaCodeBuffer.append("FCU.copyPojoSubTableToArray("
 					+ JavaWriteUtilities.pojosSubTablesArray(copyFrom.get(0))
 					+",\""+copyFrom.get(0) + "\","
 					+copyTo.getDeger().toString()+")");
@@ -190,7 +226,7 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 		}else if(copyFrom.get(0).isPojoVariable() && !copyFrom.get(0).isAllArrayItems() && copyTo.isRecordVariable() && copyTo.getLinkedToken().isArray() && !copyTo.getLinkedToken().isAllArrayItems()){
 			JavaClassElement.javaCodeBuffer.append( JavaWriteUtilities.toCustomString(copyTo)+"="+JavaWriteUtilities.toCustomString(copyFrom.get(0)) );
 		}else{
-			JavaClassElement.javaCodeBuffer.append("FrameworkConvertUtilities.copyPojoSubTableToArray("
+			JavaClassElement.javaCodeBuffer.append("FCU.copyPojoSubTableToArray("
 					+ JavaWriteUtilities.pojosSubTablesArray(copyFrom.get(0))
 					+",\""+ddm.getName() + "\","
 					+copyTo.getDeger().toString()+")");
@@ -211,7 +247,7 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 		
 //		dimensions=copyTo.getPojosDimension().getDeger().toString().split(":");
 		if(ddm==null){
-			JavaClassElement.javaCodeBuffer.append("FrameworkConvertUtilities.copyArrayToPojoSubTable("
+			JavaClassElement.javaCodeBuffer.append("FCU.copyArrayToPojoSubTable("
 					+ JavaWriteUtilities.toCustomString(copyFrom.get(0)) 
 					+ "," 
 					+ JavaWriteUtilities.pojosSubTablesArray(copyTo)
@@ -219,7 +255,7 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 					+copyFrom.get(0)
 					+"\")");
 		}else{
-		JavaClassElement.javaCodeBuffer.append("FrameworkConvertUtilities.copyArrayToPojoSubTable("
+		JavaClassElement.javaCodeBuffer.append("FCU.copyArrayToPojoSubTable("
 				+ JavaWriteUtilities.toCustomString(copyFrom.get(0)) 
 				+ "," 
 				+ JavaWriteUtilities.pojosSubTablesArray(copyTo)

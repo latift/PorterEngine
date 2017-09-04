@@ -114,11 +114,11 @@ public class ConvertUtilities {
 				if (programData.getDataName().equals(variable.getDeger())) {
 					if (programData.getDataType().substring(0, 1).equals("A")) {
 						return VariableTypes.STRING_TYPE;
-					} else if (programData.getDataType().substring(0, 1).equals("N")) {
+					} else if (programData.getDataType().substring(0, 1).equals("N") || programData.getDataType().substring(0, 1).equals("P")) {
 						if (programData.getLengthAfterDot() == 0) {
 							return VariableTypes.LONG_TYPE;
 						} else {
-							return VariableTypes.FLOAT_TYPE;
+							return VariableTypes.BIG_DECIMAL_TYPE;
 						}
 					} else if (programData.getDataType().substring(0, 1).equals("D")) {
 						return VariableTypes.DATE_TYPE;
@@ -231,22 +231,18 @@ public class ConvertUtilities {
 		String type;
 		if (dataType.equals("A") || dataType.equals("String")) {
 			type = "String";
-		} else if ((dataType.equals("N") && lengthAfterDot == 0) || dataType.equals("int")) {
+		} else if (((dataType.equals("N") || dataType.equals("P") || dataType.equals("int") || dataType.equals("I")) && lengthAfterDot == 0) ) {
 			type = "long";
-		} else if ((dataType.equals("N") && lengthAfterDot != 0) || dataType.equals("float")) {
-			type = "float";
-		} else if (dataType.equals("I")) {
-			type = "long";
-		} else if (dataType.equals("D") || dataType.equals("Date")) {
+		} else if (((dataType.equals("N") || dataType.equals("P") || dataType.equals("float")) && lengthAfterDot != 0) ) {
+			type = "BigDecimal";
+		} else if (dataType.equals("D") || dataType.equals("Date") ) {
 			type = "Date";
 		} else if (dataType.equals("T") || dataType.equals("Date")) {
-			type = "Date";
+			type = "Time";
 		} else if (dataType.equals("L") || dataType.equals("boolean")) {
 			type = "boolean";
 		} else if (dataType.equals("C") || dataType.equals("ControlEnum")) {
 			type = "ControlEnum";
-		} else if (dataType.equals("P")) {
-			type = "long";
 		} else {
 			type = "UndefinedDataType";
 		}
@@ -391,19 +387,9 @@ public class ConvertUtilities {
 
 		try {
 			field = c.getDeclaredField(fieldName);
+		
 			field.setAccessible(true);
-			/*
-			 * if (field.getType().isAssignableFrom(String.class)) { return
-			 * "String"; }else if
-			 * (field.getType().isAssignableFrom(Timestamp.class)) { return
-			 * "Timestamp"; }else if
-			 * (field.getType().isAssignableFrom(Integer.class)) { return
-			 * "Integer"; }else if
-			 * (field.getType().isAssignableFrom(Float.class)) { return "Float";
-			 * }else if (field.getType().isAssignableFrom(Double.class)) {
-			 * return "Double"; }else if
-			 * (field.getType().isAssignableFrom(Long.class)) { return "Long"; }
-			 */
+		
 			return field.getType().getSimpleName();
 
 		} catch (Exception e) {
@@ -743,7 +729,15 @@ public class ConvertUtilities {
 
 			programData = (ElementProgramDataTypeNatural) dataType;
 
-			maxLength = programData.getLength() + programData.getLengthAfterDot() + 1;
+			if(programData.getLengthAfterDot()==0){
+				
+				maxLength = programData.getLength();
+				
+			}else{
+				
+				maxLength = programData.getLength() + programData.getLengthAfterDot() + 1;
+		
+			}
 		} catch (Exception e) {
 
 		}
@@ -783,6 +777,11 @@ public class ConvertUtilities {
 	public static void assingFromArrayToArrayAllItems(String[] arrayFrom, String[] arrayTo) {
 
 		arrayTo = arrayFrom;
+	}
+	
+	public static String castToInt(){
+		return "(int)";
+		
 	}
 
 	public static void main(String[] args) {

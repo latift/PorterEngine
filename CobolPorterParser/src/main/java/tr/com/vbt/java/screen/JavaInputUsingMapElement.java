@@ -34,9 +34,24 @@ public class JavaInputUsingMapElement extends  AbstractJavaElement {
 		}
 		
 		try {
-			//JavaClassElement.javaCodeBuffer.append("=openScreen("+mapName+")"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
-			JavaClassElement.javaCodeBuffer.append("inputUsingMap(\""+mapName+"\")"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
 			
+//			validationError = true;
+//			while (this.validationError) {
+//				validationError = false;
+//				try {
+					
+			addValidationLoopStarter();
+			
+				
+			//JavaClassElement.javaCodeBuffer.append("=openScreen("+mapName+")"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+			JavaClassElement.javaCodeBuffer.append("	inputUsingMap(\""+mapName+"\")"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+	
+			addValidationLoopEnder();
+			
+//		} catch (VBTValidationException e) {
+//
+//		}
+//	}
 			registerMapToProgramMapList();
 		} catch (Exception e) {
 			logger.debug("//Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()+this.getSourceCode().getCommandName());
@@ -47,6 +62,25 @@ public class JavaInputUsingMapElement extends  AbstractJavaElement {
 		}
 		
 		return true;
+	}
+	
+
+	private void addValidationLoopEnder() {
+		JavaClassElement.javaCodeBuffer.append("	} catch (VBTValidationException e) { // TODO:Bu satır ve altindaki 3 satir. Bu ekranla ilgili son showDialogV2 den sonraya taşınmalı"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		JavaClassElement.javaCodeBuffer.append(""+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		JavaClassElement.javaCodeBuffer.append("	}//Validation Catch"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		JavaClassElement.javaCodeBuffer.append("}//Validation While"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		
+	}
+
+
+
+	private void addValidationLoopStarter() {
+		JavaClassElement.javaCodeBuffer.append("validationError = true"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);	
+		JavaClassElement.javaCodeBuffer.append("while (this.validationError) {"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		JavaClassElement.javaCodeBuffer.append("	validationError = false"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		JavaClassElement.javaCodeBuffer.append("	try {"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		
 	}
 
 	private void registerMapToProgramMapList() {

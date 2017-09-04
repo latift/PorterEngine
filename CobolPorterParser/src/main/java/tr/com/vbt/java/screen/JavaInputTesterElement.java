@@ -6,7 +6,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaClassElement;
 import tr.com.vbt.java.general.JavaConstants;
 import tr.com.vbt.java.utils.ConvertUtilities;
@@ -40,8 +39,10 @@ import tr.com.vbt.util.ConverterConfiguration;
  * Patern1: *S** 2/01 ' +----------------------------------+'
  * 
  */
-public class JavaWriteElement extends AbstractJavaElement {
+public class JavaInputTesterElement extends JavaInputElement {
 
+	JavaInputElement  javaInputElement;
+	
 	final static Logger logger = LoggerFactory.getLogger(JavaAtTopOfPageElement.class);
 
 	// Paramaters: functionName;
@@ -60,11 +61,33 @@ public class JavaWriteElement extends AbstractJavaElement {
 	boolean isMap;
 	
 	boolean isMapTester;
+	
+	
+	public String INPUT_SIZE_1 = new String("A");
+	public String INPUT_SIZE_2 = new String("AB");
+	public String INPUT_SIZE_3 = new String("ABC");
+	public String INPUT_SIZE_4 = new String("ABCD");
+	public String INPUT_SIZE_5 = new String("ABCDE");
+	public String INPUT_SIZE_6 = new String("ABCDEF");
+	public String INPUT_SIZE_7 = new String("ABCDEFG");
+	public String INPUT_SIZE_8 = new String("ABCDEFGH");
+	public String INPUT_SIZE_9 = new String("ABCDEFGHI");
+	public String INPUT_SIZE_10 = new String("ABCDEFGHIJ");
+
+
+
+
+	public JavaInputTesterElement(JavaInputElement javaInputElement) {
+		javaInputElement=javaInputElement;
+		
+		this.parameters=javaInputElement.getParameters();
+	}
+
 
 
 	@Override
 	public boolean writeJavaToStream() throws Exception{
-
+		
 		screenInputOutputArray = new ArrayList<>();
 
 		inputParameters = (List<AbstractToken>) this.parameters.get("inputParameters");
@@ -88,7 +111,7 @@ public class JavaWriteElement extends AbstractJavaElement {
 		AbstractToken currToken = null;
 
 		try {
-			
+
 			removeAdParameters();
 			
 			removeParantezI();
@@ -214,13 +237,21 @@ public class JavaWriteElement extends AbstractJavaElement {
 			
 			String name;
 			
-			name ="\"" + value + "\"";
+			if(value.contains("getInstance")){
+				String firstPart= value.substring(0,value.indexOf('.'));
+				String remaingPart= value.substring(value.indexOf('.')+1);
+				String lastPart=remaingPart.substring(remaingPart.indexOf('.'));
+				name ="\"" + firstPart+ lastPart + "\"";
+					
+			}else{
+				name ="\"" + value + "\"";
+			}
 			
 			writeUndefinedTokens();
 		
 			if (currToken.isConstantVariableWithQuota() || currToken.isSystemVariable()) {
 
-				newScreenIO = new ScreenIOLabel(xCoord, yCoord, IOModeType.AD_D, value, XCoordinationTypes.REFERANCE,
+				newScreenIO = new ScreenIOLabel(xCoord, yCoord, IOModeType.AD_D, value, XCoordinationTypes.EXACT,
 						XCoordinationTypes.EXACT,0,maxLength, currToken.isConstantVariableWithQuota());
 				
 			} else if (currToken.getTip().equals(TokenTipi.Kelime)) { // #SECIM
@@ -230,17 +261,17 @@ public class JavaWriteElement extends AbstractJavaElement {
 				if (varType.equals(VariableTypes.INT_TYPE)|| varType.equals(VariableTypes.LONG_TYPE)) {
 
 					newScreenIO = new ScreenIOIntegerInput(xCoord, yCoord, IOModeType.AD_D, name, value,
-							XCoordinationTypes.REFERANCE, XCoordinationTypes.EXACT,0,maxLength);
+							XCoordinationTypes.EXACT, XCoordinationTypes.EXACT,0,maxLength);
 
 				}else{
 					
 					newScreenIO = new ScreenIOStringInput(xCoord, yCoord, IOModeType.AD_D, name, value,
-							XCoordinationTypes.REFERANCE, XCoordinationTypes.EXACT,0,maxLength);
+							XCoordinationTypes.EXACT, XCoordinationTypes.EXACT,0,maxLength);
 				}
 			} else if (currToken.getTip().equals(TokenTipi.Sayi)) { //
 
 				newScreenIO = new ScreenIOIntegerInput(xCoord, yCoord, IOModeType.AD_D, name, value,
-						XCoordinationTypes.REFERANCE, XCoordinationTypes.EXACT,0,maxLength);
+						XCoordinationTypes.EXACT, XCoordinationTypes.EXACT,0,maxLength);
 			}
 
 			if(value.length()>maxLength){
@@ -277,7 +308,7 @@ public class JavaWriteElement extends AbstractJavaElement {
 			sb.append(undefined.toCustomString());
 			
 		}
-		newScreenIO = new ScreenIOUndefined(xCoord, yCoord, IOModeType.AD_D, sb.toString(), XCoordinationTypes.REFERANCE,  XCoordinationTypes.EXACT,0,ConverterConfiguration.DEFAULT_MAX_LENGTH_FOR_LABEL);
+		newScreenIO = new ScreenIOUndefined(xCoord, yCoord, IOModeType.AD_D, sb.toString(), XCoordinationTypes.EXACT,  XCoordinationTypes.EXACT,0,ConverterConfiguration.DEFAULT_MAX_LENGTH_FOR_LABEL);
 		
 		screenInputOutputArray.add(newScreenIO);
 		
@@ -334,7 +365,7 @@ public class JavaWriteElement extends AbstractJavaElement {
 					newScreenIO = new ScreenIOLabel(xCoord, yCoord, IOModeType.AD_D, value, XCoordinationTypes.EXACT, XCoordinationTypes.EXACT,0,maxLength);
 					
 				}else{
-					newScreenIO = new ScreenIOLabel(xCoord, yCoord, IOModeType.AD_D, value+"["+ConvertUtilities.castToInt()+arrayToken.getFirstDimension().getDeger().toString()+"]", XCoordinationTypes.EXACT,
+					newScreenIO = new ScreenIOLabel(xCoord, yCoord, IOModeType.AD_D, value, XCoordinationTypes.EXACT,
 							XCoordinationTypes.EXACT,0,maxLength);
 					
 				}
@@ -402,7 +433,11 @@ public class JavaWriteElement extends AbstractJavaElement {
 		if(isMap || isMapTester){
 			JavaClassElement.javaCodeBuffer.append("natprog.");
 		}
-		JavaClassElement.javaCodeBuffer.append("write(");
+		
+		if(!isMap && !isMapTester){
+			addValidationLoopStarter();
+		}
+		JavaClassElement.javaCodeBuffer.append("input(");
 		JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 
 		int xCoord=0, previousXCoord = 0;
@@ -417,8 +452,21 @@ public class JavaWriteElement extends AbstractJavaElement {
 			sIO = screenInputOutputArray.get(index);
 
 			xCoord=sIO.getXCoord();
+
+			logger.debug("Current:"+sIO.getName()+sIO.getValue());
+	
 			
-		/*	if (sIO.getTagType().equals(NaturalTagTypes.LABEL)) {
+			if(xCoord>previousXCoord){
+				
+				JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
+			}
+			
+			//EM parameterdir. Yazdırma
+			if(sIO.getValue().equals("EM")){
+				continue;
+			}
+			
+			if (sIO.getTagType().equals(NaturalTagTypes.LABEL)) {
 				if(sIO instanceof ScreenIOUndefined)
 				{
 					writeUndefined(sIO);
@@ -431,22 +479,10 @@ public class JavaWriteElement extends AbstractJavaElement {
 				}else{
 					writeStringInputField(sIO);
 				}
-			}*/
-			
-			if(sIO instanceof ScreenIOUndefined)
-			{
-				writeUndefined(sIO);
-			}else{
-				writeLabel(sIO);
 			}
 
 			if (index < screenInputOutputArray.size() - 1) {
 				JavaClassElement.javaCodeBuffer.append(",");
-				JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
-			}
-			
-			if(xCoord>previousXCoord){
-				
 				JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 			}
 			
@@ -455,8 +491,32 @@ public class JavaWriteElement extends AbstractJavaElement {
 
 		JavaClassElement.javaCodeBuffer.append(");");
 		JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
+		
+		if(!isMap&& !isMapTester){
+			addValidationLoopEnder();
+		}
 
 	}
+
+	private void addValidationLoopEnder() {
+		JavaClassElement.javaCodeBuffer.append("	} catch (VBTValidationException e) { // TODO:Bu satır ve altindaki 3 satir. Bu ekranla ilgili son showDialogV2 den sonraya taşınmalı"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		JavaClassElement.javaCodeBuffer.append(""+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		JavaClassElement.javaCodeBuffer.append("	}//Validation Catch"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		JavaClassElement.javaCodeBuffer.append("}//Validation While"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		
+	}
+
+
+
+	private void addValidationLoopStarter() {
+		JavaClassElement.javaCodeBuffer.append("validationError = true"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);	
+		JavaClassElement.javaCodeBuffer.append("while (this.validationError) {"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		JavaClassElement.javaCodeBuffer.append("	validationError = false"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		JavaClassElement.javaCodeBuffer.append("	try {"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		
+	}
+
+
 
 	// new
 	// ScreenIOIntegerInput(0,1,IOModeType.AD_MI_,"DIYEZ_SECIM",DIYEZ_SECIM,XCoordinationTypes.REFERANCE),
@@ -474,7 +534,7 @@ public class JavaWriteElement extends AbstractJavaElement {
 
 		JavaClassElement.javaCodeBuffer.append(",");
 
-		JavaClassElement.javaCodeBuffer.append(sIO.getValueForEngine());
+		JavaClassElement.javaCodeBuffer.append(getLabelActor(sIO.getValueForEngine()));
 
 		JavaClassElement.javaCodeBuffer.append(",");
 
@@ -515,18 +575,15 @@ public class JavaWriteElement extends AbstractJavaElement {
 
 		JavaClassElement.javaCodeBuffer.append(",");
 
-		if(isMap || isMapTester){
-			JavaClassElement.javaCodeBuffer.append("natprog.");
-		}
 
-		JavaClassElement.javaCodeBuffer.append(sIO.getValue());
+		JavaClassElement.javaCodeBuffer.append(getLabelActor(sIO.getValue()));
 
 		JavaClassElement.javaCodeBuffer.append(",");
 
 		if (sIO.getxCoordinationType().equals(XCoordinationTypes.EXACT)) {
 			JavaClassElement.javaCodeBuffer.append("XCoordinationTypes.EXACT , XCoordinationTypes.EXACT");
 		} else {
-			JavaClassElement.javaCodeBuffer.append("XCoordinationTypes.REFERANCE , XCoordinationTypes.EXACT");
+			JavaClassElement.javaCodeBuffer.append("XCoordinationTypes.REFERANCE , XCoordinationTypes.REFERANCE");
 		}
 		
 		JavaClassElement.javaCodeBuffer.append(",");
@@ -540,8 +597,11 @@ public class JavaWriteElement extends AbstractJavaElement {
 		JavaClassElement.javaCodeBuffer.append(")");
 
 	}
+	
+	//new ScreenIOLabel(0,2,IOModeType.AD_MI_,"T.C.M.B.",XCoordinationTypes.EXACT , XCoordinationTypes.EXACT,0,5),
 	private void writeLabel(ScreenIO sIO) {
 
+		
 		JavaClassElement.javaCodeBuffer.append("new ScreenIOLabel(" + sIO.getXCoord() + "," + sIO.getYCoord());
 
 		JavaClassElement.javaCodeBuffer.append(",");
@@ -551,14 +611,14 @@ public class JavaWriteElement extends AbstractJavaElement {
 		JavaClassElement.javaCodeBuffer.append(",");
 
 
-		JavaClassElement.javaCodeBuffer.append( sIO.getValue());
+		JavaClassElement.javaCodeBuffer.append( getLabelActor(sIO.getValue()));
 					
 		JavaClassElement.javaCodeBuffer.append(",");
 
 		if (sIO.getxCoordinationType().equals(XCoordinationTypes.EXACT)) {
 			JavaClassElement.javaCodeBuffer.append("XCoordinationTypes.EXACT , XCoordinationTypes.EXACT");
 		} else {
-			JavaClassElement.javaCodeBuffer.append("XCoordinationTypes.REFERANCE , XCoordinationTypes.EXACT");
+			JavaClassElement.javaCodeBuffer.append("XCoordinationTypes.REFERANCE , XCoordinationTypes.REFERANCE");
 		}
 		
 		JavaClassElement.javaCodeBuffer.append(",");
@@ -573,9 +633,69 @@ public class JavaWriteElement extends AbstractJavaElement {
 
 	}
 	
+	private String getLabelActor(String value) {
+		int labelLen=value.length();
+		
+		String label;
+		switch (labelLen) {
+		case 1:
+			
+			label= this.INPUT_SIZE_1;
+			break;
+		case 2:
+			
+			label= this.INPUT_SIZE_2;
+			break;
+		case 3:
+			
+			label= this.INPUT_SIZE_3;
+			break;
+		case 4:
+			
+			label= this.INPUT_SIZE_4;
+			break;
+		case 5:
+			
+			label= this.INPUT_SIZE_5;
+			break;
+		case 6:
+			
+			label= this.INPUT_SIZE_6;
+			break;
+			
+		case 7:
+			
+			label= this.INPUT_SIZE_7;
+			break;
+			
+		case 8:
+			
+			label= this.INPUT_SIZE_8;
+			break;
+			
+		case 9:
+			
+			label= this.INPUT_SIZE_9;
+			break;
+			
+		case 10:
+			
+			label= this.INPUT_SIZE_10;
+			break;
+
+		default:
+			label= this.INPUT_SIZE_1;
+			break;
+		}
+		
+		return "\""+label+"\"";
+	}
+
+
+
 	private void writeUndefined(ScreenIO sIO) {
 
-		JavaClassElement.javaCodeBuffer.append("new ScreenIOUndefined(" + sIO.getXCoord() + "," + sIO.getYCoord());
+		JavaClassElement.javaCodeBuffer.append("//new ScreenIOUndefined(" + sIO.getXCoord() + "," + sIO.getYCoord());
 	
 		JavaClassElement.javaCodeBuffer.append(",");
 
@@ -583,15 +703,14 @@ public class JavaWriteElement extends AbstractJavaElement {
 
 		JavaClassElement.javaCodeBuffer.append(",\"");
 
-
-		JavaClassElement.javaCodeBuffer.append( sIO.getValue());
+		JavaClassElement.javaCodeBuffer.append(getLabelActor(sIO.getValue()));
 					
 		JavaClassElement.javaCodeBuffer.append("\",");
 
 		if (sIO.getxCoordinationType().equals(XCoordinationTypes.EXACT)) {
 			JavaClassElement.javaCodeBuffer.append("XCoordinationTypes.EXACT , XCoordinationTypes.EXACT");
 		} else {
-			JavaClassElement.javaCodeBuffer.append("XCoordinationTypes.REFERANCE , XCoordinationTypes.EXACT");
+			JavaClassElement.javaCodeBuffer.append("XCoordinationTypes.REFERANCE , XCoordinationTypes.REFERANCE");
 		}
 		
 		JavaClassElement.javaCodeBuffer.append(",");
@@ -639,7 +758,7 @@ public class JavaWriteElement extends AbstractJavaElement {
 				noktaOrTireToken;
 
 		StringBuffer ADParameter;
-		if(inputParameters==null || inputParameters.size()<3) {
+		if(inputParameters==null || inputParameters.size()<4) {
 			return ;
 		}
 		for (int index = 0; index < inputParameters.size() - 3; index++) {
@@ -676,5 +795,7 @@ public class JavaWriteElement extends AbstractJavaElement {
 		}
 
 	}
+	
+	
 
 }

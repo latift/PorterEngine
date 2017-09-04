@@ -1797,6 +1797,8 @@ public class NaturalLexing extends AbstractLexing {
 
 		// MAP2.MUSNO1 (AD=ODL ) --> MAP2.MUSNO1
 		setAd_EM_IP_Parameters();
+		
+		setVal();
 
 		controlTwoDimensionArrayParameters();
 
@@ -3643,6 +3645,51 @@ public class NaturalLexing extends AbstractLexing {
 		}
 	}
 
+	
+	// VAL(FAIZYENIHESNOA)  --> bunu FAIZYENIHESNOA ya çevirir.
+		// val=true set eder.
+		private void setVal() {
+			AbstractToken current; // SUBSTR
+			AbstractToken parantezOpen; // (
+			AbstractToken realToken;// SB_ACIKLAMA
+			AbstractToken comma1; // ,
+			AbstractToken startIndex; // 1
+			AbstractToken comma2; // ,
+			AbstractToken endIndex; // 79
+			AbstractToken parantezClose; // )
+
+			String currentDeger;
+			String nextNextDeger;
+
+			for (int i = 0; i < tokenListesi.size()-3; i++) {
+
+				current = tokenListesi.get(i);
+				parantezOpen = tokenListesi.get(i + 1);
+				realToken = tokenListesi.get(i + 2);
+				parantezClose = tokenListesi.get(i + 3);
+				logger.debug("current:" + current);
+			
+				if (current.isKelime(ReservedNaturalKeywords.VAL)) {
+
+					if (!(parantezOpen.getTip().equals(TokenTipi.Karakter) && parantezOpen.getDeger().equals('('))) {
+						continue;
+					}
+					if (!(parantezClose.getTip().equals(TokenTipi.Karakter) && parantezClose.getDeger().equals(')'))) {
+						continue;
+					}
+
+					realToken.setVal(true);
+
+					tokenListesi.add(i, realToken);
+
+					tokenListesi.remove(i + 4);
+					tokenListesi.remove(i + 3);
+					tokenListesi.remove(i + 2);
+					tokenListesi.remove(i + 1);
+
+				}
+			}
+		}
 	// D_SECIM(*) --> D_SECIM yapar ve D_SECIM in flagini işaretler
 	private void setAllElementsOfArrayFlag() {
 		AbstractToken current;
@@ -4165,6 +4212,8 @@ public class NaturalLexing extends AbstractLexing {
 		systemVariables.add("INIT_ID");
 		systemVariables.add("ERROR_LINE");
 		systemVariables.add("SQLCODE");
+		systemVariables.add("ERROR_NR");
+
 		
 		if(systemVariables.contains(systemVariable.getDeger())){
 			return true;

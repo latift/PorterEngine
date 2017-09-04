@@ -148,7 +148,7 @@ public class JavaCompressElementV3 extends AbstractJavaElement {
 					
 					dest.setSubstringCommand(false);
 					
-					JavaClassElement.javaCodeBuffer.append("moveToSubstring("+ JavaWriteUtilities.toCustomString(dest)+","+startIndex+","+endIndex+",");
+					JavaClassElement.javaCodeBuffer.append("moveToSubstring(this,\""+ JavaWriteUtilities.toCustomString(dest)+"\","+startIndex+","+endIndex+",");
 						
 					writeSourcePart();
 

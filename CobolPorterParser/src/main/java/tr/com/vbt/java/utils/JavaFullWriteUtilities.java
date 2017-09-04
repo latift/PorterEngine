@@ -240,9 +240,9 @@ public class JavaFullWriteUtilities {
 	
 		if(token.isRedefinedVariableDimensionToSimple()){
 			if(token instanceof ArrayToken){
-				return token.getDeger().toString()+".getValue("+((ArrayToken)token).getFirstDimension().getDeger().toString()+"-1)";
+				return token.getDeger().toString()+".getValue("+ConvertUtilities.castToInt()+((ArrayToken)token).getFirstDimension().getDeger().toString()+"-1)";
 			}else{
-				return token.getDeger().toString()+".getValue("+token.getDeger().toString()+"-1)";
+				return token.getDeger().toString()+".getValue("+ConvertUtilities.castToInt()+token.getDeger().toString()+"-1)";
 			}
 				
 		}
@@ -305,9 +305,9 @@ public class JavaFullWriteUtilities {
 			}
 		}
 		if(basaSifirEkle){
-			sb.append("FrameworkConvertUtilities.basaSifirEkleStr(");
+			sb.append("FCU.basaSifirEkleStr(");
 		}else if(basaBoslukEkle){
-			sb.append("FrameworkConvertUtilities.basaBoslukEkleStr(");
+			sb.append("FCU.basaBoslukEkleStr(");
 		}
 		
 		if(token.getDeger()!=null){
@@ -426,7 +426,7 @@ public class JavaFullWriteUtilities {
 	
 		int startIndex=token.getSubStringStartIndex();
 		int endIndex=startIndex+token.getSubStringEndIndex();
-		return 	"FrameworkConvertUtilities.substring("+toCustomString(token)+","+startIndex+","+endIndex+")";
+		return 	"FCU.substring("+toCustomString(token)+","+startIndex+","+endIndex+")";
 		
 	}
 	
@@ -497,24 +497,24 @@ public class JavaFullWriteUtilities {
 		
 		String columnReturnType=Utility.findViewAndColumnNamesReturnType(token);
 		
-		if(columnReturnType.toLowerCase().equals("string")){
+		if(columnReturnType.toLowerCase().equals("long")){
 			
-			getterString.append("getPojoValue(\"");
-		
-		}else if(columnReturnType.toLowerCase().equals("int")){
+			getterString.append("getLongPojoValue(\"");
 			
-			getterString.append("getPojoValueAsInt(\"");
+		}else if(columnReturnType.toLowerCase().equals("bigdecimal")){
 			
-		}else if(columnReturnType.toLowerCase().equals("float")){
+			getterString.append("getBigDecimalPojoValue(\"");
 			
-			getterString.append("getPojoValueAsFloat(\"");
+		}else if(columnReturnType.toLowerCase().equals("date")){
 			
-		}else if(columnReturnType.toLowerCase().equals("long")){
+			getterString.append("getStringPojoValue(\"");
 			
-			getterString.append("getPojoValueAsLong(\"");
+		}else if(columnReturnType.toLowerCase().equals("time")){
+			
+			getterString.append("getTimePojoValue(\"");
 			
 		}else{
-			getterString.append("getPojoValue(\"");
+			getterString.append("getStringPojoValue(\"");
 		}
 		
 		getterString.append(Utility.viewAndColumnNameToPojoAndGetterMethodName(token));
@@ -1014,14 +1014,14 @@ public class JavaFullWriteUtilities {
 			arrayToken=(ArrayToken) token.getLinkedToken();
 			firstDimension=arrayToken.getFirstDimension();
 			if(firstDimension.getDeger() instanceof String){
-				tempCodeBuffer.append("["+arrayToken.getFirstDimension().getDeger()+"-1]");
+				tempCodeBuffer.append("["+ConvertUtilities.castToInt()+arrayToken.getFirstDimension().getDeger()+"-1]");
 			}
 			else{
 				if(arrayToken.getFirstDimension().isKarakter('*')) {
-					tempCodeBuffer.append("["+arrayToken.getFirstDimension().getDeger()+"-1]");
+					tempCodeBuffer.append("["+ConvertUtilities.castToInt()+arrayToken.getFirstDimension().getDeger()+"-1]");
 				}else {
 					
-					tempCodeBuffer.append("["+(int)arrayToken.getFirstDimension().getDeger()+"-1]");
+					tempCodeBuffer.append("["+ConvertUtilities.castToInt()+(int)arrayToken.getFirstDimension().getDeger()+"-1]");
 				}
 			}
 			tempCodeBuffer.append(".");

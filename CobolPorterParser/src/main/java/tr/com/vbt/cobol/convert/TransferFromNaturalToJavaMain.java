@@ -81,6 +81,8 @@ public class TransferFromNaturalToJavaMain {
 			logModel.setConversionFileType(ConversionFileType.SUBPROGRAM);
 		} else if (args[5].equals(ConversionFileType.MAP.toString())) {
 			logModel.setConversionFileType(ConversionFileType.MAP);
+		} else if (args[5].equals(ConversionFileType.MAP_TESTER.toString())) {
+			logModel.setConversionFileType(ConversionFileType.MAP_TESTER);
 		} else {
 			throw new RuntimeException(
 					"Conversion File Type Set Edilmeli: Degerler: 	PROGRAM 	SUBPROGRAM  	MAP");
@@ -133,9 +135,6 @@ public class TransferFromNaturalToJavaMain {
 		
 		logModel.setFolderPath(ConverterConfiguration.getFolderPath());
 
-		if(ConversionLogModel.getInstance().isProgram()) {
-			reCreateOutputFoldersForAModule();
-		}
 		if (logModel.getConvertOperationType().equals("Folder")) {
 
 			File folder = null;
@@ -143,7 +142,7 @@ public class TransferFromNaturalToJavaMain {
 				folder = new File(ConverterConfiguration.getFolderPath());
 			} else if (ConversionLogModel.getInstance().isSubProgram()) {
 				folder = new File(ConverterConfiguration.getSubFolderPath());
-			} else if (ConversionLogModel.getInstance().isMap()) {
+			} else if (ConversionLogModel.getInstance().isMapOrMapTester()) {
 				folder = new File(ConverterConfiguration.getFolderPathMap());
 			}
 			File[] listOfFiles = folder.listFiles();
@@ -263,7 +262,7 @@ public class TransferFromNaturalToJavaMain {
 		
 	}
 
-	private static void reCreateOutputFoldersForAModule() throws Exception {
+	public static void reCreateOutputFoldersForAModule() throws Exception {
 		// TODO Auto-generated method stub
 		String FILENAME = ConversionLogModel.getInstance().getFolderMainPath() + "/"
 				+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/output";
@@ -275,6 +274,8 @@ public class TransferFromNaturalToJavaMain {
 				+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/output/web";
 		String FILENAME_JAVA_MAP = ConversionLogModel.getInstance().getFolderMainPath() + "/"
 				+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/output/web/map";
+		String FILENAME_JAVA_MAP_TESTER = ConversionLogModel.getInstance().getFolderMainPath() + "/"
+				+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/output/web/maptester";
 		String FILENAME_JAVA_SUBPROGRAM = ConversionLogModel.getInstance().getFolderMainPath() + "/"
 				+ ConversionLogModel.getInstance().getModule() + "/SeperatedPrograms" + "/output/web/subprogram";
 		
@@ -283,9 +284,11 @@ public class TransferFromNaturalToJavaMain {
 		File indexMap = new File(FILENAMEMAP);
 		File indexJava = new File(FILENAME_JAVA);
 		File indexJavaMap = new File(FILENAME_JAVA_MAP);
+		File indexJavaMapTest = new File(FILENAME_JAVA_MAP_TESTER);
 		File indexJavaSubprogram = new File(FILENAME_JAVA_SUBPROGRAM);
 		
 		WriteFileUtility.deleteFolder(indexJavaSubprogram);
+		WriteFileUtility.deleteFolder(indexJavaMapTest);
 		WriteFileUtility.deleteFolder(indexJavaMap);
 		WriteFileUtility.deleteFolder(indexJava);
 		WriteFileUtility.deleteFolder(indexSubProgram);
@@ -302,6 +305,7 @@ public class TransferFromNaturalToJavaMain {
 		WriteFileUtility.createFileInPath(FILENAMESUBBPROGRAM);
 		WriteFileUtility.createFileInPath(FILENAME_JAVA);
 		WriteFileUtility.createFileInPath(FILENAME_JAVA_MAP);
+		WriteFileUtility.createFileInPath(FILENAME_JAVA_MAP_TESTER);
 		WriteFileUtility.createFileInPath(FILENAME_JAVA_SUBPROGRAM);
 
 	}
@@ -747,11 +751,32 @@ public class TransferFromNaturalToJavaMain {
 			javaTreeElement.resetSourceCode();
 			IteratorNameManager.resetIteratorNameManager();
 			sb = javaTreeElement.writeJavaBaslat(logModel.getFullJavaFileName());
+			
 			DDMList.getInstance().writeUndefinedDDMList();
-
+			
+			writeMapTester(javaTreeElement);
+	
 		}
 
 	}
+
+	private void writeMapTester(JavaClassGeneral javaTreeElement) {
+	
+		if(!ConversionLogModel.getInstance().getConversionFileType().equals(ConversionFileType.MAP)){
+			return;
+		}
+		
+		try {
+			
+			ConversionLogModel.getInstance().setConversionFileType(ConversionFileType.MAP_TESTER);
+			javaTreeElement.writeJavaBaslat(ConversionLogModel.getInstance().getFullJavaFileName());
+			ConversionLogModel.getInstance().setConversionFileType(ConversionFileType.MAP);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 
 	private void controlIfThereIsUndefinedCommand(CommandList commandList) throws Exception {
 		if (ConverterConfiguration.STOP_ENGINE_ON_PARSE_ERROR && !commandList.getUndefinedCommandSet().isEmpty()) {

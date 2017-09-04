@@ -12,6 +12,7 @@ import tr.com.vbt.java.general.JavaConstants;
 import tr.com.vbt.java.utils.ConvertUtilities;
 import tr.com.vbt.java.utils.JavaWriteUtilities;
 import tr.com.vbt.java.utils.VariableTypes;
+import tr.com.vbt.lexer.ConversionFileType;
 import tr.com.vbt.lexer.ConversionLogModel;
 import tr.com.vbt.natural.html.IOModeType;
 import tr.com.vbt.natural.html.NaturalTagTypes;
@@ -42,7 +43,7 @@ import tr.com.vbt.util.ConverterConfiguration;
  */
 public class JavaInputElement extends AbstractJavaElement {
 
-	final static Logger logger = LoggerFactory.getLogger(JavaAtTopOfPageElement.class);
+	final static Logger logger = LoggerFactory.getLogger(JavaInputElement.class);
 
 	// Paramaters: functionName;
 	private List<AbstractToken> inputParameters;
@@ -58,16 +59,30 @@ public class JavaInputElement extends AbstractJavaElement {
 	private List<AbstractToken> undefinedParameterList=new ArrayList<>();
 	
 	boolean isMap;
-
+	
+	boolean isMapTester;
+	
+	JavaInputTesterElement tester;
 
 	@Override
 	public boolean writeJavaToStream() throws Exception{
+		
+		if(ConversionLogModel.getInstance().getConversionFileType().equals(ConversionFileType.MAP_TESTER)){
+			
+			
+			tester=new JavaInputTesterElement(this);
+			
+			return tester.writeJavaToStream();
+		}
+		
 
 		screenInputOutputArray = new ArrayList<>();
 
 		inputParameters = (List<AbstractToken>) this.parameters.get("inputParameters");
 		
 		isMap=ConversionLogModel.getInstance().isMap();
+		
+		isMapTester=ConversionLogModel.getInstance().isMapTester();
 
 		int XCoord;
 
@@ -403,8 +418,12 @@ public class JavaInputElement extends AbstractJavaElement {
 
 		ScreenIO sIO = null;
 		
-		if(isMap){
+		if(isMap || isMapTester){
 			JavaClassElement.javaCodeBuffer.append("natprog.");
+		}
+		
+		if(!isMap){
+			addValidationLoopStarter();
 		}
 		JavaClassElement.javaCodeBuffer.append("input(");
 		JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
@@ -460,8 +479,32 @@ public class JavaInputElement extends AbstractJavaElement {
 
 		JavaClassElement.javaCodeBuffer.append(");");
 		JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
+		
+		if(!isMap){
+			addValidationLoopEnder();
+		}
 
 	}
+
+	private void addValidationLoopEnder() {
+		JavaClassElement.javaCodeBuffer.append("	} catch (VBTValidationException e) { // TODO:Bu satır ve altindaki 3 satir. Bu ekranla ilgili son showDialogV2 den sonraya taşınmalı"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		JavaClassElement.javaCodeBuffer.append(""+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		JavaClassElement.javaCodeBuffer.append("	}//Validation Catch"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		JavaClassElement.javaCodeBuffer.append("}//Validation While"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		
+	}
+
+
+
+	private void addValidationLoopStarter() {
+		JavaClassElement.javaCodeBuffer.append("validationError = true"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);	
+		JavaClassElement.javaCodeBuffer.append("while (this.validationError) {"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		JavaClassElement.javaCodeBuffer.append("	validationError = false"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		JavaClassElement.javaCodeBuffer.append("	try {"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		
+	}
+
+
 
 	// new
 	// ScreenIOIntegerInput(0,1,IOModeType.AD_MI_,"DIYEZ_SECIM",DIYEZ_SECIM,XCoordinationTypes.REFERANCE),
@@ -520,7 +563,7 @@ public class JavaInputElement extends AbstractJavaElement {
 
 		JavaClassElement.javaCodeBuffer.append(",");
 
-		if(isMap){
+		if(isMap || isMapTester){
 			JavaClassElement.javaCodeBuffer.append("natprog.");
 		}
 

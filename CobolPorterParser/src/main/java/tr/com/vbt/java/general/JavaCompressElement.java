@@ -80,6 +80,7 @@ public class JavaCompressElement extends AbstractJavaElement {
 
 			ArrayToken arrayToken = (ArrayToken) dest.getLinkedToken();
 			JavaClassElement.javaCodeBuffer.append("[");
+			JavaClassElement.javaCodeBuffer.append(ConvertUtilities.castToInt());
 			if (arrayToken.getFirstDimension().getDeger() instanceof Integer) {
 				JavaClassElement.javaCodeBuffer.append((int) arrayToken.getFirstDimension().getDeger());
 			} else {
@@ -225,6 +226,7 @@ public class JavaCompressElement extends AbstractJavaElement {
 
 	private boolean compressToArray() {
 		JavaClassElement.javaCodeBuffer.append(arrayTypeSource.getDeger().toString().replaceAll("-", "_") + "["
+				+ConvertUtilities.castToInt()
 				+ arrayTypeSource.getFirstDimension().getDeger().toString().replaceAll("-", "_") + "-1]" + " = ");
 
 		writeFromPartOfCompressCommand();

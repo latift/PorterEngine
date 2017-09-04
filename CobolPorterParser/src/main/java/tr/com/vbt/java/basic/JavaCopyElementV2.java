@@ -36,7 +36,7 @@ public class JavaCopyElementV2 extends AbstractJavaElement {
 			try {
 				for (AbstractToken destVar1 : destVariable) {
 
-					if(destVar1.isPojoVariable()){
+					if(destVar1.isPojoVariable() || destVar1.isRedefinedVariable()|| destVar1.isRedefinedVariableDimensionToSimple()){
 						JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomSetterString(destVar1, dataToMove));
 					}else{
 						JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(destVar1));
@@ -78,7 +78,7 @@ public class JavaCopyElementV2 extends AbstractJavaElement {
 				
 				destVariableFirst.setSubstringCommand(false);
 				
-				JavaClassElement.javaCodeBuffer.append("moveToSubstring("+ JavaWriteUtilities.toCustomString(destVariableFirst)+","+destVariableFirst.getSubStringStartIndex()+","+destVariableFirst.getSubStringEndIndex()+",");
+				JavaClassElement.javaCodeBuffer.append("moveToSubstring(this,\""+ JavaWriteUtilities.toCustomString(destVariableFirst)+"\","+destVariableFirst.getSubStringStartIndex()+","+destVariableFirst.getSubStringEndIndex()+",");
 					
 				JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(dataToMove));
 

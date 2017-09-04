@@ -61,7 +61,9 @@ public class JavaSqlSelectElement extends  AbstractJavaElement{
 				}
 			}
 			
-			JavaClassElement.javaCodeBuffer.append(intoToken.getDeger());	
+			if(intoToken!=null){
+				JavaClassElement.javaCodeBuffer.append(intoToken.getDeger());	
+			}
 			JavaClassElement.javaCodeBuffer.append("=runPreparedStatementLong"+JavaConstants.OPEN_NORMAL_BRACKET);
 			JavaClassElement.javaCodeBuffer.append("\"Select ");
 			

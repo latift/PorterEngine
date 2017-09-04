@@ -1,5 +1,6 @@
 package tr.com.vbt.java.util;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.cobol.parser.Levelable;
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaConstants;
-import tr.com.vbt.java.utils.JavaWriteUtilities;
+import tr.com.vbt.java.utils.ConvertUtilities;
 import tr.com.vbt.lexer.ConversionLogModel;
 import tr.com.vbt.lexer.THYModules;
 import tr.com.vbt.token.AbstractToken;
@@ -218,16 +219,16 @@ public class Utility {
 				secDimension=arrayToken.getSecondDimension();
 				if(firstDimension.getDeger() instanceof Integer){
 					firstDimensionSize=((int)firstDimension.getDeger());
-					result.append("["+firstDimensionSize+"-1]");
+					result.append("["+ConvertUtilities.castToInt()+firstDimensionSize+"-1]");
 				}else {
-					result.append("["+firstDimension.getDeger()+"-1]");
+					result.append("["+ConvertUtilities.castToInt()+firstDimension.getDeger()+"-1]");
 				}
 				if(secDimension!=null){
 					if(firstDimension.getDeger() instanceof Integer){
 						secDimensionSize=((int)secDimension.getDeger());
-						result.append("["+secDimensionSize+"-1]");
+						result.append("["+ConvertUtilities.castToInt()+secDimensionSize+"-1]");
 					}else {
-						result.append("["+secDimension.getDeger()+"-1]");
+						result.append("["+ConvertUtilities.castToInt()+secDimension.getDeger()+"-1]");
 					}
 				}
 			}else if(recordToken.getLinkedToken().getTip().equals(TokenTipi.Kelime)){
@@ -253,9 +254,6 @@ public class Utility {
 			columnName=condition.getColumnNameToken().getDeger().toString();
 			getterMethod =Utility.viewNameToPojoGetterName(columnName);
 			
-		
-			
-			
 			Class c = null;
 
 			c=findPojoClass(className);
@@ -263,25 +261,26 @@ public class Utility {
 		    try {
 				method= c.getDeclaredMethod(getterMethod, null);
 				return biggerPojoName+"."+method.getName()+"()";
-			} catch (NoSuchMethodException e) {
+			} catch (Exception e) {
 				//MEthod yoksa Primary Key dir. O zaman burası koşar.
 				//IDGIDBS-TESKI.MUSNO1 -->TESKI.getTeskiPK().getMusno1()
 				//TESKI --> getTeskiPK
-				primaryKeyGetterMethod=Utility.primaryKeyGetterMethod(tableName);
+				try {
+					primaryKeyGetterMethod=Utility.primaryKeyGetterMethod(tableName);
+	
+					return biggerPojoName+"."+primaryKeyGetterMethod.getName()+"()." +getterMethod+"()";
+					
+				} catch (Exception e1) {
 				
-				return biggerPojoName+"."+primaryKeyGetterMethod.getName()+"()." +getterMethod+"()";
+					return biggerPojoName+"."+getterMethod+"()";
+				}
 				
-			} catch (SecurityException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-				
-			
-		   return null;
+	
+			} 
 		}
 
 		
-	public static String findViewAndColumnNamesReturnType(AbstractToken condition) throws NoSuchMethodException, SecurityException {
+	public static String findViewAndColumnNamesReturnType(AbstractToken condition){
 			
 			String getterString, tableName, className, biggerPojoName, columnName, getterMethod;
 			
@@ -303,26 +302,30 @@ public class Utility {
 				method= c.getDeclaredMethod(getterMethod, null);
 				returnClass=method.getReturnType();
 				return returnClass.getSimpleName().toString();
-			} catch (NoSuchMethodException e) {
+			} catch (Exception e) {
 				//MEthod yoksa Primary Key dir. O zaman burası koşar.
 				//IDGIDBS-TESKI.MUSNO1 -->TESKI.getId().getMusno1()
 				//TESKI --> getTeskiPK
-				primaryKeyGetterMethod=Utility.primaryKeyGetterMethod(tableName);
+				try {
+					primaryKeyGetterMethod=Utility.primaryKeyGetterMethod(tableName);
+					
+					pkClass=findPojosPkClass(className);
+					
+					pkClassGetterMethod= pkClass.getDeclaredMethod(getterMethod, null);
+					
+					returnClass=pkClassGetterMethod.getReturnType();
+					
+					return returnClass.getSimpleName().toString();
 				
-				pkClass=findPojosPkClass(className);
+				} catch (Exception e1) {
+					logger.debug("pkClass:"+className.toString()+" getterMethod:"+getterMethod);
+					logger.debug(e.getMessage(),e);
+					
+					return "String";
+				}
 				
-				pkClassGetterMethod= pkClass.getDeclaredMethod(getterMethod, null);
-				
-				returnClass=pkClassGetterMethod.getReturnType();
-				
-				return returnClass.getSimpleName().toString();
-				
-			} catch (Exception e) {
-				logger.debug(e.getMessage(),e);
 			}
 				
-			
-		   return null;
 		}
 	
 			//THesap --> class(ThesapPK)
@@ -341,8 +344,19 @@ public class Utility {
 							
 					return pojoClass;
 				} catch (ClassNotFoundException e) {
+					
+						fullPKClassName="tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.pojo.common."+pojoClassName+"PK";
 							
-						return null;
+						try {
+							pojoClass = Class.forName(fullPKClassName);
+							
+							return pojoClass;
+							
+						} catch (ClassNotFoundException e1) {
+							
+							logger.debug(e1.getMessage(), e1);
+							return null;
+						}
 				}
 					
 			}else{
@@ -441,6 +455,73 @@ public class Utility {
 				return result.substring(0, 1).toLowerCase()+result.substring(1);
 			}
 			return result;
+		}
+
+		//IDGIDBS-TGECICI .KBIS --> TGECICI.getId().setKBis(
+		public static String pojoSetterName(AbstractToken token) {
+			
+			StringBuilder setterString=new StringBuilder();
+			
+			setterString.append(token.getDeger().toString()+".");
+			
+			String columnName=token.getColumnNameToken().getDeger().toString();
+			
+			//partLevel1=FrameworkConvertUtilities.getFieldsObjectByGetterMethod(partLevel1, "id");
+			
+			setterString.append(Utility.viewNameToPojoSetterName(token.getColumnNameToken().getDeger().toString()));
+			
+			return null;
+		}
+
+		//IDGIDBS-TGECICI .KBIS --> TGECICI.getId().setKbis(
+		
+		//IDGIDBS-TGECICI .Xxx --> TGECICI..setXxx(
+		public static String viewNameToPojoFullSetterName(AbstractToken token) {
+			
+			StringBuilder sb=new StringBuilder();
+		
+			String BiggerclassName = Utility.viewNameToBiggerPojoName(token.getDeger().toString());
+			
+			String className = Utility.viewNameToPojoName(token.getDeger().toString());
+
+			String fieldName = Utility.columnNameToPojoFieldName(token.getColumnNameToken().getDeger().toString());
+			
+			String setterName= Utility.viewNameToPojoSetterName(token.getColumnNameToken().getDeger().toString());
+
+			Class c = null;
+
+			c = Utility.findPojoClass(className);
+			
+			Field field;
+
+			try {
+				field = c.getDeclaredField(fieldName);
+				field.setAccessible(true);
+				
+				sb.append(className+"."+setterName);
+			
+				return sb.toString();
+
+			} catch (Exception e) {
+				
+				try {
+					Class cPK = null;
+					
+					cPK = Utility.findPojoClass(className+"PK");
+					
+					field = cPK.getDeclaredField(fieldName);
+					
+					field.setAccessible(true);
+					
+					sb.append(BiggerclassName+".getId()."+setterName);
+					
+					return sb.toString();
+		
+				} catch (Exception e1) {
+					return "UndefinedPojoFieldType";
+				}
+				
+			}
 		}
 
 

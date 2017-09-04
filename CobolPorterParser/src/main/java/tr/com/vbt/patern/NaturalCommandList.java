@@ -395,7 +395,10 @@ public class NaturalCommandList extends AbstractCommandList {
 					nextCommand = commandList.get(index);
 
 					if (nextCommand.getCommandName().equals(ReservedNaturalKeywords.WHEN)
-							|| nextCommand.getCommandName().equals(ReservedNaturalKeywords.END_DECIDE)) {
+							|| nextCommand.getCommandName().equals(ReservedNaturalKeywords.END_DECIDE)
+							|| nextCommand.getCommandName().equals(ReservedNaturalKeywords.DECIDE)
+							|| nextCommand.getCommandName().equals(ReservedNaturalKeywords.DECIDE_FIRST_CONDITION)
+							|| nextCommand.getCommandName().equals(ReservedNaturalKeywords.DECIDE_ON_FIRST_VALUE)) {
 
 						elementEndWhen = new ElementEndWhen("ElementEndWhen", "GENERAL.*.END_WHEN");
 						elementEndWhen.setVisualCommand(true);

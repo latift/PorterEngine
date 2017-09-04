@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.screen.JavaAtEndOfPageElement;
 import tr.com.vbt.java.screen.JavaAtTopOfPageElement;
+import tr.com.vbt.lexer.ConversionFileType;
 import tr.com.vbt.lexer.ConversionLogModel;
 import tr.com.vbt.util.ConverterConfiguration;
 
@@ -35,8 +36,19 @@ public class JavaNaturalClassElement extends  AbstractJavaElement{
 		if(programId==null){
 			interfaceName=ConverterConfiguration.className;
 		}
+		
+		
 	
 		implementsClassName=interfaceName+"Impl";
+		
+
+		if(ConversionLogModel.getInstance().isMapTester()){
+			interfaceName=interfaceName+"Tester";
+		}else if(ConversionLogModel.getInstance().isMap()){
+			
+		}
+		
+		
 		
 		String module=ConversionLogModel.getInstance().getModule().replaceAll("/SeperatedPrograms", "").toLowerCase();
 		
@@ -44,12 +56,21 @@ public class JavaNaturalClassElement extends  AbstractJavaElement{
 		
 		AbstractJavaElement.javaCodeBuffer.append("import java.util.*;"+JavaConstants.NEW_LINE);
 		AbstractJavaElement.javaCodeBuffer.append("import javax.annotation.*;"+JavaConstants.NEW_LINE);
-	
+		
+		AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
+		
+		AbstractJavaElement.javaCodeBuffer.append("import java.math.BigDecimal;");
+		
 		AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 		
 		AbstractJavaElement.javaCodeBuffer.append("import org.springframework.context.annotation.*;"+JavaConstants.NEW_LINE);
 		AbstractJavaElement.javaCodeBuffer.append("import org.springframework.stereotype.*;"+JavaConstants.NEW_LINE);
 		AbstractJavaElement.javaCodeBuffer.append("import org.springframework.beans.factory.annotation.*;"+JavaConstants.NEW_LINE);
+		
+		AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
+		
+		AbstractJavaElement.javaCodeBuffer.append("import org.slf4j.Logger;"+JavaConstants.NEW_LINE);
+		AbstractJavaElement.javaCodeBuffer.append("import org.slf4j.LoggerFactory;"+JavaConstants.NEW_LINE);
 		
 		AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 		
@@ -83,7 +104,7 @@ public class JavaNaturalClassElement extends  AbstractJavaElement{
 			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".web.*;"+JavaConstants.NEW_LINE);
 			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".web.interfaces.*;"+JavaConstants.NEW_LINE);
 			
-			if(logModel.isMap()){
+			if(logModel.isMapOrMapTester()){
 				AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+"."+module+".web.*;"+JavaConstants.NEW_LINE);
 			}
 
@@ -121,7 +142,7 @@ public class JavaNaturalClassElement extends  AbstractJavaElement{
 			AbstractJavaElement.javaCodeBuffer.append("@Scope(\"prototype\")"+JavaConstants.NEW_LINE);
 		}
 		
-		if(logModel.isMap()){
+		if(logModel.isMapOrMapTester()){
 			AbstractJavaElement.javaCodeBuffer.append(classSecurity+ " " +JavaConstants.CLASS+ " "+ interfaceName+  " extends AbstractNaturalMap "+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE );
 		}else{
 			if(logModel.getCustomer().equals("MB")){
@@ -130,13 +151,31 @@ public class JavaNaturalClassElement extends  AbstractJavaElement{
 				AbstractJavaElement.javaCodeBuffer.append(classSecurity+ " " +JavaConstants.CLASS+ " "+ implementsClassName+  " extends AbstractNatural"+module.toUpperCase()+"Program implements "+ interfaceName+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE );
 			}
 		}
+		
+		addLogger();
+		
 		addConstructor();
+		
 		this.writeChildrenJavaToStream();
+		
 		//addSetParametersMethod();
 		//addInitParamListMethod(); Gerek kalmadı. Reflection ve annotation ile çözüldü
 		AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE+JavaConstants.CLOSE_BRACKET+"// End Of Program "+implementsClassName);
 		AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 		return true;
+	}
+
+	private void addLogger() {
+
+		//final static Logger logger = LoggerFactory.getLogger(IDGP0011Impl.class);
+		if(ConversionLogModel.getInstance().isMap()){
+			AbstractJavaElement.javaCodeBuffer.append("final static Logger logger = LoggerFactory.getLogger("+interfaceName+".class);"+JavaConstants.NEW_LINE);
+		}else if(ConversionLogModel.getInstance().isMapTester()){
+			AbstractJavaElement.javaCodeBuffer.append("final static Logger logger = LoggerFactory.getLogger("+interfaceName+".class);"+JavaConstants.NEW_LINE);
+		}else{
+			AbstractJavaElement.javaCodeBuffer.append("final static Logger logger = LoggerFactory.getLogger("+implementsClassName+".class);"+JavaConstants.NEW_LINE);
+		}
+		
 	}
 
 	private void addSetParametersMethod() {
@@ -191,7 +230,7 @@ public class JavaNaturalClassElement extends  AbstractJavaElement{
 	}
 	private void addConstructor() {
 		
-		if(logModel.isMap()){
+		if(logModel.isMapOrMapTester()){
 			return;
 		}
 

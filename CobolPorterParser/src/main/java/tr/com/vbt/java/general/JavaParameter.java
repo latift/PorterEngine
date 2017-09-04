@@ -17,7 +17,7 @@ public class JavaParameter extends  AbstractJavaElement{
 		
 		try {
 			
-			if(ConversionLogModel.getInstance().isMap()){
+			if(ConversionLogModel.getInstance().isMapOrMapTester()){
 				return true;
 			}
 			

@@ -38,7 +38,7 @@ public class JavaExamineForGivingPositionElement extends  AbstractJavaElement {
 			//LIMANINDEX=searchArray(
 			JavaClassElement.javaCodeBuffer.append(CustomStringUtils.replaceMiddleLineWithSubLine(resultPosition)+"=");
 			
-			JavaClassElement.javaCodeBuffer.append("FrameworkConvertUtilities.indexOf(");
+			JavaClassElement.javaCodeBuffer.append("FCU.indexOf(");
 			
 			JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(sourceToken));
 			JavaClassElement.javaCodeBuffer.append(",");

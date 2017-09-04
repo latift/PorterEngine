@@ -86,13 +86,13 @@ public class SimpleCondition implements ConditionInterface {
 			}
 			boolean primitiveType=false;
 			if(ConvertUtilities.getVariableType(conditionLeft)!=null){
-				primitiveType=ConvertUtilities.getVariableType(conditionLeft).equals(VariableTypes.FLOAT_TYPE) ||
+				primitiveType=ConvertUtilities.getVariableType(conditionLeft).equals(VariableTypes.BIG_DECIMAL_TYPE) ||
 					 ConvertUtilities.getVariableType(conditionLeft).equals(VariableTypes.DATE_TYPE) ||
 					 ConvertUtilities.getVariableType(conditionLeft).equals(VariableTypes.INT_TYPE) ||
 					 ConvertUtilities.getVariableType(conditionLeft).equals(VariableTypes.LONG_TYPE);
 				
 				if(!primitiveType){
-					primitiveType=ConvertUtilities.getVariableType(conditionRight).equals(VariableTypes.FLOAT_TYPE) ||
+					primitiveType=ConvertUtilities.getVariableType(conditionRight).equals(VariableTypes.BIG_DECIMAL_TYPE) ||
 							 ConvertUtilities.getVariableType(conditionRight).equals(VariableTypes.DATE_TYPE) ||
 							 ConvertUtilities.getVariableType(conditionRight).equals(VariableTypes.INT_TYPE) ||
 							 ConvertUtilities.getVariableType(conditionRight).equals(VariableTypes.LONG_TYPE);

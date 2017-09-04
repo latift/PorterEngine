@@ -49,7 +49,8 @@ public class JavaWriteUtilities {
 			
 		}else if(token.isRecordVariable()){
 				
-		
+			tempCodeBuffer.append(toCustomRecordVariableSetterString(token));
+			
 		}else if(token.isSubstringCommand()){
 			
 		
@@ -70,7 +71,7 @@ public class JavaWriteUtilities {
 		
 		return tempCodeBuffer;
 	}
-	
+
 	public static StringBuilder toCustomSetterString(AbstractToken token, AbstractToken newValueToken) throws Exception {
 		
 		StringBuilder tempCodeBuffer=new StringBuilder();
@@ -79,7 +80,7 @@ public class JavaWriteUtilities {
 			//Do nothing;
 		}else if(token.isRedefinedVariable()){ 
 			
-			tempCodeBuffer.append(toCustomRedefinedVariableSetterString(token));
+			tempCodeBuffer.append(toCustomRedefinedVariableSetterString(token, newValueToken));
 			
 		}else if(token.getTip().equals(TokenTipi.Karakter)){
 		
@@ -122,6 +123,16 @@ public class JavaWriteUtilities {
 		}
 		
 		return tempCodeBuffer;
+	}
+
+	private static Object toCustomRedefinedVariableSetterString(AbstractToken token, AbstractToken newValueToken) {
+		StringBuffer sb=new StringBuffer();
+		sb.append(token.getDeger().toString()+".setValue(");
+		
+		sb.append(newValueToken.toCustomString());
+		
+		sb.append(")");
+		return sb.toString();
 	}
 
 	public static StringBuilder toCustomString(AbstractToken token) throws Exception  {
@@ -244,9 +255,9 @@ public class JavaWriteUtilities {
 	
 		if(token.isRedefinedVariableDimensionToSimple()){
 			if(token instanceof ArrayToken){
-				return token.getDeger().toString()+".getValue("+((ArrayToken)token).getFirstDimension().getDeger().toString()+"-1)";
+				return token.getDeger().toString()+".getValue("+ConvertUtilities.castToInt()+((ArrayToken)token).getFirstDimension().getDeger().toString()+"-1)";
 			}else{
-				return token.getDeger().toString()+".getValue("+token.getDeger().toString()+"-1)";
+				return token.getDeger().toString()+".getValue("+ConvertUtilities.castToInt()+token.getDeger().toString()+"-1)";
 			}
 				
 		}
@@ -396,7 +407,7 @@ public class JavaWriteUtilities {
 	
 		int startIndex=token.getSubStringStartIndex();
 		int endIndex=startIndex+token.getSubStringEndIndex();
-		return 	"FrameworkConvertUtilities.substring("+toCustomString(token)+","+startIndex+","+endIndex+")";
+		return 	"FCU.substring("+toCustomString(token)+","+startIndex+","+endIndex+")";
 		
 	}
 	
@@ -421,6 +432,30 @@ public class JavaWriteUtilities {
 		}
 		
 	}
+	
+	
+	private static String toCustomRecordVariableSetterString(AbstractToken token) {
+		
+		AbstractCommand variableDefinition;
+		
+		ElementProgramGrupNatural variableDefinitionGrupNatural = null;
+		
+		variableDefinition=ConvertUtilities.getVariableDefinitinCommand(token);
+		
+		System.out.println("test");
+		if(variableDefinition instanceof ElementProgramGrupNatural){
+			variableDefinitionGrupNatural=(ElementProgramGrupNatural) variableDefinition;
+		}
+		
+		if(variableDefinitionGrupNatural!=null&&variableDefinitionGrupNatural.getArrayLength()!=0){
+				return writeSetterArrayOfRecord(variableDefinitionGrupNatural, token);
+		}
+		else{
+			 return writeSetterSimpleRecord(token);
+		}
+	}
+
+
 
 	private static String toCustomConstantVariableString(AbstractToken token) {
 		return "\""+token.getDeger().toString().trim().toString()+"\"";
@@ -441,9 +476,9 @@ public class JavaWriteUtilities {
 			
 			StringBuilder setterString=new StringBuilder();
 			
-			setterString.append(token.getDeger().toString()+".");
+			setterString.append(Utility.viewNameToPojoFullSetterName(token));
 			
-			setterString.append(Utility.viewNameToPojoSetterName(token.getColumnNameToken().getDeger().toString()));
+			//setterString.append(Utility.pojoSetterName(token));
 			
 			setterString.append("(");
 			
@@ -473,10 +508,11 @@ public class JavaWriteUtilities {
 		
 			StringBuilder sqlTimeString=new StringBuilder();
 		
-			sqlTimeString.append("FrameworkConvertUtilities.stringToSqlTime(");
+			sqlTimeString.append("FCU.stringToSqlTime(");
 			
 			sqlTimeString.append(JavaWriteUtilities.toCustomString(newValueToken)); //"11111111"
 			
+			sqlTimeString.append(")");
 			return sqlTimeString.toString();
 		}
 
@@ -485,12 +521,12 @@ public class JavaWriteUtilities {
 			
 			StringBuilder sqlTimeString=new StringBuilder();
 			
-			sqlTimeString.append("FrameworkConvertUtilities.stringToSqlDate(");
+			sqlTimeString.append("FCU.stringToSqlDate(");
 			
 			sqlTimeString.append(JavaWriteUtilities.toCustomString(newValueToken)); //"11111111"
 			
 			sqlTimeString.append(",");
-			sqlTimeString.append("\"yyyy-MM-dd\"");
+			sqlTimeString.append("\"yyyy-MM-dd\")");
 			
 			return sqlTimeString.toString();
 		}
@@ -514,26 +550,25 @@ public class JavaWriteUtilities {
 		
 		String columnReturnType=Utility.findViewAndColumnNamesReturnType(token);
 		
-		if(columnReturnType.toLowerCase().equals("string")){
+	if(columnReturnType.toLowerCase().equals("long")){
 			
-			getterString.append("getPojoValue(\"");
-		
-		}else if(columnReturnType.toLowerCase().equals("int")){
+			getterString.append("getLongPojoValue(\"");
 			
-			getterString.append("getPojoValueAsInt(\"");
+		}else if(columnReturnType.toLowerCase().equals("bigdecimal")){
 			
-		}else if(columnReturnType.toLowerCase().equals("float")){
+			getterString.append("getBigDecimalPojoValue(\"");
 			
-			getterString.append("getPojoValueAsFloat(\"");
+		}else if(columnReturnType.toLowerCase().equals("date")){
 			
-		}else if(columnReturnType.toLowerCase().equals("long")){
+			getterString.append("getStringPojoValue(\"");
 			
-			getterString.append("getPojoValueAsLong(\"");
+		}else if(columnReturnType.toLowerCase().equals("time")){
+			
+			getterString.append("getTimePojoValue(\"");
 			
 		}else{
-			getterString.append("getPojoValue(\"");
+			getterString.append("getStringPojoValue(\"");
 		}
-		
 		getterString.append(Utility.viewAndColumnNameToPojoAndGetterMethodName(token));
 		
 		getterString.append("\")");
@@ -1031,11 +1066,11 @@ public class JavaWriteUtilities {
 			arrayToken=(ArrayToken) token.getLinkedToken();
 			firstDimension=arrayToken.getFirstDimension();
 			if(firstDimension.getDeger() instanceof String){
-				tempCodeBuffer.append("["+arrayToken.getFirstDimension().getDeger()+"-1]");
+				tempCodeBuffer.append("["+ConvertUtilities.castToInt()+arrayToken.getFirstDimension().getDeger()+"-1]");
 			}
 			else{
 				if(arrayToken.getFirstDimension().isKarakter('*')) {
-					tempCodeBuffer.append("["+arrayToken.getFirstDimension().getDeger()+"-1]");
+					tempCodeBuffer.append("["+ConvertUtilities.castToInt()+arrayToken.getFirstDimension().getDeger()+"-1]");
 				}else {
 					
 					tempCodeBuffer.append("["+(int)arrayToken.getFirstDimension().getDeger()+"-1]");
@@ -1054,6 +1089,42 @@ public class JavaWriteUtilities {
 		return tempCodeBuffer.toString();
 	}
 
+	private static String writeSetterArrayOfRecord(ElementProgramGrupNatural variableDefinitionGrupNatural,
+			AbstractToken token) {
+	
+		StringBuilder tempCodeBuffer=new StringBuilder();
+		
+		ArrayToken arrayToken = null;
+		AbstractToken firstDimension;
+		tempCodeBuffer.append(token.getDeger().toString());  //MAP_DIZISI
+		
+		logger.debug(token.getLinkedToken().toString());
+		if(token.getLinkedToken() instanceof ArrayToken){
+			arrayToken=(ArrayToken) token.getLinkedToken();
+			firstDimension=arrayToken.getFirstDimension();
+			if(firstDimension.getDeger() instanceof String){
+				tempCodeBuffer.append("["+ConvertUtilities.castToInt()+arrayToken.getFirstDimension().getDeger()+"-1]");
+			}
+			else{
+				if(arrayToken.getFirstDimension().isKarakter('*')) {
+					tempCodeBuffer.append("["+ConvertUtilities.castToInt()+arrayToken.getFirstDimension().getDeger()+"-1]");
+				}else {
+					
+					tempCodeBuffer.append("["+(int)arrayToken.getFirstDimension().getDeger()+"-1]");
+				}
+			}
+			tempCodeBuffer.append(".");
+			tempCodeBuffer.append(token.getLinkedToken().getDeger().toString()); //D_SIRA
+		}else if(token.getLinkedToken() instanceof KelimeToken){
+			tempCodeBuffer.append(".");
+			tempCodeBuffer.append(token.getLinkedToken().getDeger().toString()); //D_SIRA
+		}else{
+			tempCodeBuffer.append(".");
+			tempCodeBuffer.append(token.getLinkedToken().getDeger().toString()); //D_SIRA
+		}
+		
+		return tempCodeBuffer.toString();
+	}
 
 	
 	private static String writeSimpleRecord(AbstractToken token) {
@@ -1099,6 +1170,53 @@ public class JavaWriteUtilities {
 		
 		return tempCodeBuffer.toString();
 	}
+	
+
+	private static String writeSetterSimpleRecord(AbstractToken token) {
+		
+		StringBuilder tempCodeBuffer=new StringBuilder();
+		
+		ArrayToken arrayToken = null;
+		
+		AbstractToken firstDimension;
+		
+		int firstDimensionSize;
+		
+		AbstractToken secDimension;
+		
+		int secDimensionSize;
+		
+		tempCodeBuffer.append(token.getDeger().toString());  //MAP_DIZISI
+		tempCodeBuffer.append(".");
+		tempCodeBuffer.append(token.getLinkedToken().getDeger().toString()); //D_SIRA
+		if(token.getLinkedToken().getTip().equals(TokenTipi.Array)){
+			arrayToken=(ArrayToken) token.getLinkedToken();
+			firstDimension=arrayToken.getFirstDimension();
+			secDimension=arrayToken.getSecondDimension();
+			if(firstDimension.getDeger() instanceof Integer){
+				firstDimensionSize=((int)firstDimension.getDeger());
+				tempCodeBuffer.append("["+firstDimensionSize+"-1]");
+			}else {
+				tempCodeBuffer.append("["+firstDimension.getDeger()+"-1]");
+			}
+			if(secDimension!=null){
+				if(secDimension.getDeger() instanceof Integer){
+					secDimensionSize=((int)secDimension.getDeger());
+					tempCodeBuffer.append("["+secDimensionSize+"-1]");
+				}else {
+					tempCodeBuffer.append("["+secDimension.getDeger()+"-1]");
+				}
+			}
+		}else if(token.getLinkedToken().getTip().equals(TokenTipi.Kelime)){
+				//Do nothing
+		}else{
+			tempCodeBuffer.append(token.getLinkedToken());
+		}
+		
+		return tempCodeBuffer.toString();
+	}
+
+	
 	
 	
 	

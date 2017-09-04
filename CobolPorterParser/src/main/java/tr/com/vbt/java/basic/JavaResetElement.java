@@ -26,6 +26,8 @@ public class JavaResetElement extends  AbstractJavaElement {
 	
 	private List<AbstractToken> resetVariableList;
 	
+	int scale;
+	
 	
 	public boolean writeJavaToStream() throws Exception{ super.writeJavaToStream();
 		
@@ -34,6 +36,8 @@ public class JavaResetElement extends  AbstractJavaElement {
 		VariableTypes variableType, childVariableType;
 		
 		AbstractCommand variableDefinitionCommand;
+		
+		ElementProgramDataTypeNatural variableDefinitionCommandDataType;
 		
 		AbstractToken linkedToken;
 		
@@ -52,12 +56,27 @@ public class JavaResetElement extends  AbstractJavaElement {
 				
 				variableDefinitionCommand=ConvertUtilities.getVariableDefinitinCommand(variable);
 			    
-				if(variableType==VariableTypes.FLOAT_TYPE
-						||variableType==VariableTypes.INT_TYPE
+				if(variableType==VariableTypes.INT_TYPE
 						||variableType==VariableTypes.LONG_TYPE){
 					
 					try{
 						JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(variable)+"="+"0"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+					} catch (Exception e) {
+						logger.debug("//Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()+this.getSourceCode().getCommandName());
+						JavaClassElement.javaCodeBuffer.append("/*Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()
+								+this.getSourceCode().getCommandName()+"*/"+JavaConstants.NEW_LINE);
+						logger.error("//Conversion Error:"+e.getMessage(), e); 
+						ConvertUtilities.writeconversionErrors(e, this); 
+					}
+				}else if(variableType==VariableTypes.BIG_DECIMAL_TYPE){
+					
+					if(variableDefinitionCommand instanceof ElementProgramDataTypeNatural){
+						variableDefinitionCommandDataType=(ElementProgramDataTypeNatural) variableDefinitionCommand;
+						scale=variableDefinitionCommandDataType.getLengthAfterDot();
+					}
+					//FCU.resetBigDecimal(2);
+					try{
+						JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(variable)+"="+"FCU.resetBigDecimal("+scale+")"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
 					} catch (Exception e) {
 						logger.debug("//Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()+this.getSourceCode().getCommandName());
 						JavaClassElement.javaCodeBuffer.append("/*Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()
@@ -113,7 +132,7 @@ public class JavaResetElement extends  AbstractJavaElement {
 					JavaClassElement.javaCodeBuffer.append("//TODO POJO RESETLEME ARRAY VAR DİKKAT!");
 				}else{
 					
-					JavaClassElement.javaCodeBuffer.append("FrameworkConvertUtilities.resetArray("+JavaWriteUtilities.toCustomString(variable)+");");
+					JavaClassElement.javaCodeBuffer.append("FCU.resetArray("+JavaWriteUtilities.toCustomString(variable)+");");
 				}
 
 			}

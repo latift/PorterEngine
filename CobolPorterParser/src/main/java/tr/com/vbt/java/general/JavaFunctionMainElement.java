@@ -30,26 +30,52 @@ public class JavaFunctionMainElement extends  AbstractJavaElement{
 		
 		try {
 			//AbstractJavaElement.javaCodeBuffer.append("public static void main(String[] args)"+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE);
-			if(logModel.isMap()){
+			if(logModel.isMapOrMapTester()){
+				
 				AbstractJavaElement.javaCodeBuffer.append("public void parseMap()"+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE);
 				AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 				
 				String implClass=null;
-				try {
-					implClass = ConversionLogModel.getInstance().getMapsProgram(ConversionLogModel.getInstance().getFileName()).getProgramName();
-				} catch (Exception e) {
-					implClass="NATSOURCEYOK";
+				if(ConversionLogModel.getInstance().isMapTester()){
+					implClass ="TESTNATPROG";
+				
+				}else{
+					
+					try {
+						implClass = ConversionLogModel.getInstance().getMapsProgram(ConversionLogModel.getInstance().getFileName()).getProgramName();
+					} catch (Exception e) {
+						implClass="NATSOURCEYOK";
+					}
 				}
 				AbstractJavaElement.javaCodeBuffer.append(implClass+"Impl natprog = ("+implClass+"Impl) program"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
 				AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 				
 			}else{
 				AbstractJavaElement.javaCodeBuffer.append("public void mainProgram()"+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE);
+			
+				AbstractJavaElement.javaCodeBuffer.append("		try {"+JavaConstants.NEW_LINE);
+						
+				AbstractJavaElement.javaCodeBuffer.append("				naturalProgram();"+JavaConstants.NEW_LINE);
+					
+				AbstractJavaElement.javaCodeBuffer.append("		} catch (Exception e) {"+JavaConstants.NEW_LINE);
+						
+				AbstractJavaElement.javaCodeBuffer.append("				logger.debug(e.getMessage(), e);"+JavaConstants.NEW_LINE);
+				
+				AbstractJavaElement.javaCodeBuffer.append("		}"+JavaConstants.NEW_LINE);
+				
+				AbstractJavaElement.javaCodeBuffer.append(JavaConstants.CLOSE_BRACKET+ "//Main Program End");
+				
+				AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
+				
+				AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
+				
+				AbstractJavaElement.javaCodeBuffer.append("private void naturalProgram()"+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE);
+				
 			}
 			
 			this.writeChildrenJavaToStream();
 			
-			AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE+JavaConstants.CLOSE_BRACKET+ "//Main Program End");
+			AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE+JavaConstants.CLOSE_BRACKET+ "//Natural Program End");
 		
 		} catch (Exception e) {
 			logger.debug("//Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()+this.getSourceCode().getCommandName());

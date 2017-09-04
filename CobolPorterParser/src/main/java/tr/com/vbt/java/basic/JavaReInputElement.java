@@ -51,7 +51,7 @@ public class JavaReInputElement extends AbstractJavaElement {
 		}
 		changeDoubleQuotaToSingleQuota();
 		try {
-			JavaClassElement.javaCodeBuffer.append("showDialog(" + dataToDisplayAsStr + ")" + JavaConstants.DOT_WITH_COMMA + JavaConstants.NEW_LINE);
+			JavaClassElement.javaCodeBuffer.append("showDialogV2(" + dataToDisplayAsStr + ")" + JavaConstants.DOT_WITH_COMMA + JavaConstants.NEW_LINE);
 		} catch (Exception e) {
 			logger.debug("//Conversion Error" + this.getClass() + this.getSourceCode().getSatirNumarasi() + this.getSourceCode().getCommandName());
 			JavaClassElement.javaCodeBuffer.append("/*Conversion Error" + this.getClass() + this.getSourceCode().getSatirNumarasi() + this.getSourceCode().getCommandName() + "*/" + JavaConstants.NEW_LINE);

@@ -68,6 +68,9 @@ public class TransferFromNaturalToJavaMainAllElements {
 			
 			fromNaturalToJavaMain=new  TransferFromNaturalToJavaMain();
 			try {
+				
+				fromNaturalToJavaMain.reCreateOutputFoldersForAModule();
+				
 				logModel.setConversionFileType(ConversionFileType.PROGRAM);
 				fromNaturalToJavaMain.operateConversionForAModule();
 				
@@ -76,6 +79,7 @@ public class TransferFromNaturalToJavaMainAllElements {
 				
 				logModel.setConversionFileType(ConversionFileType.MAP);
 				fromNaturalToJavaMain.operateConversionForAModule();
+				
 			} catch (Exception e) {
 				logger.debug(e.getMessage(),e);
 				return;
