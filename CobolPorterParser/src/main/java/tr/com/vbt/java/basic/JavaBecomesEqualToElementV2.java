@@ -152,6 +152,10 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 		
 		String typeOfCopyFrom=ConvertUtilities.getTypeOfVariable(copyFrom);
 		
+		if(typeOfCopyTo==null || typeOfCopyFrom==null){
+			return false;
+		}
+		
 		//2595   FAIZYENIHESNO:=VAL(FAIZYENIHESNOA) 
 		// Alphabet Numbera atanıyorsa --> Long.valueOf(
 		if(typeOfCopyTo.equals("long") && typeOfCopyFrom.equals("String") ){
