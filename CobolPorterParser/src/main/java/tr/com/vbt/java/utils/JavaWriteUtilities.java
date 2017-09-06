@@ -141,9 +141,7 @@ public class JavaWriteUtilities {
 		
 		if(token==null){
 			logger.debug("");
-		}
-		
-		if(token.isSubstringCommand()){
+		}else  if(token.isSubstringCommand()){
 			
 			tempCodeBuffer.append(toCustomSubstringVariableString(token));
 		
