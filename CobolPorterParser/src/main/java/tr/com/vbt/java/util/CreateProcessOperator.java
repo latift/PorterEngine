@@ -32,10 +32,12 @@ import tr.com.vbt.java.basic.JavaScannerElement;
 import tr.com.vbt.java.basic.JavaSetControl;
 import tr.com.vbt.java.basic.JavaSubtractElement;
 import tr.com.vbt.java.basic.JavaUpdateElement;
+import tr.com.vbt.java.conditions.JavaBackoutTransaction;
 import tr.com.vbt.java.conditions.JavaCaseElement;
 import tr.com.vbt.java.conditions.JavaDefaultElement;
 import tr.com.vbt.java.conditions.JavaElseElement;
 import tr.com.vbt.java.conditions.JavaElseIfElement;
+import tr.com.vbt.java.conditions.JavaEndTransaction;
 import tr.com.vbt.java.conditions.JavaIfElementV2;
 import tr.com.vbt.java.conditions.JavaIgnoreElement;
 import tr.com.vbt.java.conditions.JavaSwitchDecideFirstCondition;
@@ -473,6 +475,12 @@ public class CreateProcessOperator extends ProcessOperator {
 			break;
 		case "JavaParameter":
 			elementForCreate = new JavaParameter();
+			break;
+		case "JavaEndTransaction":
+			elementForCreate = new JavaEndTransaction();
+			break;
+		case "JavaBackoutTransaction":
+			elementForCreate = new JavaBackoutTransaction();
 			break;
 
 		// JSP

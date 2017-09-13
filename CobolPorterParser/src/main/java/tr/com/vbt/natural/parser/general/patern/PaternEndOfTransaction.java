@@ -35,7 +35,7 @@ public class PaternEndOfTransaction extends AbstractPattern{
 	
 	@Override
 	public AbstractCommand createElement(){
-		ElementEndOfTransaction createdElement = new ElementEndOfTransaction(ReservedNaturalKeywords.END_OF_TRANSACTION,"END_OF_TRANSACTION");
+		ElementEndOfTransaction createdElement = new ElementEndOfTransaction(ReservedNaturalKeywords.END_TRANSACTION,"END_TRANSACTION");
 		return createdElement;
 	}
 
