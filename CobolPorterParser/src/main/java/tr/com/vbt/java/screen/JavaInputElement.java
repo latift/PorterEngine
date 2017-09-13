@@ -46,57 +46,48 @@ public class JavaInputElement extends AbstractJavaElement {
 	final static Logger logger = LoggerFactory.getLogger(JavaInputElement.class);
 
 	// Paramaters: functionName;
-	private List<AbstractToken> inputParameters;
+	protected List<AbstractToken> inputParameters;
 
-	private List<ScreenIO> screenInputOutputArray;
-
-	ScreenIO newScreenIO;
-
-	int offset;
-
-	int xCoord, yCoord;
+	protected List<ScreenIO> screenInputOutputArray;
 	
-	private List<AbstractToken> undefinedParameterList=new ArrayList<>();
+	protected List<AbstractToken> buttonArray=new ArrayList<AbstractToken>();
+
+	protected ScreenIO newScreenIO;
+
+	protected int offset;
+
+	protected int xCoord, yCoord;
 	
-	boolean isMap;
+	protected int carpan;
 	
-	boolean isMapTester;
+	protected List<AbstractToken> undefinedParameterList=new ArrayList<>();
 	
 	JavaInputTesterElement tester;
+	
+	protected boolean modifiable =false;
 
 	@Override
 	public boolean writeJavaToStream() throws Exception{
 		
-		if(ConversionLogModel.getInstance().getConversionFileType().equals(ConversionFileType.MAP_TESTER)){
+		screenInputOutputArray = new ArrayList<>();
+		
+		AbstractToken currToken = null;
+	
+		inputParameters = (List<AbstractToken>) this.parameters.get("inputParameters");
+		
+		
+		if(ConversionLogModel.getInstance().getConversionFileType().equals(ConversionFileType.MAP_TESTER) && !(this instanceof JavaInputTesterElement)){
 			
 			
 			tester=new JavaInputTesterElement(this);
 			
+			tester.inputParameters=this.inputParameters;
+			
+			
 			return tester.writeJavaToStream();
 		}
 		
-
-		screenInputOutputArray = new ArrayList<>();
-
-		inputParameters = (List<AbstractToken>) this.parameters.get("inputParameters");
-		
-		isMap=ConversionLogModel.getInstance().isMap();
-		
-		isMapTester=ConversionLogModel.getInstance().isMapTester();
-
-		int XCoord;
-
-		XCoordinationTypes xCoordinationType;
-
-		int YCoord;
-
-		NaturalTagTypes tagType;
-
-		IOModeType modeType;
-
-		String value;
-
-		AbstractToken currToken = null;
+	
 
 		try {
 
@@ -122,7 +113,11 @@ public class JavaInputElement extends AbstractJavaElement {
 
 					} else if (matchsPaternXIndentation(index)) { // 13X
 
-					} else if (matchsPaternWord(index)) {
+					} else if (matchsPaternKarakterCarpan(index)) { // 0046  013T '-' (041)(I)
+
+						processCarpan();
+						
+					}else if (matchsPaternWord(index)) {
 
 					} else if (matchsPaternArray(index)) {
 
@@ -152,8 +147,42 @@ public class JavaInputElement extends AbstractJavaElement {
 
 
 
+	// (041) -- Carpan=41
+	protected boolean matchsPaternKarakterCarpan(int index) {
+		
+		if (index + 2 >= inputParameters.size()) {
+			return false;
+		}
+
+		AbstractToken openParToken, closeParToken, carpanToken;
+
+		openParToken = inputParameters.get(index);
+
+		carpanToken = inputParameters.get(index + 1);
+		
+		closeParToken=inputParameters.get(index + 2);
+		
+		logger.debug(openParToken.getDeger().toString()+" "+carpanToken.getDeger().toString());
+
+		if (openParToken.isKarakter('(') && closeParToken.isKarakter(')') && carpanToken.isSayi()) {
+
+			offset = 2;
+
+			carpan=Integer.parseInt(carpanToken.getDeger().toString());
+			
+			logger.debug("Input Match Patern Carpan:" + carpanToken.getDeger().toString());
+
+			return true;
+		
+		}
+		
+		return false;
+	}
+
+
+
 	// 2/01
-	private boolean matchsPaternExact(int index) {
+	protected boolean matchsPaternExact(int index) {
 
 		if (index + 2 >= inputParameters.size()) {
 			return false;
@@ -186,7 +215,7 @@ public class JavaInputElement extends AbstractJavaElement {
 	}
 
 	// *S** /
-	private boolean matchsPaternSlash(int index) {
+	protected boolean matchsPaternSlash(int index) {
 
 		AbstractToken currToken;
 
@@ -209,7 +238,7 @@ public class JavaInputElement extends AbstractJavaElement {
 	}
 
 	// *S** #SECIM
-	private boolean matchsPaternWord(int index) throws Exception {
+	protected boolean matchsPaternWord(int index) throws Exception {
 
 		AbstractToken currToken, nextToken;
 
@@ -217,6 +246,8 @@ public class JavaInputElement extends AbstractJavaElement {
 
 		String value = null;
 
+		
+		
 		if (currToken.getTip().equals(TokenTipi.Kelime)) {
 			
 			int maxLength=ConvertUtilities.getVariableMaxLength(currToken);
@@ -236,13 +267,23 @@ public class JavaInputElement extends AbstractJavaElement {
 			}
 			
 			writeUndefinedTokens();
+			
+			
+			logger.debug(currToken.getDeger().toString());
+			
+			modifiable=controlModifiable(currToken);
+			//AD=MIT  --> M modifiable
 		
-			if (currToken.isConstantVariableWithQuota() || currToken.isSystemVariable()) {
+			if(isButton(currToken)){
+				
+				buttonArray.add(currToken);
+			}
+			else if (currToken.isConstantVariableWithQuota() || currToken.isSystemVariable()) {
 
 				newScreenIO = new ScreenIOLabel(xCoord, yCoord, IOModeType.AD_D, value, XCoordinationTypes.EXACT,
 						XCoordinationTypes.EXACT,0,maxLength, currToken.isConstantVariableWithQuota());
 				
-			} else if (currToken.getTip().equals(TokenTipi.Kelime)) { // #SECIM
+			} else if (currToken.getTip().equals(TokenTipi.Kelime) && modifiable) { // #SECIM
 
 				VariableTypes varType = ConvertUtilities.getVariableType(currToken);
 
@@ -260,7 +301,12 @@ public class JavaInputElement extends AbstractJavaElement {
 
 				newScreenIO = new ScreenIOIntegerInput(xCoord, yCoord, IOModeType.AD_D, name, value,
 						XCoordinationTypes.EXACT, XCoordinationTypes.EXACT,0,maxLength);
+			} else { //
+
+				newScreenIO = new ScreenIOLabel(xCoord, yCoord, IOModeType.AD_D, value, XCoordinationTypes.EXACT,
+						XCoordinationTypes.EXACT,0,maxLength, currToken.isConstantVariableWithQuota());
 			}
+
 
 			if(value.length()>maxLength){
 				yCoord = yCoord + value.length();
@@ -268,13 +314,16 @@ public class JavaInputElement extends AbstractJavaElement {
 				yCoord = yCoord + maxLength;
 			}
 			
-			screenInputOutputArray.add(newScreenIO);
+			if(!isButton(currToken)){
+				
+				screenInputOutputArray.add(newScreenIO);
+				
+				offset = 0;
+	
+				logger.debug("Input Match matchsPaternWord:" + newScreenIO.toString());
 
-			offset = 0;
-
-			logger.debug("Input Match matchsPaternWord:" + newScreenIO.toString());
-			
-
+			}
+	
 			return true;
 		}
 
@@ -282,7 +331,71 @@ public class JavaInputElement extends AbstractJavaElement {
 	}
 
 
+
+
+
+	protected void processCarpan() {
 		
+		ScreenIO lastScreenIOForModify = screenInputOutputArray.get(screenInputOutputArray.size()-1);
+		
+		if(!(lastScreenIOForModify instanceof ScreenIOLabel)){
+			return;
+		}
+		
+		ScreenIOLabel lastlabelForModify;
+		
+		String oldValue=lastScreenIOForModify.getValue().replaceAll("\"", "");
+		
+		StringBuffer newValue=new StringBuffer("\"");
+		
+		for(int i=0; i<carpan;i++){
+			newValue.append(oldValue);
+		}
+		
+		newValue.append("\"");
+		
+		lastlabelForModify=(ScreenIOLabel) lastScreenIOForModify;
+			
+		lastlabelForModify.setValue(newValue.toString());
+		
+		carpan=1;
+	
+		return;
+		
+	}
+
+
+
+	protected boolean controlModifiable(AbstractToken currToken) {
+		
+		this.modifiable=false;
+		
+		String inputADParameters;
+		try {
+			if(currToken.getInputADParameters()!=null){
+				inputADParameters=currToken.getInputADParameters().getDeger().toString();
+				
+				if(inputADParameters.contains("M")){
+					return true;
+				}
+			}
+			
+			if(currToken.getLinkedToken()!=null && currToken.getLinkedToken().getInputADParameters()!=null){
+				inputADParameters=currToken.getLinkedToken().getInputADParameters().getDeger().toString();
+				
+				if(inputADParameters.contains("M")){
+					return true;
+				}
+			}
+		} catch (Exception e) {
+			logger.debug(e.getMessage(), e);
+			return false;
+		}
+		return false;
+	}
+
+
+
 	private void writeUndefinedTokens() {
 		
 		StringBuffer sb=new StringBuffer();
@@ -300,15 +413,11 @@ public class JavaInputElement extends AbstractJavaElement {
 		
 		screenInputOutputArray.add(newScreenIO);
 		
-		xCoord=xCoord+1;
-		
-		yCoord=0;
-		
 		undefinedParameterList=new  ArrayList<AbstractToken>();
 	}
 
 	// *S** SCRLINES(*)
-	private boolean matchsPaternArray(int index) throws Exception {
+	protected boolean matchsPaternArray(int index) throws Exception {
 
 
 		AbstractToken currToken;
@@ -374,7 +483,7 @@ public class JavaInputElement extends AbstractJavaElement {
 	}
 
 	// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
-	private boolean matchsPaternXIndentation(int index) {
+	protected boolean matchsPaternXIndentation(int index) {
 
 		if (index + 1 >= inputParameters.size()) {
 			return false;
@@ -410,7 +519,7 @@ public class JavaInputElement extends AbstractJavaElement {
 		return false;
 	}
 
-	private void writeOutput() {
+	protected void writeOutput() {
 
 		AbstractToken curToken, nextToken, previousToken = null;
 
@@ -418,13 +527,16 @@ public class JavaInputElement extends AbstractJavaElement {
 
 		ScreenIO sIO = null;
 		
-		if(isMap || isMapTester){
-			JavaClassElement.javaCodeBuffer.append("natprog.");
-		}
-		
-		if(!isMap){
+		writeButtons();
+
+		if(!logModel.isMapOrMapTester()){
 			addValidationLoopStarter();
 		}
+		
+		if(logModel.isMapOrMapTester()){
+			JavaClassElement.javaCodeBuffer.append("natprog.");
+		}
+	
 		JavaClassElement.javaCodeBuffer.append("input(");
 		JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 
@@ -480,11 +592,113 @@ public class JavaInputElement extends AbstractJavaElement {
 		JavaClassElement.javaCodeBuffer.append(");");
 		JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 		
-		if(!isMap){
+		if(!logModel.isMapOrMapTester()){
 			addValidationLoopEnder();
 		}
-
 	}
+
+	/*
+	 * natprog.unRegisterPFKeyAll();
+		natprog.unRegisterEnterKey();
+		natprog.registerPFKey("PF3", ":Çıkış", true, true, "", "");
+		natprog.registerPFKey("PF2", ":Ana Menu", true, true, "", "");
+		natprog.registerPFKey("PF1", ":Ulke Kodları", true, true, "", "");
+		natprog.registerPFKey("PF5", ":Şehir Adları", true, true, "", "");
+		natprog.registerPFKey("PF12", ":Devam", true, true, "", "");
+	 */
+	private void writeButtons() {
+		
+		boolean enterButtonVisible=false;
+		enterButtonVisible=isEnterButtonVisible();
+		String buttonPFKey="", tokenDeger, buttonName="";
+		JavaClassElement.javaCodeBuffer.append("natprog.unRegisterPFKeyAll()");
+		JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		
+		if(!enterButtonVisible){
+			JavaClassElement.javaCodeBuffer.append("natprog.unRegisterEnterKey()");
+			JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		}
+		
+		for(AbstractToken button:buttonArray){
+			
+			tokenDeger=button.getDeger().toString();
+			if(tokenDeger.startsWith("F20") 
+					||tokenDeger.startsWith("F19")
+					||tokenDeger.startsWith("F18")
+					||tokenDeger.startsWith("F17")
+					||tokenDeger.startsWith("F16")
+					||tokenDeger.startsWith("F15")
+					||tokenDeger.startsWith("F14")
+					||tokenDeger.startsWith("F13")
+					||tokenDeger.startsWith("F12")
+					||tokenDeger.startsWith("F11")
+					||tokenDeger.startsWith("F10")
+					){
+				buttonPFKey=tokenDeger.substring(0,3);
+				buttonName=tokenDeger.substring(3);
+			}else if(tokenDeger.startsWith("F9")
+					||tokenDeger.startsWith("F8")
+					||tokenDeger.startsWith("F7")
+					||tokenDeger.startsWith("F6")
+					||tokenDeger.startsWith("F5")
+					||tokenDeger.startsWith("F4")
+					||tokenDeger.startsWith("F3")
+					||tokenDeger.startsWith("F2")
+					||tokenDeger.startsWith("F1")
+					){
+				buttonPFKey=tokenDeger.substring(0,2);
+				buttonName=tokenDeger.substring(2);
+			}
+			buttonPFKey="P"+buttonPFKey;
+			logger.debug("Register Button: "+buttonPFKey +" "+buttonName);
+			JavaClassElement.javaCodeBuffer.append("natprog.registerPFKey(\""+buttonPFKey+"\", \""+buttonName+"\", true, true, \"\", \"\")");
+			JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		}
+		
+	}
+
+
+	
+	private boolean isButton(AbstractToken currToken) {
+		
+		String tokenDeger;
+		
+		tokenDeger=currToken.getDeger().toString();
+		
+		if(tokenDeger.toUpperCase().startsWith("ENTER")
+				|| tokenDeger.toUpperCase().startsWith("ENTR")
+				|| tokenDeger.toUpperCase().startsWith("F1")
+				|| tokenDeger.toUpperCase().startsWith("F2")
+				|| tokenDeger.toUpperCase().startsWith("F3")
+				|| tokenDeger.toUpperCase().startsWith("F4")
+				|| tokenDeger.toUpperCase().startsWith("F5")
+				|| tokenDeger.toUpperCase().startsWith("F6")
+				|| tokenDeger.toUpperCase().startsWith("F7")
+				|| tokenDeger.toUpperCase().startsWith("F8")
+				|| tokenDeger.toUpperCase().startsWith("F9")){
+			return true;
+		}
+		return false;	
+	}
+
+
+	private boolean isEnterButtonVisible() {
+		String buttonPFKey, tokenDeger;
+		
+		for(AbstractToken button:buttonArray){
+			tokenDeger=button.getDeger().toString();
+			if(tokenDeger.indexOf(" ")==-1){
+				continue;
+			}
+			buttonPFKey=tokenDeger.substring(0, tokenDeger.indexOf(" "));
+			if(buttonPFKey.toUpperCase().equals("ENTER")|| buttonPFKey.toUpperCase().equals("ENTR")){
+				return true;
+			}
+		}
+		return false;
+	}
+
+
 
 	private void addValidationLoopEnder() {
 		JavaClassElement.javaCodeBuffer.append("	} catch (VBTValidationException e) { // TODO:Bu satır ve altindaki 3 satir. Bu ekranla ilgili son showDialogV2 den sonraya taşınmalı"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
@@ -497,18 +711,17 @@ public class JavaInputElement extends AbstractJavaElement {
 
 
 	private void addValidationLoopStarter() {
-		JavaClassElement.javaCodeBuffer.append("validationError = true"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);	
-		JavaClassElement.javaCodeBuffer.append("while (this.validationError) {"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
-		JavaClassElement.javaCodeBuffer.append("	validationError = false"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
-		JavaClassElement.javaCodeBuffer.append("	try {"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
-		
+			JavaClassElement.javaCodeBuffer.append("validationError = true"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);	
+			JavaClassElement.javaCodeBuffer.append("while (this.validationError) {"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+			JavaClassElement.javaCodeBuffer.append("	validationError = false"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+			JavaClassElement.javaCodeBuffer.append("	try {"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
 	}
 
 
 
 	// new
 	// ScreenIOIntegerInput(0,1,IOModeType.AD_MI_,"DIYEZ_SECIM",DIYEZ_SECIM,XCoordinationTypes.REFERANCE),
-	private void writeNumberInputField(ScreenIO sIO) {
+	protected void writeNumberInputField(ScreenIO sIO) {
 
 		JavaClassElement.javaCodeBuffer.append("new ScreenIOIntegerInput(" + sIO.getXCoord() + "," + sIO.getYCoord());
 
@@ -548,7 +761,7 @@ public class JavaInputElement extends AbstractJavaElement {
 	
 	// new
 	// ScreenIOIntegerInput(0,1,IOModeType.AD_MI_,"DIYEZ_SECIM",DIYEZ_SECIM,XCoordinationTypes.REFERANCE),
-	private void writeStringInputField(ScreenIO sIO) {
+	protected void writeStringInputField(ScreenIO sIO) {
 
 		JavaClassElement.javaCodeBuffer.append("new ScreenIOStringInput(" + sIO.getXCoord() + "," + sIO.getYCoord());
 
@@ -563,7 +776,7 @@ public class JavaInputElement extends AbstractJavaElement {
 
 		JavaClassElement.javaCodeBuffer.append(",");
 
-		if(isMap || isMapTester){
+		if(logModel.isMapOrMapTester()){
 			JavaClassElement.javaCodeBuffer.append("natprog.");
 		}
 
@@ -588,7 +801,7 @@ public class JavaInputElement extends AbstractJavaElement {
 		JavaClassElement.javaCodeBuffer.append(")");
 
 	}
-	private void writeLabel(ScreenIO sIO) {
+	protected void writeLabel(ScreenIO sIO) {
 
 		JavaClassElement.javaCodeBuffer.append("new ScreenIOLabel(" + sIO.getXCoord() + "," + sIO.getYCoord());
 
@@ -599,6 +812,10 @@ public class JavaInputElement extends AbstractJavaElement {
 		JavaClassElement.javaCodeBuffer.append(",");
 
 
+		if(logModel.isMapOrMapTester() && !sIO.isDoubleQouta()){
+			JavaClassElement.javaCodeBuffer.append("natprog.");
+		}
+		
 		JavaClassElement.javaCodeBuffer.append( sIO.getValue());
 					
 		JavaClassElement.javaCodeBuffer.append(",");
@@ -655,7 +872,7 @@ public class JavaInputElement extends AbstractJavaElement {
 	}
 
 	// (I) karakter dizisini inputParameters listten siler 
-	private void removeParantezI() {
+	protected void removeParantezI() {
 		
 		AbstractToken IKelimesi, parantezOpenToken,parantezCloseParameters;
 		if(inputParameters==null || inputParameters.size()<3) {
@@ -681,7 +898,7 @@ public class JavaInputElement extends AbstractJavaElement {
 	// MAP2.MUSNO1 (AD=ODL ) --> MAP2.MUSNO1
 	// MUSNO1 (AD=ODL ) --> MUSNO1
 	// *S**INPUT (AD=MI'.') -->
-	private void removeAdParameters() {
+	protected void removeAdParameters() {
 
 		AbstractToken curToken, parantezOpenToken, adToken, equalsToken, inputADParameters, parantezCloseParameters,
 				noktaOrTireToken;
@@ -700,9 +917,10 @@ public class JavaInputElement extends AbstractJavaElement {
 
 				logger.debug(adToken.getDeger().toString());
 
-				if (parantezOpenToken.getTip().equals(TokenTipi.Karakter)&& parantezOpenToken.getDeger().equals('(') 
-						&& equalsToken.getTip().equals(TokenTipi.Karakter) && equalsToken.getDeger().equals('=')
-						&& adToken.getTip().equals(TokenTipi.Kelime) && adToken.getDeger().equals("AD")) {
+				//004T MAP.MUSNO1  (AD=ODL )
+				if (parantezOpenToken.isKarakter('(')
+						&& equalsToken.isKarakter('=')
+						&& adToken.isKelime("AD")) {
 
 					do {
 						parantezCloseParameters = inputParameters.get(index+1);
@@ -714,7 +932,7 @@ public class JavaInputElement extends AbstractJavaElement {
 					} while (!(parantezCloseParameters.getTip().equals(TokenTipi.Karakter)
 							&& parantezCloseParameters.getDeger().equals(')')));
 
-					parantezOpenToken.setInputADParameters(new KelimeToken(("("+ADParameter.toString()), 0, 0, 0));
+					adToken.setInputADParameters(new KelimeToken(("("+ADParameter.toString()), 0, 0, 0));
 					inputParameters.remove(index);
 				}
 				

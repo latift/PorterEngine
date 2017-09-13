@@ -82,6 +82,10 @@ public class JavaNaturalClassElement extends  AbstractJavaElement{
 		
 		AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 		
+		if(logModel.getCustomer().equals("MB") && logModel.isMapTester()){
+			AbstractJavaElement.javaCodeBuffer.append("import tr.com.mb.menu1.web.TESTNATPROGImpl;"+JavaConstants.NEW_LINE);
+		}
+		
 		if(logModel.getCustomer().equals("MB")){
 			
 			AbstractJavaElement.javaCodeBuffer.append("import tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.*;"+JavaConstants.NEW_LINE);

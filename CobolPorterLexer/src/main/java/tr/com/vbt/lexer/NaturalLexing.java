@@ -1015,6 +1015,7 @@ public class NaturalLexing extends AbstractLexing {
 						&& (adToken.isKelime("AD")|| adToken.isKelime("EM")|| adToken.isKelime("IP")|| adToken.isKelime("CV"))) {
 
 					inputADParameters=new KelimeToken<>(adToken.getDeger().toString(),0,0,0);
+					inputADParameters.setInputParameters(true);
 					tokenListesi.remove(index + 1); // (
 					tokenListesi.remove(index + 1); // AD
 					tokenListesi.remove(index + 1); // =
@@ -1033,16 +1034,12 @@ public class NaturalLexing extends AbstractLexing {
 				
 					} while (true);
 
-					if(adToken.getDeger().equals("AD")){
-						inputADParameters.setInputADParameters(new KelimeToken(parameters.toString(), 0, 0, 0));
-					}else if(adToken.getDeger().equals("IP")){
-						inputADParameters.setInputIPParameters(new KelimeToken(parameters.toString(), 0, 0, 0));
-					}else if(adToken.getDeger().equals("CV")){
-						inputADParameters.setInputCVParameters(new KelimeToken(parameters.toString(), 0, 0, 0));
-					}else if(adToken.getDeger().equals("EM")){
-						inputADParameters.setInputEMParameters(new KelimeToken(parameters.toString(), 0, 0, 0));
+					inputADParameters.setDeger(parameters.toString());
+					
+					if(adToken.isOneOfKelime("AD","IP","CV","EM")){
+						curToken.setInputADParameters(inputADParameters);
 					}
-					inputADParameters.setInputParameters(true);
+					
 					
 					//*S**MOVE ( AD = I ) TO CV1 
 					if(curToken.isOzelKelime(ReservedNaturalKeywords.MOVE)&& tokenListesi.get(index+1).isOzelKelime("TO")){
@@ -2446,7 +2443,9 @@ public class NaturalLexing extends AbstractLexing {
 			
 			nexterToken=tokenListesi.get(i+2);
 			
-			logger.debug("Current"+current);
+			if(current!=null && current.getDeger()!=null){
+				logger.debug("Current "+current.getDeger().toString());
+			}
 
 			if (current.getTip().equals(TokenTipi.Kelime) && current.getDeger().equals("C")
 					&& next.getTip().equals(TokenTipi.Karakter)&& next.getDeger().equals('*')
