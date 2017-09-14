@@ -23,5 +23,6 @@ public enum THYModules {
 	BUTCEMK,
 	BUTCEPR,
 	MUHBATCH,
-	TRANSFER
+	TRANSFER,
+	MEINCO
 }

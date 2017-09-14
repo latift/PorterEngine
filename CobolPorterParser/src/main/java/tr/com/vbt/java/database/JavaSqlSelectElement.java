@@ -71,41 +71,14 @@ public class JavaSqlSelectElement extends  AbstractJavaElement{
 				
 				curToken=queryTokenList.get(i);
 				
-					
-					/*if(curToken.getTip().equals(TokenTipi.OzelKelime)&&
-							(curToken.getDeger().equals(ReservedNaturalKeywords.AND)||
-									curToken.getDeger().equals(ReservedNaturalKeywords.OR)		
-									)){
-						// Add +"
-						JavaClassElement.javaCodeBuffer.append("+\" ");
-					}*/
-					
+					JavaClassElement.javaCodeBuffer.append(" ");
 					if(curToken.isPojoVariable()){
-						JavaClassElement.javaCodeBuffer.append("\"+ ");
-						
 						JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(curToken));
-						JavaClassElement.javaCodeBuffer.append("+\"");
 						
 					}else{
 						JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(curToken));
 					}
-					/*
-					if(curToken.isPojoVariable()){
-						JavaClassElement.javaCodeBuffer.append(Utility.pojoNameToPojoDotColumnName(curToken));
-					}else if(curToken.isRecordVariable()){
-						JavaClassElement.javaCodeBuffer.append(Utility.recordNameToRecordDotRecordFieldName(curToken));
-					}else if(curToken.isConstantVariableWithQuota()){
-						JavaClassElement.javaCodeBuffer.append("\""+curToken.getDeger()+"\"");
-					}else{
-						JavaClassElement.javaCodeBuffer.append(curToken.getDeger());
-					}
-					*/
-					/*if(curToken.getTip().equals(TokenTipi.Karakter)&& curToken.getDeger().equals('=')){
-						// Add "+
-						JavaClassElement.javaCodeBuffer.append("\"+");
-					}
-					
-					JavaClassElement.javaCodeBuffer.append(" ");*/
+
 	
 			}
 			

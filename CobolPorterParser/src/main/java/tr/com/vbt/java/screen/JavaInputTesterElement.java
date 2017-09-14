@@ -234,6 +234,8 @@ public class JavaInputTesterElement extends JavaInputElement {
 	private String getLabelActor(ScreenIO sIO) {
 		if(sIO.isDoubleQouta()){
 			return sIO.getValue();
+		}else if(sIO.getValue().equals("PROGRAM")){
+			return "getMapName()";
 		}else{
 			return getLabelActor(sIO.getValue());
 		}

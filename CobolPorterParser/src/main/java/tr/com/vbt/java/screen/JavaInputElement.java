@@ -280,8 +280,8 @@ public class JavaInputElement extends AbstractJavaElement {
 			}
 			else if (currToken.isConstantVariableWithQuota() || currToken.isSystemVariable()) {
 
-				newScreenIO = new ScreenIOLabel(xCoord, yCoord, IOModeType.AD_D, value, XCoordinationTypes.EXACT,
-						XCoordinationTypes.EXACT,0,maxLength, currToken.isConstantVariableWithQuota());
+					newScreenIO = new ScreenIOLabel(xCoord, yCoord, IOModeType.AD_D, value, XCoordinationTypes.EXACT,
+							XCoordinationTypes.EXACT,0,maxLength, currToken.isConstantVariableWithQuota());
 				
 			} else if (currToken.getTip().equals(TokenTipi.Kelime) && modifiable) { // #SECIM
 
@@ -811,7 +811,7 @@ public class JavaInputElement extends AbstractJavaElement {
 
 		JavaClassElement.javaCodeBuffer.append(",");
 
-
+		logger.debug("Value:"+sIO.getValue());
 		if(logModel.isMapOrMapTester() && !sIO.isDoubleQouta()){
 			JavaClassElement.javaCodeBuffer.append("natprog.");
 		}
