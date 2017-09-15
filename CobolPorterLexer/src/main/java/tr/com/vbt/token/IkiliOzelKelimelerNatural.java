@@ -93,6 +93,8 @@ public IkiliOzelKelimelerNatural() {
 	ikiliKelimeler.add(new DoubleWordKeyword("LOGICAL","ASCENDING"));
 	ikiliKelimeler.add(new DoubleWordKeyword("NO","ERASE"));
 	ikiliKelimeler.add(new DoubleWordKeyword("COMPUTE","ROUNDED"));
+	ikiliKelimeler.add(new DoubleWordKeyword("ORDER","BY"));
+	ikiliKelimeler.add(new DoubleWordKeyword("GROUP","BY"));
 }
 
 }

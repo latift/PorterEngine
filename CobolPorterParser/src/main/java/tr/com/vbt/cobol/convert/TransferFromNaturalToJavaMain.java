@@ -19,6 +19,7 @@ import tr.com.vbt.ddm.DDMList;
 import tr.com.vbt.java.MethodImplementation;
 import tr.com.vbt.java.MethodSignature;
 import tr.com.vbt.java.database.IteratorNameManager;
+import tr.com.vbt.java.database.SQLManager;
 import tr.com.vbt.java.general.JavaClassElement;
 import tr.com.vbt.java.general.JavaClassGeneral;
 import tr.com.vbt.java.general.JavaConstants;
@@ -241,7 +242,8 @@ public class TransferFromNaturalToJavaMain {
 				}
 			}
 		}
-
+		
+	
 	}
 	// Module/seperatedPrograms/output silinecek
 	// Module/seperatedPrograms/subprogram/output silinecek

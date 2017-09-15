@@ -8,7 +8,7 @@ import tr.com.vbt.lexer.ReservedNaturalKeywords;
 import tr.com.vbt.natural.parser.database.ElementSQLSelect;
 import tr.com.vbt.patern.carriage_return.AbstractPatternFromXToYWithoutCarriageReturn;
 import tr.com.vbt.token.AbstractToken;
-import tr.com.vbt.token.KelimeToken;
+import tr.com.vbt.token.GenelTipToken;
 import tr.com.vbt.token.OzelKelimeToken;
 
 /**
@@ -40,7 +40,7 @@ public class PaternSelect extends AbstractPatternFromXToYWithoutCarriageReturn{
 		patternTokenList.add(starterToken);
 		
 		//conditionList
-		midfieldToken=new KelimeToken<String>();
+		midfieldToken=new GenelTipToken();
 		midfieldToken.setTekrarlayabilir("+");
 		midfieldToken.setSourceFieldName("queryTokenList");
 		patternTokenList.add(midfieldToken);

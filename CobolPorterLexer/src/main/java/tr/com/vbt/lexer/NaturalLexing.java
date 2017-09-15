@@ -2685,14 +2685,17 @@ public class NaturalLexing extends AbstractLexing {
 
 				while (true) {
 
-					if (astNext.getTip().equals(TokenTipi.OzelKelime)) {
-						if (!astNext.getDeger().equals(ReservedNaturalKeywords.AND)
-								&& !astNext.getDeger().equals(ReservedNaturalKeywords.OR)
-								&& !astNext.getDeger().equals(ReservedNaturalKeywords.INTO)
-								&& !astNext.getDeger().equals(ReservedNaturalKeywords.MAX)
-								&& !astNext.getDeger().equals(ReservedNaturalKeywords.DISTINCT)
-								&& !astNext.getDeger().equals(ReservedNaturalKeywords.FROM)
-								&& !astNext.getDeger().equals(ReservedNaturalKeywords.SORTED_BY)) {
+					if (astNext.isOzelKelime()) {
+						if (!astNext.isOneOfOzelKelime(ReservedNaturalKeywords.AND,
+								ReservedNaturalKeywords.OR,
+								ReservedNaturalKeywords.INTO,
+								ReservedNaturalKeywords.MAX,
+								ReservedNaturalKeywords.DISTINCT,
+								ReservedNaturalKeywords.ORDER_BY,
+								ReservedNaturalKeywords.COUNT,
+								ReservedNaturalKeywords.VIEW,
+								ReservedNaturalKeywords.FROM,
+								ReservedNaturalKeywords.SORTED_BY)) {
 							break;
 						}
 					}

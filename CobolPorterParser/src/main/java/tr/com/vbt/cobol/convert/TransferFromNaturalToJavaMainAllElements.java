@@ -6,6 +6,7 @@ import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import tr.com.vbt.java.database.SQLManager;
 import tr.com.vbt.lexer.ConversionFileType;
 import tr.com.vbt.lexer.ConversionLogModel;
 import tr.com.vbt.lexer.ConversionLogReport;
@@ -73,6 +74,8 @@ public class TransferFromNaturalToJavaMainAllElements {
 				
 				logModel.setConversionFileType(ConversionFileType.PROGRAM);
 				fromNaturalToJavaMain.operateConversionForAModule();
+				
+				SQLManager.writeSQLStringToFile();
 				
 				logModel.setConversionFileType(ConversionFileType.SUBPROGRAM);
 				fromNaturalToJavaMain.operateConversionForAModule();
