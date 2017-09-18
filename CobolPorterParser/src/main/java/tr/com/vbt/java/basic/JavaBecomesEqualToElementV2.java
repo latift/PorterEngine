@@ -62,6 +62,13 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 				return true;
 			}
 			
+			String typeOfCopyTo=ConvertUtilities.getTypeOfVariable(copyTo);
+			
+			if(typeOfCopyTo==null){
+				typeOfCopyTo="";
+			}
+			typeOfCopyTo=typeOfCopyTo.toLowerCase();
+			
 			if(copyTo.getLinkedToken()!=null && copyFrom.get(0).getLinkedToken()!=null&& copyFrom.get(0).getLinkedToken().isAllArrayItems()){
 				copyFrom.get(0).setAllArrayItems(true);
 			}
@@ -112,14 +119,20 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 				
 				JavaClassElement.javaCodeBuffer.append(")");
 				
+			}else if(typeOfCopyTo.equals("bigdecimal")){
+				
+				fromBigDecimalToBigDecimal();
+				
 			}else{
 					JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(copyTo));
 					JavaClassElement.javaCodeBuffer.append("=");
 					for (int i = 0; i < copyFrom.size(); i++) {
-						if(copyFrom.get(i).isVal()){
+						//if(copyFrom.get(i).isVal()){
 							addCast=addCast(copyTo,copyFrom.get(i));
-						}
+						//}
+						
 						JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(copyFrom.get(i)));
+						
 						if(addCast){
 							JavaClassElement.javaCodeBuffer.append(")");
 						}
@@ -155,19 +168,23 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 		if(typeOfCopyTo==null || typeOfCopyFrom==null){
 			return false;
 		}
+		typeOfCopyTo=typeOfCopyTo.toLowerCase();
+		typeOfCopyFrom=typeOfCopyFrom.toLowerCase();
+		
 		
 		//2595   FAIZYENIHESNO:=VAL(FAIZYENIHESNOA) 
 		// Alphabet Numbera atanıyorsa --> Long.valueOf(
-		if(typeOfCopyTo.equals("long") && typeOfCopyFrom.equals("String") ){
+		if(typeOfCopyTo.equals("long") && typeOfCopyFrom.equals("string") ){
 			JavaClassElement.javaCodeBuffer.append("Long.valueOf(");
 			
 			return true;
-		
-		// Alphabet BigDecimala atanıyorsa --> 
-		}else {
-			JavaClassElement.javaCodeBuffer.append("Cast");
-			
+		//  VFMEB:=5
+		}else if(typeOfCopyTo.equals("bigdecimal") && typeOfCopyFrom.equals("long")){
+			JavaClassElement.javaCodeBuffer.append(" BigDecimal.valueOf(");
 			return true;
+		}else {
+			
+			return false;
 		}
 		
 	}
@@ -213,7 +230,43 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 		
 	}
 	
-	
+	private void fromBigDecimalToBigDecimal() throws Exception {
+		
+		JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(copyTo));
+		JavaClassElement.javaCodeBuffer.append("=");
+		boolean closeParantez=false;
+		for (int i = 0; i < copyFrom.size(); i++) {
+			//if(copyFrom.get(i).isVal()){
+				addCast=addCast(copyTo,copyFrom.get(i));
+			//}
+				//KONTMEB:=D_SCEKMEB(I)+D_SVFMEB(I)-D_SME(I) --> KONTMEB=D_SCEKMEB(I).add(D_SVFMEB(I)).mınus(D_SME(I));
+			if(copyFrom.get(i).isKarakter('+')){
+				JavaClassElement.javaCodeBuffer.append(".add(");
+				closeParantez=true;
+			}else if(copyFrom.get(i).isKarakter('-')){
+				JavaClassElement.javaCodeBuffer.append(".subtract(");
+				closeParantez=true;
+			}else if(copyFrom.get(i).isKarakter('/')){
+				JavaClassElement.javaCodeBuffer.append(".divide(");
+				closeParantez=true;
+			}else if(copyFrom.get(i).isKarakter('*')){
+				JavaClassElement.javaCodeBuffer.append(".multiply(");
+				closeParantez=true;
+			}else{
+				JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(copyFrom.get(i)));
+				if(closeParantez){
+					JavaClassElement.javaCodeBuffer.append(")");
+					closeParantez=false;
+				}
+			}
+			
+			if(addCast){
+				JavaClassElement.javaCodeBuffer.append(")");
+			}
+			
+			addCast=false;
+		}
+	}
 	
 	private void fromPojoToArraySelectedItems() throws Exception {
 		

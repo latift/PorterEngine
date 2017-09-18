@@ -611,11 +611,18 @@ public class JavaInputElement extends AbstractJavaElement {
 		boolean enterButtonVisible=false;
 		enterButtonVisible=isEnterButtonVisible();
 		String buttonPFKey="", tokenDeger, buttonName="";
-		JavaClassElement.javaCodeBuffer.append("natprog.unRegisterPFKeyAll()");
+		if(ConversionLogModel.getInstance().isMapOrMapTester()){
+			JavaClassElement.javaCodeBuffer.append("natprog.");
+		}
+		
+		JavaClassElement.javaCodeBuffer.append("unRegisterPFKeyAll()");
 		JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
 		
 		if(!enterButtonVisible){
-			JavaClassElement.javaCodeBuffer.append("natprog.unRegisterEnterKey()");
+			if(ConversionLogModel.getInstance().isMapOrMapTester()){
+				JavaClassElement.javaCodeBuffer.append("natprog.");
+			}
+			JavaClassElement.javaCodeBuffer.append("unRegisterEnterKey()");
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
 		}
 		
@@ -651,7 +658,10 @@ public class JavaInputElement extends AbstractJavaElement {
 			}
 			buttonPFKey="P"+buttonPFKey;
 			logger.debug("Register Button: "+buttonPFKey +" "+buttonName);
-			JavaClassElement.javaCodeBuffer.append("natprog.registerPFKey(\""+buttonPFKey+"\", \""+buttonName+"\", true, true, \"\", \"\")");
+			if(ConversionLogModel.getInstance().isMapOrMapTester()){
+				JavaClassElement.javaCodeBuffer.append("natprog.");
+			}
+			JavaClassElement.javaCodeBuffer.append("registerPFKey(\""+buttonPFKey+"\", \""+buttonName+"\", true, true, \"\", \"\")");
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
 		}
 		

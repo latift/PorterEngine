@@ -1796,7 +1796,7 @@ public class NaturalLexing extends AbstractLexing {
 		setAd_EM_IP_Parameters();
 		
 		setVal();
-
+		
 		controlTwoDimensionArrayParameters();
 
 		controlOneDimensionArrayParameters();
@@ -3692,6 +3692,10 @@ public class NaturalLexing extends AbstractLexing {
 				}
 			}
 		}
+		
+		
+		
+		
 	// D_SECIM(*) --> D_SECIM yapar ve D_SECIM in flagini işaretler
 	private void setAllElementsOfArrayFlag() {
 		AbstractToken current;
@@ -4192,6 +4196,7 @@ public class NaturalLexing extends AbstractLexing {
 		systemVariables.add("DAT");
 		systemVariables.add("DAT4I");
 		systemVariables.add("DAT4E");
+		systemVariables.add("DAT4D");
 		systemVariables.add("DATE");
 		systemVariables.add("DATN");
 		systemVariables.add("TIMX");

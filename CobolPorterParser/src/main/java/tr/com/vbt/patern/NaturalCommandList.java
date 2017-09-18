@@ -236,7 +236,7 @@ public class NaturalCommandList extends AbstractCommandList {
 
 			setSourceCodeFullSatir(command, tokenListesi, offset, command.getCommandMatchPoint());
 			logger.info("COMMAND MATCHED: " + command);
-
+			
 			offset += command.getCommandMatchPoint();
 
 		} while (offset < tokenListesiRealSize);
@@ -247,6 +247,8 @@ public class NaturalCommandList extends AbstractCommandList {
 		logger.info("*************************************************************************************");
 		logger.info("*************************************************************************************");
 	}
+
+
 
 	private void addCommandsToIncludedCommandsList() {
 		this.commandListWithIncludedViewVariables.addAll(this.commandList);
@@ -1540,11 +1542,15 @@ public class NaturalCommandList extends AbstractCommandList {
 
 				currentGrupCommandLevelable = (Levelable) currentGrupCommand;
 
+				logger.debug(currentGrupCommand.toString());
 				if (!it.hasNext()) {
 					break;
 				}
 				nextCommand = it.next();
 
+				if (nextCommand instanceof ElementProgramRedefineGrupNatural) {
+					continue;
+				}
 				if (DataTypesCommandsUtility.isDataType(nextCommand)) {
 
 					nextLevelable = (Levelable) nextCommand;
@@ -1560,7 +1566,7 @@ public class NaturalCommandList extends AbstractCommandList {
 					logger.debug("....");
 				}
 
-			} while (!DataTypesCommandsUtility.isGroupDataType(nextCommand));
+			} while (!DataTypesCommandsUtility.isGroupDataType(nextCommand) || nextCommand instanceof ElementProgramRedefineGrupNatural);
 
 		}
 		;
@@ -1586,10 +1592,11 @@ public class NaturalCommandList extends AbstractCommandList {
 
 			curKelimeToken = tokenListesi.get(index);
 
+			
 			// FIND XXX WITH ....... THEN : With ile Then arasındakilere
 			// eklenmez.
 			// FIND ve WITH görünce THEN görünceye kadar devam et.
-			if (curKelimeToken.getTip().equals(TokenTipi.OzelKelime)
+			/*if (curKelimeToken.getTip().equals(TokenTipi.OzelKelime)
 					&& curKelimeToken.getDeger().equals(ReservedNaturalKeywords.FIND)) {
 
 				while (!(curKelimeToken.getTip().equals(TokenTipi.OzelKelime)
@@ -1597,8 +1604,10 @@ public class NaturalCommandList extends AbstractCommandList {
 					index++;
 					curKelimeToken = tokenListesi.get(index);
 				}
-			}
+			}*/
 
+			logger.debug(curKelimeToken.toString());
+			
 			if (curKelimeToken.getTip().equals(TokenTipi.Kelime) || curKelimeToken.getTip().equals(TokenTipi.Array)) {
 
 				if (recordVariablesParentMap.containsKey(curKelimeToken.getDeger())) {

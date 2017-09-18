@@ -85,20 +85,22 @@ public class SimpleCondition implements ConditionInterface {
 				JavaClassElement.javaCodeBuffer.append("!");
 			}
 			boolean primitiveType=false;
-			if(ConvertUtilities.getVariableType(conditionLeft)!=null){
-				primitiveType=ConvertUtilities.getVariableType(conditionLeft).equals(VariableTypes.BIG_DECIMAL_TYPE) ||
-					 ConvertUtilities.getVariableType(conditionLeft).equals(VariableTypes.DATE_TYPE) ||
-					 ConvertUtilities.getVariableType(conditionLeft).equals(VariableTypes.INT_TYPE) ||
-					 ConvertUtilities.getVariableType(conditionLeft).equals(VariableTypes.LONG_TYPE);
-				
-				if(!primitiveType){
-					primitiveType=ConvertUtilities.getVariableType(conditionRight).equals(VariableTypes.BIG_DECIMAL_TYPE) ||
-							 ConvertUtilities.getVariableType(conditionRight).equals(VariableTypes.DATE_TYPE) ||
-							 ConvertUtilities.getVariableType(conditionRight).equals(VariableTypes.INT_TYPE) ||
-							 ConvertUtilities.getVariableType(conditionRight).equals(VariableTypes.LONG_TYPE);
+			
+			boolean isBigDecimalType=false;
+			
+			VariableTypes conditionLeftType=ConvertUtilities.getVariableType(conditionLeft);
+			VariableTypes conditionRightType=ConvertUtilities.getVariableType(conditionRight);
+	
+			if(conditionLeftType!=null && conditionRightType!=null){
+				primitiveType=(conditionLeftType.equals(VariableTypes.INT_TYPE) || conditionLeftType.equals(VariableTypes.LONG_TYPE)) &&
+							(conditionRightType.equals(VariableTypes.INT_TYPE) ||  conditionRightType.equals(VariableTypes.LONG_TYPE));
 				}
+			if(conditionLeftType.equals(VariableTypes.BIG_DECIMAL_TYPE)  ||conditionRightType.equals(VariableTypes.BIG_DECIMAL_TYPE) ){
+				isBigDecimalType=true;
 			}
 			
+			
+		
 			SimpleConditionWriter conWriter;
 			//IF TPS-DOF NE MASK(YYMMDD) OR TPS-DOF < TPS-DOS
 			if ((conOperator.isKarakter('=')||conOperator.isKarakter("==")||conOperator.isOzelKelime("EQ")) && conditionRight.isMasked()){
@@ -108,42 +110,60 @@ public class SimpleCondition implements ConditionInterface {
 				conWriter=new SimpleMaskNotEqualsConditionWriter();
 				
 			}else if(conOperator.isKarakter('=')||conOperator.isKarakter("==")||conOperator.isOzelKelime("EQ")){
-				if(primitiveType){
+				if(isBigDecimalType){
+					conWriter=new SimpleBigDecimalTypeEqualsConditionWriter();
+				}
+				else if(primitiveType){
 					conWriter=new SimplePrimitiveTypeWriter();
 				}else{
 					conWriter=new SimpleObjectTypeEqualsConditionWriter();
 				}
 			
 			}else if(conOperator.isKarakter("!=")||conOperator.isOzelKelime("NE")){
-				if(primitiveType){
+				if(isBigDecimalType){
+					conWriter=new SimpleBigDecimalTypeNotEqualsConditionWriter();
+				}
+				else if(primitiveType){
 					conWriter=new SimplePrimitiveTypeWriter();
 				}else{
 					conWriter=new SimpleObjectTypeNotEqualsConditionWriter();
 				}
 			
 			}else if(conOperator.isKarakter('>')||conOperator.isKarakter(">")||conOperator.isOzelKelime("GT")){
-				if(primitiveType){
+				if(isBigDecimalType){
+					conWriter=new SimpleBigDecimalTypeGreaterThenConditionWriter();
+				}
+				else if(primitiveType){
 					conWriter=new SimplePrimitiveTypeWriter();
 				}else{
 					conWriter=new SimpleObjectTypeGreaterThenConditionWriter();
 				}
 			
 			}else if(conOperator.isKarakter('>')||conOperator.isKarakter(">=")||conOperator.isOzelKelime("GE")){
-				if(primitiveType){
+				if(isBigDecimalType){
+					conWriter=new SimpleBigDecimalTypeGreaterThenOrEqualsConditionWriter();
+				}
+				else if(primitiveType){
 					conWriter=new SimplePrimitiveTypeWriter();
 				}else{
 					conWriter=new SimpleObjectTypeGreaterThenOrEqualsConditionWriter();
 				}
 			
 			}else if(conOperator.isKarakter('<')||conOperator.isKarakter("<")||conOperator.isOzelKelime("LT")){
-				if(primitiveType){
+				if(isBigDecimalType){
+					conWriter=new SimpleBigDecimalTypeLessThenConditionWriter();
+				}
+				else if(primitiveType){
 					conWriter=new SimplePrimitiveTypeWriter();
 				}else{
 					conWriter=new SimpleObjectTypeLessThenConditionWriter();
 				}
 					
 			}else if(conOperator.isKarakter('<')||conOperator.isKarakter("<=")||conOperator.isOzelKelime("LE")){
-				if(primitiveType){
+				if(isBigDecimalType){
+					conWriter=new SimpleBigDecimalTypeLessThenOrEqualsConditionWriter();
+				}
+				else if(primitiveType){
 					conWriter=new SimplePrimitiveTypeWriter();
 				}else{
 					conWriter=new SimpleObjectTypeLessThenOrEqualsConditionWriter();

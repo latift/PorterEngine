@@ -24,6 +24,7 @@ public class ElementProgramTwoDimensionArrayNatural extends AbstractCommand impl
 	
 	private int arrayLength2;  //60 
 
+	private int lengthAfterDot;
 
 	@Override
 	public String toString() {
@@ -124,7 +125,15 @@ public class ElementProgramTwoDimensionArrayNatural extends AbstractCommand impl
 
 
 	
-	
+	public int getLengthAfterDot() {
+		return lengthAfterDot;
+	}
+
+
+	public void setLengthAfterDot(int lengthAfterDot) {
+		this.lengthAfterDot = lengthAfterDot;
+	}
+
 	
 	
 }

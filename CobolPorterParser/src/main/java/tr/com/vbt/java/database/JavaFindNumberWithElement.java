@@ -147,7 +147,6 @@ public class JavaFindNumberWithElement extends AbsctractConditionalJavaElement {
 
 
 			//LIMAN_RESULT_LIST=LIMAN_DAO.findByMusno2AndReferansSmallerAndOpenParBsicilOrAsicilCloseParAndIslemTar(GecMusno2, Map.refno, 0,0,Guntar);
-			JavaClassElement.javaCodeBuffer.append("List<"+pojoType+"> ");
 			JavaClassElement.javaCodeBuffer.append(calculatedResultListName);
 			JavaClassElement.javaCodeBuffer.append("=");
 			JavaClassElement.javaCodeBuffer.append(calculatedDAOName);

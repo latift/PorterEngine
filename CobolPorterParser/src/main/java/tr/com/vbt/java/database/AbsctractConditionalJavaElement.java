@@ -389,23 +389,16 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 				continue;
 			}
 			
-			if(curFilter.getFilterValue().isPojoVariable()){
-				if(ConversionLogModel.getInstance().isMB() && curFilter.getFilterValue().getSchemaNameToken()!=null){
-			
-					findByString.append(JavaWriteUtilities.toCustomString(curFilter.getFilterValue()));
-					
-				}else{
-					
-					findByString.append(JavaWriteUtilities.toCustomString(curFilter.getFilterName()));
-				
-				}
-			}else if(curFilter.getFilterValue().isRecordVariable()) {
-				findByString.append(Utility.recordNameToRecordDotRecordFieldName(curFilter.getFilterValue()));
-			}else if(curFilter.getFilterValue().isConstantVariableWithQuota()){
-				findByString.append("\""+curFilter.getFilterValue().getDeger()+"\"");
+			/*if(curFilter.getFilterValue().isPojoVariable() ||curFilter.getFilterValue().isRecordVariable() || curFilter.getFilterValue().isConstantVariableWithQuota() || curFilter.getFilterValue().isArray()) {
+				//findByString.append(Utility.recordNameToRecordDotRecordFieldName(curFilter.getFilterValue()));
+				findByString.append(JavaWriteUtilities.toCustomString(curFilter.getFilterValue()));
 			}else {
 				findByString.append(ConvertUtilities.onlyFieldOfIncludedVariable(curFilter.getFilterValue().getDeger().toString()));
-			}
+			}*/
+			findByString.append(JavaWriteUtilities.toCustomString(curFilter.getFilterValue()));
+			
+			
+			
 			if(index<conditionListWithFiltersAndParantesiz.size()-1  && lastItem instanceof Filter){
 				findByString.append(",");
 			}

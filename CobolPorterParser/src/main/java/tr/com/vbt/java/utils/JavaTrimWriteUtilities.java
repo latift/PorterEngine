@@ -335,12 +335,12 @@ public class JavaTrimWriteUtilities {
 					}
 					tempCodeBuffer.append("\"");
 				}else{
-					tempCodeBuffer.append(arrayToken.getDeger().toString()+"["+firstDimensionSize+"-1]");
+					tempCodeBuffer.append(arrayToken.getDeger().toString()+"["+addIntCastForArrays()+firstDimensionSize+"-1]");
 				}
 			
 			}else {
 			
-				tempCodeBuffer.append(arrayToken.getDeger().toString()+"["+firstDimension.getDeger().toString()+"-1]");
+				tempCodeBuffer.append(arrayToken.getDeger().toString()+"["+addIntCastForArrays()+firstDimension.getDeger().toString()+"-1]");
 			
 			}
 			if(secDimension!=null){
@@ -1020,9 +1020,9 @@ public class JavaTrimWriteUtilities {
 			secDimension=arrayToken.getSecondDimension();
 			if(firstDimension.getDeger() instanceof Integer){
 				firstDimensionSize=((int)firstDimension.getDeger());
-				tempCodeBuffer.append("["+firstDimensionSize+"-1]");
+				tempCodeBuffer.append("["+addIntCastForArrays()+firstDimensionSize+"-1]");
 			}else {
-				tempCodeBuffer.append("["+firstDimension.getDeger()+"-1]");
+				tempCodeBuffer.append("["+addIntCastForArrays()+firstDimension.getDeger()+"-1]");
 			}
 			if(secDimension!=null){
 				if(secDimension.getDeger() instanceof Integer){
@@ -1111,6 +1111,9 @@ public class JavaTrimWriteUtilities {
 
 
 
+	private static String addIntCastForArrays() {
+		return "(int)";
+	}
 
 
 

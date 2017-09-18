@@ -89,6 +89,9 @@ public class JavaCompressElementV3 extends AbstractJavaElement {
 	private boolean compressToSimple() throws Exception {
 		
 		
+		//NATURAL CODE:2230   :.0 COMPRESS FULL AVEKDOGYIL - AVEKDOGAY 
+		//setPojoValue("TVEKALET"DOGTARAVEKDOGYIL.getValue() + "-" + AVEKDOGAY.getValue() + "-" + AVEKDOGGUN.getValue());
+		//Dogrusu:  	TVEKALET.setDogtar(FrameworkConvertUtilities.stringToSqlDate(MAP_P.AVEKDOGYIL + "-" + MAP_P.AVEKDOGAY + "-" + MAP_P.AVEKDOGGUN));
 		JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomSetterString(dest));
 		
 		if(!dest.isPojoVariable() && !dest.isRedefinedVariable()){

@@ -28,6 +28,7 @@ import tr.com.vbt.natural.parser.datalayout.db.ElementDBDataTypeNatural;
 import tr.com.vbt.natural.parser.datalayout.program.ElementProgramDataTypeNatural;
 import tr.com.vbt.natural.parser.datalayout.program.ElementProgramGrupNatural;
 import tr.com.vbt.natural.parser.datalayout.program.ElementProgramOneDimensionArrayNatural;
+import tr.com.vbt.natural.parser.datalayout.program.ElementProgramTwoDimensionArrayNatural;
 import tr.com.vbt.patern.NaturalCommandList;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.TokenTipi;
@@ -107,8 +108,28 @@ public class ConvertUtilities {
 		}
 		ElementProgramDataTypeNatural programData;
 		ElementProgramGrupNatural programGrupData;
+		ElementProgramOneDimensionArrayNatural elementProgramOneDimensionArrayNatural;
+		ElementProgramTwoDimensionArrayNatural elementProgramTwoDimensionArrayNatural;
+		
+		if(variable.getLinkedToken()!=null){
+			variable=variable.getLinkedToken();
+		}
+		
+		if(variable.isPojoVariable()){
+			
+			return getVariableTypeOfPojo(variable);
+			
+		}
+		
+		if(variable.isGlobalVariable()){
+			return getVariableTypeOfGlobalVariable(variable);
+		}
+		
 		List<AbstractCommand> commandList = NaturalCommandList.getInstance().getCommandListWithIncludedVariables();
 		for (AbstractCommand abstractCommand : commandList) {
+			
+			logger.debug(abstractCommand.toString());
+			
 			if (abstractCommand instanceof ElementProgramDataTypeNatural) {
 				programData = (ElementProgramDataTypeNatural) abstractCommand;
 				if (programData.getDataName().equals(variable.getDeger())) {
@@ -129,11 +150,87 @@ public class ConvertUtilities {
 				if (programGrupData.getDataName().equals(variable.getDeger())) {
 					return VariableTypes.GRUP_TYPE;
 				}
+			} else if (abstractCommand instanceof ElementProgramOneDimensionArrayNatural) {
+				elementProgramOneDimensionArrayNatural = (ElementProgramOneDimensionArrayNatural) abstractCommand;
+				if (elementProgramOneDimensionArrayNatural.getDataName().equals(variable.getDeger())) {
+						if (elementProgramOneDimensionArrayNatural.getDataType().substring(0, 1).equals("A")) {
+							return VariableTypes.STRING_TYPE;
+						} else if (elementProgramOneDimensionArrayNatural.getDataType().substring(0, 1).equals("N") || elementProgramOneDimensionArrayNatural.getDataType().substring(0, 1).equals("P")) {
+							if (elementProgramOneDimensionArrayNatural.getLengthAfterDot() == 0) {
+								return VariableTypes.LONG_TYPE;
+							} else {
+								return VariableTypes.BIG_DECIMAL_TYPE;
+							}
+						} else if (elementProgramOneDimensionArrayNatural.getDataType().substring(0, 1).equals("D")) {
+							return VariableTypes.DATE_TYPE;
+						}
+					}
+				
+			} else if (abstractCommand instanceof ElementProgramTwoDimensionArrayNatural) {
+				
+				elementProgramTwoDimensionArrayNatural = (ElementProgramTwoDimensionArrayNatural) abstractCommand;
+				if (elementProgramTwoDimensionArrayNatural.getDataName().equals(variable.getDeger())) {
+						if (elementProgramTwoDimensionArrayNatural.getDataType().substring(0, 1).equals("A")) {
+							return VariableTypes.STRING_TYPE;
+						} else if (elementProgramTwoDimensionArrayNatural.getDataType().substring(0, 1).equals("N") || elementProgramTwoDimensionArrayNatural.getDataType().substring(0, 1).equals("P")) {
+							if (elementProgramTwoDimensionArrayNatural.getLengthAfterDot() == 0) {
+								return VariableTypes.LONG_TYPE;
+							} else {
+								return VariableTypes.BIG_DECIMAL_TYPE;
+							}
+						} else if (elementProgramTwoDimensionArrayNatural.getDataType().substring(0, 1).equals("D")) {
+							return VariableTypes.DATE_TYPE;
+						}
+					}
 			}
 		}
 		return VariableTypes.UNDEFINED_TYPE;
 	}
 	
+	private static VariableTypes getVariableTypeOfGlobalVariable(AbstractToken variable) {
+	
+		String variableName=variable.getDeger().toString();
+		if(variableName.contains("HESCINSI")||
+				variableName.contains("ISUSER")||
+				variableName.contains("YAZICI")||
+				variableName.contains("LAZERYAZICI")||
+				variableName.contains("GMESAJ")||
+				variableName.contains("PIKYAZICI")||
+				variableName.contains("HESDOKYAZICI")
+				){
+			return VariableTypes.STRING_TYPE;
+		}else{
+			return VariableTypes.LONG_TYPE;
+		}
+	
+
+	}
+	
+	public static String getVariableTypeOfPojoAsString(AbstractToken variable) {
+		
+		return Utility.findViewAndColumnNamesReturnType(variable).toLowerCase();
+		
+	}
+
+	public static VariableTypes getVariableTypeOfPojo(AbstractToken variable) {
+		
+		String columnReturnType=Utility.findViewAndColumnNamesReturnType(variable).toLowerCase();
+		
+		if(columnReturnType.equals("string")){
+			return VariableTypes.STRING_TYPE;
+		}else if(columnReturnType.equals("bigdecimal")){
+			return VariableTypes.BIG_DECIMAL_TYPE;
+		}else if(columnReturnType.equals("long")){
+			return VariableTypes.LONG_TYPE;
+		}else if(columnReturnType.equals("date")){
+			return VariableTypes.DATE_TYPE;
+		}else if(columnReturnType.equals("grup")){
+			return VariableTypes.GRUP_TYPE;
+		}
+		return VariableTypes.UNDEFINED_TYPE;
+		
+		
+	}
 	public static String getVariableTypeOfString(AbstractToken variable) {
 		Double d = 0.0;
 		if (variable.getTip().equals(TokenTipi.Sayi)) {
@@ -151,7 +248,7 @@ public class ConvertUtilities {
 			}
 
 		}
-
+		
 		String variableDeger = variable.getDeger().toString();
 
 		if (variable.getDeger().toString().contains(".")) {
@@ -210,8 +307,11 @@ public class ConvertUtilities {
 		ElementProgramDataTypeNatural programData;
 
 		ElementProgramGrupNatural grupNatural;
+		
+		ElementProgramOneDimensionArrayNatural elementProgramOneDimensionArrayNatural;
 
 		for (AbstractCommand abstractCommand : commandList) {
+			logger.debug(abstractCommand.toString());
 			if (abstractCommand instanceof ElementProgramDataTypeNatural) {
 				programData = (ElementProgramDataTypeNatural) abstractCommand;
 				if (programData.getDataName().equals(variable.getDeger())) {
@@ -221,6 +321,11 @@ public class ConvertUtilities {
 				grupNatural = (ElementProgramGrupNatural) abstractCommand;
 				if (grupNatural.getGrupName().equals(variable.getDeger())) {
 					return grupNatural;
+				}
+			}else if (abstractCommand instanceof ElementProgramOneDimensionArrayNatural) {
+				elementProgramOneDimensionArrayNatural = (ElementProgramOneDimensionArrayNatural) abstractCommand;
+				if (elementProgramOneDimensionArrayNatural.getDataName().equals(variable.getDeger())) {
+					return elementProgramOneDimensionArrayNatural;
 				}
 			}
 		}
@@ -290,10 +395,19 @@ public class ConvertUtilities {
 			} else {
 				return "int";
 			}
+		}else if(variable.isSayi()){
+			return "long";
+		}
+		if(variable.getLinkedToken()!=null){
+			variable=variable.getLinkedToken();
+		}else if(variable.isPojoVariable()){
+			return getVariableTypeOfPojoAsString(variable);
+			
 		}
 		AbstractCommand commmand;
 		ElementProgramOneDimensionArrayNatural oneDimensionArrayChildDefinition;
 		ElementProgramDataTypeNatural programDataTypeDefinition;
+		
 		commmand = ConvertUtilities.getVariableDefinitinCommand(variable);
 
 		if (commmand instanceof ElementProgramOneDimensionArrayNatural) {
@@ -305,8 +419,7 @@ public class ConvertUtilities {
 			return ConvertUtilities.getJavaVariableType(programDataTypeDefinition.getDataType(),
 					programDataTypeDefinition.getLength(), programDataTypeDefinition.getLengthAfterDot());
 		}
-		return null;
-
+		return null; 
 	}
 
 	// STORE IDGIDBS-TGECICI --> TGECICIDAO.save(TGECICI);
@@ -790,6 +903,20 @@ public class ConvertUtilities {
 		// System.out.println(srtTarihToSlash(a));
 		// System.out.println(basaAltCizgiEkle(b,5));
 		// System.out.println(sonaAltCizgiEkle(b,5));
+	}
+
+	public static boolean isBigDecimal(AbstractToken token) {
+		
+		VariableTypes varType=ConvertUtilities.getVariableType(token);
+		
+		return varType.equals(VariableTypes.BIG_DECIMAL_TYPE);
+	}
+
+	public static boolean isPrimitiveType(AbstractToken token) {
+		
+		VariableTypes varType=ConvertUtilities.getVariableType(token);
+		
+		return varType.equals(VariableTypes.LONG_TYPE)|| varType.equals(VariableTypes.INT_TYPE);
 	}
 
 

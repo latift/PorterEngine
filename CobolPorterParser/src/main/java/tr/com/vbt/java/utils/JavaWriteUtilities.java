@@ -135,6 +135,16 @@ public class JavaWriteUtilities {
 		return sb.toString();
 	}
 
+	public static StringBuilder toCustomString(AbstractToken token, String castType) throws Exception  {
+		
+		StringBuilder tempCodeBuffer=new StringBuilder();
+		
+		if(castType.toUpperCase().equals("BIGDECIMAL")){
+			
+		}
+		return null;
+		
+	}
 	public static StringBuilder toCustomString(AbstractToken token) throws Exception  {
 
 		StringBuilder tempCodeBuffer=new StringBuilder();
@@ -228,6 +238,8 @@ public class JavaWriteUtilities {
 			inputParameters=token.getInputADParameters().getDeger().toString();
 			
 			resultList.append("ControlEnum."+inputParameters);
+		}else{
+			resultList.append("ControlEnum.AD");	
 		}
 		return resultList.toString();
 	}
@@ -344,12 +356,12 @@ public class JavaWriteUtilities {
 					}
 					tempCodeBuffer.append("\"");
 				}else{
-					tempCodeBuffer.append(arrayToken.getDeger().toString()+"["+firstDimensionSize+"-1]");
+					tempCodeBuffer.append(arrayToken.getDeger().toString()+"["+addIntCastForArrays()+firstDimensionSize+"-1]");
 				}
 			
 			}else {
 			
-				tempCodeBuffer.append(arrayToken.getDeger().toString()+"["+firstDimension.getDeger().toString()+"-1]");
+				tempCodeBuffer.append(arrayToken.getDeger().toString()+"["+addIntCastForArrays()+firstDimension.getDeger().toString()+"-1]");
 			
 			}
 			if(secDimension!=null){
@@ -358,11 +370,11 @@ public class JavaWriteUtilities {
 				
 					secDimensionSize=((int)secDimension.getDeger());
 			
-					tempCodeBuffer.append("["+secDimensionSize+"-1]");
+					tempCodeBuffer.append("["+addIntCastForArrays()+secDimensionSize+"-1]");
 				
 				}else {
 				
-					tempCodeBuffer.append("["+secDimension.getDeger().toString()+"-1]");
+					tempCodeBuffer.append("["+addIntCastForArrays()+secDimension.getDeger().toString()+"-1]");
 			
 				}
 			}
@@ -370,6 +382,10 @@ public class JavaWriteUtilities {
 		
 		return tempCodeBuffer.toString();
 
+	}
+
+	private static String addIntCastForArrays() {
+		return "(int)";
 	}
 
 	private static String toCustomNumberVariableString(AbstractToken token) {
@@ -776,17 +792,17 @@ public class JavaWriteUtilities {
 	 * 					1  A8  TAX-DOM-INT --> KetTax.setTaxDomInt()*/
 	private static String ruleEmtpy_1_setter(DDM ddm, AbstractToken token) {
 		
-		String setterString;
-			setterString= "setPojoValue("+"\""+token.getDeger().toString()+"\"";
+		StringBuilder setterString=new StringBuilder();//TESKI;
+		setterString.append(token.getDeger().toString());
+
+		setterString.append(".");
 		if(token.getColumnNameToken()==null){
-			
-			setterString +=token.getDeger().toString();
-					
+			setterString.append(Utility.viewNameToPojoSetterName(token.getDeger().toString()));
 		}else{
-			
-			setterString +=token.getColumnNameToken().getDeger().toString();
+			setterString.append(Utility.viewNameToPojoSetterName(token.getColumnNameToken().getDeger().toString()));
 		}
-		return setterString;
+		setterString.append("(");
+		return setterString.toString();
 
 	}
 	
@@ -1148,16 +1164,16 @@ public class JavaWriteUtilities {
 			secDimension=arrayToken.getSecondDimension();
 			if(firstDimension.getDeger() instanceof Integer){
 				firstDimensionSize=((int)firstDimension.getDeger());
-				tempCodeBuffer.append("["+firstDimensionSize+"-1]");
+				tempCodeBuffer.append("["+addIntCastForArrays()+firstDimensionSize+"-1]");
 			}else {
-				tempCodeBuffer.append("["+firstDimension.getDeger()+"-1]");
+				tempCodeBuffer.append("["+addIntCastForArrays()+firstDimension.getDeger()+"-1]");
 			}
 			if(secDimension!=null){
 				if(secDimension.getDeger() instanceof Integer){
 					secDimensionSize=((int)secDimension.getDeger());
-					tempCodeBuffer.append("["+secDimensionSize+"-1]");
+					tempCodeBuffer.append("["+addIntCastForArrays()+secDimensionSize+"-1]");
 				}else {
-					tempCodeBuffer.append("["+secDimension.getDeger()+"-1]");
+					tempCodeBuffer.append("["+addIntCastForArrays()+secDimension.getDeger()+"-1]");
 				}
 			}
 		}else if(token.getLinkedToken().getTip().equals(TokenTipi.Kelime)){
@@ -1193,16 +1209,16 @@ public class JavaWriteUtilities {
 			secDimension=arrayToken.getSecondDimension();
 			if(firstDimension.getDeger() instanceof Integer){
 				firstDimensionSize=((int)firstDimension.getDeger());
-				tempCodeBuffer.append("["+firstDimensionSize+"-1]");
+				tempCodeBuffer.append("["+addIntCastForArrays()+firstDimensionSize+"-1]");
 			}else {
-				tempCodeBuffer.append("["+firstDimension.getDeger()+"-1]");
+				tempCodeBuffer.append("["+addIntCastForArrays()+firstDimension.getDeger()+"-1]");
 			}
 			if(secDimension!=null){
 				if(secDimension.getDeger() instanceof Integer){
 					secDimensionSize=((int)secDimension.getDeger());
-					tempCodeBuffer.append("["+secDimensionSize+"-1]");
+					tempCodeBuffer.append("["+addIntCastForArrays()+secDimensionSize+"-1]");
 				}else {
-					tempCodeBuffer.append("["+secDimension.getDeger()+"-1]");
+					tempCodeBuffer.append("["+addIntCastForArrays()+secDimension.getDeger()+"-1]");
 				}
 			}
 		}else if(token.getLinkedToken().getTip().equals(TokenTipi.Kelime)){

@@ -480,7 +480,7 @@ public class Utility {
 			
 			StringBuilder sb=new StringBuilder();
 		
-			String BiggerclassName = Utility.viewNameToBiggerPojoName(token.getDeger().toString());
+			String biggerclassName = Utility.viewNameToBiggerPojoName(token.getDeger().toString());
 			
 			String className = Utility.viewNameToPojoName(token.getDeger().toString());
 
@@ -498,7 +498,7 @@ public class Utility {
 				field = c.getDeclaredField(fieldName);
 				field.setAccessible(true);
 				
-				sb.append(className+"."+setterName);
+				sb.append(biggerclassName+"."+setterName);
 			
 				return sb.toString();
 
@@ -513,7 +513,7 @@ public class Utility {
 					
 					field.setAccessible(true);
 					
-					sb.append(BiggerclassName+".getId()."+setterName);
+					sb.append(biggerclassName+".getId()."+setterName);
 					
 					return sb.toString();
 		
@@ -523,8 +523,6 @@ public class Utility {
 				
 			}
 		}
-
-
 		
 		
 	

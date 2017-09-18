@@ -147,12 +147,11 @@ public class JavaFindWithElement extends AbsctractConditionalJavaElement {
 
 			// List<KetMultifile> LIMAN_RESULT_LIST=LIMAN_DAO.findByMusno2AndReferansSmallerAndOpenParBsicilOrAsicilCloseParAndIslemTar(GecMusno2, Map.refno, 0,0,Guntar);
 			
-			JavaClassElement.javaCodeBuffer.append("List<"+pojoType+"> ");
 			JavaClassElement.javaCodeBuffer.append(calculatedResultListName);
 			JavaClassElement.javaCodeBuffer.append("=");
 			JavaClassElement.javaCodeBuffer.append(calculatedDAOName);
 			JavaClassElement.javaCodeBuffer.append(".");
-			JavaClassElement.javaCodeBuffer.append(findByString.replaceAll("-", "_")+ JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
+			JavaClassElement.javaCodeBuffer.append(findByString+ JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
 			
 			//{
 			JavaClassElement.javaCodeBuffer.append("{"+ JavaConstants.NEW_LINE);

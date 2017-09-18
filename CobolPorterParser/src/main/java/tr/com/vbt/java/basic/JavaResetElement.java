@@ -55,6 +55,14 @@ public class JavaResetElement extends  AbstractJavaElement {
 				variableType=ConvertUtilities.getVariableType(variable);
 				
 				variableDefinitionCommand=ConvertUtilities.getVariableDefinitinCommand(variable);
+				
+				if(variable.isRecordVariable() && variable.getLinkedToken()!=null){
+					variableType=ConvertUtilities.getVariableType(variable.getLinkedToken());
+					
+					variableDefinitionCommand=ConvertUtilities.getVariableDefinitinCommand(variable.getLinkedToken());
+				}
+				
+				
 			    
 				if(variableType==VariableTypes.INT_TYPE
 						||variableType==VariableTypes.LONG_TYPE){
