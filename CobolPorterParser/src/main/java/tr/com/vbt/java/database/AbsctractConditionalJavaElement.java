@@ -310,7 +310,7 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 
 	private String createMethodName(String isFindByOrReadBy) {
 	
-		StringBuilder createdFindByMethodName=new StringBuilder();
+		StringBuilder createdFindByMethodName=new StringBuilder(isFindByOrReadBy);
 		
 		AbstractToken curToken;
 		Filter curFilter;
