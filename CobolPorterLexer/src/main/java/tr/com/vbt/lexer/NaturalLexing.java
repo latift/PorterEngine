@@ -1012,7 +1012,7 @@ public class NaturalLexing extends AbstractLexing {
 						|| (curToken.isOzelKelime()))
 						&& parantezOpenToken.isKarakter('(') //Oncesinde array indexi olabilir.
 						&& equalsToken.isKarakter('=')
-						&& (adToken.isKelime("AD")|| adToken.isKelime("EM")|| adToken.isKelime("IP")|| adToken.isKelime("CV"))) {
+						&& adToken.isADParameters()) {
 
 					inputADParameters=new KelimeToken<>(adToken.getDeger().toString(),0,0,0);
 					inputADParameters.setInputParameters(true);
@@ -1036,7 +1036,7 @@ public class NaturalLexing extends AbstractLexing {
 
 					inputADParameters.setDeger(parameters.toString());
 					
-					if(adToken.isOneOfKelime("AD","IP","CV","EM")){
+					if(adToken.isADParameters()){
 						curToken.setInputADParameters(inputADParameters);
 					}
 					
@@ -2031,7 +2031,7 @@ public class NaturalLexing extends AbstractLexing {
 			}
 			
 			//3)  = varsa öncesinde AD EM CV varsa koyma
-			if(astLeft.isOneOfKelime("AD","EM","CV")){
+			if(astLeft.isADParameters()){
 				continue;
 			}
 
@@ -2106,7 +2106,7 @@ public class NaturalLexing extends AbstractLexing {
 			}
 			
 			//3)  = varsa öncesinde AD EM CV varsa koyma
-			if(astLeft.isOneOfKelime("AD","EM","CV")){
+			if(astLeft.isADParameters()){
 				continue;
 			}
 
@@ -3251,6 +3251,9 @@ public class NaturalLexing extends AbstractLexing {
 							schemaName = tableColumnReferans.get(columnName);
 						}
 
+						if(isLocalVariable(current)){
+							continue;
+						}
 						String tableNameDeger = tableColumnReferans.get(columnName)
 								.substring(tableColumnReferans.get(columnName).indexOf('.') + 1);
 
@@ -3269,6 +3272,24 @@ public class NaturalLexing extends AbstractLexing {
 
 	}
 	
+	private boolean isLocalVariable(AbstractToken controlToken) {
+	
+		AbstractToken current;
+		
+		for (int i = 0; i < tokenListesi.size() - 1; i++) {
+
+			current = tokenListesi.get(i);
+			
+			if(current.isOzelKelime(ReservedNaturalKeywords.END_DEFINE)){
+				return false;
+			}else if(current.isKelime()&& controlToken.isKelime() && current.valueEquals(controlToken)){
+				return true;
+			}
+			
+		}
+		return false;
+	}
+
 	private void setPojoVariablesForMB() {
 		
 		if(ConversionLogModel.getInstance().getCustomer().equals("THY")){

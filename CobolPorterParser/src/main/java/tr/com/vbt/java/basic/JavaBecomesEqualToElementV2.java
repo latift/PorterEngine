@@ -123,6 +123,10 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 				
 				fromBigDecimalToBigDecimal();
 				
+			}else if((copyTo.isAllArrayItems()|| copyTo.getTip().equals(TokenTipi.Array)) && copyFrom.get(0).isSayi()){
+				
+				fromSingleToArray();
+				
 			}else{
 					JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(copyTo));
 					JavaClassElement.javaCodeBuffer.append("=");
@@ -153,6 +157,24 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 			ConvertUtilities.writeconversionErrors(e, this);
 		}
 		return true;
+	}
+
+
+
+
+
+	//0700 MUSNOSUBE(*):=0  --> FCU.setArray(MUSNOSUBE, 0);
+	private void fromSingleToArray() {
+		try {
+			JavaClassElement.javaCodeBuffer.append("FCU.setArray("
+					+ JavaWriteUtilities.toCustomString(copyTo).toString()
+					+ " , "
+					+ JavaWriteUtilities.toCustomString(copyFrom.get(0)).toString()
+					+")");
+		} catch (Exception e) {
+			JavaClassElement.javaCodeBuffer.append("FCU.setArray("+e.getMessage()+")");
+		}
+		
 	}
 
 

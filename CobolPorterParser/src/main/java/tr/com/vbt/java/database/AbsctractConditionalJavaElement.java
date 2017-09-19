@@ -194,84 +194,28 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 	 * DAO ve HibernateDAO daki method imzasını oluşturur
 	 */
 	protected MethodSignature createFindByMethodString(String isFindByOrReadBy, String returnPojoType) {
-		//StringBuffer findByString = new StringBuffer(isFindByOrReadBy);
 		
-		MethodSignature createdFindByMethod=new MethodSignature(isFindByOrReadBy,returnPojoType);
+		String methodName=createMethodName(isFindByOrReadBy);
 		
-		AbstractToken curToken;
+		MethodSignature createdFindByMethod=new MethodSignature(methodName,returnPojoType);
+		
 		Filter curFilter;
-		AbstractCommand variableDefinition;
-		ElementProgramDataTypeNatural variableDefinitionProgramDataTypeNatural = null;
-		ElementProgramOneDimensionArrayNatural variableDefinitionOneDimensionArray = null;
 
 		String methodParameterType, methodParameterName;
-		
-		
 		
 		if(conditionListWithFiltersAndParantesiz==null || conditionListWithFiltersAndParantesiz.size()==0){
 			if(isFindByOrReadBy.equals("readBy")){
 				
-				return new MethodSignature("readBy",returnPojoType);
+				return new MethodSignature(methodName,returnPojoType);
 			
 			}else{
 				
-				return new MethodSignature("findAll",returnPojoType);
+				return new MethodSignature(methodName,returnPojoType);
 		
 			}
 			
 		}
-
-		for (int index = 0; index < conditionListWithFiltersAndParantesiz.size(); index++) {
-			curFilter = null;
-			curToken = null;
-			if (conditionListWithFiltersAndParantesiz.get(index) instanceof Filter) {
-				curFilter = (Filter) conditionListWithFiltersAndParantesiz.get(index);
-			} else {
-				curToken = (AbstractToken) conditionListWithFiltersAndParantesiz.get(index);
-			}
-
-			// FIND IDGIDBS-TBESYIL WITH MUSNO=PMUSNO AND HESHARYIL>=10
-			// -->findByMusno_HesharyilGE_
-			if (curFilter != null) {
-				logger.debug(curFilter.getFilterName().getDeger().toString());
-				if (curFilter.getFilterName().isPojoVariable()) {
-					if (curFilter.getFilterName().getColumnNameToken() == null) {
-						createdFindByMethod.getMethodName().append(Utility.columnNameToPojoFieldNameWithFirstLetterUpper(
-								curFilter.getFilterName().getDeger().toString()));
-					} else {
-						createdFindByMethod.getMethodName().append(Utility.columnNameToPojoFieldNameWithFirstLetterUpper(
-								curFilter.getFilterName().getColumnNameToken().getDeger().toString()));
-					}
-				} else if (curFilter.getFilterName().isRecordVariable()) {
-					if (curFilter.getFilterName().getColumnNameToken() == null) {
-						createdFindByMethod.getMethodName().append(Utility.recordNameToRecordDotRecordFieldName(curFilter.getFilterName()));
-					}else{
-						createdFindByMethod.getMethodName().append(Utility.recordNameToRecordDotRecordFieldName(curFilter.getFilterName().getColumnNameToken()));
-					}
-				} else {
-					if (curFilter.getFilterName().getColumnNameToken() == null) {
-						createdFindByMethod.getMethodName().append(Utility.columnNameToPojoFieldNameWithFirstLetterUpper(
-								curFilter.getFilterName().getDeger().toString()));
-					}else{
-						createdFindByMethod.getMethodName().append(Utility.columnNameToPojoFieldNameWithFirstLetterUpper(
-								curFilter.getFilterName().getColumnNameToken().getDeger().toString()));
-					}
-				}
-				createdFindByMethod.getMethodName().append(operatorInfoToMethodName(curFilter));
-
-				if (index < conditionListWithFiltersAndParantesiz.size() - 1) {
-					createdFindByMethod.getMethodName().append("_");
-				}
-			} else {
-				if (curToken.getDeger().equals('(')) {
-					// createdFindByMethod.getMethodName().append("OpenPar");
-				} else if (curToken.getDeger().equals(ReservedNaturalKeywords.OR)) {
-					createdFindByMethod.getMethodName().append("Or");
-					// createdFindByMethod.getMethodName().append("ClosePar");
-				}
-			}
-
-		}
+		
 		//createdFindByMethod.getMethodName().append(JavaConstants.OPEN_NORMAL_BRACKET);
 		for (int index = 0; index < conditionListWithFiltersAndParantesiz.size(); index++) {
 			curFilter = null;
@@ -328,57 +272,15 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 	 * Java kodundan DAO methodunu çağıran kodu oluşturur
 	 */
 	protected String createFindByString(String isFindByOrReadBy) throws Exception {
-		StringBuffer findByString=new StringBuffer(isFindByOrReadBy);
-		AbstractToken curToken;
+		
+		StringBuffer findByString=new StringBuffer();
+		
 		Filter curFilter;
 		
-		if(conditionListWithFiltersAndParantesiz==null || conditionListWithFiltersAndParantesiz.size()==0){
-			if(isFindByOrReadBy.equals("readBy")){
-				return "readAll()";
-			}else{
-				return "findAll()";
-			}
-			
-		}
-		for(int index=0; index<conditionListWithFiltersAndParantesiz.size();index++){
-			curFilter=null;
-			curToken=null;
-			if (conditionListWithFiltersAndParantesiz.get(index) instanceof Filter){ 
-				curFilter=(Filter) conditionListWithFiltersAndParantesiz.get(index);
-			}else{
-				curToken=(AbstractToken) conditionListWithFiltersAndParantesiz.get(index);
-			}
-			
-			if(curFilter!=null){
-				
-				if(curFilter.getFilterName().isRecordVariable()) {
-					findByString.append( Utility.recordNameToRecordDotRecordFieldName(curFilter.getFilterName()));
-				}else {
-					if(curFilter.getFilterName().getColumnNameToken()!=null){
-					
-						findByString.append(Utility.columnNameToPojoFieldNameWithFirstLetterUpper(curFilter.getFilterName().getColumnNameToken().getDeger().toString()));
-								
-					}else{
-						
-						findByString.append(Utility.columnNameToPojoFieldNameWithFirstLetterUpper(curFilter.getFilterName().getDeger().toString()));
-				
-					}
-				}
-				
-				if(index<conditionListWithFiltersAndParantesiz.size()-1){
-					findByString.append("_");
-				}
-			}else{
-				if(curToken.getDeger().equals('(')){
-					//findByString.append("OpenPar");
-				}else if(curToken.getDeger().equals(ReservedNaturalKeywords.OR)){
-					findByString.append("Or");
-					//findByString.append("ClosePar");
-				}
-			}
+		findByString.append(createMethodName(isFindByOrReadBy));
 		
-		}
 		findByString.append(JavaConstants.OPEN_NORMAL_BRACKET);
+		
 		Object lastItem;
 		lastItem=conditionListWithFiltersAndParantesiz.get(conditionListWithFiltersAndParantesiz.size()-1);
 		for(int index=0; index<conditionListWithFiltersAndParantesiz.size();index++){
@@ -389,12 +291,6 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 				continue;
 			}
 			
-			/*if(curFilter.getFilterValue().isPojoVariable() ||curFilter.getFilterValue().isRecordVariable() || curFilter.getFilterValue().isConstantVariableWithQuota() || curFilter.getFilterValue().isArray()) {
-				//findByString.append(Utility.recordNameToRecordDotRecordFieldName(curFilter.getFilterValue()));
-				findByString.append(JavaWriteUtilities.toCustomString(curFilter.getFilterValue()));
-			}else {
-				findByString.append(ConvertUtilities.onlyFieldOfIncludedVariable(curFilter.getFilterValue().getDeger().toString()));
-			}*/
 			findByString.append(JavaWriteUtilities.toCustomString(curFilter.getFilterValue()));
 			
 			
@@ -410,6 +306,74 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 		findByString.append(JavaConstants.CLOSE_NORMAL_BRACKET);
 	
 		return findByString.toString();
+	}
+
+	private String createMethodName(String isFindByOrReadBy) {
+	
+		StringBuilder createdFindByMethodName=new StringBuilder();
+		
+		AbstractToken curToken;
+		Filter curFilter;
+		AbstractCommand variableDefinition;
+		ElementProgramDataTypeNatural variableDefinitionProgramDataTypeNatural = null;
+		ElementProgramOneDimensionArrayNatural variableDefinitionOneDimensionArray = null;
+
+		
+		
+		
+		for (int index = 0; index < conditionListWithFiltersAndParantesiz.size(); index++) {
+			curFilter = null;
+			curToken = null;
+			if (conditionListWithFiltersAndParantesiz.get(index) instanceof Filter) {
+				curFilter = (Filter) conditionListWithFiltersAndParantesiz.get(index);
+			} else {
+				curToken = (AbstractToken) conditionListWithFiltersAndParantesiz.get(index);
+			}
+
+			// FIND IDGIDBS-TBESYIL WITH MUSNO=PMUSNO AND HESHARYIL>=10
+			// -->findByMusno_HesharyilGE_
+			if (curFilter != null) {
+				logger.debug(curFilter.getFilterName().getDeger().toString());
+				if (curFilter.getFilterName().isPojoVariable()) {
+					if (curFilter.getFilterName().getColumnNameToken() == null) {
+						createdFindByMethodName.append(Utility.columnNameToPojoFieldNameWithFirstLetterUpper(
+								curFilter.getFilterName().getDeger().toString()));
+					} else {
+						createdFindByMethodName.append(Utility.columnNameToPojoFieldNameWithFirstLetterUpper(
+								curFilter.getFilterName().getColumnNameToken().getDeger().toString()));
+					}
+				} else if (curFilter.getFilterName().isRecordVariable()) {
+					if (curFilter.getFilterName().getColumnNameToken() == null) {
+						createdFindByMethodName.append(Utility.recordNameToRecordDotRecordFieldName(curFilter.getFilterName()));
+					}else{
+						createdFindByMethodName.append(Utility.recordNameToRecordDotRecordFieldName(curFilter.getFilterName().getColumnNameToken()));
+					}
+				} else {
+					if (curFilter.getFilterName().getColumnNameToken() == null) {
+						createdFindByMethodName.append(Utility.columnNameToPojoFieldNameWithFirstLetterUpper(
+								curFilter.getFilterName().getDeger().toString()));
+					}else{
+						createdFindByMethodName.append(Utility.columnNameToPojoFieldNameWithFirstLetterUpper(
+								curFilter.getFilterName().getColumnNameToken().getDeger().toString()));
+					}
+				}
+				createdFindByMethodName.append(operatorInfoToMethodName(curFilter));
+
+				if (index < conditionListWithFiltersAndParantesiz.size() - 1) {
+					createdFindByMethodName.append("_");
+				}
+			} else {
+				if (curToken.getDeger().equals('(')) {
+					// createdFindByMethodName.append("OpenPar");
+				} else if (curToken.getDeger().equals(ReservedNaturalKeywords.OR)) {
+					createdFindByMethodName.append("Or");
+					// createdFindByMethod.getMethodName().append("ClosePar");
+				}
+			}
+
+		}
+		return createdFindByMethodName.toString();
+		
 	}
 
 	protected void writeDAOInterfaceCode() {

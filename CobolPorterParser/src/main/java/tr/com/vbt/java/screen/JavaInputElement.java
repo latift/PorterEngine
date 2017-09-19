@@ -930,7 +930,7 @@ public class JavaInputElement extends AbstractJavaElement {
 				//004T MAP.MUSNO1  (AD=ODL )
 				if (parantezOpenToken.isKarakter('(')
 						&& equalsToken.isKarakter('=')
-						&& adToken.isKelime("AD")) {
+						&& adToken.isADParameters()) {
 
 					do {
 						parantezCloseParameters = inputParameters.get(index+1);

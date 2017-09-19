@@ -216,6 +216,10 @@ public class JavaWriteElement extends AbstractJavaElement {
 			
 			name ="\"" + value + "\"";
 			
+			if(currToken.isDiscardedWriteKeyword()){
+				return true;
+			}
+			
 			writeUndefinedTokens();
 		
 			if (currToken.isConstantVariableWithQuota() || currToken.isSystemVariable()) {
@@ -654,7 +658,7 @@ public class JavaWriteElement extends AbstractJavaElement {
 
 				if (parantezOpenToken.getTip().equals(TokenTipi.Karakter)&& parantezOpenToken.getDeger().equals('(') 
 						&& equalsToken.getTip().equals(TokenTipi.Karakter) && equalsToken.getDeger().equals('=')
-						&& adToken.getTip().equals(TokenTipi.Kelime) && adToken.getDeger().equals("AD")) {
+						&& adToken.getTip().equals(TokenTipi.Kelime) && adToken.isADParameters()) {
 
 					do {
 						parantezCloseParameters = inputParameters.get(index+1);

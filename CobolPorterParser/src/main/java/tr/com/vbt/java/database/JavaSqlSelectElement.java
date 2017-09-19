@@ -66,8 +66,8 @@ public class JavaSqlSelectElement extends  AbstractJavaElement{
 				writeDistinctSQLJavaCode();
 			}else if(isPojoSQL()){
 				writePojoSQLJavaCode();
-			}else{
-				throw new Exception("SQL Cevrim Hatasi");
+			}else{ //Yukardakilerden biri değilse en azından aşağıdaki şekilde yazsın
+				writeUnknownTypeSQLJavaCode();
 			}
 			
 			return true;
@@ -220,6 +220,9 @@ public class JavaSqlSelectElement extends  AbstractJavaElement{
 		for(int i=0; i<intoTokenList.size();i++){
 			//EBIM_NO =convertResultToLong(distinctResultRecord[0]);
 			intoToken=intoTokenList.get(i);
+			if(intoToken.isPojoVariable()){ // Motor düzeltmesidir. Pojo olmaması gerekirken pojo set ediliyor.
+				intoToken=intoToken.getColumnNameToken();
+			}
 			JavaClassElement.javaCodeBuffer.append(intoToken.getDeger()+"=convertResultToLong(distinctResultRecord["+i+"])"+ JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
 			
 		}
@@ -335,6 +338,47 @@ public class JavaSqlSelectElement extends  AbstractJavaElement{
 		this.writeChildrenJavaToStream();
 		JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
 		JavaClassElement.javaCodeBuffer.append("} //Function SQL End"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
+	
+		return;
+	}
+	
+	private void writeUnknownTypeSQLJavaCode() throws Exception {
+		
+		try {
+			if(queryTokenList==null){
+				JavaClassElement.javaCodeBuffer.append("//TODO ENGINE: SQL HATASI ");
+				return;
+			}
+			
+			setIntoFieldsAndRemoveFromSQL();
+			
+			setTableNameAndPutSchema();
+
+			intoToken=intoTokenList.get(0);
+			//DISTINCT_RESULTLIST=runPreparedStatementDistinctV2("Select  DISTINCT EBIMNO , FISNO , ISLEM_TURU , ISLASTUR , ARB_SW FROM IDGIDBS.TSUBE_MUHASEBE WHERE BAKOD = \'"+B+"\'");
+			
+			writeParameters();
+			
+			JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(intoToken));
+			JavaClassElement.javaCodeBuffer.append("=runPreparedStatementUnknownTypeV2"+JavaConstants.OPEN_NORMAL_BRACKET);
+			
+			writeSQL();
+			
+			registerSQLAndWriteKeyToJava();
+			
+			JavaClassElement.javaCodeBuffer.append(", params");
+			
+			JavaClassElement.javaCodeBuffer.append(JavaConstants.CLOSE_NORMAL_BRACKET+ JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
+			
+			JavaClassElement.javaCodeBuffer.append("{"+ JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
+			
+			this.writeChildrenJavaToStream();
+			JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
+			JavaClassElement.javaCodeBuffer.append("} //Function SQL End"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	
 		return;
 	}
