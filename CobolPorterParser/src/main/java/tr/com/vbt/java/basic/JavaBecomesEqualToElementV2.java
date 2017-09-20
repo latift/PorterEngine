@@ -44,9 +44,10 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 
 	private List<AbstractToken> aritmethicOperators = new ArrayList<AbstractToken>();
 	
-	boolean addCast=false;
-
+	boolean cast;
+	
 	public boolean writeJavaToStream() throws Exception{
+		
 		super.writeJavaToStream(); 
 		try {
 			copyFrom = (List<AbstractToken>) this.parameters.get("copyFrom");
@@ -101,12 +102,6 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 					
 					JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomSetterString(copyTo, copyFrom.get(0)));
 					
-				/*	for (int i = 0; i < copyFrom.size(); i++) {
-						JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(copyFrom.get(i)));
-					}*/
-					
-					//JavaClassElement.javaCodeBuffer.append(")");
-					
 			}else if(copyTo.isPojoVariable() || copyTo.isRedefinedVariable()){
 				//*S**ASSIGN TAX-INOUT = SCR-IN-OUT -->KET_TAX.setTaxInout(SCR_IN_OUT);
 				
@@ -131,17 +126,15 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 					JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(copyTo));
 					JavaClassElement.javaCodeBuffer.append("=");
 					for (int i = 0; i < copyFrom.size(); i++) {
-						//if(copyFrom.get(i).isVal()){
-							addCast=addCast(copyTo,copyFrom.get(i));
-						//}
-						
+					
+						cast=JavaWriteUtilities.addCast(copyTo,copyFrom.get(i));
+					
 						JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(copyFrom.get(i)));
 						
-						if(addCast){
-							JavaClassElement.javaCodeBuffer.append(")");
-						}
+						JavaWriteUtilities.endCast(cast);
 						
-						addCast=false;
+						JavaWriteUtilities.addTypeChangeFunctionToEnd(copyTo,copyFrom.get(i));
+						
 					}
 			}
 
@@ -179,37 +172,6 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 
 
 
-
-
-	private boolean addCast(AbstractToken copyTo, AbstractToken copyFrom) {
-		
-		String typeOfCopyTo=ConvertUtilities.getTypeOfVariable(copyTo);
-		
-		String typeOfCopyFrom=ConvertUtilities.getTypeOfVariable(copyFrom);
-		
-		if(typeOfCopyTo==null || typeOfCopyFrom==null){
-			return false;
-		}
-		typeOfCopyTo=typeOfCopyTo.toLowerCase();
-		typeOfCopyFrom=typeOfCopyFrom.toLowerCase();
-		
-		
-		//2595   FAIZYENIHESNO:=VAL(FAIZYENIHESNOA) 
-		// Alphabet Numbera atanıyorsa --> Long.valueOf(
-		if(typeOfCopyTo.equals("long") && typeOfCopyFrom.equals("string") ){
-			JavaClassElement.javaCodeBuffer.append("Long.valueOf(");
-			
-			return true;
-		//  VFMEB:=5
-		}else if(typeOfCopyTo.equals("bigdecimal") && typeOfCopyFrom.equals("long")){
-			JavaClassElement.javaCodeBuffer.append(" BigDecimal.valueOf(");
-			return true;
-		}else {
-			
-			return false;
-		}
-		
-	}
 
 
 
@@ -258,10 +220,10 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 		JavaClassElement.javaCodeBuffer.append("=");
 		boolean closeParantez=false;
 		for (int i = 0; i < copyFrom.size(); i++) {
-			//if(copyFrom.get(i).isVal()){
-				addCast=addCast(copyTo,copyFrom.get(i));
-			//}
-				//KONTMEB:=D_SCEKMEB(I)+D_SVFMEB(I)-D_SME(I) --> KONTMEB=D_SCEKMEB(I).add(D_SVFMEB(I)).mınus(D_SME(I));
+			
+			cast=JavaWriteUtilities.addCast(copyTo,copyFrom.get(i));
+			
+			//KONTMEB:=D_SCEKMEB(I)+D_SVFMEB(I)-D_SME(I) --> KONTMEB=D_SCEKMEB(I).add(D_SVFMEB(I)).mınus(D_SME(I));
 			if(copyFrom.get(i).isKarakter('+')){
 				JavaClassElement.javaCodeBuffer.append(".add(");
 				closeParantez=true;
@@ -282,11 +244,10 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 				}
 			}
 			
-			if(addCast){
-				JavaClassElement.javaCodeBuffer.append(")");
-			}
+			JavaWriteUtilities.endCast(cast);
 			
-			addCast=false;
+			JavaWriteUtilities.addTypeChangeFunctionToEnd(copyTo,copyFrom.get(i));
+						
 		}
 	}
 	

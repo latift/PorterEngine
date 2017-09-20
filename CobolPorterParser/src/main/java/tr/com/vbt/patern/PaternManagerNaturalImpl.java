@@ -61,6 +61,7 @@ import tr.com.vbt.natural.parser.conditions.patern.PaternEndIfBeforeElse;
 import tr.com.vbt.natural.parser.conditions.patern.PaternIf;
 import tr.com.vbt.natural.parser.conditions.patern.PaternIgnore;
 import tr.com.vbt.natural.parser.conditions.patern.PaternNone;
+import tr.com.vbt.natural.parser.conditions.patern.PaternNoneValue;
 import tr.com.vbt.natural.parser.conditions.patern.PaternRejectIf;
 import tr.com.vbt.natural.parser.conditions.patern.PaternValue;
 import tr.com.vbt.natural.parser.conditions.patern.PaternWhen;
@@ -87,6 +88,7 @@ import tr.com.vbt.natural.parser.database.patern.PaternSelect;
 import tr.com.vbt.natural.parser.enders.patern.PaternEndAtEndOfPage;
 import tr.com.vbt.natural.parser.enders.patern.PaternEndDefineData;
 import tr.com.vbt.natural.parser.enders.patern.PaternEndDisplay;
+import tr.com.vbt.natural.parser.enders.patern.PaternEndError;
 import tr.com.vbt.natural.parser.enders.patern.PaternEndMainStart;
 import tr.com.vbt.natural.parser.enders.patern.PaternEndSubroutine;
 import tr.com.vbt.natural.parser.enders.patern.PaternEndTopOfPage;
@@ -171,6 +173,8 @@ public class PaternManagerNaturalImpl  extends AbstractPaternManagerNatural{
 		commmandPatternList.add(new PaternLocalUsing());
 		commmandPatternList.add(new PaternSubroutine());
 		commmandPatternList.add(new PaternEndSubroutine());
+		commmandPatternList.add(new PaternOnError());
+		commmandPatternList.add(new PaternEndError());
 		
 		commmandPatternList.add(new PaternBackoutTransaction());
 		commmandPatternList.add(new PaternEndOfTransaction());
@@ -252,6 +256,7 @@ public class PaternManagerNaturalImpl  extends AbstractPaternManagerNatural{
 		commmandPatternList.add(new PaternEndDecide());
 		commmandPatternList.add(new PaternValue());
 		commmandPatternList.add(new PaternNone());
+		commmandPatternList.add(new PaternNoneValue());
 		//Condition End
 		
 		//Loops

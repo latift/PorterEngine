@@ -23,6 +23,7 @@ import tr.com.vbt.cobol.parser.basicverbs.ElementUndefinedCobol;
 import tr.com.vbt.cobol.parser.enders.ElementEndGroupDataType;
 import tr.com.vbt.java.util.DataTypesCommandsUtility;
 import tr.com.vbt.java.util.MultipleLinesCommandsUtility;
+import tr.com.vbt.java.utils.VariableTypes;
 import tr.com.vbt.lexer.AbstractLexing;
 import tr.com.vbt.lexer.ConversionLogModel;
 import tr.com.vbt.lexer.NaturalMode;
@@ -492,7 +493,7 @@ public class NaturalCommandList extends AbstractCommandList {
 
 			curCommand = commandList.get(index);
 
-			System.out.println(curCommand.getCommandName());
+			logger.debug(curCommand.getCommandName());
 
 			if (curCommand.getCommandName().equals(ReservedNaturalKeywords.VALUE)) {
 
@@ -1669,6 +1670,8 @@ public class NaturalCommandList extends AbstractCommandList {
 		AbstractToken current;
 
 		int innerOffset = offset;
+		
+		ElementRedefineDataTypeOfSimpleDataType simpleRedefine;
 
 		redefinedCommandList = new ArrayList<Levelable>();
 		
@@ -1692,6 +1695,18 @@ public class NaturalCommandList extends AbstractCommandList {
 					
 					if (redefinedCommandList.get(k).getDataName().equals(current.getDeger().toString())) {
 						current.setRedefinedVariable(true);
+						if(redefinedCommandList.get(k) instanceof ElementRedefineDataTypeOfSimpleDataType){
+							simpleRedefine=(ElementRedefineDataTypeOfSimpleDataType) redefinedCommandList.get(k);
+						
+							String varType=simpleRedefine.getDataType();
+							if(varType.equals("A")){
+								current.setVarType(VariableTypes.STRING_TYPE);
+							}else if(varType.equals("N")){
+								current.setVarType(VariableTypes.LONG_TYPE);
+							}else if(varType.equals("D")){
+								current.setVarType(VariableTypes.DATE_TYPE);
+							}
+						}
 						if(redefinedCommandList.get(k) instanceof ElementOneDimenRedefineArrayOfSimpleDataType){
 							current.setRedefinedVariableDimensionToSimple(true);
 						}

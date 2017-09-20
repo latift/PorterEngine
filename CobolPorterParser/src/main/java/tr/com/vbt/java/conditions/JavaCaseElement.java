@@ -18,7 +18,7 @@ public class JavaCaseElement extends  AbstractJavaElement {
 		super.writeJavaToStream();
 		valueToken = (AbstractToken) this.parameters.get("VALUE");
 		
-		JavaClassElement.javaCodeBuffer.append("case "+JavaWriteUtilities.toCustomString(valueToken)+":" + JavaConstants.NEW_LINE);								
+		JavaClassElement.javaCodeBuffer.append("case "+JavaWriteUtilities.toCustomString(valueToken)+":" + JavaConstants.NEW_LINE);	
 		this.writeChildrenJavaToStream();
 		
 		return true;

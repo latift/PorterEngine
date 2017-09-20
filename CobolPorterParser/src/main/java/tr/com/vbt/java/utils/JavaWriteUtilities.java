@@ -10,9 +10,11 @@ import org.slf4j.LoggerFactory;
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.ddm.DDM;
 import tr.com.vbt.ddm.DDMList;
+import tr.com.vbt.java.general.JavaClassElement;
 import tr.com.vbt.java.util.Utility;
 import tr.com.vbt.lexer.ConversionLogModel;
 import tr.com.vbt.lexer.RedefinedColumn;
+import tr.com.vbt.natural.parser.datalayout.program.ElementProgramDataTypeNatural;
 import tr.com.vbt.natural.parser.datalayout.program.ElementProgramGrupNatural;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.ArrayToken;
@@ -24,9 +26,12 @@ public class JavaWriteUtilities {
 	
 	final static Logger logger = LoggerFactory.getLogger(JavaWriteUtilities.class);
 	
+	public static String endCastStr=null;
+	
 	public static StringBuilder toCustomSetterString(AbstractToken token) throws Exception {
 		
 		StringBuilder tempCodeBuffer=new StringBuilder();
+
 		
 		if(token.getTip().equals(TokenTipi.SatirBasi)){ 
 			//Do nothing;
@@ -151,7 +156,9 @@ public class JavaWriteUtilities {
 		
 		if(token==null){
 			logger.debug("");
-		}else  if(token.isSubstringCommand()){
+		}
+		
+		if(token.isSubstringCommand() || (token.getLinkedToken()!=null && token.getLinkedToken().isSubstringCommand())){
 			
 			tempCodeBuffer.append(toCustomSubstringVariableString(token));
 		
@@ -319,7 +326,7 @@ public class JavaWriteUtilities {
 		}
 	}
 
-	private static String toCustomArrayVariableString(AbstractToken token) {
+	private static String toCustomArrayVariableString(AbstractToken token) throws Exception {
 	
 		StringBuilder tempCodeBuffer=new StringBuilder();
 		
@@ -361,7 +368,8 @@ public class JavaWriteUtilities {
 			
 			}else {
 			
-				tempCodeBuffer.append(arrayToken.getDeger().toString()+"["+addIntCastForArrays()+firstDimension.getDeger().toString()+"-1]");
+				firstDimension=controlFirstDimensionIsRecord(firstDimension);
+				tempCodeBuffer.append(arrayToken.getDeger().toString()+"["+addIntCastForArrays()+JavaWriteUtilities.toCustomString(firstDimension)+"-1]");
 			
 			}
 			if(secDimension!=null){
@@ -382,6 +390,34 @@ public class JavaWriteUtilities {
 		
 		return tempCodeBuffer.toString();
 
+	}
+
+	private static AbstractToken controlFirstDimensionIsRecord(AbstractToken token) {
+		
+		try {
+			AbstractToken resultToken;
+			
+			AbstractCommand command=ConvertUtilities.getVariableDefinitinCommand(token);
+			
+			ElementProgramDataTypeNatural commandElement=null;
+			ElementProgramGrupNatural parentCommandElement = null;
+			
+			AbstractCommand parentCommand=command.getParent();
+			
+			if(parentCommand instanceof ElementProgramGrupNatural && command instanceof ElementProgramDataTypeNatural){
+				commandElement=(ElementProgramDataTypeNatural) command;
+				parentCommandElement=(ElementProgramGrupNatural) parentCommand;
+			}
+			
+			resultToken=new KelimeToken(parentCommandElement.getDataName(), parentCommandElement.getSatirNumarasi(), 0, 0);
+			
+			resultToken.setRecordVariable(true);
+			resultToken.setLinkedToken(token);
+			
+			return resultToken;
+		} catch (Exception e) {
+			return token;
+		}
 	}
 
 	private static String addIntCastForArrays() {
@@ -418,15 +454,25 @@ public class JavaWriteUtilities {
 	private static String toCustomSubstringVariableString(AbstractToken token) throws Exception {
 		
 		token.setSubstringCommand(false);
+		
+		if(token.getLinkedToken()!=null && token.getLinkedToken().isSubstringCommand()){
+			
+			token.getLinkedToken().setSubstringCommand(false);
+			int startIndex=token.getLinkedToken().getSubStringStartIndex();
+			int endIndex=startIndex+token.getLinkedToken().getSubStringEndIndex();
+			return 	"FCU.substring("+toCustomString(token)+","+startIndex+","+endIndex+")";
+			
+		}else{
 	
-		int startIndex=token.getSubStringStartIndex();
-		int endIndex=startIndex+token.getSubStringEndIndex();
-		return 	"FCU.substring("+toCustomString(token)+","+startIndex+","+endIndex+")";
+			int startIndex=token.getSubStringStartIndex();
+			int endIndex=startIndex+token.getSubStringEndIndex();
+			return 	"FCU.substring("+toCustomString(token)+","+startIndex+","+endIndex+")";
+		}
 		
 	}
 	
 
-	private static String toCustomRecordVariableString(AbstractToken token) {
+	private static String toCustomRecordVariableString(AbstractToken token) throws Exception {
 		AbstractCommand variableDefinition;
 		
 		ElementProgramGrupNatural variableDefinitionGrupNatural = null;
@@ -482,6 +528,8 @@ public class JavaWriteUtilities {
 			
 			String pojosFieldType = "";
 			
+			String castStr;
+			
 			if(token.isPojoVariable()){
 				
 				pojosFieldType=ConvertUtilities.getPojosFieldType(token);
@@ -496,18 +544,22 @@ public class JavaWriteUtilities {
 			
 			setterString.append("(");
 			
-			if(pojosFieldType.equals("Date")){
-				
-				setterString.append(JavaWriteUtilities.toCustomSqlDateString(newValueToken));
-				
-			}else if(pojosFieldType.equals("Time")){
-				
-				setterString.append(JavaWriteUtilities.toCustomSqlTimeString(newValueToken));
-				
-			}else{
-				
-				setterString.append(JavaWriteUtilities.toCustomString(newValueToken));
+			//cast=JavaWriteUtilities.addCast(token,newValueToken);
+			castStr=returnCastString(token, newValueToken);
+			
+			if(castStr!=null){
+				setterString.append(castStr);
 			}
+			
+			setterString.append(JavaWriteUtilities.toCustomString(newValueToken));
+			
+			
+			if(castStr!=null){
+				setterString.append(")");
+				castStr=null;
+			}
+			
+			setterString.append(JavaWriteUtilities.returnTypeChangeFunctionToEnd(token,newValueToken));
 			
 			setterString.append(")");
 			
@@ -574,7 +626,7 @@ public class JavaWriteUtilities {
 			
 		}else if(columnReturnType.toLowerCase().equals("date")){
 			
-			getterString.append("getStringPojoValue(\"");
+			getterString.append("getDatePojoValue(\"");
 			
 		}else if(columnReturnType.toLowerCase().equals("time")){
 			
@@ -1141,7 +1193,7 @@ public class JavaWriteUtilities {
 	}
 
 	
-	private static String writeSimpleRecord(AbstractToken token) {
+	private static String writeSimpleRecord(AbstractToken token) throws Exception {
 		
 		StringBuilder tempCodeBuffer=new StringBuilder();
 		
@@ -1157,6 +1209,10 @@ public class JavaWriteUtilities {
 		
 		tempCodeBuffer.append(token.getDeger().toString());  //MAP_DIZISI
 		tempCodeBuffer.append(".");
+		if(token.getLinkedToken().isRedefinedVariable()){
+			tempCodeBuffer.append(JavaWriteUtilities.toCustomString(token.getLinkedToken()).toString());
+			return tempCodeBuffer.toString();
+		}
 		tempCodeBuffer.append(token.getLinkedToken().getDeger().toString()); //D_SIRA
 		if(token.getLinkedToken().getTip().equals(TokenTipi.Array)){
 			arrayToken=(ArrayToken) token.getLinkedToken();
@@ -1240,8 +1296,12 @@ public class JavaWriteUtilities {
 			StringBuilder tempCodeBuffer = new StringBuilder();
 			
 			String type=ConvertUtilities.getTypeOfVariable(token);
-			
-			if(token.getDeger().toString().equals("TIME")
+			if(token.getDeger().toString().equalsIgnoreCase("DAT4I")){
+				type="Date";
+			}else if(token.getDeger().toString().equalsIgnoreCase("TIME")){
+				type="Time";
+			}
+			else if(token.getDeger().toString().equals("TIME")
 					||token.getDeger().toString().equals("TIMX")
 					||token.getDeger().toString().equals("LANGUAGE")
 					||token.getDeger().toString().equals("PROGRAM")
@@ -1253,11 +1313,14 @@ public class JavaWriteUtilities {
 				type="String";
 			}
 				
-			if(token.getDeger().equals("PF_KEY")){
+			if(token.getDeger().toString().equalsIgnoreCase("PF_KEY")){
 				tempCodeBuffer.append("getPF_KEY()");
-			}
-			else if(type.equals("String")){
+			}else if(type.equalsIgnoreCase("String")){
 				tempCodeBuffer.append("getSystemVariableStr(\""+token.getDeger().toString()+"\")");
+			}else if(type.equalsIgnoreCase("Date")){
+				tempCodeBuffer.append("getSystemVariableDate(\""+token.getDeger().toString()+"\")");
+			}else if(type.equalsIgnoreCase("Time")){
+				tempCodeBuffer.append("getSystemVariableTime(\""+token.getDeger().toString()+"\")");
 			}else{
 				tempCodeBuffer.append("getSystemVariable(\""+token.getDeger().toString()+"\")");
 			}
@@ -1299,12 +1362,161 @@ public class JavaWriteUtilities {
 		
 	}
 
+	public static void endCast(boolean cast) {
+		if(endCastStr!=null){
+			JavaClassElement.javaCodeBuffer.append(endCastStr);
+			endCastStr=null;
+		}
+		if(cast){
+			JavaClassElement.javaCodeBuffer.append(")");
+		}
+	}
 
+	public  static boolean addCast(AbstractToken copyTo, AbstractToken copyFrom) {
+		
+		String result=null;
+		String typeOfCopyTo=ConvertUtilities.getTypeOfVariable(copyTo);
+		
+		String typeOfCopyFrom=ConvertUtilities.getTypeOfVariable(copyFrom);
+		
+		if(typeOfCopyTo==null || typeOfCopyFrom==null){
+			return false;
+		}
+		typeOfCopyTo=typeOfCopyTo.toLowerCase();
+		typeOfCopyFrom=typeOfCopyFrom.toLowerCase();
+		
+		result=cast(typeOfCopyTo,typeOfCopyFrom);
+		
+		if(result!=null  && result.trim().length()>0){
+			JavaClassElement.javaCodeBuffer.append(result);
+			return true;
+		}
+		return false;
+		
+	}
 
+	
+	public  static String returnCastString(AbstractToken copyTo, AbstractToken copyFrom) {
+		
+		String result=null;
+		String typeOfCopyTo=ConvertUtilities.getTypeOfVariable(copyTo);
+		
+		String typeOfCopyFrom=ConvertUtilities.getTypeOfVariable(copyFrom);
+		
+		if(typeOfCopyTo==null || typeOfCopyFrom==null){
+			return null;
+		}
+		typeOfCopyTo=typeOfCopyTo.toLowerCase();
+		typeOfCopyFrom=typeOfCopyFrom.toLowerCase();
+		
+		
+		result=cast(typeOfCopyTo,typeOfCopyFrom);
+		
+		return result;
+		
+	}
 
+	private static String cast(String typeOfCopyTo, String typeOfCopyFrom) {
+			String result=null;
+			//Long-String
+			if(typeOfCopyTo.equalsIgnoreCase("long") && typeOfCopyFrom.equalsIgnoreCase("string") ){
+				result="Long.valueOf(";
+			}else if(typeOfCopyTo.equalsIgnoreCase("string") && typeOfCopyFrom.equalsIgnoreCase("long") ){
+					result=" String.valueOf(";
+					
+				
+			// Bigdecimal -- Long
+			}else if(typeOfCopyTo.equalsIgnoreCase("bigdecimal") && typeOfCopyFrom.equalsIgnoreCase("long")){
+				result=" BigDecimal.valueOf(";
+			}
+			
+			// Bigdecimal -- String
+			else if(typeOfCopyTo.equalsIgnoreCase("bigdecimal") && typeOfCopyFrom.equalsIgnoreCase("string")){
+				result=" BigDecimal.valueOf(";
+			}
+		
+			
+			//String-Time
+			else if(typeOfCopyTo.equalsIgnoreCase("string") && typeOfCopyFrom.equalsIgnoreCase("time")){
+				result=" FCU.timeToStringwithFormat(";
+			}else if(typeOfCopyTo.equalsIgnoreCase("time") && typeOfCopyFrom.equalsIgnoreCase("string")){
+				result=" FCU.stringToSqlTime(";
+			}
+			
+			//String-Date
+			else if(typeOfCopyTo.equalsIgnoreCase("date") && typeOfCopyFrom.equalsIgnoreCase("string")){
+				result=" FCU.stringToDate(";
+				endCastStr=",\"dd.MM.yyyy\"";
+			}else if(typeOfCopyTo.equalsIgnoreCase("string") && typeOfCopyFrom.equalsIgnoreCase("date")){
+				result=" FCU.dateToStringwithFormat(";
+				endCastStr=",\"dd.MM.yyyy\"";
+			}
+			return result;
+	}
+	
+	private static String typeChangeMethod(String typeOfCopyTo, String typeOfCopyFrom) {
+		String result=null;
+		//Long-String
+		
+		// Bigdecimal -- Long
+		if(typeOfCopyTo.equalsIgnoreCase("long") && typeOfCopyFrom.equalsIgnoreCase("bigdecimal")){
+			result=".longValue()";
+		}
+		
+		// Bigdecimal -- String
+		else if(typeOfCopyTo.equalsIgnoreCase("string") && typeOfCopyFrom.equalsIgnoreCase("bigdecimal")){
+			result=".toPlainString()";
+		}
+	
+		return result;
+}
 
-
-
+	//Sonuna ... şeklinde method ekler. Örnek .longValue()
+	public static void addTypeChangeFunctionToEnd(AbstractToken copyTo, AbstractToken copyFrom) {
+		
+		String result=null;
+		String typeOfCopyTo=ConvertUtilities.getTypeOfVariable(copyTo);
+		
+		String typeOfCopyFrom=ConvertUtilities.getTypeOfVariable(copyFrom);
+		
+		if(typeOfCopyTo==null || typeOfCopyFrom==null){
+			return;
+		}
+		typeOfCopyTo=typeOfCopyTo.toLowerCase();
+		typeOfCopyFrom=typeOfCopyFrom.toLowerCase();
+		
+		result=typeChangeMethod(typeOfCopyTo,typeOfCopyFrom);
+		
+		if(result!=null  && result.trim().length()>0){
+			JavaClassElement.javaCodeBuffer.append(result);
+			return;
+		}
+		return;
+		
+	}
+	
+	//Sonuna ... şeklinde method ekler. Örnek .longValue()
+		public static String returnTypeChangeFunctionToEnd(AbstractToken copyTo, AbstractToken copyFrom) {
+			
+			String result=null;
+			String typeOfCopyTo=ConvertUtilities.getTypeOfVariable(copyTo);
+			
+			String typeOfCopyFrom=ConvertUtilities.getTypeOfVariable(copyFrom);
+			
+			if(typeOfCopyTo==null || typeOfCopyFrom==null){
+				return "";
+			}
+			typeOfCopyTo=typeOfCopyTo.toLowerCase();
+			typeOfCopyFrom=typeOfCopyFrom.toLowerCase();
+			
+			result=typeChangeMethod(typeOfCopyTo,typeOfCopyFrom);
+			
+			if(result!=null  && result.trim().length()>0){
+				return result;
+			}
+			return "";
+			
+		}
 
 
 

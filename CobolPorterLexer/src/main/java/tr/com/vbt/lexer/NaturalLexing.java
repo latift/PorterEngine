@@ -3124,8 +3124,6 @@ public class NaturalLexing extends AbstractLexing {
 
 		AbstractToken current;
 
-		Field field;
-
 		KelimeToken includeFilename = null;
 
 		String fieldNameForLookup = null;
@@ -3156,6 +3154,8 @@ public class NaturalLexing extends AbstractLexing {
 					    		current.setDeger(fWrapper.getFieldOwnerFile() + "." + current.getDeger());
 						    }*/
 					    	current.setDeger(fWrapper.getFieldOwnerFile() + ".getInstance(sessionId, programName)." + current.getDeger());
+					    	current.setIncludedVariable(true);
+					    	current.setIncludedVariable(fWrapper.getField());
 					    	logger.debug("Add "+ fWrapper.getFieldOwnerFile()+". Before"+current.getDeger());
 					    	
 					    	if(fWrapper.getField().getType().getSimpleName().contains("Redefined")){
@@ -3712,8 +3712,59 @@ public class NaturalLexing extends AbstractLexing {
 
 				}
 			}
+			
+			setVal2();
 		}
 		
+		
+		// VAL(MAP.YETSUBE)  --> bunu MAP e çevirir.
+				// val=true set eder.
+				private void setVal2() {
+					AbstractToken current; // SUBSTR
+					AbstractToken parantezOpen; // (
+					AbstractToken realToken;// SB_ACIKLAMA
+					AbstractToken dotToken;// SB_ACIKLAMA
+					AbstractToken realLinkedToken;// SB_ACIKLAMA
+					AbstractToken parantezClose; // )
+
+					String currentDeger;
+					String nextNextDeger;
+
+					for (int i = 0; i < tokenListesi.size()-5; i++) {
+
+						current = tokenListesi.get(i);
+						parantezOpen = tokenListesi.get(i + 1);
+						realToken = tokenListesi.get(i + 2);
+						dotToken= tokenListesi.get(i + 3);
+						realLinkedToken = tokenListesi.get(i + 4);
+						parantezClose = tokenListesi.get(i + 5);
+						logger.debug("current:" + current);
+					
+						
+						if (!current.isKelime(ReservedNaturalKeywords.VAL)
+							||!parantezOpen.isKarakter('(')
+							|| !parantezClose.isKarakter(')')
+							|| !dotToken.isNoktaToken()
+							|| !realLinkedToken.isKelime()
+							|| !realLinkedToken.isKelime()){
+							continue;
+						}
+					
+						realToken.setVal(true);
+						realToken.setLinkedToken(realLinkedToken);
+						realToken.setRecordVariable(true);
+
+						tokenListesi.add(i, realToken);
+
+						tokenListesi.remove(i + 6);
+						tokenListesi.remove(i + 5);
+						tokenListesi.remove(i + 4);
+						tokenListesi.remove(i + 3);
+						tokenListesi.remove(i + 2);
+						tokenListesi.remove(i + 1);
+
+					}
+				}
 		
 		
 		

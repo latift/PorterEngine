@@ -125,6 +125,10 @@ public class ConvertUtilities {
 			return getVariableTypeOfGlobalVariable(variable);
 		}
 		
+		if(variable.isRedefinedVariable()){
+			return getVariableTypeOfRedefinedVariable(variable);
+		}
+		
 		List<AbstractCommand> commandList = NaturalCommandList.getInstance().getCommandListWithIncludedVariables();
 		for (AbstractCommand abstractCommand : commandList) {
 			
@@ -187,6 +191,11 @@ public class ConvertUtilities {
 		return VariableTypes.UNDEFINED_TYPE;
 	}
 	
+	private static VariableTypes getVariableTypeOfRedefinedVariable(AbstractToken variable) {
+		
+		return variable.getVarType();
+	}
+
 	private static VariableTypes getVariableTypeOfGlobalVariable(AbstractToken variable) {
 	
 		String variableName=variable.getDeger().toString();
@@ -235,14 +244,14 @@ public class ConvertUtilities {
 		Double d = 0.0;
 		if (variable.getTip().equals(TokenTipi.Sayi)) {
 			if (variable.getDeger() instanceof Integer) {
-				return "int";
+				return "long";
 			} else {
 
 				d = (Double) variable.getDeger();
 				if (d % 1 != 0) {
 					return "float";
 				} else {
-					return "int";
+					return "long";
 				}
 
 			}
@@ -298,6 +307,11 @@ public class ConvertUtilities {
 
 		}
 		return VariableTypes.UNDEFINED_TYPE.toString();
+	}
+	
+	public static AbstractCommand getCommandsParentCommand(AbstractCommand command) {
+		
+		return command.getParent();
 	}
 
 	public static AbstractCommand getVariableDefinitinCommand(AbstractToken variable) {
@@ -369,25 +383,10 @@ public class ConvertUtilities {
 
 	public static String getTypeOfVariable(AbstractToken variable) {
 
-		/**
-		 * if(systemVariable.getDeger().equals("PF-KEY")) return true; else
-		 * if(systemVariable.getDeger().toString().startsWith("DAT")) return
-		 * true; else if(systemVariable.getDeger().equals("DAT4E")) return true;
-		 * else if(systemVariable.getDeger().equals("TIMX")) return true; else
-		 * if(systemVariable.getDeger().equals("TIME")) return true; else
-		 * if(systemVariable.getDeger().equals("USER")) return true; else
-		 * if(systemVariable.getDeger().equals("PROGRAM")) return true; else
-		 * if(systemVariable.getDeger().equals("DEVICE")) return true; else
-		 * if(systemVariable.getDeger().equals("LANGUAGE")) return true;
-		 * 
-		 * else if(systemVariable.getDeger().equals("PAGE_NUMBER")) return true;
-		 * else if(systemVariable.getDeger().equals("PAGE-NUMBER")) return true;
-		 * else if(systemVariable.getDeger().equals("ISN")) return true; else
-		 * if(systemVariable.getDeger().equals("COUNTER"))
-		 */
-
 		if (variable.isSystemVariable()) {
-			if (variable.getDeger().equals("PF-KEY") || variable.getDeger().equals("USER")
+			if (variable.getDeger().toString().startsWith("DAT")) {
+				return "Time";
+			}else if (variable.getDeger().equals("PF-KEY") || variable.getDeger().equals("USER")
 					|| variable.getDeger().equals("PROGRAM") || variable.getDeger().equals("DEVICE")
 					|| variable.getDeger().equals("LANGUAGE") || variable.getDeger().toString().startsWith("DAT")
 					|| variable.getDeger().equals("PF-KEY")) {
@@ -397,6 +396,13 @@ public class ConvertUtilities {
 			}
 		}else if(variable.isSayi()){
 			return "long";
+		}else if(variable.isIncludedVariable()){
+			try {
+				String type= variable.getIncludedVariable().getType().getSimpleName().toLowerCase();
+				return type;
+			} catch (Exception e) {
+				return null;
+			}
 		}
 		if(variable.getLinkedToken()!=null){
 			variable=variable.getLinkedToken();

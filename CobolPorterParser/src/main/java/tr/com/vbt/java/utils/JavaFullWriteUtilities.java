@@ -128,7 +128,7 @@ public class JavaFullWriteUtilities {
 			logger.debug("");
 		}
 		
-		if(token.isSubstringCommand()){
+		if(token.isSubstringCommand() || (token.getLinkedToken()!=null && token.getLinkedToken().isSubstringCommand())){
 			
 			tempCodeBuffer.append(toCustomSubstringVariableString(token));
 		
@@ -423,10 +423,20 @@ public class JavaFullWriteUtilities {
 	private static String toCustomSubstringVariableString(AbstractToken token) throws Exception {
 		
 		token.setSubstringCommand(false);
+		
+		if(token.getLinkedToken()!=null && token.getLinkedToken().isSubstringCommand()){
+			
+			token.getLinkedToken().setSubstringCommand(false);
+			int startIndex=token.getLinkedToken().getSubStringStartIndex();
+			int endIndex=startIndex+token.getLinkedToken().getSubStringEndIndex();
+			return 	"FCU.substring("+toCustomString(token)+","+startIndex+","+endIndex+")";
+			
+		}else{
 	
-		int startIndex=token.getSubStringStartIndex();
-		int endIndex=startIndex+token.getSubStringEndIndex();
-		return 	"FCU.substring("+toCustomString(token)+","+startIndex+","+endIndex+")";
+			int startIndex=token.getSubStringStartIndex();
+			int endIndex=startIndex+token.getSubStringEndIndex();
+			return 	"FCU.substring("+toCustomString(token)+","+startIndex+","+endIndex+")";
+		}
 		
 	}
 	

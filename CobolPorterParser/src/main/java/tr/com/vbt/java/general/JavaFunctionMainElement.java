@@ -61,6 +61,8 @@ public class JavaFunctionMainElement extends  AbstractJavaElement{
 						
 				AbstractJavaElement.javaCodeBuffer.append("				logger.debug(e.getMessage(), e);"+JavaConstants.NEW_LINE);
 				
+				AbstractJavaElement.javaCodeBuffer.append("				ON_ERROR();"+JavaConstants.NEW_LINE);
+				
 				AbstractJavaElement.javaCodeBuffer.append("		}"+JavaConstants.NEW_LINE);
 				
 				AbstractJavaElement.javaCodeBuffer.append(JavaConstants.CLOSE_BRACKET+ "//Main Program End");

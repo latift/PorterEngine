@@ -80,6 +80,7 @@ public IkiliOzelKelimelerNatural() {
 	ikiliKelimeler.add(new DoubleWordKeyword("ON","ERROR"));
 	ikiliKelimeler.add(new DoubleWordKeyword("INPUT","MAP"));
 	ikiliKelimeler.add(new DoubleWordKeyword("EXAMINE","FULL"));
+	ikiliKelimeler.add(new DoubleWordKeyword("NONE","VALUE"));
 	
 	//TODO REPORTING MODDADA GEREK DUYULMAMASI LAZIM
 	if(ConversionLogModel.getInstance().getMode().equals(NaturalMode.REPORTING)){

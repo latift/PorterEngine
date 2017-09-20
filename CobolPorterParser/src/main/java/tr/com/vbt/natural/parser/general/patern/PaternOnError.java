@@ -3,11 +3,8 @@ package tr.com.vbt.natural.parser.general.patern;
 import java.util.List;
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
-import tr.com.vbt.lexer.ConversionLogModel;
-import tr.com.vbt.lexer.NaturalMode;
 import tr.com.vbt.lexer.ReservedNaturalKeywords;
-import tr.com.vbt.natural.parser.general.ElementEndError;
-import tr.com.vbt.natural.parser.general.ElementOnError;
+import tr.com.vbt.natural.parser.general.ElementSubroutine;
 import tr.com.vbt.patern.AbstractPattern;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.OzelKelimeToken;
@@ -46,19 +43,12 @@ public class PaternOnError extends AbstractPattern{
 		starterToken.setTekrarlayabilir("+");
 		patternTokenList.add(starterToken);	
 		
-		enderToken=new OzelKelimeToken(ReservedNaturalKeywords.END_ERROR, 0, 0, 0);
-		enderToken.setSourceFieldName("END_COMMAND");
-		enderToken.setOptional(true);
-		patternTokenList.add(enderToken);	
-
-		
-	
 	}
 	
 	@Override
 	public AbstractCommand createElement(){
-		ElementOnError elementDisplay = new ElementOnError(ReservedNaturalKeywords.ON_ERROR,"GENERAL.*.ON_ERROR");
-		return elementDisplay;
+		AbstractCommand elementParagraph = new ElementSubroutine(ReservedNaturalKeywords.SUBROUTINE,"GENERAL.SUBROUTINE" );
+		return elementParagraph;
 	}
 
 
@@ -67,13 +57,12 @@ public class PaternOnError extends AbstractPattern{
 			AbstractToken currentTokenForMatch,
 			AbstractToken abstractTokenInPattern) {
 		
-		ElementOnError matchedCommandAdd=(ElementOnError) matchedCommand;
-		ElementEndError matchedCommandAddEND=(ElementEndError) matchedCommand;
+		ElementSubroutine elementParagraph=(ElementSubroutine) matchedCommand;
 		
 		super.setSatirNumarasi(matchedCommand,currentTokenForMatch, abstractTokenInPattern);
-		if(abstractTokenInPattern.getSourceFieldName()==null){
 		
-		}
+		elementParagraph.setSubroutineName("ON_ERROR");
+		elementParagraph.getParameters().put("subroutineName", elementParagraph.getSubroutineName());
 		
 	}
 		

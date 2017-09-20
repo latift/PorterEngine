@@ -43,6 +43,8 @@ public class JavaCompressElementV3 extends AbstractJavaElement {
 	private ArrayToken arrayTypeSource;
 	
 	private boolean isLeavingNo, isFull;
+	
+	boolean cast;
 
 	@Override
 	public boolean writeJavaToStream() throws Exception{
@@ -112,17 +114,26 @@ public class JavaCompressElementV3 extends AbstractJavaElement {
 
 	
 	private void writeSourcePart() throws Exception {
+		
+		String castStr;
 
 		for (int i = 0; i < sourceList.size(); i++) {
 
 			source = sourceList.get(i);
 
+			cast=JavaWriteUtilities.addCast(dest,source);
+			
 			if(isFull){  // Trim yapma
 				JavaClassElement.javaCodeBuffer.append(JavaFullWriteUtilities.toCustomString(source));
 			}else{ //Trim yap
 				JavaClassElement.javaCodeBuffer.append(JavaTrimWriteUtilities.toCustomString(source));
 			}
 
+			JavaWriteUtilities.endCast(cast);
+			
+			JavaWriteUtilities.addTypeChangeFunctionToEnd(dest,source);
+			
+			
 			if (i < sourceList.size() - 1) {
 				JavaClassElement.javaCodeBuffer.append(" + ");
 				if(!isLeavingNo){
@@ -169,5 +180,7 @@ public class JavaCompressElementV3 extends AbstractJavaElement {
 			
 			return true;
 		}
+		
+		
 
 }

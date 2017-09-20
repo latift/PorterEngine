@@ -74,7 +74,7 @@ public class JavaSwitchElementV2 extends  AbstractJavaElement {
 			
 			JavaClassElement.javaCodeBuffer.append("switch "+JavaConstants.OPEN_NORMAL_BRACKET);
 				try {
-					
+					addIntCastForLong(condition);
 					JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(condition));
 					
 					
@@ -99,5 +99,20 @@ public class JavaSwitchElementV2 extends  AbstractJavaElement {
 		return true;
 	}
 
+
+	private static void addIntCastForLong(AbstractToken controlToken) {
+	
+		String typeOfToken=ConvertUtilities.getTypeOfVariable(controlToken);
+		
+		if(typeOfToken==null){
+			return;
+		}
+		typeOfToken=typeOfToken.toLowerCase();
+		
+		if(typeOfToken.equals("long")){
+			JavaClassElement.javaCodeBuffer.append("(int)");
+		}
+		return;
+	}
 
 }

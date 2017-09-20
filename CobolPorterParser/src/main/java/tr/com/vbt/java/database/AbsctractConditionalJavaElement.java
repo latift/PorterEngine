@@ -281,32 +281,43 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 		
 		findByString.append(JavaConstants.OPEN_NORMAL_BRACKET);
 		
-		Object lastItem;
-		lastItem=conditionListWithFiltersAndParantesiz.get(conditionListWithFiltersAndParantesiz.size()-1);
-		for(int index=0; index<conditionListWithFiltersAndParantesiz.size();index++){
-			curFilter=null;
-			if (conditionListWithFiltersAndParantesiz.get(index) instanceof Filter){ 
-				curFilter=(Filter) conditionListWithFiltersAndParantesiz.get(index);
-			}else{
-				continue;
+		if(conditionListWithFiltersAndParantesiz.size()>0){
+			Object lastItem=null;
+			try {
+				lastItem=conditionListWithFiltersAndParantesiz.get(conditionListWithFiltersAndParantesiz.size()-1);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			
-			findByString.append(JavaWriteUtilities.toCustomString(curFilter.getFilterValue()));
-			
-			
-			
-			if(index<conditionListWithFiltersAndParantesiz.size()-1  && lastItem instanceof Filter){
-				findByString.append(",");
-			}
-			if(index<conditionListWithFiltersAndParantesiz.size()-2  && lastItem instanceof KarakterToken){ // ) varsa sonunda
-				findByString.append(",");
+			for(int index=0; index<conditionListWithFiltersAndParantesiz.size();index++){
+				curFilter=null;
+				if (conditionListWithFiltersAndParantesiz.get(index) instanceof Filter){ 
+					curFilter=(Filter) conditionListWithFiltersAndParantesiz.get(index);
+				}else{
+					continue;
+				}
+	
+				if(curFilter.getFilterValue().isSayi()){
+					findByString.append("(long)");
+				}
+				
+				findByString.append(JavaWriteUtilities.toCustomString(curFilter.getFilterValue()));
+				
+				
+				
+				if(index<conditionListWithFiltersAndParantesiz.size()-1  && lastItem instanceof Filter){
+					findByString.append(",");
+				}
+				if(index<conditionListWithFiltersAndParantesiz.size()-2  && lastItem instanceof KarakterToken){ // ) varsa sonunda
+					findByString.append(",");
+				}
 			}
 		}
-		
 		findByString.append(JavaConstants.CLOSE_NORMAL_BRACKET);
 	
 		return findByString.toString();
 	}
+
 
 	private String createMethodName(String isFindByOrReadBy) {
 	
@@ -334,29 +345,16 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 			// -->findByMusno_HesharyilGE_
 			if (curFilter != null) {
 				logger.debug(curFilter.getFilterName().getDeger().toString());
-				if (curFilter.getFilterName().isPojoVariable()) {
-					if (curFilter.getFilterName().getColumnNameToken() == null) {
+					if (curFilter.getFilterName().getLinkedToken() != null) {
 						createdFindByMethodName.append(Utility.columnNameToPojoFieldNameWithFirstLetterUpper(
-								curFilter.getFilterName().getDeger().toString()));
-					} else {
-						createdFindByMethodName.append(Utility.columnNameToPojoFieldNameWithFirstLetterUpper(
-								curFilter.getFilterName().getColumnNameToken().getDeger().toString()));
-					}
-				} else if (curFilter.getFilterName().isRecordVariable()) {
-					if (curFilter.getFilterName().getColumnNameToken() == null) {
-						createdFindByMethodName.append(Utility.recordNameToRecordDotRecordFieldName(curFilter.getFilterName()));
-					}else{
-						createdFindByMethodName.append(Utility.recordNameToRecordDotRecordFieldName(curFilter.getFilterName().getColumnNameToken()));
-					}
-				} else {
-					if (curFilter.getFilterName().getColumnNameToken() == null) {
-						createdFindByMethodName.append(Utility.columnNameToPojoFieldNameWithFirstLetterUpper(
-								curFilter.getFilterName().getDeger().toString()));
-					}else{
+								curFilter.getFilterName().getLinkedToken().getDeger().toString()));
+					}else if (curFilter.getFilterName().getColumnNameToken() != null) {
 						createdFindByMethodName.append(Utility.columnNameToPojoFieldNameWithFirstLetterUpper(
 								curFilter.getFilterName().getColumnNameToken().getDeger().toString()));
+					}else{
+						createdFindByMethodName.append(Utility.columnNameToPojoFieldNameWithFirstLetterUpper(
+								curFilter.getFilterName().getDeger().toString()));
 					}
-				}
 				createdFindByMethodName.append(operatorInfoToMethodName(curFilter));
 
 				if (index < conditionListWithFiltersAndParantesiz.size() - 1) {
