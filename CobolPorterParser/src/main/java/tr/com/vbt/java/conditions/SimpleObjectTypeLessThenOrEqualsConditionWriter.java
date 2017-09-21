@@ -10,11 +10,19 @@ public class SimpleObjectTypeLessThenOrEqualsConditionWriter implements SimpleCo
 	public void writeSimpleCondition(AbstractToken conditionLeft, AbstractToken conOperator,
 			AbstractToken conditionRight, ConditionJoiner conditionJoiner) throws Exception{
 		
+		boolean cast;
+		
 		JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(conditionLeft));
 		
 		JavaClassElement.javaCodeBuffer.append(".compareTo(");
 		
+		cast=JavaWriteUtilities.addCast(conditionLeft,conditionRight);
+		
 		JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(conditionRight));
+		
+		JavaWriteUtilities.endCast(cast);
+		
+		JavaWriteUtilities.addTypeChangeFunctionToEnd(conditionLeft,conditionRight);
 		
 		JavaClassElement.javaCodeBuffer.append(")<=0");
 		

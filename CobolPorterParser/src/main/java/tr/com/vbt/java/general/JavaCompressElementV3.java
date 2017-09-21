@@ -13,6 +13,7 @@ import tr.com.vbt.java.utils.JavaTrimWriteUtilities;
 import tr.com.vbt.java.utils.JavaWriteUtilities;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.ArrayToken;
+import tr.com.vbt.token.KelimeToken;
 
 //*  5130   COMPRESS IDGIDBS-TOZLUK.ADI ' ' IDGIDBS-TOZLUK.SOYAD INTO                                                                    
 //5132     MAP2.ADSOY1   --> MAP2.ADSOY1=TOZLUK.getAdi+' '+ TOZLUK.getSoyad;
@@ -120,6 +121,12 @@ public class JavaCompressElementV3 extends AbstractJavaElement {
 		for (int i = 0; i < sourceList.size(); i++) {
 
 			source = sourceList.get(i);
+			
+			//Compress de - işlemi olmaz. Compress string join yapar.
+			if(source.isKarakter('-')){
+				source=new KelimeToken<>("-",0,0,0);
+				source.setConstantVariableWithQuota(true); 
+			}
 
 			cast=JavaWriteUtilities.addCast(dest,source);
 			

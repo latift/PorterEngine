@@ -17,9 +17,17 @@ public class SimpleObjectTypeEqualsConditionWriter implements SimpleConditionWri
 		
 		JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(conditionLeft));
 		
+		boolean cast;
+		
 		JavaClassElement.javaCodeBuffer.append(".equals(");
 		
+		cast=JavaWriteUtilities.addCast(conditionLeft,conditionRight);
+		
 		JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(conditionRight));
+		
+		JavaWriteUtilities.endCast(cast);
+		
+		JavaWriteUtilities.addTypeChangeFunctionToEnd(conditionLeft,conditionRight);
 		
 		JavaClassElement.javaCodeBuffer.append(")");
 		

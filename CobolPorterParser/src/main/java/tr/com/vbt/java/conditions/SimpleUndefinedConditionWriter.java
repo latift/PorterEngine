@@ -10,7 +10,7 @@ public class SimpleUndefinedConditionWriter implements SimpleConditionWriter {
 	public void writeSimpleCondition(AbstractToken conditionLeft, AbstractToken conOperator,
 			AbstractToken conditionRight, ConditionJoiner conditionJoiner) throws Exception {
 		
-	JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(conditionLeft));
+		JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(conditionLeft));
 		
 		JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(conOperator));
 		

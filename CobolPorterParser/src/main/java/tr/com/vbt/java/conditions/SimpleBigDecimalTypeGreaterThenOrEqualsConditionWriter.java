@@ -11,21 +11,20 @@ public class SimpleBigDecimalTypeGreaterThenOrEqualsConditionWriter implements S
 	@Override
 	public void writeSimpleCondition(AbstractToken conditionLeft, AbstractToken conOperator,
 			AbstractToken conditionRight, ConditionJoiner conditionJoiner) throws Exception {
-
+		
+		boolean cast;
+		
 		JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(conditionLeft));
 		
 		JavaClassElement.javaCodeBuffer.append(".compareTo(");
 		
-		boolean castDone=false;
-		if(ConvertUtilities.isBigDecimal(conditionLeft) && ConvertUtilities.isPrimitiveType(conditionRight)){
-			castDone=addBigDecimalCast();
-		}
+		cast=JavaWriteUtilities.addCast(conditionLeft,conditionRight);
 		
 		JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(conditionRight));
 		
-		if(castDone){
-			JavaClassElement.javaCodeBuffer.append(")");
-		}
+		JavaWriteUtilities.endCast(cast);
+		
+		JavaWriteUtilities.addTypeChangeFunctionToEnd(conditionLeft,conditionRight);
 		
 		JavaClassElement.javaCodeBuffer.append(")>=0");
 		

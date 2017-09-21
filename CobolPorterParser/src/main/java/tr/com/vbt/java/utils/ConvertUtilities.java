@@ -115,17 +115,14 @@ public class ConvertUtilities {
 			variable=variable.getLinkedToken();
 		}
 		
-		if(variable.isPojoVariable()){
-			
+		
+		if(variable.isSystemVariable()){
+			return getVariableTypeOfSystem(variable);
+		}else if(variable.isPojoVariable()){
 			return getVariableTypeOfPojo(variable);
-			
-		}
-		
-		if(variable.isGlobalVariable()){
+		}else if(variable.isGlobalVariable()){
 			return getVariableTypeOfGlobalVariable(variable);
-		}
-		
-		if(variable.isRedefinedVariable()){
+		}else if(variable.isRedefinedVariable()){
 			return getVariableTypeOfRedefinedVariable(variable);
 		}
 		
@@ -191,6 +188,20 @@ public class ConvertUtilities {
 		return VariableTypes.UNDEFINED_TYPE;
 	}
 	
+	private static VariableTypes getVariableTypeOfSystem(AbstractToken variable) {
+			if (variable.getDeger().toString().startsWith("DAT")) {
+				return VariableTypes.DATE_TYPE;
+			}else if (variable.getDeger().equals("PF-KEY") || variable.getDeger().equals("USER")
+					|| variable.getDeger().equals("PROGRAM") || variable.getDeger().equals("DEVICE")
+					|| variable.getDeger().equals("LANGUAGE") 
+					|| variable.getDeger().equals("PF-KEY")) {
+				return VariableTypes.STRING_TYPE;
+			} else {
+				return VariableTypes.LONG_TYPE;
+			}
+		
+	}
+
 	private static VariableTypes getVariableTypeOfRedefinedVariable(AbstractToken variable) {
 		
 		return variable.getVarType();
@@ -385,14 +396,14 @@ public class ConvertUtilities {
 
 		if (variable.isSystemVariable()) {
 			if (variable.getDeger().toString().startsWith("DAT")) {
-				return "Time";
+				return "Date";
 			}else if (variable.getDeger().equals("PF-KEY") || variable.getDeger().equals("USER")
 					|| variable.getDeger().equals("PROGRAM") || variable.getDeger().equals("DEVICE")
 					|| variable.getDeger().equals("LANGUAGE") || variable.getDeger().toString().startsWith("DAT")
 					|| variable.getDeger().equals("PF-KEY")) {
 				return "String";
 			} else {
-				return "int";
+				return "long";
 			}
 		}else if(variable.isSayi()){
 			return "long";
@@ -403,6 +414,8 @@ public class ConvertUtilities {
 			} catch (Exception e) {
 				return null;
 			}
+		}else if(variable.isConstantVariableWithQuota()){
+			return "String";
 		}
 		if(variable.getLinkedToken()!=null){
 			variable=variable.getLinkedToken();

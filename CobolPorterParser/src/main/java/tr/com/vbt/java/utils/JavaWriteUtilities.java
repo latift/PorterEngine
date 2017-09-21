@@ -542,26 +542,41 @@ public class JavaWriteUtilities {
 			
 			//setterString.append(Utility.pojoSetterName(token));
 			
-			setterString.append("(");
+			setterString.append("(");  //Pojo Starter
+			
+			
+			
+			
 			
 			//cast=JavaWriteUtilities.addCast(token,newValueToken);
 			castStr=returnCastString(token, newValueToken);
+			logger.debug("1"+setterString.toString());
 			
 			if(castStr!=null){
 				setterString.append(castStr);
 			}
+			logger.debug("2"+setterString.toString());
 			
 			setterString.append(JavaWriteUtilities.toCustomString(newValueToken));
+			logger.debug("3"+setterString.toString());
 			
+			if(endCastStr!=null){
+				setterString.append(endCastStr);
+				endCastStr=null;
+			}
 			
 			if(castStr!=null){
 				setterString.append(")");
-				castStr=null;
 			}
 			
-			setterString.append(JavaWriteUtilities.returnTypeChangeFunctionToEnd(token,newValueToken));
+			logger.debug("4"+setterString.toString());
 			
-			setterString.append(")");
+			setterString.append(JavaWriteUtilities.returnTypeChangeFunctionToEnd(token,newValueToken));
+			logger.debug("5"+setterString.toString());
+			
+			////NATURAL CODE:1487   :.0 IDGIDBS-TKARTEX .GIRTAR : = *DATN  
+			setterString.append(")"); //Pojo Ender
+			logger.debug("6"+setterString.toString());
 			
 			return setterString.toString();
 			
@@ -616,7 +631,11 @@ public class JavaWriteUtilities {
 		
 		String columnReturnType=Utility.findViewAndColumnNamesReturnType(token);
 		
-	if(columnReturnType.toLowerCase().equals("long")){
+		if(columnReturnType.toLowerCase().equals("long")){
+			
+			getterString.append("getLongPojoValue(\"");
+			
+		}else if(columnReturnType.toLowerCase().equals("int")){  //Pojo da int olmamali ama varsada Long diye cekmeli
 			
 			getterString.append("getLongPojoValue(\"");
 			
@@ -1296,7 +1315,9 @@ public class JavaWriteUtilities {
 			StringBuilder tempCodeBuffer = new StringBuilder();
 			
 			String type=ConvertUtilities.getTypeOfVariable(token);
-			if(token.getDeger().toString().equalsIgnoreCase("DAT4I")){
+			if(token.getDeger().toString().contains("DATEKRAN")){
+				type="String";
+			}else if(token.getDeger().toString().contains("DAT")){
 				type="Date";
 			}else if(token.getDeger().toString().equalsIgnoreCase("TIME")){
 				type="Time";
@@ -1305,8 +1326,6 @@ public class JavaWriteUtilities {
 					||token.getDeger().toString().equals("TIMX")
 					||token.getDeger().toString().equals("LANGUAGE")
 					||token.getDeger().toString().equals("PROGRAM")
-					||token.getDeger().toString().contains("DATEKRAN")
-					||token.getDeger().toString().contains("DAT")
 					||token.getDeger().toString().contains("COUNTER")
 					||token.getDeger().toString().contains("LIBRARY_ID")
 					||token.getDeger().toString().contains("GROUP")){
@@ -1445,11 +1464,20 @@ public class JavaWriteUtilities {
 			
 			//String-Date
 			else if(typeOfCopyTo.equalsIgnoreCase("date") && typeOfCopyFrom.equalsIgnoreCase("string")){
-				result=" FCU.stringToDate(";
+				result=" FCU.stringToSqlDate(";
 				endCastStr=",\"dd.MM.yyyy\"";
 			}else if(typeOfCopyTo.equalsIgnoreCase("string") && typeOfCopyFrom.equalsIgnoreCase("date")){
 				result=" FCU.dateToStringwithFormat(";
 				endCastStr=",\"dd.MM.yyyy\"";
+			}
+			
+			//Date-Long
+			else if(typeOfCopyTo.equalsIgnoreCase("date") && typeOfCopyFrom.equalsIgnoreCase("long")){
+				result=" FCU.stringToSqlDate(";
+				endCastStr=",\"dd.MM.yyyy\"";
+			}else if(typeOfCopyTo.equalsIgnoreCase("long") && typeOfCopyFrom.equalsIgnoreCase("date")){
+				result=" Long.valueOf(FCU.dateToStringwithFormat(";
+				endCastStr=",\"dd.MM.yyyy\")";
 			}
 			return result;
 	}

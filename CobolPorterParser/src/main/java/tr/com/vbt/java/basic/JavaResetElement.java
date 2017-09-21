@@ -63,8 +63,10 @@ public class JavaResetElement extends  AbstractJavaElement {
 				}
 				
 				
-			    
-				if(variableType==VariableTypes.INT_TYPE
+				//RESET TAB ( *) --> FCU.resetArray(TAB);
+			    if(variableDefinitionCommand instanceof ElementProgramOneDimensionArrayNatural && variable.isAllArrayItems()){
+			    	JavaClassElement.javaCodeBuffer.append("FCU.resetArray("+JavaWriteUtilities.toCustomString(variable)+")"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+			    }else if(variableType==VariableTypes.INT_TYPE
 						||variableType==VariableTypes.LONG_TYPE){
 					
 					try{

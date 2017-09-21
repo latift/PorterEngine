@@ -81,26 +81,49 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 			//*S**ASSIGN SCR-PAX-DSCR(*)  = TAX-PAX-DSCR(*)
 			if(copyTo.isAllArrayItems() &&copyFrom.get(0).isPojoVariable()&& copyFrom.get(0).getColumnNameToken().isAllArrayItems()){  
 					
+					cast=JavaWriteUtilities.addCast(copyTo,copyFrom.get(0));
+				
 					fromPojoToArrayAllItems();
+					
+					JavaWriteUtilities.endCast(cast);
+					
+					JavaWriteUtilities.addTypeChangeFunctionToEnd(copyTo,copyFrom.get(0));
 				
 			//*S**ASSIGN TAX-EXC-DEST(*) = SCR-EXC-DEST(*) ArrayAllItemdan PojoArraye
-			}else if(copyFrom.get(0).isAllArrayItems() &&copyTo.isPojoVariable()&& copyTo.getColumnNameToken().isAllArrayItems()){ 				
+			}else if(copyFrom.get(0).isAllArrayItems() &&copyTo.isPojoVariable()&& copyTo.getColumnNameToken().isAllArrayItems()){ 		
+				
+				cast=JavaWriteUtilities.addCast(copyTo,copyFrom.get(0));
 				
 				fromArrayToPojoAllItems();
 				
+				JavaWriteUtilities.endCast(cast);
+				
+				JavaWriteUtilities.addTypeChangeFunctionToEnd(copyTo,copyFrom.get(0));
+				
 			}else if(copyTo.isPojoVariable() && copyFrom.get(0).getTip().equals(TokenTipi.Array)){
 				
+				cast=JavaWriteUtilities.addCast(copyTo,copyFrom.get(0));
+				
 				fromArrayToPojoSelectedItems();
+				
+				JavaWriteUtilities.endCast(cast);
+				
+				JavaWriteUtilities.addTypeChangeFunctionToEnd(copyTo,copyFrom.get(0));
 				
 				//Pojodan Arraya
 			}else if(copyFrom.get(0).isPojoVariable() && (copyTo.getTip().equals(TokenTipi.Array)|| (copyTo.getLinkedToken()!=null &&copyTo.getLinkedToken().getTip().equals(TokenTipi.Array)))){
 				
+				cast=JavaWriteUtilities.addCast(copyTo,copyFrom.get(0));
+				
 				fromPojoToArraySelectedItems();
 				
+				JavaWriteUtilities.endCast(cast);
+				
+				JavaWriteUtilities.addTypeChangeFunctionToEnd(copyTo,copyFrom.get(0));
+				
 			}else if(copyTo.isPojoVariable() && ConversionLogModel.getInstance().isMB()){
-					//7220 IDGIDBS-TGECICI.HSONVALOR:=*DAT4I --> TGECICI.setHSonvalor();
 					
-					JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomSetterString(copyTo, copyFrom.get(0)));
+				JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomSetterString(copyTo, copyFrom.get(0)));
 					
 			}else if(copyTo.isPojoVariable() || copyTo.isRedefinedVariable()){
 				//*S**ASSIGN TAX-INOUT = SCR-IN-OUT -->KET_TAX.setTaxInout(SCR_IN_OUT);
@@ -116,11 +139,23 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 				
 			}else if(typeOfCopyTo.equals("bigdecimal")){
 				
+				cast=JavaWriteUtilities.addCast(copyTo,copyFrom.get(0));
+				
 				fromBigDecimalToBigDecimal();
+				
+				JavaWriteUtilities.endCast(cast);
+				
+				JavaWriteUtilities.addTypeChangeFunctionToEnd(copyTo,copyFrom.get(0));
 				
 			}else if((copyTo.isAllArrayItems()|| copyTo.getTip().equals(TokenTipi.Array)) && copyFrom.get(0).isSayi()){
 				
+				cast=JavaWriteUtilities.addCast(copyTo,copyFrom.get(0));
+				
 				fromSingleToArray();
+				
+				JavaWriteUtilities.endCast(cast);
+				
+				JavaWriteUtilities.addTypeChangeFunctionToEnd(copyTo,copyFrom.get(0));
 				
 			}else{
 					JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(copyTo));

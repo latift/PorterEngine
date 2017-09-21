@@ -21,6 +21,8 @@ public class JavaCopyElementV2 extends AbstractJavaElement {
 	private AbstractToken dataToMove;
 
 	private List<AbstractToken> destVariable = new ArrayList<AbstractToken>();
+	
+	boolean cast;
 
 	public boolean writeJavaToStream() throws Exception{
 		super.writeJavaToStream();
@@ -41,7 +43,13 @@ public class JavaCopyElementV2 extends AbstractJavaElement {
 					}else{
 						JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(destVar1));
 						JavaClassElement.javaCodeBuffer.append("=");
+						cast=JavaWriteUtilities.addCast(destVar1,dataToMove);
+						
 						JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(dataToMove));
+						
+						JavaWriteUtilities.endCast(cast);
+						
+						JavaWriteUtilities.addTypeChangeFunctionToEnd(destVar1,dataToMove);
 					}
 
 					JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA + JavaConstants.NEW_LINE);
@@ -78,7 +86,7 @@ public class JavaCopyElementV2 extends AbstractJavaElement {
 				
 				destVariableFirst.setSubstringCommand(false);
 				
-				JavaClassElement.javaCodeBuffer.append("moveToSubstring(this,\""+ JavaWriteUtilities.toCustomString(destVariableFirst)+"\","+destVariableFirst.getSubStringStartIndex()+","+destVariableFirst.getSubStringEndIndex()+",");
+				JavaClassElement.javaCodeBuffer.append("moveToSubstring(this,"+ JavaWriteUtilities.toCustomString(destVariableFirst)+","+destVariableFirst.getSubStringStartIndex()+","+destVariableFirst.getSubStringEndIndex()+",");
 					
 				JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(dataToMove));
 

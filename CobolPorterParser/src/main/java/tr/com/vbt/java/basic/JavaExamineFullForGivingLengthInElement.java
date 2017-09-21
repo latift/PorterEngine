@@ -35,7 +35,7 @@ public class JavaExamineFullForGivingLengthInElement extends  AbstractJavaElemen
 		
 		try{
 			//LIMANINDEX=searchArray(
-			JavaClassElement.javaCodeBuffer.append(CustomStringUtils.replaceMiddleLineWithSubLine(resultIndex)+"=searchArray(");
+			JavaClassElement.javaCodeBuffer.append(CustomStringUtils.replaceMiddleLineWithSubLine(resultIndex)+"=FCU.searchArray(");
 			
 			JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(arrayToken));
 			JavaClassElement.javaCodeBuffer.append(",");
