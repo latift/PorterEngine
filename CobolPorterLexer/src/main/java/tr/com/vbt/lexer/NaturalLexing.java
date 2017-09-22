@@ -1733,7 +1733,11 @@ public class NaturalLexing extends AbstractLexing {
 		
 		removePojosSubTableCountToken();
 
+		logger.debug(tokenListesi.get(143).getDeger().toString());
 		replaceDoublesToInteger();
+		
+		logger.debug(tokenListesi.get(143).getDeger().toString());
+		
 		
 		setIncludedFiles(); //includedFiles Listesini doldurur.
 		
@@ -2463,7 +2467,7 @@ public class NaturalLexing extends AbstractLexing {
 
 	private void replaceDoublesToInteger() {
 		AbstractToken current,currentNewToken = null;
-		int tokenDeger;
+		long tokenDeger;
 		double tokenDegerMod;
 		for (int i = 0; i < tokenListesi.size() - 2; i++) {
 
@@ -2472,8 +2476,8 @@ public class NaturalLexing extends AbstractLexing {
 			if (current.getTip().equals(TokenTipi.Sayi)) {
 				tokenDegerMod=Double.valueOf(current.getDeger().toString());
 				if(tokenDegerMod%1==0){
-					tokenDeger=(int) tokenDegerMod;
-					currentNewToken= new SayiToken<Integer>(tokenDeger, current.getSatirNumarasi(), current.getUzunluk(), current.getSatirdakiTokenSirasi());
+					tokenDeger=(long) tokenDegerMod;
+					currentNewToken= new SayiToken<Long>(tokenDeger, current.getSatirNumarasi(), current.getUzunluk(), current.getSatirdakiTokenSirasi());
 					tokenListesi.set(i, currentNewToken);
 				}
 	
@@ -2899,6 +2903,18 @@ public class NaturalLexing extends AbstractLexing {
 		// onceki kelime SUBROUTINE se ve current kelime ozelKelime ise
 		// ozelkeimeyi --normal kelimeye çevir ve değerinin son harfini değere
 		// ekle.
+		
+		//Bütün notları NOT_T yapıyoruz. Sonra Java Condition kısmında bakıp condition içinde NOT_T görürsek NOT yapacağız.
+		for (int i = 0; i < tokenListesi.size() - 2; i++) {
+			curToken = tokenListesi.get(i);
+			
+			if(curToken.isOzelKelime("NOT") ||curToken.isKelime("NOT") ){
+				curToken.setTip(TokenTipi.Kelime);
+				curToken.setDeger("NOTT");
+			}
+		}
+
+
 
 	}
 

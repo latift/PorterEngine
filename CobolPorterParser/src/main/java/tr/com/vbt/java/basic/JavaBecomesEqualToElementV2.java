@@ -41,7 +41,7 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 	private List<AbstractToken> copyFrom = new ArrayList<AbstractToken>(); // #TOPLAM-UPLIFT2 +(T-GYOG*T-UPLIFT)
 	
 	private AbstractToken copyTo;
-
+	
 	private List<AbstractToken> aritmethicOperators = new ArrayList<AbstractToken>();
 	
 	boolean cast;
@@ -125,7 +125,7 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 					
 				JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomSetterString(copyTo, copyFrom.get(0)));
 					
-			}else if(copyTo.isPojoVariable() || copyTo.isRedefinedVariable()){
+			}else if(copyTo.isRedefinedVariable() || (copyTo.getLinkedToken()!=null && copyTo.getLinkedToken().isRedefinedVariable())){
 				//*S**ASSIGN TAX-INOUT = SCR-IN-OUT -->KET_TAX.setTaxInout(SCR_IN_OUT);
 				
 				JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomSetterString(copyTo));

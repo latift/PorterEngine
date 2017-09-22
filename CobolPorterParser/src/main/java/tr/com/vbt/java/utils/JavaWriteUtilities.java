@@ -284,7 +284,7 @@ public class JavaWriteUtilities {
 	
 	private static Object toCustomRedefinedVariableSetterString(AbstractToken token) {
 		
-		return token.getDeger().toString()+".setValue";
+		return token.getDeger().toString()+".setValue(";
 	
 	}
 
@@ -1465,19 +1465,19 @@ public class JavaWriteUtilities {
 			//String-Date
 			else if(typeOfCopyTo.equalsIgnoreCase("date") && typeOfCopyFrom.equalsIgnoreCase("string")){
 				result=" FCU.stringToSqlDate(";
-				endCastStr=",\"dd.MM.yyyy\"";
+				endCastStr=",\"yyyy-MM-dd\"";
 			}else if(typeOfCopyTo.equalsIgnoreCase("string") && typeOfCopyFrom.equalsIgnoreCase("date")){
 				result=" FCU.dateToStringwithFormat(";
-				endCastStr=",\"dd.MM.yyyy\"";
+				endCastStr=",\"yyyy-MM-dd\"";
 			}
 			
 			//Date-Long
 			else if(typeOfCopyTo.equalsIgnoreCase("date") && typeOfCopyFrom.equalsIgnoreCase("long")){
 				result=" FCU.stringToSqlDate(";
-				endCastStr=",\"dd.MM.yyyy\"";
+				endCastStr=",\"yyyy-MM-dd\"";
 			}else if(typeOfCopyTo.equalsIgnoreCase("long") && typeOfCopyFrom.equalsIgnoreCase("date")){
 				result=" Long.valueOf(FCU.dateToStringwithFormat(";
-				endCastStr=",\"dd.MM.yyyy\")";
+				endCastStr=",\"yyyy-MM-dd\")";
 			}
 			return result;
 	}

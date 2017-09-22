@@ -1,10 +1,10 @@
 
 package tr.com.vbt.token;
 
-public class SayiToken<Integer> extends AbstractToken<Integer>
+public class SayiToken<Long> extends AbstractToken<Long>
 {
 
-	public SayiToken(Integer deger, int satirNumarasi, int uzunluk, int satirdakiTokenSirasi) {
+	public SayiToken(Long deger, int satirNumarasi, int uzunluk, int satirdakiTokenSirasi) {
 		super(deger, satirNumarasi, uzunluk, TokenTipi.Sayi, satirdakiTokenSirasi);
 	}
 	

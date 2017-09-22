@@ -92,7 +92,7 @@ public NaturalOzelKelimeler() {
 	ozelKelimeler.add("CALLNAT");
 	ozelKelimeler.add("REINPUT");
 	ozelKelimeler.add("EDITED");
-	ozelKelimeler.add("NOT");
+	//ozelKelimeler.add("NOT");
 	ozelKelimeler.add("EQ");
 	ozelKelimeler.add("GT");
 	ozelKelimeler.add("LT");

@@ -20,6 +20,10 @@ public class JavaFullWriteUtilities {
 	
 	final static Logger logger = LoggerFactory.getLogger(JavaFullWriteUtilities.class);
 	
+	public static boolean basaSifirEkle;
+	
+	public static boolean basaBoslukEkle;
+	
 	public static StringBuilder toCustomSetterString(AbstractToken token) throws Exception {
 		
 		StringBuilder tempCodeBuffer=new StringBuilder();
@@ -128,15 +132,24 @@ public class JavaFullWriteUtilities {
 			logger.debug("");
 		}
 		
+		
 		if(token.isSubstringCommand() || (token.getLinkedToken()!=null && token.getLinkedToken().isSubstringCommand())){
 			
+			tempCodeBuffer.append(addBasaSifirYadaBoslukEkle(token));
+			
 			tempCodeBuffer.append(toCustomSubstringVariableString(token));
+			
+			tempCodeBuffer.append( addBasaSifirYadaBoslukEkleSon(token));
 		
 		}else if(token.isPojoVariable()){
 			
 			if(ConversionLogModel.getInstance().isMB()){
+				
+				tempCodeBuffer.append(addBasaSifirYadaBoslukEkle(token));
 			
 				tempCodeBuffer.append(toCustomPojoDB2VariableString(token));
+				
+				tempCodeBuffer.append( addBasaSifirYadaBoslukEkleSon(token));
 				
 			}else{
 				
@@ -146,16 +159,29 @@ public class JavaFullWriteUtilities {
 			
 		}else if(token.getTip().equals(TokenTipi.Kelime) && token.isInputParameters() ){ 
 		
+			tempCodeBuffer.append(addBasaSifirYadaBoslukEkle(token));
+			
 			tempCodeBuffer.append(toCustomInputParametersVariableString(token));
+			
+			tempCodeBuffer.append( addBasaSifirYadaBoslukEkleSon(token));
+			
 		}else if(token.getTip().equals(TokenTipi.SatirBasi)){ 
 			//Do nothing;
 		}else if(token.isMasked()){ 
 			
+			tempCodeBuffer.append(addBasaSifirYadaBoslukEkle(token));
+			
 			tempCodeBuffer.append(toCustomMaskedVariableString(token));
+			
+			tempCodeBuffer.append( addBasaSifirYadaBoslukEkleSon(token));
 			
 		}else if(token.isRedefinedVariable()){ 
 			
+			tempCodeBuffer.append( addBasaSifirYadaBoslukEkle(token));
+			
 			tempCodeBuffer.append(toCustomRedefinedVariableString(token));
+			
+			tempCodeBuffer.append( addBasaSifirYadaBoslukEkleSon(token));
 			
 		}else if(token.getTip().equals(TokenTipi.Karakter)
 				&&(token.getDeger().equals('+')
@@ -176,8 +202,12 @@ public class JavaFullWriteUtilities {
 			
 		}else if(token.isRecordVariable()){
 				
+			tempCodeBuffer.append( addBasaSifirYadaBoslukEkle(token));
+			
 			tempCodeBuffer.append(toCustomRecordVariableString(token));
 		
+			tempCodeBuffer.append( addBasaSifirYadaBoslukEkleSon(token));
+			
 		}else if(token.isEdited()){ //DVANATOPMEB(DOVIZGEC) -->DVANATOPMEB[DOVIZGEC]
 			
 			tempCodeBuffer.append(toCustomEditedVariableString(token));
@@ -286,28 +316,10 @@ public class JavaFullWriteUtilities {
 	private static String toCustomDefaultVariableString(AbstractToken token) {
 		
 		StringBuffer sb=new StringBuffer();
-		AbstractCommand command=ConvertUtilities.getVariableDefinitinCommand(token);
 		
 		if(token.getDeger()!=null &&( token.isKelime("FALSE")||token.isKelime("TRUE"))){
 			sb.append(token.getDeger().toString().toLowerCase());
 			return sb.toString();
-		}
-		
-		boolean basaSifirEkle = false, basaBoslukEkle=false;
-		ElementProgramDataTypeNatural dataTypeDefinitionCommand = null;
-		//FrameworkConvertUtilities.basaBoslukEkleStr()
-		if(command!=null && command instanceof ElementProgramDataTypeNatural){
-			dataTypeDefinitionCommand=(ElementProgramDataTypeNatural) command;
-			if(dataTypeDefinitionCommand.getDataType()!=null && dataTypeDefinitionCommand.getDataType().equals("N")){
-				basaSifirEkle=true;
-			}else {
-				basaBoslukEkle=true;
-			}
-		}
-		if(basaSifirEkle){
-			sb.append("FCU.basaSifirEkleStr(");
-		}else if(basaBoslukEkle){
-			sb.append("FCU.basaBoslukEkleStr(");
 		}
 		
 		if(token.getDeger()!=null){
@@ -316,18 +328,119 @@ public class JavaFullWriteUtilities {
 			sb.append(token.toString());
 		}
 		
-		if(basaSifirEkle || basaBoslukEkle ){
-			if(dataTypeDefinitionCommand!=null){
-				sb.append(","+dataTypeDefinitionCommand.getLength()+")");
+		return sb.toString();
+		
+	}
+	
+
+
+	private static String addBasaSifirYadaBoslukEkle(AbstractToken token){
+		
+		StringBuffer sb=new StringBuffer();
+		
+		String variableType;
+		try {
+			if(token.isPojoVariable()){
+				variableType= ConvertUtilities.getVariableTypeOfPojoAsString(token);
+				if(variableType.equalsIgnoreCase("string")){
+					basaBoslukEkle=true;
+				}else{
+					basaSifirEkle=true;
+				}
+			
 			}else{
-				sb.append(", \"TODO:Manuel_Fix_Gerekli\" )"); //Compile Hatası almak için yapıldı.
+				
+				if(token.getLinkedToken()!=null){
+					token=token.getLinkedToken();
+				}else if(token.getColumnNameToken()!=null){
+					token=token.getColumnNameToken();
+				}
+				
+				AbstractCommand command=ConvertUtilities.getVariableDefinitinCommand(token);
+				
+				ElementProgramDataTypeNatural dataTypeDefinitionCommand = null;
+				
+				if(command!=null && command instanceof ElementProgramDataTypeNatural){
+					dataTypeDefinitionCommand=(ElementProgramDataTypeNatural) command;
+					if(dataTypeDefinitionCommand.getDataType()!=null && dataTypeDefinitionCommand.getDataType().equals("N")){
+						basaSifirEkle=true;
+					}else {
+						basaBoslukEkle=true;
+					}
+				}
+				
 			}
+			
+			if(basaSifirEkle){
+				sb.append("FCU.basaSifirEkleStr(");
+			}else if(basaBoslukEkle){
+				sb.append("FCU.basaBoslukEkleStr(");
+			}
+			
+		} catch (Exception e) {
+			basaSifirEkle=false;
+			basaBoslukEkle=false;
+			e.printStackTrace();
+			return "";
 		}
 		
 		return sb.toString();
 		
 	}
 
+	private static String addBasaSifirYadaBoslukEkleSon(AbstractToken token) {
+		
+		StringBuilder sb=null;
+		try {
+			ElementProgramDataTypeNatural dataTypeDefinitionCommand = null;
+
+			sb = new StringBuilder();
+			
+			if (basaSifirEkle || basaBoslukEkle) {
+				
+					int pojosColumnSize=0;
+					
+					if(token.isPojoVariable()){
+					
+						sb.append("," + pojosColumnSize + ")");
+						
+					}else{
+						
+							if(token.getLinkedToken()!=null){
+								token=token.getLinkedToken();
+							}
+						
+							AbstractCommand command = ConvertUtilities.getVariableDefinitinCommand(token);
+			
+							if (command != null && command instanceof ElementProgramDataTypeNatural) {
+								
+								dataTypeDefinitionCommand = (ElementProgramDataTypeNatural) command;
+			
+								if (dataTypeDefinitionCommand != null) {
+									sb.append("," + dataTypeDefinitionCommand.getLength() + ")");
+								} else {
+									sb.append(", \"TODO:Manuel_Fix_Gerekli\" )"); // Compile Hatasıalmakiçinyapıldı.
+								}
+			
+							}
+					}
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			basaSifirEkle=false;
+			basaBoslukEkle=false;
+			return "";
+		}
+		
+		basaSifirEkle=false;
+		basaBoslukEkle=false;
+
+		return sb.toString();
+		
+	}
+	
 	private static String toCustomArrayVariableString(AbstractToken token) {
 	
 		StringBuilder tempCodeBuffer=new StringBuilder();

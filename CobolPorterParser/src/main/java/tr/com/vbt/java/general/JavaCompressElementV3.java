@@ -128,17 +128,42 @@ public class JavaCompressElementV3 extends AbstractJavaElement {
 				source.setConstantVariableWithQuota(true); 
 			}
 
-			cast=JavaWriteUtilities.addCast(dest,source);
-			
 			if(isFull){  // Trim yapma
+				
+				String typeOfCopyTo=ConvertUtilities.getTypeOfVariable(dest);
+				
+				String typeOfCopyFrom=ConvertUtilities.getTypeOfVariable(source);
+				
+				if(!(typeOfCopyTo.equalsIgnoreCase("string") && typeOfCopyFrom.equalsIgnoreCase("long"))){
+					
+					cast=JavaWriteUtilities.addCast(dest,source);	
+				
+				}
+				
 				JavaClassElement.javaCodeBuffer.append(JavaFullWriteUtilities.toCustomString(source));
+				
+				if(!(typeOfCopyTo.equalsIgnoreCase("string") && typeOfCopyFrom.equalsIgnoreCase("long"))){
+		
+					JavaWriteUtilities.endCast(cast);
+				
+					JavaWriteUtilities.addTypeChangeFunctionToEnd(dest,source);
+				
+				}
+				
 			}else{ //Trim yap
+				
+				cast=JavaWriteUtilities.addCast(dest,source);
+				
 				JavaClassElement.javaCodeBuffer.append(JavaTrimWriteUtilities.toCustomString(source));
+				
+				JavaWriteUtilities.endCast(cast);
+				
+				JavaWriteUtilities.addTypeChangeFunctionToEnd(dest,source);
 			}
 
-			JavaWriteUtilities.endCast(cast);
 			
-			JavaWriteUtilities.addTypeChangeFunctionToEnd(dest,source);
+			
+			
 			
 			
 			if (i < sourceList.size() - 1) {

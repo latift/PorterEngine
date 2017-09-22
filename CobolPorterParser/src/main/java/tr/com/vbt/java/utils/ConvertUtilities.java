@@ -124,6 +124,8 @@ public class ConvertUtilities {
 			return getVariableTypeOfGlobalVariable(variable);
 		}else if(variable.isRedefinedVariable()){
 			return getVariableTypeOfRedefinedVariable(variable);
+		}else if(variable.isConstantVariableWithQuota()){
+			return VariableTypes.STRING_TYPE;
 		}
 		
 		List<AbstractCommand> commandList = NaturalCommandList.getInstance().getCommandListWithIncludedVariables();
@@ -191,10 +193,9 @@ public class ConvertUtilities {
 	private static VariableTypes getVariableTypeOfSystem(AbstractToken variable) {
 			if (variable.getDeger().toString().startsWith("DAT")) {
 				return VariableTypes.DATE_TYPE;
-			}else if (variable.getDeger().equals("PF-KEY") || variable.getDeger().equals("USER")
-					|| variable.getDeger().equals("PROGRAM") || variable.getDeger().equals("DEVICE")
-					|| variable.getDeger().equals("LANGUAGE") 
-					|| variable.getDeger().equals("PF-KEY")) {
+			}else if (variable.getDeger().toString().equalsIgnoreCase("PF_KEY") || variable.getDeger().toString().equalsIgnoreCase("USER")
+					|| variable.getDeger().toString().equalsIgnoreCase("PROGRAM") || variable.getDeger().toString().equalsIgnoreCase("DEVICE")
+					|| variable.getDeger().toString().equalsIgnoreCase("LANGUAGE")) {
 				return VariableTypes.STRING_TYPE;
 			} else {
 				return VariableTypes.LONG_TYPE;
@@ -394,13 +395,15 @@ public class ConvertUtilities {
 
 	public static String getTypeOfVariable(AbstractToken variable) {
 
-		if (variable.isSystemVariable()) {
+		if(variable.isSubstringCommand()){
+			return "String";
+		}else if(variable.isSystemVariable()) {
+		
 			if (variable.getDeger().toString().startsWith("DAT")) {
 				return "Date";
-			}else if (variable.getDeger().equals("PF-KEY") || variable.getDeger().equals("USER")
-					|| variable.getDeger().equals("PROGRAM") || variable.getDeger().equals("DEVICE")
-					|| variable.getDeger().equals("LANGUAGE") || variable.getDeger().toString().startsWith("DAT")
-					|| variable.getDeger().equals("PF-KEY")) {
+			}else if (variable.getDeger().toString().equalsIgnoreCase("PF_KEY") || variable.getDeger().toString().equalsIgnoreCase("USER")
+					|| variable.getDeger().toString().equalsIgnoreCase("PROGRAM") || variable.getDeger().toString().equalsIgnoreCase("DEVICE")
+					|| variable.getDeger().toString().equalsIgnoreCase("LANGUAGE") || variable.getDeger().toString().startsWith("DAT")) {
 				return "String";
 			} else {
 				return "long";
