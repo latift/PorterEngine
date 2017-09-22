@@ -70,11 +70,11 @@ public class PaternBase extends AbstractPattern{
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("baseX")){
 			double deger=(double) currentTokenForMatch.getDeger();
 			
-			matchedCommandAdd.setBaseX((int) deger);
+			matchedCommandAdd.setBaseX((long) deger);
 			matchedCommandAdd.getParameters().put("baseX", matchedCommandAdd.getBaseX());
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("baseY")){
 			double deger=(double) currentTokenForMatch.getDeger();
-			matchedCommandAdd.setBaseY((int) deger);
+			matchedCommandAdd.setBaseY((long) deger);
 			matchedCommandAdd.getParameters().put("baseY", matchedCommandAdd.getBaseY());
 		}
 	}

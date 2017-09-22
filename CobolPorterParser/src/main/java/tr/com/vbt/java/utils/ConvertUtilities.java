@@ -358,7 +358,7 @@ public class ConvertUtilities {
 		return null;
 	}
 
-	public static String getJavaVariableType(String dataType, int length, int lengthAfterDot) {
+	public static String getJavaVariableType(String dataType, long length, long lengthAfterDot) {
 		String type;
 		if (dataType.equals("A") || dataType.equals("String")) {
 			type = "String";
@@ -850,9 +850,9 @@ public class ConvertUtilities {
 
 	}
 
-	public static int getVariableMaxLength(AbstractToken currToken) {
+	public static long getVariableMaxLength(AbstractToken currToken) {
 
-		int maxLength = ConverterConfiguration.DEFAULT_MAX_LENGTH_FOR_INPUT;
+		long maxLength = ConverterConfiguration.DEFAULT_MAX_LENGTH_FOR_INPUT;
 
 		ElementProgramDataTypeNatural programData;
 
@@ -880,11 +880,11 @@ public class ConvertUtilities {
 		return maxLength;
 	}
 
-	public static int getArrayLength(AbstractToken currToken) {
+	public static long getArrayLength(AbstractToken currToken) {
 
 		ElementProgramOneDimensionArrayNatural programData;
 
-		int arrayLength = ConverterConfiguration.DEFAULT_ARRAY_LENGTH;
+		long arrayLength = ConverterConfiguration.DEFAULT_ARRAY_LENGTH;
 
 		try {
 			AbstractCommand dataType = ConvertUtilities.getVariableDefinitinCommand(currToken);

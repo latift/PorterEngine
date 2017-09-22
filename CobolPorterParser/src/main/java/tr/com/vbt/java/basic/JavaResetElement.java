@@ -26,7 +26,7 @@ public class JavaResetElement extends  AbstractJavaElement {
 	
 	private List<AbstractToken> resetVariableList;
 	
-	int scale;
+	long scale;
 	
 	
 	public boolean writeJavaToStream() throws Exception{ super.writeJavaToStream();

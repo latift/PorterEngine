@@ -90,7 +90,7 @@ public class PaternFileDescription extends AbstractPattern{
 			matchedCommandAdd.getParameters().put("LABEL_RECORDS_ARE", matchedCommandAdd.getLabelRecordsType());
 		}
 		else if(abstractTokenInPattern.getSourceFieldName().equals("BLOCK")){
-			matchedCommandAdd.setBlockCount(((int)((KeyValueOzelKelimeToken)currentTokenForMatch).getValue()));
+			matchedCommandAdd.setBlockCount(((long)((KeyValueOzelKelimeToken)currentTokenForMatch).getValue()));
 			matchedCommandAdd.getParameters().put("BLOCK", matchedCommandAdd.getBlockCount());
 		}
 	}

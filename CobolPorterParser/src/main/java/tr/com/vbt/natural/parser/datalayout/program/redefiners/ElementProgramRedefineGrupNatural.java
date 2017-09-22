@@ -15,7 +15,7 @@ import tr.com.vbt.token.AbstractToken;
 **/
 public class ElementProgramRedefineGrupNatural extends AbstractMultipleLinesCommand implements Levelable, DataTypeMapConverter {
 
-	protected int levelNumber; // mandatory
+	protected long levelNumber; // mandatory
 	
 	protected String redefineName; // mandatory
 	
@@ -76,12 +76,12 @@ public class ElementProgramRedefineGrupNatural extends AbstractMultipleLinesComm
 	}
 
 
-	public int getLevelNumber() {
+	public long getLevelNumber() {
 		return levelNumber;
 	}
 
 
-	public void setLevelNumber(int levelNumber) {
+	public void setLevelNumber(long levelNumber) {
 		this.levelNumber = levelNumber;
 	}
 

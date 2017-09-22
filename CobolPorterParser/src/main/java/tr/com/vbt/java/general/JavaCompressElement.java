@@ -82,7 +82,7 @@ public class JavaCompressElement extends AbstractJavaElement {
 			JavaClassElement.javaCodeBuffer.append("[");
 			JavaClassElement.javaCodeBuffer.append(ConvertUtilities.castToInt());
 			if (arrayToken.getFirstDimension().getDeger() instanceof Integer) {
-				JavaClassElement.javaCodeBuffer.append((int) arrayToken.getFirstDimension().getDeger());
+				JavaClassElement.javaCodeBuffer.append((long) arrayToken.getFirstDimension().getDeger());
 			} else {
 				JavaClassElement.javaCodeBuffer.append(arrayToken.getFirstDimension().getDeger());
 			}
@@ -93,7 +93,7 @@ public class JavaCompressElement extends AbstractJavaElement {
 					secDimensionSize = ((int) (double) secDimension.getDeger());
 					JavaClassElement.javaCodeBuffer.append("[" + secDimensionSize + "-1]");
 				} else if (firstDimension.getDeger() instanceof Integer) {
-					secDimensionSize = ((int) secDimension.getDeger());
+					secDimensionSize = ((int) (long)secDimension.getDeger());
 					JavaClassElement.javaCodeBuffer.append("[" + secDimensionSize + "-1]");
 				} else {
 					JavaClassElement.javaCodeBuffer.append("[" + secDimension.getDeger() + "-1]");

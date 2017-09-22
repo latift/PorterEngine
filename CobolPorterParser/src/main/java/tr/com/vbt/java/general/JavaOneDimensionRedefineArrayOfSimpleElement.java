@@ -43,7 +43,7 @@ public class JavaOneDimensionRedefineArrayOfSimpleElement extends AbstractJavaEl
 		try {
 			//length=(int) this.parameters.get("length");
 			dataName = (String) this.parameters.get("dataName");
-			arrayLength=(int) this.parameters.get("arrayLength");
+			arrayLength=(int)((long) this.parameters.get("arrayLength"));
 			redefinedCommand=(AbstractCommand) this.parameters.get("redefinedCommand");
 			
 			redCommandDataType=(ElementProgramDataTypeNatural) redefinedCommand;

@@ -47,7 +47,7 @@ public class JavaFor extends  AbstractJavaElement{
 			int step=1;
 					
 			if(stepToken!=null){
-				step=(int) stepToken.getDeger();
+				step=(int) ((long)stepToken.getDeger());
 				if(step<0){
 					stepDirectionAzalanMi = true;
 				}
@@ -58,7 +58,7 @@ public class JavaFor extends  AbstractJavaElement{
 			JavaClassElement.javaCodeBuffer.append("for("+indexName+"=");
 			if(loopStartIndex!=null){
 				if(loopStartIndex.getTip().equals(TokenTipi.Sayi)){
-						JavaClassElement.javaCodeBuffer.append((int)loopStartIndex.getDeger()); //+"; "+indexName+"<"+loopEndPoint.getDeger()+" ; "+indexName+"++){");
+						JavaClassElement.javaCodeBuffer.append((int)((long)loopStartIndex.getDeger())); //+"; "+indexName+"<"+loopEndPoint.getDeger()+" ; "+indexName+"++){");
 				}else{
 					JavaClassElement.javaCodeBuffer.append(loopStartIndex.getDeger());
 				}
@@ -72,7 +72,7 @@ public class JavaFor extends  AbstractJavaElement{
 			}
 			if(loopEndPoint!=null){
 				if(loopEndPoint.getTip().equals(TokenTipi.Sayi)){
-						JavaClassElement.javaCodeBuffer.append((int)loopEndPoint.getDeger()); //+"; "+indexName+"<"+loopEndPoint.getDeger()+" ; "+indexName+"++){");
+						JavaClassElement.javaCodeBuffer.append((int)((long)loopEndPoint.getDeger())); //+"; "+indexName+"<"+loopEndPoint.getDeger()+" ; "+indexName+"++){");
 				}else{
 					JavaClassElement.javaCodeBuffer.append(loopEndPoint.getDeger());
 				}

@@ -10,7 +10,7 @@ import tr.com.vbt.token.AbstractToken;
 //UPDATE 
 public class ElementUpdate extends AbstractCommand{
 
-	private int recNumber;
+	private long recNumber;
 	
 	public ElementUpdate(AbstractToken baseToken,
 			List<AbstractToken> tokenListesi, AbstractCommand parent) {
@@ -44,11 +44,11 @@ public class ElementUpdate extends AbstractCommand{
 		return sb.toString();
 	}
 
-	public int getRecNumber() {
+	public long getRecNumber() {
 		return recNumber;
 	}
 
-	public void setRecNumber(int recNumber) {
+	public void setRecNumber(long recNumber) {
 		this.recNumber = recNumber;
 	}
 	

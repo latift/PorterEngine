@@ -9,7 +9,7 @@ import tr.com.vbt.lexer.ReservedNaturalKeywords;
 //AT END OF PAGE.
 public class ElementAtEndOfPage extends AbstractMultipleLinesCommand{
 	
-	private int printNumber;
+	private long printNumber;
 	
 	public ElementAtEndOfPage(String elementName,String detailedCobolName) {
 		super(elementName, detailedCobolName);
@@ -52,11 +52,11 @@ public class ElementAtEndOfPage extends AbstractMultipleLinesCommand{
 				return false;
 	}
 
-	public int getPrintNumber() {
+	public long getPrintNumber() {
 		return printNumber;
 	}
 
-	public void setPrintNumber(int printNumber) {
+	public void setPrintNumber(long printNumber) {
 		this.printNumber = printNumber;
 	}
 

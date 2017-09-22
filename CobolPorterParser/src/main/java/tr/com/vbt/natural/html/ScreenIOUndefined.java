@@ -27,13 +27,13 @@ import tr.com.vbt.util.ConverterConfiguration;
 
 public class ScreenIOUndefined implements ScreenIO {
 
-	protected int XCoord;
+	protected long XCoord;
 
 	protected XCoordinationTypes xCoordinationType;
 	
 	protected XCoordinationTypes yCoordinationType;
 
-	protected int YCoord;
+	protected long YCoord;
 
 	protected NaturalTagTypes tagType=NaturalTagTypes.LABEL;
 
@@ -43,15 +43,15 @@ public class ScreenIOUndefined implements ScreenIO {
 
 	protected String value;
 	
-	protected int minLength;
+	protected long minLength;
 	
-	protected int maxLength;
+	protected long maxLength;
 	
 	protected HtmlColor color;
 	
 
-	public ScreenIOUndefined(int xCoord, int yCoord, IOModeType modeType, String value,
-			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, int minLen, int maxLen) {
+	public ScreenIOUndefined(long xCoord, long yCoord, IOModeType modeType, String value,
+			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, long minLen, long maxLen) {
 
 		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
 		if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
@@ -70,10 +70,10 @@ public class ScreenIOUndefined implements ScreenIO {
 		this.maxLength=maxLen;
 	}
 
-	public ScreenIOUndefined(int xCoord, String yCoord, IOModeType modeType, String value,
+	public ScreenIOUndefined(long xCoord, String yCoord, IOModeType modeType, String value,
 			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType) {
 
-		int YCoordCarpan;
+		long YCoordCarpan;
 
 		if (yCoord != null && !yCoord.trim().isEmpty()) {
 			
@@ -101,19 +101,19 @@ public class ScreenIOUndefined implements ScreenIO {
 
 	}
 
-	public int getXCoord() {
+	public long getXCoord() {
 		return XCoord;
 	}
 
-	public void setXCoord(int xCoord) {
+	public void setXCoord(long xCoord) {
 		XCoord = xCoord;
 	}
 
-	public int getYCoord() {
+	public long getYCoord() {
 		return YCoord;
 	}
 
-	public void setYCoord(int yCoord) {
+	public void setYCoord(long yCoord) {
 		YCoord = yCoord;
 	}
 
@@ -174,19 +174,19 @@ public class ScreenIOUndefined implements ScreenIO {
 		this.yCoordinationType = yCoordinationType;
 	}
 
-	public int getMinLength() {
+	public long getMinLength() {
 		return minLength;
 	}
 
-	public void setMinLength(int minLength) {
+	public void setMinLength(long minLength) {
 		this.minLength = minLength;
 	}
 
-	public int getMaxLength() {
+	public long getMaxLength() {
 		return maxLength;
 	}
 
-	public void setMaxLength(int maxLength) {
+	public void setMaxLength(long maxLength) {
 		this.maxLength = maxLength;
 	}
 

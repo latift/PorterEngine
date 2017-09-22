@@ -15,7 +15,7 @@ public class ElementFileDescription extends AbstractMultipleLinesCommand{
 	
 	private String labelRecordsType;
 	
-	private int blockCount;
+	private long blockCount;
 	
 	public ElementFileDescription(AbstractToken baseToken,
 			List<AbstractToken> tokenListesi, AbstractCommand parent) {
@@ -62,11 +62,11 @@ public class ElementFileDescription extends AbstractMultipleLinesCommand{
 		this.fileName = fileName;
 	}
 
-	public int getBlockCount() {
+	public long getBlockCount() {
 		return blockCount;
 	}
 
-	public void setBlockCount(int blockCount) {
+	public void setBlockCount(long blockCount) {
 		this.blockCount = blockCount;
 	}
 

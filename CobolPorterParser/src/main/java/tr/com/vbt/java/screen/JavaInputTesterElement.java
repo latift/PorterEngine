@@ -98,7 +98,7 @@ public class JavaInputTesterElement extends JavaInputElement {
 						undefinedParameterList.add(inputParameters.get(index));
 					}
 
-					index = index + offset;
+					index = index + (int)offset;
 		
 			}
 

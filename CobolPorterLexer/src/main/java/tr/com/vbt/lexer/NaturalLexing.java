@@ -1733,10 +1733,10 @@ public class NaturalLexing extends AbstractLexing {
 		
 		removePojosSubTableCountToken();
 
-		logger.debug(tokenListesi.get(143).getDeger().toString());
+	//	logger.debug(tokenListesi.get(143).getDeger().toString());
 		replaceDoublesToInteger();
 		
-		logger.debug(tokenListesi.get(143).getDeger().toString());
+//		logger.debug(tokenListesi.get(143).getDeger().toString());
 		
 		
 		setIncludedFiles(); //includedFiles Listesini doldurur.
@@ -3656,15 +3656,15 @@ public class NaturalLexing extends AbstractLexing {
 				realToken.setSubstringCommand(true);
 
 				if (startIndex.getTip().equals(TokenTipi.Sayi)) {
-					int startIndexDbl = (int) startIndex.getDeger();
-					realToken.setSubStringStartIndex(startIndexDbl);
+					long startIndexDbl = (long) startIndex.getDeger();
+					realToken.setSubStringStartIndex((int)startIndexDbl);
 				} else {
 					realToken.setSubStringStartIndexString((String) startIndex.getDeger());
 				}
 
 				if (endIndex.getTip().equals(TokenTipi.Sayi)) {
-					int endIndexDbl = (int) endIndex.getDeger();
-					realToken.setSubStringEndIndex(endIndexDbl);
+					long endIndexDbl = (long) endIndex.getDeger();
+					realToken.setSubStringEndIndex((int)endIndexDbl);
 				} else {
 					realToken.setSubStringEndIndexString((String) endIndex.getDeger());
 				}

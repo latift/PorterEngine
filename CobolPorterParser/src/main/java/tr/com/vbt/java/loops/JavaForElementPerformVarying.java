@@ -27,8 +27,8 @@ public class JavaForElementPerformVarying extends  AbstractJavaElement {
 	public boolean writeJavaToStream() throws Exception{ super.writeJavaToStream();
 		try {
 			variable = (String) this.parameters.get("variable");
-			from = (int) this.parameters.get("from");
-			by = (int) this.parameters.get("by");
+			from = (int)((long) this.parameters.get("from"));
+			by = (int) ((long)this.parameters.get("by"));
 			//until = (int) this.parameters.get("until");
 			
 			JavaClassElement.javaCodeBuffer.append("for (int "+variable+"=0; "+variable+"<100;"+ variable+"="+variable+"+"+by+")"+JavaConstants.NEW_LINE);

@@ -13,11 +13,11 @@ import tr.com.vbt.token.AbstractToken;
 **/
 public class ElementDBMultipleUnitDataTypeNatural extends AbstractMultipleLinesCommand implements Levelable, DataTypeMapConverter {
 
-	protected int levelNumber; // mandatory
+	protected long levelNumber; // mandatory
 
 	protected String dataName; // mandatory
 	
-	protected int multipleUnitCount; // mandatory
+	protected long multipleUnitCount; // mandatory
 
 	@Override
 	public String toString() {
@@ -66,13 +66,13 @@ public class ElementDBMultipleUnitDataTypeNatural extends AbstractMultipleLinesC
 
 
 
-	public int getLevelNumber() {
+	public long getLevelNumber() {
 		return levelNumber;
 	}
 
 
 
-	public void setLevelNumber(int levelNumber) {
+	public void setLevelNumber(long levelNumber) {
 		this.levelNumber = levelNumber;
 	}
 
@@ -90,13 +90,13 @@ public class ElementDBMultipleUnitDataTypeNatural extends AbstractMultipleLinesC
 
 
 
-	public int getMultipleUnitCount() {
+	public long getMultipleUnitCount() {
 		return multipleUnitCount;
 	}
 
 
 
-	public void setMultipleUnitCount(int multipleUnitCount) {
+	public void setMultipleUnitCount(long multipleUnitCount) {
 		this.multipleUnitCount = multipleUnitCount;
 	}
 

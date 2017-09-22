@@ -51,7 +51,7 @@ public class PaternDBRedefineDataGroupNatural extends AbstractDataTypePattern{
 		super.setSatirNumarasi(matchedCommand,currentTokenForMatch, abstractTokenInPattern);if(abstractTokenInPattern.getSourceFieldName()==null){
 		
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("levelNumber")){
-			matchedCommandAdd.setLevelNumber(((Integer)currentTokenForMatch.getDeger()));
+			matchedCommandAdd.setLevelNumber(((Long)currentTokenForMatch.getDeger()));
 			matchedCommandAdd.getParameters().put("levelNumber", matchedCommandAdd.getLevelNumber());
 		
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("redefine")){

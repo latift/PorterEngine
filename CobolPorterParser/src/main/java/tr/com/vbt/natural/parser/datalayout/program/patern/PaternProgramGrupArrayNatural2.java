@@ -78,7 +78,7 @@ public class PaternProgramGrupArrayNatural2 extends AbstractDataTypePattern{
 		super.setSatirNumarasi(matchedCommand,currentTokenForMatch, abstractTokenInPattern);if(abstractTokenInPattern.getSourceFieldName()==null){
 		
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("levelNumber")){
-			matchedCommandAdd.setLevelNumber(((Integer)currentTokenForMatch.getDeger()));
+			matchedCommandAdd.setLevelNumber(((Long)currentTokenForMatch.getDeger()));
 			matchedCommandAdd.getParameters().put("levelNumber", matchedCommandAdd.getLevelNumber());
 		
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("grupName")){
@@ -86,7 +86,7 @@ public class PaternProgramGrupArrayNatural2 extends AbstractDataTypePattern{
 			matchedCommandAdd.getParameters().put("grupName", matchedCommandAdd.getGrupName());
 		}
 		else if(abstractTokenInPattern.getSourceFieldName().equals("arrayLength")){
-			matchedCommandAdd.setArrayLength((int) currentTokenForMatch.getDeger());
+			matchedCommandAdd.setArrayLength((long) currentTokenForMatch.getDeger());
 			matchedCommandAdd.getParameters().put("arrayLength", matchedCommandAdd.getArrayLength());
 		}
 	}

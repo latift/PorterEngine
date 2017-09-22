@@ -21,6 +21,7 @@ public class JavaRepeatElement extends  AbstractJavaElement {
 			loopName = (String) this.parameters.get("loopName");
 			JavaClassElement.javaCodeBuffer.append("while (true)"+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE);
 			JavaClassElement.javaCodeBuffer.append("//"+loopName+JavaConstants.NEW_LINE);
+			JavaClassElement.javaCodeBuffer.append("continueControl= false"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
 			this.writeChildrenJavaToStream();
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.CLOSE_BRACKET+JavaConstants.NEW_LINE);
 		} catch (Exception e) {

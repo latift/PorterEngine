@@ -68,7 +68,7 @@ public class PaternUpdate extends AbstractPattern{
 		if(abstractTokenInPattern.getSourceFieldName()==null){
 		
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("RECNUMBER")){
-			int recNumber=(int) currentTokenForMatch.getDeger();
+			long recNumber=(long) currentTokenForMatch.getDeger();
 			matchedCommandAdd.setRecNumber(recNumber);
 			matchedCommandAdd.getParameters().put("RECNUMBER", matchedCommandAdd.getRecNumber());
 		}

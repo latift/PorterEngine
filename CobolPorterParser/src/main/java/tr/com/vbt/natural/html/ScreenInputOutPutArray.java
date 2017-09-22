@@ -29,11 +29,11 @@ public class ScreenInputOutPutArray implements ScreenIO {
 
 	private String[] valueArray;
 	
-	protected int XCoord;
+	protected long XCoord;
 
 	protected XCoordinationTypes xCoordinationType;
 
-	protected int YCoord;
+	protected long YCoord;
 
 	protected NaturalTagTypes tagType;
 
@@ -49,7 +49,7 @@ public class ScreenInputOutPutArray implements ScreenIO {
 	
 	private String called;
 
-	public ScreenInputOutPutArray(int xCoord, String yCoord, NaturalTagTypes tagType, IOModeType modeType,
+	public ScreenInputOutPutArray(long xCoord, String yCoord, NaturalTagTypes tagType, IOModeType modeType,
 			String[] sCRLINES, XCoordinationTypes xCoordinationType) {
 
 		if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
@@ -58,7 +58,7 @@ public class ScreenInputOutPutArray implements ScreenIO {
 			this.XCoord = this.XCoord + xCoord;
 		}
 
-		int YCoordCarpan = Integer.valueOf(yCoord.substring(0, yCoord.length() - 1));
+		long YCoordCarpan = Integer.valueOf(yCoord.substring(0, yCoord.length() - 1));
 		if (yCoord.contains("X")) {
 			YCoord = YCoordCarpan * ConverterConfiguration.NATURAL_X_LENGTH;
 		} else if (yCoord.contains("T")) {
@@ -71,19 +71,19 @@ public class ScreenInputOutPutArray implements ScreenIO {
 
 	}
 
-	public int getXCoord() {
+	public long getXCoord() {
 		return XCoord;
 	}
 
-	public void setXCoord(int xCoord) {
+	public void setXCoord(long xCoord) {
 		XCoord = xCoord;
 	}
 
-	public int getYCoord() {
+	public long getYCoord() {
 		return YCoord;
 	}
 
-	public void setYCoord(int yCoord) {
+	public void setYCoord(long yCoord) {
 		YCoord = yCoord;
 	}
 
@@ -153,7 +153,7 @@ public class ScreenInputOutPutArray implements ScreenIO {
 	}
 
 	@Override
-	public int getMaxLength() {
+	public long getMaxLength() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

@@ -6,13 +6,13 @@ public interface ScreenIO {
 	
 	XCoordinationTypes getyCoordinationType();
 	 
-	int getXCoord();
+	long getXCoord();
 
-	int getYCoord();
+	long getYCoord();
 	
-	void setXCoord(int xCoord);
+	void setXCoord(long xCoord);
 	
-	void setYCoord(int yCoord);
+	void setYCoord(long yCoord);
 	
 	NaturalTagTypes getTagType();
 	
@@ -22,7 +22,7 @@ public interface ScreenIO {
 	
 	String getName();
 	
-	int getMaxLength();
+	long getMaxLength();
 	
 	boolean isDoubleQouta();
 	

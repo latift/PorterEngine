@@ -104,20 +104,20 @@ public class JavaTwoDimensionArrayElement extends AbstractJavaElement {
 			//length=(int) this.parameters.get("length");
 			dataName = (String) this.parameters.get("dataName");
 			if(this.parameters.get("levelNumber")!=null){
-				levelNumber = (int) this.parameters.get("levelNumber");
+				levelNumber = (int)((long) this.parameters.get("levelNumber"));
 			}
 			if(this.parameters.get("arrayLength")!=null){
 				
-				arrayLength=(int) this.parameters.get("arrayLength");
+				arrayLength=(int)((long) this.parameters.get("arrayLength"));
 			}
 			if(this.parameters.get("arrayLength2")!=null){
 				
-				arrayLength2=(int) this.parameters.get("arrayLength2");
+				arrayLength2=(int)((long) this.parameters.get("arrayLength2"));
 			}
 			
 					
 			if(parameters.get("lengthAfterDot")!=null){
-				lengthAfterDot=(int) parameters.get("lengthAfterDot");
+				lengthAfterDot=(int) ((long)parameters.get("lengthAfterDot"));
 			}
 
 			

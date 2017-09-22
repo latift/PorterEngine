@@ -13,9 +13,9 @@ public class ElementGroupDataType extends AbstractMultipleLinesCommand implement
 
 	protected String dataName;
 
-	protected int levelNumber;
+	protected long levelNumber;
 	
-	private int occuringCount;
+	private long occuringCount;
 	
 	private String redefines;
 	
@@ -85,11 +85,11 @@ public class ElementGroupDataType extends AbstractMultipleLinesCommand implement
 		return sb.toString();
 	}
 
-	public int getLevelNumber() {
+	public long getLevelNumber() {
 		return levelNumber;
 	}
 
-	public void setLevelNumber(int levelNumber) {
+	public void setLevelNumber(long levelNumber) {
 		this.levelNumber = levelNumber;
 	}
 
@@ -106,11 +106,11 @@ public class ElementGroupDataType extends AbstractMultipleLinesCommand implement
 		return this.commandName+ "  "+this.dataName+"  "+ this.levelNumber;
 	}
 
-	public int getOccuringCount() {
+	public long getOccuringCount() {
 		return occuringCount;
 	}
 
-	public void setOccuringCount(int occuringCount) {
+	public void setOccuringCount(long occuringCount) {
 		this.occuringCount = occuringCount;
 	}
 

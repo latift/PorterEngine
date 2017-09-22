@@ -126,7 +126,7 @@ public class PaternProgramOneDimensionArrayNaturalWithInit extends AbstractDataT
 		super.setSatirNumarasi(matchedCommand,currentTokenForMatch, abstractTokenInPattern);if(abstractTokenInPattern.getSourceFieldName()==null){
 		
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("levelNumber")){
-			matchedCommandAdd.setLevelNumber(((Integer)currentTokenForMatch.getDeger()));
+			matchedCommandAdd.setLevelNumber(((Long)currentTokenForMatch.getDeger()));
 			matchedCommandAdd.getParameters().put("levelNumber", matchedCommandAdd.getLevelNumber());
 		}
 		
@@ -155,7 +155,7 @@ public class PaternProgramOneDimensionArrayNaturalWithInit extends AbstractDataT
 		}
 		
 		else if(abstractTokenInPattern.getSourceFieldName().equals("arrayLength")){
-			matchedCommandAdd.setArrayLength( (int) currentTokenForMatch.getDeger());
+			matchedCommandAdd.setArrayLength( (long) currentTokenForMatch.getDeger());
 			matchedCommandAdd.getParameters().put("arrayLength", matchedCommandAdd.getArrayLength());
 		}
 	}

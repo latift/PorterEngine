@@ -16,13 +16,13 @@ import tr.com.vbt.token.AbstractToken;
 **/
 public class ElementOneDimenRedefineArrayOfSimpleDataType extends AbstractCommand implements Levelable, DataTypeMapConverter {
 
-	protected int levelNumber; // 2
+	protected long levelNumber; // 2
 
 	protected String dataName; // TAX-EXC-ITEM
 	
 	private String dataType; // A5
 
-	private int arrayLength; // 10 Parantez içindeki ifade
+	private long arrayLength; // 10 Parantez içindeki ifade
 	
 	private ElementProgramDataTypeNatural redefinedDataType;
 
@@ -76,11 +76,11 @@ public class ElementOneDimenRedefineArrayOfSimpleDataType extends AbstractComman
 		this.dataName = dataName;
 	}
 
-	public int getLevelNumber() {
+	public long getLevelNumber() {
 		return levelNumber;
 	}
 
-	public void setLevelNumber(int levelNumber) {
+	public void setLevelNumber(long levelNumber) {
 		this.levelNumber = levelNumber;
 	}
 
@@ -109,11 +109,11 @@ public class ElementOneDimenRedefineArrayOfSimpleDataType extends AbstractComman
 	}
 
 
-	public int getArrayLength() {
+	public long getArrayLength() {
 		return arrayLength;
 	}
 
-	public void setArrayLength(int arrayLength) {
+	public void setArrayLength(long arrayLength) {
 		this.arrayLength = arrayLength;
 	}
 

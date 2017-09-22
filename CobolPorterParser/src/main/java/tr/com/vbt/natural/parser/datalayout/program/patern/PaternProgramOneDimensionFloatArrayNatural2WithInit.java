@@ -119,7 +119,7 @@ public class PaternProgramOneDimensionFloatArrayNatural2WithInit extends Abstrac
 		super.setSatirNumarasi(matchedCommand,currentTokenForMatch, abstractTokenInPattern);if(abstractTokenInPattern.getSourceFieldName()==null){
 		
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("levelNumber")){
-			matchedCommandAdd.setLevelNumber(((Integer)currentTokenForMatch.getDeger()));
+			matchedCommandAdd.setLevelNumber(((Long)currentTokenForMatch.getDeger()));
 			matchedCommandAdd.getParameters().put("levelNumber", matchedCommandAdd.getLevelNumber());
 		}
 		else if(abstractTokenInPattern.getSourceFieldName().equals("dataName")){
@@ -147,11 +147,11 @@ public class PaternProgramOneDimensionFloatArrayNatural2WithInit extends Abstrac
 		}
 		
 		else if(abstractTokenInPattern.getSourceFieldName().equals("arrayLength")){
-			matchedCommandAdd.setArrayLength((int) currentTokenForMatch.getDeger());
+			matchedCommandAdd.setArrayLength((long) currentTokenForMatch.getDeger());
 			matchedCommandAdd.getParameters().put("arrayLength", matchedCommandAdd.getArrayLength());
 		}
 		else if(abstractTokenInPattern.getSourceFieldName().equals("lengthAfterDot")){
-			matchedCommandAdd.setLengthAfterDot( (int) currentTokenForMatch.getDeger());
+			matchedCommandAdd.setLengthAfterDot( (long) currentTokenForMatch.getDeger());
 			matchedCommandAdd.getParameters().put("lengthAfterDot", matchedCommandAdd.getLengthAfterDot());
 		}
 	}

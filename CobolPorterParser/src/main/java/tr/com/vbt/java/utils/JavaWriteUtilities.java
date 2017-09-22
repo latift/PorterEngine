@@ -354,7 +354,7 @@ public class JavaWriteUtilities {
 		
 			if(firstDimension.getDeger() instanceof Integer){
 			
-				firstDimensionSize=((int)firstDimension.getDeger());
+				firstDimensionSize=((int)((long)firstDimension.getDeger()));
 				if(arrayToken.getDeger().equals("_") || arrayToken.getDeger().equals("=") || arrayToken.getDeger().equals("-")){ //Cizgi Bastirmak Icin Eklendi
 					tempCodeBuffer.append("\"");
 					while(sayacForLine != firstDimensionSize){
@@ -376,7 +376,7 @@ public class JavaWriteUtilities {
 			
 				if(secDimension.getDeger() instanceof Integer){
 				
-					secDimensionSize=((int)secDimension.getDeger());
+					secDimensionSize=((int)((long)secDimension.getDeger()));
 			
 					tempCodeBuffer.append("["+addIntCastForArrays()+secDimensionSize+"-1]");
 				
@@ -1158,7 +1158,7 @@ public class JavaWriteUtilities {
 					tempCodeBuffer.append("["+ConvertUtilities.castToInt()+arrayToken.getFirstDimension().getDeger()+"-1]");
 				}else {
 					
-					tempCodeBuffer.append("["+(int)arrayToken.getFirstDimension().getDeger()+"-1]");
+					tempCodeBuffer.append("["+(int)((long)arrayToken.getFirstDimension().getDeger())+"-1]");
 				}
 			}
 			tempCodeBuffer.append(".");
@@ -1195,7 +1195,7 @@ public class JavaWriteUtilities {
 					tempCodeBuffer.append("["+ConvertUtilities.castToInt()+arrayToken.getFirstDimension().getDeger()+"-1]");
 				}else {
 					
-					tempCodeBuffer.append("["+(int)arrayToken.getFirstDimension().getDeger()+"-1]");
+					tempCodeBuffer.append("["+(int)((long)arrayToken.getFirstDimension().getDeger())+"-1]");
 				}
 			}
 			tempCodeBuffer.append(".");
@@ -1238,14 +1238,14 @@ public class JavaWriteUtilities {
 			firstDimension=arrayToken.getFirstDimension();
 			secDimension=arrayToken.getSecondDimension();
 			if(firstDimension.getDeger() instanceof Integer){
-				firstDimensionSize=((int)firstDimension.getDeger());
+				firstDimensionSize=((int)((long)firstDimension.getDeger()));
 				tempCodeBuffer.append("["+addIntCastForArrays()+firstDimensionSize+"-1]");
 			}else {
 				tempCodeBuffer.append("["+addIntCastForArrays()+firstDimension.getDeger()+"-1]");
 			}
 			if(secDimension!=null){
 				if(secDimension.getDeger() instanceof Integer){
-					secDimensionSize=((int)secDimension.getDeger());
+					secDimensionSize=((int)((long)secDimension.getDeger()));
 					tempCodeBuffer.append("["+addIntCastForArrays()+secDimensionSize+"-1]");
 				}else {
 					tempCodeBuffer.append("["+addIntCastForArrays()+secDimension.getDeger()+"-1]");
@@ -1283,14 +1283,14 @@ public class JavaWriteUtilities {
 			firstDimension=arrayToken.getFirstDimension();
 			secDimension=arrayToken.getSecondDimension();
 			if(firstDimension.getDeger() instanceof Integer){
-				firstDimensionSize=((int)firstDimension.getDeger());
+				firstDimensionSize=((int)((long)firstDimension.getDeger()));
 				tempCodeBuffer.append("["+addIntCastForArrays()+firstDimensionSize+"-1]");
 			}else {
 				tempCodeBuffer.append("["+addIntCastForArrays()+firstDimension.getDeger()+"-1]");
 			}
 			if(secDimension!=null){
 				if(secDimension.getDeger() instanceof Integer){
-					secDimensionSize=((int)secDimension.getDeger());
+					secDimensionSize=((int)((long)secDimension.getDeger()));
 					tempCodeBuffer.append("["+addIntCastForArrays()+secDimensionSize+"-1]");
 				}else {
 					tempCodeBuffer.append("["+addIntCastForArrays()+secDimension.getDeger()+"-1]");

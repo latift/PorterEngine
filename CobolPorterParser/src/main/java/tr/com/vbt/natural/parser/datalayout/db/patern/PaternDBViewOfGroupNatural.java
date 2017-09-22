@@ -13,7 +13,7 @@ import tr.com.vbt.token.SayiToken;
 
 //*S**1 TESL2 VIEW OF AYK-TESL 
 /**
-  * protected int levelNumber;
+  * protected long levelNumber;
 	
 	//TESL2
 	protected String variableName;
@@ -66,7 +66,7 @@ public class PaternDBViewOfGroupNatural extends AbstractDataTypePattern{
 		super.setSatirNumarasi(matchedCommand,currentTokenForMatch, abstractTokenInPattern);if(abstractTokenInPattern.getSourceFieldName()==null){
 		
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("levelNumber")){
-			matchedCommandAdd.setLevelNumber(((Integer)currentTokenForMatch.getDeger()));
+			matchedCommandAdd.setLevelNumber(((Long)currentTokenForMatch.getDeger()));
 			matchedCommandAdd.getParameters().put("levelNumber", matchedCommandAdd.getLevelNumber());
 		
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("variableName")){

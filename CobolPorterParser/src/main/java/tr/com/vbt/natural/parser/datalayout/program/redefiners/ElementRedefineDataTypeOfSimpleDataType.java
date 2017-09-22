@@ -32,15 +32,15 @@ import tr.com.vbt.token.AbstractToken;
 **/
 public class ElementRedefineDataTypeOfSimpleDataType extends AbstractCommand implements Levelable, DataTypeMapConverter {
 
-	protected int levelNumber; // mandatory
+	protected long levelNumber; // mandatory
 
 	protected String dataName; // mandatory
 	
 	private String dataType; // 9, X, A //mandatory
 
-	private int length; // (5) Parantez içindeki ifade //optional
+	private long length; // (5) Parantez içindeki ifade //optional
 	
-	private int lengthAfterDot; // Noktanin Solundali
+	private long lengthAfterDot; // Noktanin Solundali
 	
 	private String redefinedDataType;
 	
@@ -110,11 +110,11 @@ public class ElementRedefineDataTypeOfSimpleDataType extends AbstractCommand imp
 		this.dataName = dataName;
 	}
 
-	public int getLevelNumber() {
+	public long getLevelNumber() {
 		return levelNumber;
 	}
 
-	public void setLevelNumber(int levelNumber) {
+	public void setLevelNumber(long levelNumber) {
 		this.levelNumber = levelNumber;
 	}
 
@@ -128,21 +128,21 @@ public class ElementRedefineDataTypeOfSimpleDataType extends AbstractCommand imp
 		this.dataType = dataType;
 	}
 
-	public int getLength() {
+	public long getLength() {
 		return length;
 	}
 
-	public void setLength(int length) {
+	public void setLength(long length) {
 		this.length = length;
 	}
 
 
-	public int getLengthAfterDot() {
+	public long getLengthAfterDot() {
 		return lengthAfterDot;
 	}
 
 
-	public void setLengthAfterDot(int lengthAfterDot) {
+	public void setLengthAfterDot(long lengthAfterDot) {
 		this.lengthAfterDot = lengthAfterDot;
 	}
 
@@ -175,7 +175,7 @@ public class ElementRedefineDataTypeOfSimpleDataType extends AbstractCommand imp
 							
 							offset=Utility.calculateOffset(this, commandList,commandIndex);
 							pojoName=Utility.viewNameToPojoName(this.dataName);
-							redefineEndIndex=offset+length;
+							redefineEndIndex=offset+(int)length;
 							
 							if(parentRedefinedCommand.getDataType().equals("N")){
 								if(this.getDataType().equals("N")){

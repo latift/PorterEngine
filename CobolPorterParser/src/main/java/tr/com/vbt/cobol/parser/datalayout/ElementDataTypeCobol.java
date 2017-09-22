@@ -11,13 +11,13 @@ import tr.com.vbt.token.AbstractToken;
 // 01 WS-NUM3 PIC S9(3)V9(2) VALUE -123.45.
 public class ElementDataTypeCobol extends AbstractCommand implements Levelable {
 
-	protected int levelNumber; // mandatory
+	protected long levelNumber; // mandatory
 
 	protected String dataName; // mandatory
 
 	private String sign; // + veya //optional
 	
-	private int occuringCount;
+	private long occuringCount;
 
 	@Override
 	public String toString() {
@@ -28,13 +28,13 @@ public class ElementDataTypeCobol extends AbstractCommand implements Levelable {
 
 	private int length; // (5) Parantez içindeki ifade //optional
 
-	private int decimalLength; // (5) Parantez içindeki ifade //optional
+	private Long decimalLength; // (5) Parantez içindeki ifade //optional
 
 	private String redefines;
 
 	private String value;
 	
-	private int valueAsInt;
+	private Long valueAsInt;
 
 	public ElementDataTypeCobol(AbstractToken baseToken,
 			List<AbstractToken> tokenListesi, AbstractCommand parent) {
@@ -92,11 +92,11 @@ public class ElementDataTypeCobol extends AbstractCommand implements Levelable {
 		this.dataName = dataName;
 	}
 
-	public int getLevelNumber() {
+	public long getLevelNumber() {
 		return levelNumber;
 	}
 
-	public void setLevelNumber(int levelNumber) {
+	public void setLevelNumber(long levelNumber) {
 		this.levelNumber = levelNumber;
 	}
 
@@ -124,11 +124,11 @@ public class ElementDataTypeCobol extends AbstractCommand implements Levelable {
 		this.length = length;
 	}
 
-	public int getDecimalLength() {
+	public long getDecimalLength() {
 		return decimalLength;
 	}
 
-	public void setDecimalLength(int decimalLength) {
+	public void setDecimalLength(long decimalLength) {
 		this.decimalLength = decimalLength;
 	}
 
@@ -148,19 +148,19 @@ public class ElementDataTypeCobol extends AbstractCommand implements Levelable {
 		this.value = value;
 	}
 
-	public int getOccuringCount() {
+	public long getOccuringCount() {
 		return occuringCount;
 	}
 
-	public void setOccuringCount(int occuringCount) {
+	public void setOccuringCount(long occuringCount) {
 		this.occuringCount = occuringCount;
 	}
 
-	public int getValueAsInt() {
+	public long getValueAsInt() {
 		return valueAsInt;
 	}
 
-	public void setValueAsInt(int valueAsInt) {
+	public void setValueAsInt(long valueAsInt) {
 		this.valueAsInt = valueAsInt;
 	}
 

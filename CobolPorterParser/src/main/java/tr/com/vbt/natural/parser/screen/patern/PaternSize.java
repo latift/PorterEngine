@@ -64,12 +64,12 @@ public class PaternSize extends AbstractPattern{
 		super.setSatirNumarasi(matchedCommand,currentTokenForMatch, abstractTokenInPattern);if(abstractTokenInPattern.getSourceFieldName()==null){
 		
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("lineCount")){
-			int deger=(int) currentTokenForMatch.getDeger();
+			long deger=(long) currentTokenForMatch.getDeger();
 			matchedCommandAdd.setLineCount(deger);
 			matchedCommandAdd.getParameters().put("lineCount", matchedCommandAdd.getLineCount());
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("lineLength")){
-			int deger=(int) currentTokenForMatch.getDeger();
-			matchedCommandAdd.setLineCount((int) deger);
+			long deger=(long) currentTokenForMatch.getDeger();
+			matchedCommandAdd.setLineCount((long) deger);
 			matchedCommandAdd.getParameters().put("lineLength", matchedCommandAdd.getLineCount());
 		}
 	}

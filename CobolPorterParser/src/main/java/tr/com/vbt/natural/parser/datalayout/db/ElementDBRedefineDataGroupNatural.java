@@ -14,7 +14,7 @@ public class ElementDBRedefineDataGroupNatural extends AbstractMultipleLinesComm
 
 	protected String redefineName;
 
-	protected int levelNumber;
+	protected long levelNumber;
 	
 	public ElementDBRedefineDataGroupNatural(AbstractToken baseToken,
 			List<AbstractToken> tokenListesi, AbstractCommand parent) {
@@ -53,11 +53,11 @@ public class ElementDBRedefineDataGroupNatural extends AbstractMultipleLinesComm
 		return sb.toString();
 	}
 
-	public int getLevelNumber() {
+	public long getLevelNumber() {
 		return levelNumber;
 	}
 
-	public void setLevelNumber(int levelNumber) {
+	public void setLevelNumber(long levelNumber) {
 		this.levelNumber = levelNumber;
 	}
 

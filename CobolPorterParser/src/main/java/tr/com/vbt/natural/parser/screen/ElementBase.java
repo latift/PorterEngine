@@ -21,9 +21,9 @@ import tr.com.vbt.token.AbstractToken;
 
 public class ElementBase extends AbstractCommand{
 	
-	int baseX;
+	long baseX;
 	
-	int baseY;
+	long baseY;
 	
 	public ElementBase(AbstractToken baseToken,
 			List<AbstractToken> tokenListesi, AbstractCommand parent) {
@@ -56,19 +56,19 @@ public class ElementBase extends AbstractCommand{
 		return sb.toString();
 	}
 
-	public int getBaseX() {
+	public long getBaseX() {
 		return baseX;
 	}
 
-	public void setBaseX(int baseX) {
+	public void setBaseX(long baseX) {
 		this.baseX = baseX;
 	}
 
-	public int getBaseY() {
+	public long getBaseY() {
 		return baseY;
 	}
 
-	public void setBaseY(int baseY) {
+	public void setBaseY(long baseY) {
 		this.baseY = baseY;
 	}
 

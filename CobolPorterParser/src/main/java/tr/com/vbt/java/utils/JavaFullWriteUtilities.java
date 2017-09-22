@@ -469,7 +469,7 @@ public class JavaFullWriteUtilities {
 		
 			if(firstDimension.getDeger() instanceof Integer){
 			
-				firstDimensionSize=((int)firstDimension.getDeger());
+				firstDimensionSize=((int)((long)firstDimension.getDeger()));
 				if(arrayToken.getDeger().equals("_") || arrayToken.getDeger().equals("=") || arrayToken.getDeger().equals("-")){ //Cizgi Bastirmak Icin Eklendi
 					tempCodeBuffer.append("\"");
 					while(sayacForLine != firstDimensionSize){
@@ -490,7 +490,7 @@ public class JavaFullWriteUtilities {
 			
 				if(secDimension.getDeger() instanceof Integer){
 				
-					secDimensionSize=((int)secDimension.getDeger());
+					secDimensionSize=((int)((long)secDimension.getDeger()));
 			
 					tempCodeBuffer.append("["+secDimensionSize+"-1]");
 				
@@ -1144,7 +1144,7 @@ public class JavaFullWriteUtilities {
 					tempCodeBuffer.append("["+ConvertUtilities.castToInt()+arrayToken.getFirstDimension().getDeger()+"-1]");
 				}else {
 					
-					tempCodeBuffer.append("["+ConvertUtilities.castToInt()+(int)arrayToken.getFirstDimension().getDeger()+"-1]");
+					tempCodeBuffer.append("["+ConvertUtilities.castToInt()+(int)((long)arrayToken.getFirstDimension().getDeger())+"-1]");
 				}
 			}
 			tempCodeBuffer.append(".");
@@ -1184,14 +1184,14 @@ public class JavaFullWriteUtilities {
 			firstDimension=arrayToken.getFirstDimension();
 			secDimension=arrayToken.getSecondDimension();
 			if(firstDimension.getDeger() instanceof Integer){
-				firstDimensionSize=((int)firstDimension.getDeger());
+				firstDimensionSize=((int)((long)firstDimension.getDeger()));
 				tempCodeBuffer.append("["+addIntCastForArrays()+firstDimensionSize+"-1]");
 			}else {
 				tempCodeBuffer.append("["+addIntCastForArrays()+firstDimension.getDeger()+"-1]");
 			}
 			if(secDimension!=null){
 				if(secDimension.getDeger() instanceof Integer){
-					secDimensionSize=((int)secDimension.getDeger());
+					secDimensionSize=((int)((long)secDimension.getDeger()));
 					tempCodeBuffer.append("["+secDimensionSize+"-1]");
 				}else {
 					tempCodeBuffer.append("["+secDimension.getDeger()+"-1]");

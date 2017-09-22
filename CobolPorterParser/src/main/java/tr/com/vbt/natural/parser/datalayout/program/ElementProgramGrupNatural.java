@@ -23,11 +23,11 @@ import tr.com.vbt.token.AbstractToken;
 **/
 public class ElementProgramGrupNatural extends AbstractMultipleLinesCommand implements Levelable, DataTypeMapConverter {
 
-	protected int levelNumber; // mandatory
+	protected long levelNumber; // mandatory
 	
 	protected String grupName; // mandatory
 	
-	private int arrayLength; // 500 Parantez içindeki ifade
+	private long arrayLength; // 500 Parantez içindeki ifade
 	
 	
 	@Override
@@ -72,12 +72,12 @@ public class ElementProgramGrupNatural extends AbstractMultipleLinesCommand impl
 	}
 
 
-	public int getLevelNumber() {
+	public long getLevelNumber() {
 		return levelNumber;
 	}
 
 
-	public void setLevelNumber(int levelNumber) {
+	public void setLevelNumber(long levelNumber) {
 		this.levelNumber = levelNumber;
 	}
 
@@ -103,12 +103,12 @@ public class ElementProgramGrupNatural extends AbstractMultipleLinesCommand impl
 	}
 
 
-	public int getArrayLength() {
+	public long getArrayLength() {
 		return arrayLength;
 	}
 
 
-	public void setArrayLength(int arrayLength) {
+	public void setArrayLength(long arrayLength) {
 		this.arrayLength = arrayLength;
 	}
 

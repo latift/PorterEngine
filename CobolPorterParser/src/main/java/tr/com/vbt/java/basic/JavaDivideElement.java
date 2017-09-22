@@ -50,7 +50,7 @@ public class JavaDivideElement extends AbstractJavaElement {
 				} else if (bolunen.getDeger() instanceof Double) {
 					double bolunenDbl = (Double) bolunen.getDeger();
 					if (bolunenDbl % 1 == 0) {
-						JavaClassElement.javaCodeBuffer.append((int) bolunenDbl);
+						JavaClassElement.javaCodeBuffer.append((long) bolunenDbl);
 					} else {
 						JavaClassElement.javaCodeBuffer.append(bolunenDbl);
 					}
@@ -74,7 +74,7 @@ public class JavaDivideElement extends AbstractJavaElement {
 				} else if (bolunen.getDeger() instanceof Double) {
 					double bolunenDbl = (Double) bolunen.getDeger();
 					if (bolunenDbl % 1 == 0) {
-						JavaClassElement.javaCodeBuffer.append((int) bolunenDbl);
+						JavaClassElement.javaCodeBuffer.append((long) bolunenDbl);
 					} else {
 						JavaClassElement.javaCodeBuffer.append(bolunenDbl);
 					}

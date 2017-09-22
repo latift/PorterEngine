@@ -11,10 +11,10 @@ import tr.com.vbt.token.AbstractToken;
 //END_GROUP_DATA_TYPE
 public class ElementEndGroupDataType extends AbstractEndingCommand implements Levelable{
 	
-	private int levelNumber;
+	private long levelNumber;
 	
 	public ElementEndGroupDataType(AbstractToken baseToken,
-			List<AbstractToken> tokenListesi, AbstractCommand parent, int levelNumber) {
+			List<AbstractToken> tokenListesi, AbstractCommand parent, long levelNumber) {
 		super("EndPerform","WORKING-STORAGE-SECTION.*.END_GROUP_DATA_TYPE");
 		this.levelNumber=levelNumber;
 	}
@@ -23,7 +23,7 @@ public class ElementEndGroupDataType extends AbstractEndingCommand implements Le
 		super(elementName, detailedCobolName);
 	}
 
-	public ElementEndGroupDataType(String elementName,String detailedCobolName, int levelNumber) {
+	public ElementEndGroupDataType(String elementName,String detailedCobolName, long levelNumber) {
 		super(elementName, detailedCobolName);
 		this.levelNumber=levelNumber;
 	}
@@ -49,11 +49,11 @@ public class ElementEndGroupDataType extends AbstractEndingCommand implements Le
 		return sb.toString();
 	}
 
-	public int getLevelNumber() {
+	public long getLevelNumber() {
 		return levelNumber;
 	}
 
-	public void setLevelNumber(int levelNumber) {
+	public void setLevelNumber(long levelNumber) {
 		this.levelNumber = levelNumber;
 	}
 

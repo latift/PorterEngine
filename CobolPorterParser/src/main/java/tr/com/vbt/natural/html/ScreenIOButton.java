@@ -28,13 +28,13 @@ import tr.com.vbt.util.ConverterConfiguration;
 
 public class ScreenIOButton implements ScreenIO {
 
-	protected int XCoord;
+	protected long XCoord;
 
 	protected XCoordinationTypes xCoordinationType;
 	
 	protected XCoordinationTypes yCoordinationType;
 
-	protected int YCoord;
+	protected long YCoord;
 
 	protected NaturalTagTypes tagType=NaturalTagTypes.SUBMIT_BUTTON;
 
@@ -44,11 +44,11 @@ public class ScreenIOButton implements ScreenIO {
 
 	protected String value;
 	
-	protected int minLength;
+	protected long minLength;
 	
-	protected int maxLength;
+	protected long maxLength;
 	
-	private  static int  buttonYcoord;
+	private  static long  buttonYcoord;
 	
 	private String hotKey;
 	
@@ -58,8 +58,8 @@ public class ScreenIOButton implements ScreenIO {
 	
 	private String called;
 	
-	public ScreenIOButton(int xCoord, int yCoord, IOModeType modeType, String value,
-			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType , int minLen, int maxLen,String hotKey) {
+	public ScreenIOButton(long xCoord, long yCoord, IOModeType modeType, String value,
+			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType , long minLen, long maxLen,String hotKey) {
 
 		super();
 		
@@ -78,7 +78,7 @@ public class ScreenIOButton implements ScreenIO {
 		this.hotKey=hotKey;
 	}
 	
-	public ScreenIOButton(int xCoord, int yCoord, IOModeType modeType, String value,
+	public ScreenIOButton(long xCoord, long yCoord, IOModeType modeType, String value,
 			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, String hotKey) {
 
 		super();
@@ -95,11 +95,11 @@ public class ScreenIOButton implements ScreenIO {
 		this.yCoordinationType = yCoordinationType;
 		this.hotKey=hotKey;
 	}
-	public int getXCoord() {
+	public long getXCoord() {
 		return XCoord;
 	}
 
-	public void setXCoord(int xCoord) {
+	public void setXCoord(long xCoord) {
 		XCoord = xCoord;
 	}
 
@@ -119,11 +119,11 @@ public class ScreenIOButton implements ScreenIO {
 		this.yCoordinationType = yCoordinationType;
 	}
 
-	public int getYCoord() {
+	public long getYCoord() {
 		return YCoord;
 	}
 
-	public void setYCoord(int yCoord) {
+	public void setYCoord(long yCoord) {
 		YCoord = yCoord;
 	}
 
@@ -166,7 +166,7 @@ public class ScreenIOButton implements ScreenIO {
 	}
 
 	@Override
-	public int getMaxLength() {
+	public long getMaxLength() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

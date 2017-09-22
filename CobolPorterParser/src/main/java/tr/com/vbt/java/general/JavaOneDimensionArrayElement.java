@@ -99,16 +99,16 @@ public class JavaOneDimensionArrayElement extends AbstractJavaElement {
 		try {
 			dataType = (String) this.parameters.get("dataType");
 			if(this.parameters.get("length")!=null){
-				length=(int) this.parameters.get("length");
+				length=(int)((long) this.parameters.get("length"));
 				
 			}
 			dataName = (String) this.parameters.get("dataName");
-			levelNumber = (int) this.parameters.get("levelNumber");
+			levelNumber = (int)((long)  this.parameters.get("levelNumber"));
 			if(this.parameters.get("arrayLength")!=null){
-				arrayLength=(int) this.parameters.get("arrayLength");
+				arrayLength=(int) ((long)this.parameters.get("arrayLength"));
 			}
 			if(parameters.get("lengthAfterDot")!=null){
-				lengthAfterDot=(int) parameters.get("lengthAfterDot");
+				lengthAfterDot=(int)((long) parameters.get("lengthAfterDot"));
 			}
 
 			type=ConvertUtilities.getJavaVariableType(dataType, arrayLength, lengthAfterDot);

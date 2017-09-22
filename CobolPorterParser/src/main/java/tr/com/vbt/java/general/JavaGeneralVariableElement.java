@@ -99,10 +99,10 @@ public class JavaGeneralVariableElement extends AbstractJavaElement {
 			writeFieldAnnotation();
 			
 			dataType = (String) this.parameters.get("dataType");
-			length=(int) this.parameters.get("length");
+			length=(int)((long) this.parameters.get("length"));
 			dataName = (String) this.parameters.get("dataName");
 			if(parameters.get("lengthAfterDot")!=null){
-				lengthAfterDot=(int) parameters.get("lengthAfterDot");
+				lengthAfterDot=(int) ((long)parameters.get("lengthAfterDot"));
 			}
 			if(parameters.get("initialValue")!=null){
 				initialValue= (String) parameters.get("initialValue");

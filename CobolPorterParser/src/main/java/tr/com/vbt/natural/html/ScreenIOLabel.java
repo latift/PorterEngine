@@ -29,13 +29,13 @@ import tr.com.vbt.util.ConverterConfiguration;
 
 public class ScreenIOLabel implements ScreenIO {
 
-	protected int XCoord;
+	protected long XCoord;
 
 	protected XCoordinationTypes xCoordinationType;
 	
 	protected XCoordinationTypes yCoordinationType;
 
-	protected int YCoord;
+	protected long YCoord;
 
 	protected NaturalTagTypes tagType=NaturalTagTypes.LABEL;
 
@@ -45,9 +45,9 @@ public class ScreenIOLabel implements ScreenIO {
 
 	protected String value;
 	
-	protected int minLength;
+	protected long minLength;
 	
-	protected int maxLength;
+	protected long maxLength;
 
 	private boolean doubleQouta;
 	
@@ -57,8 +57,8 @@ public class ScreenIOLabel implements ScreenIO {
 	
 	protected HtmlColor color=HtmlColor.BLUE;  //Default Blue
 
-	public ScreenIOLabel(int xCoord, int yCoord, IOModeType modeType, String value,
-			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, int minLen, int maxLen) {
+	public ScreenIOLabel(long xCoord, long yCoord, IOModeType modeType, String value,
+			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, long minLen, long maxLen) {
 
 		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
 		if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
@@ -80,8 +80,8 @@ public class ScreenIOLabel implements ScreenIO {
 		this.maxLength=maxLen;
 	}
 	
-	public ScreenIOLabel(int xCoord, int yCoord, IOModeType modeType, String value,
-			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, int minLen, int maxLen, HtmlColor color) {
+	public ScreenIOLabel(long xCoord, long yCoord, IOModeType modeType, String value,
+			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, long minLen, long maxLen, HtmlColor color) {
 
 		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
 		if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
@@ -104,32 +104,8 @@ public class ScreenIOLabel implements ScreenIO {
 		this.color=color;
 	}
 	
-	public ScreenIOLabel(int xCoord, int yCoord, IOModeType modeType, String value,
-			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, int minLen, int maxLen, boolean doubleQouta) {
-
-		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
-		if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
-			XCoord = xCoord;
-		} else {
-			this.XCoord = this.XCoord + xCoord;
-		}
-
-		if(value==null || value.isEmpty()){
-			value="";
-		}
-		XCoord = xCoord;
-		YCoord = yCoord;
-		this.modeType = modeType;
-		this.value = value;
-		this.xCoordinationType = xCoordinationType;
-		this.yCoordinationType = yCoordinationType;
-		this.minLength=minLen;
-		this.maxLength=maxLen;
-		this.doubleQouta=doubleQouta;
-	}
-	
-	public ScreenIOLabel(int xCoord, int yCoord, IOModeType modeType, String value,
-			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, int minLen, int maxLen, boolean doubleQouta, HtmlColor color) {
+	public ScreenIOLabel(long xCoord, long yCoord, IOModeType modeType, String value,
+			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, long minLen, long maxLen, boolean doubleQouta) {
 
 		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
 		if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
@@ -150,11 +126,35 @@ public class ScreenIOLabel implements ScreenIO {
 		this.minLength=minLen;
 		this.maxLength=maxLen;
 		this.doubleQouta=doubleQouta;
+	}
+	
+	public ScreenIOLabel(long xCoord, long yCoord, IOModeType modeType, String value,
+			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, long minLen, long maxLen, boolean doubleQouta, HtmlColor color) {
+
+		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
+		if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
+			XCoord = xCoord;
+		} else {
+			this.XCoord = this.XCoord + xCoord;
+		}
+
+		if(value==null || value.isEmpty()){
+			value="";
+		}
+		XCoord = xCoord;
+		YCoord = yCoord;
+		this.modeType = modeType;
+		this.value = value;
+		this.xCoordinationType = xCoordinationType;
+		this.yCoordinationType = yCoordinationType;
+		this.minLength=minLen;
+		this.maxLength=maxLen;
+		this.doubleQouta=doubleQouta;
 		this.color=color;
 	}
 	
-	public ScreenIOLabel(int xCoord, int yCoord, IOModeType modeType, int value,
-			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, int minLen, int maxLen) {
+	public ScreenIOLabel(long xCoord, long yCoord, IOModeType modeType, long value,
+			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, long minLen, long maxLen) {
 		
 		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
 		if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
@@ -179,8 +179,8 @@ public class ScreenIOLabel implements ScreenIO {
 		this.maxLength=maxLen;
 	}
 	
-	public ScreenIOLabel(int xCoord, int yCoord, IOModeType modeType, int value,
-			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, int minLen, int maxLen, HtmlColor color) {
+	public ScreenIOLabel(long xCoord, long yCoord, IOModeType modeType, long value,
+			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, long minLen, long maxLen, HtmlColor color) {
 		
 		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
 		if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
@@ -190,55 +190,6 @@ public class ScreenIOLabel implements ScreenIO {
 		}
 		
 		
-		
-		XCoord = xCoord;
-		YCoord = yCoord;
-		this.modeType = modeType;
-		if(value==0 ){
-			this.value = "";
-		}else{
-			this.value = String.valueOf(value);
-		}
-		this.xCoordinationType = xCoordinationType;
-		this.yCoordinationType = yCoordinationType;
-		this.minLength=minLen;
-		this.maxLength=maxLen;
-		this.color=color;
-	}
-	
-	public ScreenIOLabel(int xCoord, int yCoord, IOModeType modeType, float value,
-			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, int minLen, int maxLen) {
-		
-		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
-		if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
-			XCoord = xCoord;
-		} else {
-			this.XCoord = this.XCoord + xCoord;
-		}
-		
-		XCoord = xCoord;
-		YCoord = yCoord;
-		this.modeType = modeType;
-		if(value==0 ){
-			this.value = "";
-		}else{
-			this.value = String.valueOf(value);
-		}
-		this.xCoordinationType = xCoordinationType;
-		this.yCoordinationType = yCoordinationType;
-		this.minLength=minLen;
-		this.maxLength=maxLen;
-	}
-	
-	public ScreenIOLabel(int xCoord, int yCoord, IOModeType modeType, float value,
-			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, int minLen, int maxLen, HtmlColor color) {
-		
-		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
-		if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
-			XCoord = xCoord;
-		} else {
-			this.XCoord = this.XCoord + xCoord;
-		}
 		
 		XCoord = xCoord;
 		YCoord = yCoord;
@@ -255,8 +206,57 @@ public class ScreenIOLabel implements ScreenIO {
 		this.color=color;
 	}
 	
-	public ScreenIOLabel(int xCoord, int yCoord, IOModeType modeType, BigDecimal value,
-			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, int minLen, int maxLen) {
+	public ScreenIOLabel(long xCoord, long yCoord, IOModeType modeType, float value,
+			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, long minLen, long maxLen) {
+		
+		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
+		if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
+			XCoord = xCoord;
+		} else {
+			this.XCoord = this.XCoord + xCoord;
+		}
+		
+		XCoord = xCoord;
+		YCoord = yCoord;
+		this.modeType = modeType;
+		if(value==0 ){
+			this.value = "";
+		}else{
+			this.value = String.valueOf(value);
+		}
+		this.xCoordinationType = xCoordinationType;
+		this.yCoordinationType = yCoordinationType;
+		this.minLength=minLen;
+		this.maxLength=maxLen;
+	}
+	
+	public ScreenIOLabel(long xCoord, long yCoord, IOModeType modeType, float value,
+			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, long minLen, long maxLen, HtmlColor color) {
+		
+		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
+		if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
+			XCoord = xCoord;
+		} else {
+			this.XCoord = this.XCoord + xCoord;
+		}
+		
+		XCoord = xCoord;
+		YCoord = yCoord;
+		this.modeType = modeType;
+		if(value==0 ){
+			this.value = "";
+		}else{
+			this.value = String.valueOf(value);
+		}
+		this.xCoordinationType = xCoordinationType;
+		this.yCoordinationType = yCoordinationType;
+		this.minLength=minLen;
+		this.maxLength=maxLen;
+		this.color=color;
+	}
+	
+	public ScreenIOLabel(long xCoord, long yCoord, IOModeType modeType, BigDecimal value,
+			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, long minLen, long maxLen) {
 		
 		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
 				if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
@@ -279,8 +279,8 @@ public class ScreenIOLabel implements ScreenIO {
 				this.maxLength=maxLen;
 	}
 	
-	public ScreenIOLabel(int xCoord, int yCoord, IOModeType modeType, BigDecimal value,
-			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, int minLen, int maxLen, HtmlColor color) {
+	public ScreenIOLabel(long xCoord, long yCoord, IOModeType modeType, BigDecimal value,
+			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, long minLen, long maxLen, HtmlColor color) {
 		
 		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
 				if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
@@ -304,10 +304,10 @@ public class ScreenIOLabel implements ScreenIO {
 				this.color=color;
 	}
 
-	public ScreenIOLabel(int xCoord, String yCoord, IOModeType modeType, String value,
+	public ScreenIOLabel(long xCoord, String yCoord, IOModeType modeType, String value,
 			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType) {
 
-		int YCoordCarpan;
+		long YCoordCarpan;
 
 		if (yCoord != null && !yCoord.trim().isEmpty()) {
 			
@@ -339,10 +339,10 @@ public class ScreenIOLabel implements ScreenIO {
 
 	}
 	
-	public ScreenIOLabel(int xCoord, String yCoord, IOModeType modeType, String value,
+	public ScreenIOLabel(long xCoord, String yCoord, IOModeType modeType, String value,
 			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, HtmlColor color) {
 
-		int YCoordCarpan;
+		long YCoordCarpan;
 
 		if (yCoord != null && !yCoord.trim().isEmpty()) {
 			
@@ -375,9 +375,9 @@ public class ScreenIOLabel implements ScreenIO {
 
 	}
 	
-	public ScreenIOLabel(int xCoord, String yCoord, IOModeType modeType, int value,
+	public ScreenIOLabel(long xCoord, String yCoord, IOModeType modeType, long value,
 			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType) {
-		int YCoordCarpan;
+		long YCoordCarpan;
 
 		if (yCoord != null && !yCoord.trim().isEmpty()) {
 			
@@ -408,9 +408,9 @@ public class ScreenIOLabel implements ScreenIO {
 		this.yCoordinationType = yCoordinationType;
 	}
 	
-	public ScreenIOLabel(int xCoord, String yCoord, IOModeType modeType, int value,
+	public ScreenIOLabel(long xCoord, String yCoord, IOModeType modeType, long value,
 			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, HtmlColor color) {
-		int YCoordCarpan;
+		long YCoordCarpan;
 
 		if (yCoord != null && !yCoord.trim().isEmpty()) {
 			
@@ -444,19 +444,19 @@ public class ScreenIOLabel implements ScreenIO {
 
 
 
-	public int getXCoord() {
+	public long getXCoord() {
 		return XCoord;
 	}
 
-	public void setXCoord(int xCoord) {
+	public void setXCoord(long xCoord) {
 		XCoord = xCoord;
 	}
 
-	public int getYCoord() {
+	public long getYCoord() {
 		return YCoord;
 	}
 
-	public void setYCoord(int yCoord) {
+	public void setYCoord(long yCoord) {
 		YCoord = yCoord;
 	}
 
@@ -517,19 +517,19 @@ public class ScreenIOLabel implements ScreenIO {
 		this.yCoordinationType = yCoordinationType;
 	}
 
-	public int getMinLength() {
+	public long getMinLength() {
 		return minLength;
 	}
 
-	public void setMinLength(int minLength) {
+	public void setMinLength(long minLength) {
 		this.minLength = minLength;
 	}
 
-	public int getMaxLength() {
+	public long getMaxLength() {
 		return maxLength;
 	}
 
-	public void setMaxLength(int maxLength) {
+	public void setMaxLength(long maxLength) {
 		this.maxLength = maxLength;
 	}
 

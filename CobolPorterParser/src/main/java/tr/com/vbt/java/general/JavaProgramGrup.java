@@ -26,7 +26,7 @@ public class JavaProgramGrup extends  AbstractJavaElement{
 	final static Logger logger = LoggerFactory.getLogger(JavaProgramGrup.class);
 	
 	
-	protected int levelNumber; // mandatory
+	protected long levelNumber; // mandatory
 	
 	protected String grupName; // mandatory
 	
@@ -36,14 +36,14 @@ public class JavaProgramGrup extends  AbstractJavaElement{
 	@Override
 	public boolean writeJavaToStream() throws Exception{ super.writeJavaToStream();
 	
-		levelNumber = (int) this.parameters.get("levelNumber");
+		levelNumber = (int)((long) this.parameters.get("levelNumber"));
 			
 		grupName = (String) this.parameters.get("grupName");
 		
 		grupName=grupName.replaceAll("-", "_");
 		
 		if(this.parameters.get("arrayLength")!=null){
-			arrayLength =  (int) this.parameters.get("arrayLength");
+			arrayLength =  (int)((long) this.parameters.get("arrayLength"));
 		}
 		
 		
@@ -79,12 +79,12 @@ public class JavaProgramGrup extends  AbstractJavaElement{
 	}
 
 
-	public int getLevelNumber() {
+	public long getLevelNumber() {
 		return levelNumber;
 	}
 
 
-	public void setLevelNumber(int levelNumber) {
+	public void setLevelNumber(long levelNumber) {
 		this.levelNumber = levelNumber;
 	}
 

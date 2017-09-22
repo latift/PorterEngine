@@ -28,13 +28,13 @@ import tr.com.vbt.util.ConverterConfiguration;
 
 public class ScreenIOPopupableButton implements ScreenIO {
 
-	protected int XCoord;
+	protected long XCoord;
 
 	protected XCoordinationTypes xCoordinationType;
 	
 	protected XCoordinationTypes yCoordinationType;
 
-	protected int YCoord;
+	protected long YCoord;
 
 	protected NaturalTagTypes tagType=NaturalTagTypes.POPUPABLE_INPUTFIELD;
 
@@ -44,11 +44,11 @@ public class ScreenIOPopupableButton implements ScreenIO {
 
 	protected String value;
 	
-	protected int minLength;
+	protected long minLength;
 	
-	protected int maxLength;
+	protected long maxLength;
 	
-	private  static int  buttonYcoord;
+	private  static long  buttonYcoord;
 	
 	private String hotKey;
 	
@@ -100,11 +100,11 @@ public class ScreenIOPopupableButton implements ScreenIO {
 		this.hotKey=hotKey;
 	}
 
-	public int getXCoord() {
+	public long getXCoord() {
 		return XCoord;
 	}
 
-	public void setXCoord(int xCoord) {
+	public void setXCoord(long xCoord) {
 		XCoord = xCoord;
 	}
 
@@ -124,11 +124,11 @@ public class ScreenIOPopupableButton implements ScreenIO {
 		this.yCoordinationType = yCoordinationType;
 	}
 
-	public int getYCoord() {
+	public long getYCoord() {
 		return YCoord;
 	}
 
-	public void setYCoord(int yCoord) {
+	public void setYCoord(long yCoord) {
 		YCoord = yCoord;
 	}
 
@@ -171,7 +171,7 @@ public class ScreenIOPopupableButton implements ScreenIO {
 	}
 
 	@Override
-	public int getMaxLength() {
+	public long getMaxLength() {
 		return maxLength;
 	}
 

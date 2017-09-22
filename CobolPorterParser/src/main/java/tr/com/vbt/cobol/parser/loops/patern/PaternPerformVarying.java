@@ -119,15 +119,15 @@ public class PaternPerformVarying extends AbstractPatternFromXToYWithoutCarriage
 			matchedCommandAdd.getParameters().put("variable", matchedCommandAdd.getVariable());
 			
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("from")){
-			matchedCommandAdd.setFrom((int) currentTokenForMatch.getDeger());
+			matchedCommandAdd.setFrom((long) currentTokenForMatch.getDeger());
 			matchedCommandAdd.getParameters().put("from", matchedCommandAdd.getFrom());
 			
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("by")){
-			matchedCommandAdd.setBy((int) currentTokenForMatch.getDeger());
+			matchedCommandAdd.setBy((long) currentTokenForMatch.getDeger());
 			matchedCommandAdd.getParameters().put("by", matchedCommandAdd.getBy());
 			
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("until")){
-			matchedCommandAdd.setUntil( (int) currentTokenForMatch.getDeger());
+			matchedCommandAdd.setUntil( (long) currentTokenForMatch.getDeger());
 			matchedCommandAdd.getParameters().put("until", matchedCommandAdd.getUntil());
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("conditionList")){
 			

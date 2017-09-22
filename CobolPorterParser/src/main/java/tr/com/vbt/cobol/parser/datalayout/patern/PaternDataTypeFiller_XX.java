@@ -94,7 +94,7 @@ public class PaternDataTypeFiller_XX extends AbstractPattern{
 			matchedCommandAdd.setLength(currentTokenForMatch.getDeger().toString().length());
 			matchedCommandAdd.getParameters().put("length", matchedCommandAdd.getLength());
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("OCCURS")){
-			matchedCommandAdd.setOccuringCount((int) ((KeyValueOzelKelimeToken)currentTokenForMatch).getValue());
+			matchedCommandAdd.setOccuringCount((long) ((KeyValueOzelKelimeToken)currentTokenForMatch).getValue());
 			matchedCommandAdd.getParameters().put("OCCURS", matchedCommandAdd.getOccuringCount());
 		}
 		

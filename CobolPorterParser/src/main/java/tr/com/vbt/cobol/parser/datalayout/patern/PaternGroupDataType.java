@@ -75,7 +75,7 @@ public class PaternGroupDataType extends AbstractPattern{
 			matchedCommandAdd.setDataName((String) currentTokenForMatch.getDeger());
 			matchedCommandAdd.getParameters().put("dataName", matchedCommandAdd.getDataName());
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("OCCURS")){
-			matchedCommandAdd.setOccuringCount((int) ((KeyValueOzelKelimeToken)currentTokenForMatch).getValue());
+			matchedCommandAdd.setOccuringCount((long) ((KeyValueOzelKelimeToken)currentTokenForMatch).getValue());
 			matchedCommandAdd.getParameters().put("OCCURS", matchedCommandAdd.getOccuringCount());
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("REDEFINES")){
 			matchedCommandAdd.setRedefines(((String) ((KeyValueOzelKelimeToken)currentTokenForMatch).getValue()));

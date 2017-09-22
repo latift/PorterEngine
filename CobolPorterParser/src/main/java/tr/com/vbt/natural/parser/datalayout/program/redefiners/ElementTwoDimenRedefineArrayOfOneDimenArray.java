@@ -14,7 +14,7 @@ import tr.com.vbt.token.AbstractToken;
 **/
 public class ElementTwoDimenRedefineArrayOfOneDimenArray extends AbstractCommand implements Levelable, DataTypeMapConverter {
 
-	protected int levelNumber; // 1
+	protected long levelNumber; // 1
 
 	protected String dataName; // DIZI-KLIM
 	
@@ -22,9 +22,9 @@ public class ElementTwoDimenRedefineArrayOfOneDimenArray extends AbstractCommand
 	
 	private int lengthAfterDot; // Noktanin Solundali
 
-	private int arrayLength; // 500 Parantez içindeki ifade
+	private long arrayLength; // 500 Parantez içindeki ifade
 	
-	private int arrayLength2;  //60 
+	private long arrayLength2;  //60 
 	
 	private AbstractCommand redefinedCommand;
 
@@ -78,11 +78,11 @@ public class ElementTwoDimenRedefineArrayOfOneDimenArray extends AbstractCommand
 		this.dataName = dataName;
 	}
 
-	public int getLevelNumber() {
+	public long getLevelNumber() {
 		return levelNumber;
 	}
 
-	public void setLevelNumber(int levelNumber) {
+	public void setLevelNumber(long levelNumber) {
 		this.levelNumber = levelNumber;
 	}
 
@@ -114,22 +114,22 @@ public class ElementTwoDimenRedefineArrayOfOneDimenArray extends AbstractCommand
 	}
 
 
-	public int getArrayLength() {
+	public long getArrayLength() {
 		return arrayLength;
 	}
 
 
-	public void setArrayLength(int arrayLength) {
+	public void setArrayLength(long arrayLength) {
 		this.arrayLength = arrayLength;
 	}
 
 
-	public int getArrayLength2() {
+	public long getArrayLength2() {
 		return arrayLength2;
 	}
 
 
-	public void setArrayLength2(int arrayLength2) {
+	public void setArrayLength2(long arrayLength2) {
 		this.arrayLength2 = arrayLength2;
 	}
 

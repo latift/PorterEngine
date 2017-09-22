@@ -112,7 +112,7 @@ public class PaternProgramDataTypeNaturalWithInit extends AbstractDataTypePatter
 		super.setSatirNumarasi(matchedCommand,currentTokenForMatch, abstractTokenInPattern);if(abstractTokenInPattern.getSourceFieldName()==null){
 		
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("levelNumber")){
-			matchedCommandAdd.setLevelNumber(((Integer)currentTokenForMatch.getDeger()));
+			matchedCommandAdd.setLevelNumber(((Long)currentTokenForMatch.getDeger()));
 			matchedCommandAdd.getParameters().put("levelNumber", matchedCommandAdd.getLevelNumber());
 		}
 		
@@ -121,7 +121,7 @@ public class PaternProgramDataTypeNaturalWithInit extends AbstractDataTypePatter
 			matchedCommandAdd.getParameters().put("dataName", matchedCommandAdd.getDataName());
 		}
 		else if(abstractTokenInPattern.getSourceFieldName().equals("initialValue")){
-			Integer deger= (Integer) currentTokenForMatch.getDeger();
+			Long deger= (Long) currentTokenForMatch.getDeger();
 			matchedCommandAdd.setInitialValue(deger.toString());
 			matchedCommandAdd.getParameters().put("initialValue", matchedCommandAdd.getInitialValue());
 		}
@@ -154,13 +154,13 @@ public class PaternProgramDataTypeNaturalWithInit extends AbstractDataTypePatter
 			
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("lengthAfterDot")){
 			Double lenghtD;
-			Integer lengthInt;
+			Long lengthInt;
 			if(currentTokenForMatch.getDeger()  instanceof Double){
 				lenghtD=(Double) currentTokenForMatch.getDeger();
 				matchedCommandAdd.setLengthAfterDot(lenghtD.intValue());
 				matchedCommandAdd.getParameters().put("lengthAfterDot", matchedCommandAdd.getLengthAfterDot());
 			}else if(currentTokenForMatch.getDeger()  instanceof Integer){
-				lengthInt=(Integer) currentTokenForMatch.getDeger();
+				lengthInt=(Long) currentTokenForMatch.getDeger();
 				matchedCommandAdd.setLengthAfterDot(lengthInt);
 				matchedCommandAdd.getParameters().put("lengthAfterDot", matchedCommandAdd.getLengthAfterDot());
 			}

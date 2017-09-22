@@ -2,13 +2,13 @@ package tr.com.vbt.natural.html;
 
 public class ScreenIODispatch implements ScreenIO {
 
-	protected int XCoord;
+	protected long XCoord;
 
 	protected XCoordinationTypes xCoordinationType;
 	
 	protected XCoordinationTypes yCoordinationType;
 
-	protected int YCoord;
+	protected long YCoord;
 
 	protected NaturalTagTypes tagType=NaturalTagTypes.DISPATCH;
 
@@ -41,25 +41,25 @@ public class ScreenIODispatch implements ScreenIO {
 	}
 
 	@Override
-	public int getXCoord() {
+	public long getXCoord() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int getYCoord() {
+	public long getYCoord() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public void setXCoord(int xCoord) {
+	public void setXCoord(long xCoord) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void setYCoord(int yCoord) {
+	public void setYCoord(long yCoord) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -88,7 +88,7 @@ public class ScreenIODispatch implements ScreenIO {
 	}
 
 	@Override
-	public int getMaxLength() {
+	public long getMaxLength() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

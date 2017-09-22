@@ -30,7 +30,7 @@ public class JavaAtEndOfPageElement extends  AbstractJavaElement {
 	
 	public boolean writeJavaToStream() throws Exception{ super.writeJavaToStream();
 		if(this.getParameters().get("printNumber")!=null){
-			printNumber= (int) this.getParameters().get("printNumber");
+			printNumber= (int) ((long)this.getParameters().get("printNumber"));
 		}
 		
 		try{

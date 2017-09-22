@@ -26,7 +26,8 @@ public class JavaEscapeTopElement extends  AbstractJavaElement {
 				loopName = (AbstractToken) this.parameters.get("loopName");
 				JavaClassElement.javaCodeBuffer.append("//TODO:"+JavaWriteUtilities.toCustomString(loopName)+JavaConstants.NEW_LINE);
 			}
-			JavaClassElement.javaCodeBuffer.append("continue;"+JavaConstants.NEW_LINE);
+			JavaClassElement.javaCodeBuffer.append("	continueControl=true"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+			JavaClassElement.javaCodeBuffer.append("	continue;"+JavaConstants.NEW_LINE);
 		} catch (Exception e) {
 			logger.debug("//Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()+this.getSourceCode().getCommandName());
 			JavaClassElement.javaCodeBuffer.append("/*Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()

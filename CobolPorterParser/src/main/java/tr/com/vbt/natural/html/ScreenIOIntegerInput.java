@@ -4,13 +4,13 @@ import tr.com.vbt.util.ConverterConfiguration;
 
 public class ScreenIOIntegerInput   implements ScreenIO{
 
-	protected int XCoord;
+	protected long XCoord;
 	
 	protected XCoordinationTypes xCoordinationType;
 	
 	protected XCoordinationTypes yCoordinationType;
 	
-	protected int YCoord;
+	protected long YCoord;
 	
 	protected NaturalTagTypes tagType=NaturalTagTypes.INPUTFIELD;
 	
@@ -18,19 +18,19 @@ public class ScreenIOIntegerInput   implements ScreenIO{
 	
 	protected String name;
 	
-	protected int value;
+	protected long value;
 	
 	protected String valueForEngine;
 	
-	protected int minLength;
+	protected long minLength;
 	
-	protected int maxLength;
+	protected long maxLength;
 	
 	protected HtmlColor color;
 	
 	
-	public ScreenIOIntegerInput(int xCoord, int yCoord, IOModeType modeType, String name, int value,
-			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType , int minLen, int maxLen) {
+	public ScreenIOIntegerInput(long xCoord, long yCoord, IOModeType modeType, String name, long value,
+			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType , long minLen, long maxLen) {
 
 		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
 		if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
@@ -51,8 +51,8 @@ public class ScreenIOIntegerInput   implements ScreenIO{
 		this.maxLength=maxLen;
 	}
 	
-	public ScreenIOIntegerInput(int xCoord, String yCoord, IOModeType modeType, String name, int value,
-			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, int minLen, int maxLen) {
+	public ScreenIOIntegerInput(long xCoord, String yCoord, IOModeType modeType, String name, long value,
+			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, long minLen, long maxLen) {
 
 		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
 		if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
@@ -61,7 +61,7 @@ public class ScreenIOIntegerInput   implements ScreenIO{
 			XCoord = XCoord + xCoord;
 		}
 
-		int YCoordCarpan;
+		long YCoordCarpan;
 		
 		if (yCoord != null && !yCoord.trim().isEmpty()) {
 			YCoordCarpan = Integer.valueOf(yCoord.substring(0, yCoord.length() - 1));
@@ -84,8 +84,8 @@ public class ScreenIOIntegerInput   implements ScreenIO{
 		this.maxLength=maxLen;
 	}
 	
-	public ScreenIOIntegerInput(int xCoord, int yCoord, IOModeType modeType, String name, String valueForEngine,
-			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType , int minLen, int maxLen) {
+	public ScreenIOIntegerInput(long xCoord, long yCoord, IOModeType modeType, String name, String valueForEngine,
+			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType , long minLen, long maxLen) {
 
 		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
 		if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
@@ -106,8 +106,8 @@ public class ScreenIOIntegerInput   implements ScreenIO{
 	}
 	
 	
-	public ScreenIOIntegerInput(int xCoord, String yCoord, IOModeType modeType, String name, String valueForEngine,
-			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType , int minLen, int maxLen) {
+	public ScreenIOIntegerInput(long xCoord, String yCoord, IOModeType modeType, String name, String valueForEngine,
+			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType , long minLen, long maxLen) {
 
 		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
 		if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
@@ -116,7 +116,7 @@ public class ScreenIOIntegerInput   implements ScreenIO{
 			XCoord = this.XCoord + xCoord;
 		}
 
-		int YCoordCarpan;
+		long YCoordCarpan;
 		
 		if (yCoord != null && !yCoord.trim().isEmpty()) {
 			YCoordCarpan = Integer.valueOf(yCoord.substring(0, yCoord.length() - 1));
@@ -139,11 +139,11 @@ public class ScreenIOIntegerInput   implements ScreenIO{
 		this.maxLength=maxLen;
 	}
 
-	public int getXCoord() {
+	public long getXCoord() {
 		return XCoord;
 	}
 
-	public void setXCoord(int xCoord) {
+	public void setXCoord(long xCoord) {
 		XCoord = xCoord;
 	}
 
@@ -155,11 +155,11 @@ public class ScreenIOIntegerInput   implements ScreenIO{
 		this.xCoordinationType = xCoordinationType;
 	}
 
-	public int getYCoord() {
+	public long getYCoord() {
 		return YCoord;
 	}
 
-	public void setYCoord(int yCoord) {
+	public void setYCoord(long yCoord) {
 		YCoord = yCoord;
 	}
 
@@ -188,10 +188,10 @@ public class ScreenIOIntegerInput   implements ScreenIO{
 	}
 
 	public String getValue() {
-		return Integer.toString(value);
+		return Long.toString(value);
 	}
 
-	public void setValue(int value) {
+	public void setValue(long value) {
 		this.value = value;
 	}
 
@@ -211,19 +211,19 @@ public class ScreenIOIntegerInput   implements ScreenIO{
 		this.yCoordinationType = yCoordinationType;
 	}
 
-	public int getMinLength() {
+	public long getMinLength() {
 		return minLength;
 	}
 
-	public void setMinLength(int minLength) {
+	public void setMinLength(long minLength) {
 		this.minLength = minLength;
 	}
 
-	public int getMaxLength() {
+	public long getMaxLength() {
 		return maxLength;
 	}
 
-	public void setMaxLength(int maxLength) {
+	public void setMaxLength(long maxLength) {
 		this.maxLength = maxLength;
 	}
 

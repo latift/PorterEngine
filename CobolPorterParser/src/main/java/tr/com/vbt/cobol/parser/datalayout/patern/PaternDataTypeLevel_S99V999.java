@@ -125,7 +125,7 @@ public class PaternDataTypeLevel_S99V999 extends AbstractPattern{
 		else if(abstractTokenInPattern.getSourceFieldName().equals("VALUE")){
 			System.out.println(currentTokenForMatch.toString());
 			if(((KeyValueOzelKelimeToken)currentTokenForMatch).getValue() instanceof Integer) {
-				Integer valueAsInt= (Integer) ((KeyValueOzelKelimeToken)currentTokenForMatch).getValue();
+				Long valueAsInt= (Long) ((KeyValueOzelKelimeToken)currentTokenForMatch).getValue();
 				matchedCommandAdd.setValueAsInt(valueAsInt);
 				
 			}else if(((KeyValueOzelKelimeToken)currentTokenForMatch).getValue() instanceof String) {
@@ -137,7 +137,7 @@ public class PaternDataTypeLevel_S99V999 extends AbstractPattern{
 			matchedCommandAdd.getParameters().put("VALUE", matchedCommandAdd.getValue());
 		}
 		else if(abstractTokenInPattern.getSourceFieldName().equals("OCCURS")){
-			matchedCommandAdd.setOccuringCount((int) ((KeyValueOzelKelimeToken)currentTokenForMatch).getValue());
+			matchedCommandAdd.setOccuringCount((long) ((KeyValueOzelKelimeToken)currentTokenForMatch).getValue());
 			matchedCommandAdd.getParameters().put("OCCURS", matchedCommandAdd.getOccuringCount());
 		}
 		

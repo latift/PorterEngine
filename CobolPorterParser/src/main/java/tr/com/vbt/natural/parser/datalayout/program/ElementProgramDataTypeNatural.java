@@ -33,9 +33,9 @@ public class ElementProgramDataTypeNatural extends AbstractCommand implements Le
 	
 	private String dataType; // 9, X, A //mandatory
 
-	private int length; // (5) Parantez içindeki ifade //optional
+	private long length; // (5) Parantez içindeki ifade //optional
 	
-	private int lengthAfterDot; // Noktanin Solundali
+	private long lengthAfterDot; // Noktanin Solundali
 	
 	private String initialValue; //int yada String farketmez. Burada String olarak tutulur. JAvaCreate esnasında tipine göre doğrusu set edilir.
 
@@ -103,21 +103,21 @@ public class ElementProgramDataTypeNatural extends AbstractCommand implements Le
 		this.dataType = dataType;
 	}
 
-	public int getLength() {
+	public long getLength() {
 		return length;
 	}
 
-	public void setLength(int length) {
+	public void setLength(long length) {
 		this.length = length;
 	}
 
 
-	public int getLengthAfterDot() {
+	public long getLengthAfterDot() {
 		return lengthAfterDot;
 	}
 
 
-	public void setLengthAfterDot(int lengthAfterDot) {
+	public void setLengthAfterDot(long lengthAfterDot) {
 		this.lengthAfterDot = lengthAfterDot;
 	}
 

@@ -53,7 +53,7 @@ public class JavaWriteElement extends AbstractJavaElement {
 
 	int offset;
 
-	int xCoord, yCoord;
+	long xCoord, yCoord;
 	
 	private List<AbstractToken> undefinedParameterList=new ArrayList<>();
 	
@@ -160,9 +160,9 @@ public class JavaWriteElement extends AbstractJavaElement {
 		if (currToken.getTip().equals(TokenTipi.Sayi) && nextToken.getTip().equals(TokenTipi.Karakter)
 				&& nextToken.getDeger().equals('/') && nextToken2.getTip().equals(TokenTipi.Sayi)) {
 
-			xCoord = (int)currToken.getDeger() - 1;
+			xCoord = (int)((long)currToken.getDeger()) - 1;
 
-			yCoord = (int)nextToken2.getDeger() - 1;
+			yCoord = (int)((long)nextToken2.getDeger()) - 1;
 
 			offset = 2;
 
@@ -208,7 +208,7 @@ public class JavaWriteElement extends AbstractJavaElement {
 
 		if (currToken.getTip().equals(TokenTipi.Kelime)) {
 			
-			int maxLength=ConvertUtilities.getVariableMaxLength(currToken);
+			long maxLength=ConvertUtilities.getVariableMaxLength(currToken);
 			
 			value = JavaWriteUtilities.toCustomString(currToken).toString();
 			
@@ -225,7 +225,7 @@ public class JavaWriteElement extends AbstractJavaElement {
 			if (currToken.isConstantVariableWithQuota() || currToken.isSystemVariable()) {
 
 				newScreenIO = new ScreenIOLabel(xCoord, yCoord, IOModeType.AD_D, value, XCoordinationTypes.REFERANCE,
-						XCoordinationTypes.EXACT,0,maxLength, currToken.isConstantVariableWithQuota());
+						XCoordinationTypes.EXACT,(long)0,maxLength, currToken.isConstantVariableWithQuota());
 				
 			} else if (currToken.getTip().equals(TokenTipi.Kelime)) { // #SECIM
 
@@ -308,14 +308,14 @@ public class JavaWriteElement extends AbstractJavaElement {
 			
 			arrayToken=(ArrayToken) currToken;
 			
-			int maxLength=ConvertUtilities.getVariableMaxLength(currToken);
+			long maxLength=ConvertUtilities.getVariableMaxLength(currToken);
 			
 			writeUndefinedTokens();
 			
 			if(arrayToken.getFirstDimension().getDeger().equals('*')){   //SCRLINES(*)
 				value = JavaWriteUtilities.toCustomString(arrayToken).toString();
 				
-				int arrayLength;
+				long arrayLength;
 				
 				arrayLength=ConvertUtilities.getArrayLength(currToken);
 				
@@ -376,7 +376,7 @@ public class JavaWriteElement extends AbstractJavaElement {
 
 			int YCoordCarpan;
 
-			YCoordCarpan = (int) (currToken.getDeger());
+			YCoordCarpan = (int) ((long)(currToken.getDeger()));
 			if (nextToken.getDeger().equals("X")) {
 				yCoord = YCoordCarpan * ConverterConfiguration.NATURAL_X_LENGTH;
 			} else if (nextToken.getDeger().equals("T")) {
@@ -409,7 +409,7 @@ public class JavaWriteElement extends AbstractJavaElement {
 		JavaClassElement.javaCodeBuffer.append("write(");
 		JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 
-		int xCoord=0, previousXCoord = 0;
+		long xCoord=0, previousXCoord = 0;
 		// new
 		// ScreenInputOutput(2,"1X",NaturalTagTypes.LABEL,IOModeType.AD_MI_,"+----------------------------------+",XCoordinationTypes.EXACT)
 		for (int index = 0; index < screenInputOutputArray.size(); index++) {

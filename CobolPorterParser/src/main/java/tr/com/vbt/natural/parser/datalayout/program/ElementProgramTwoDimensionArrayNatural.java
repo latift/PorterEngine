@@ -14,17 +14,17 @@ import tr.com.vbt.token.AbstractToken;
 **/
 public class ElementProgramTwoDimensionArrayNatural extends AbstractCommand implements Levelable, DataTypeMapConverter {
 
-	protected int levelNumber; // 1
+	protected long levelNumber; // 1
 
 	protected String dataName; // DIZI-KLIM
 	
 	private String dataType; // A3
 	
-	private int arrayLength; // 500 Parantez içindeki ifade
+	private long arrayLength; // 500 Parantez içindeki ifade
 	
-	private int arrayLength2;  //60 
+	private long arrayLength2;  //60 
 
-	private int lengthAfterDot;
+	private long lengthAfterDot;
 
 	@Override
 	public String toString() {
@@ -75,11 +75,11 @@ public class ElementProgramTwoDimensionArrayNatural extends AbstractCommand impl
 		this.dataName = dataName;
 	}
 
-	public int getLevelNumber() {
+	public long getLevelNumber() {
 		return levelNumber;
 	}
 
-	public void setLevelNumber(int levelNumber) {
+	public void setLevelNumber(long levelNumber) {
 		this.levelNumber = levelNumber;
 	}
 
@@ -104,33 +104,33 @@ public class ElementProgramTwoDimensionArrayNatural extends AbstractCommand impl
 	}
 
 
-	public int getArrayLength() {
+	public long getArrayLength() {
 		return arrayLength;
 	}
 
 
-	public void setArrayLength(int arrayLength) {
+	public void setArrayLength(long arrayLength) {
 		this.arrayLength = arrayLength;
 	}
 
 
-	public int getArrayLength2() {
+	public long getArrayLength2() {
 		return arrayLength2;
 	}
 
 
-	public void setArrayLength2(int arrayLength2) {
+	public void setArrayLength2(long arrayLength2) {
 		this.arrayLength2 = arrayLength2;
 	}
 
 
 	
-	public int getLengthAfterDot() {
+	public long getLengthAfterDot() {
 		return lengthAfterDot;
 	}
 
 
-	public void setLengthAfterDot(int lengthAfterDot) {
+	public void setLengthAfterDot(long lengthAfterDot) {
 		this.lengthAfterDot = lengthAfterDot;
 	}
 

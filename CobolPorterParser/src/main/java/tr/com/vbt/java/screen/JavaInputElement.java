@@ -54,11 +54,11 @@ public class JavaInputElement extends AbstractJavaElement {
 
 	protected ScreenIO newScreenIO;
 
-	protected int offset;
+	protected long offset;
 
-	protected int xCoord, yCoord;
+	protected long xCoord, yCoord;
 	
-	protected int carpan;
+	protected long carpan;
 	
 	protected List<AbstractToken> undefinedParameterList=new ArrayList<>();
 	
@@ -126,7 +126,7 @@ public class JavaInputElement extends AbstractJavaElement {
 						undefinedParameterList.add(inputParameters.get(index));
 					}
 
-					index = index + offset;
+					index = index + (int)offset;
 		
 			}
 
@@ -200,9 +200,9 @@ public class JavaInputElement extends AbstractJavaElement {
 		if (currToken.getTip().equals(TokenTipi.Sayi) && nextToken.getTip().equals(TokenTipi.Karakter)
 				&& nextToken.getDeger().equals('/') && nextToken2.getTip().equals(TokenTipi.Sayi)) {
 
-			xCoord = (int)currToken.getDeger() - 1;
+			xCoord = (int)((long)currToken.getDeger()) - 1;
 
-			yCoord = (int)nextToken2.getDeger() - 1;
+			yCoord = (int)((long)nextToken2.getDeger()) - 1;
 
 			offset = 2;
 
@@ -250,7 +250,7 @@ public class JavaInputElement extends AbstractJavaElement {
 		
 		if (currToken.getTip().equals(TokenTipi.Kelime)) {
 			
-			int maxLength=ConvertUtilities.getVariableMaxLength(currToken);
+			long maxLength=ConvertUtilities.getVariableMaxLength(currToken);
 			
 			value = JavaWriteUtilities.toCustomString(currToken).toString();
 			
@@ -290,7 +290,7 @@ public class JavaInputElement extends AbstractJavaElement {
 				if (varType.equals(VariableTypes.INT_TYPE)|| varType.equals(VariableTypes.LONG_TYPE)) {
 
 					newScreenIO = new ScreenIOIntegerInput(xCoord, yCoord, IOModeType.AD_D, name, value,
-							XCoordinationTypes.EXACT, XCoordinationTypes.EXACT,0,maxLength);
+							XCoordinationTypes.EXACT, XCoordinationTypes.EXACT,(long)0,maxLength);
 
 				}else{
 					
@@ -432,14 +432,14 @@ public class JavaInputElement extends AbstractJavaElement {
 			
 			arrayToken=(ArrayToken) currToken;
 			
-			int maxLength=ConvertUtilities.getVariableMaxLength(currToken);
+			long maxLength=ConvertUtilities.getVariableMaxLength(currToken);
 			
 			writeUndefinedTokens();
 			
 			if(arrayToken.getFirstDimension().getDeger().equals('*')){   //SCRLINES(*)
 				value = JavaWriteUtilities.toCustomString(arrayToken).toString();
 				
-				int arrayLength;
+				long arrayLength;
 				
 				arrayLength=ConvertUtilities.getArrayLength(currToken);
 				
@@ -500,7 +500,7 @@ public class JavaInputElement extends AbstractJavaElement {
 
 			int YCoordCarpan;
 
-			YCoordCarpan = (int) (currToken.getDeger());
+			YCoordCarpan = (int) ((long)currToken.getDeger());
 			if (nextToken.getDeger().equals("X")) {
 				yCoord = YCoordCarpan * ConverterConfiguration.NATURAL_X_LENGTH;
 			} else if (nextToken.getDeger().equals("T")) {
@@ -540,7 +540,7 @@ public class JavaInputElement extends AbstractJavaElement {
 		JavaClassElement.javaCodeBuffer.append("input(");
 		JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 
-		int xCoord=0, previousXCoord = 0;
+		long xCoord=0, previousXCoord = 0;
 		// new
 		// ScreenInputOutput(2,"1X",NaturalTagTypes.LABEL,IOModeType.AD_MI_,"+----------------------------------+",XCoordinationTypes.EXACT)
 		for (int index = 0; index < screenInputOutputArray.size(); index++) {
@@ -710,22 +710,40 @@ public class JavaInputElement extends AbstractJavaElement {
 
 
 
+
+
+	private void addValidationLoopStarter() {
+			JavaClassElement.javaCodeBuffer.append("validationError = true"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);	
+			JavaClassElement.javaCodeBuffer.append("while (this.validationError) {"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+			JavaClassElement.javaCodeBuffer.append("    breakControl = false"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);	
+			JavaClassElement.javaCodeBuffer.append("	validationError = false"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+			JavaClassElement.javaCodeBuffer.append("	try {"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+			
+			JavaClassElement.javaCodeBuffer.append("if(continueControl){"+JavaConstants.NEW_LINE);
+			JavaClassElement.javaCodeBuffer.append("	break"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+			JavaClassElement.javaCodeBuffer.append("}//Continue Kontrol"+JavaConstants.NEW_LINE);
+	}
+
+	
 	private void addValidationLoopEnder() {
 		JavaClassElement.javaCodeBuffer.append("	} catch (VBTValidationException e) { // TODO:Bu satır ve altindaki 3 satir. Bu ekranla ilgili son showDialogV2 den sonraya taşınmalı"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
 		JavaClassElement.javaCodeBuffer.append(""+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
 		JavaClassElement.javaCodeBuffer.append("	}//Validation Catch"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
 		JavaClassElement.javaCodeBuffer.append("}//Validation While"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
 		
+		JavaClassElement.javaCodeBuffer.append("if(breakControl){"+JavaConstants.NEW_LINE);
+		JavaClassElement.javaCodeBuffer.append("	breakControl=false"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		JavaClassElement.javaCodeBuffer.append("	break"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		JavaClassElement.javaCodeBuffer.append("}//Break Kontrol"+JavaConstants.NEW_LINE);
+		
+		JavaClassElement.javaCodeBuffer.append("if(continueControl){"+JavaConstants.NEW_LINE);
+		JavaClassElement.javaCodeBuffer.append("	continueControl=false"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		JavaClassElement.javaCodeBuffer.append("	continue"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		JavaClassElement.javaCodeBuffer.append("}//Continue Kontrol"+JavaConstants.NEW_LINE);
+		
+		
 	}
 
-
-
-	private void addValidationLoopStarter() {
-			JavaClassElement.javaCodeBuffer.append("validationError = true"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);	
-			JavaClassElement.javaCodeBuffer.append("while (this.validationError) {"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
-			JavaClassElement.javaCodeBuffer.append("	validationError = false"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
-			JavaClassElement.javaCodeBuffer.append("	try {"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
-	}
 
 
 

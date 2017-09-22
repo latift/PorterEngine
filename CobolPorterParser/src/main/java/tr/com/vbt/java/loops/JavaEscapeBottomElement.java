@@ -25,6 +25,7 @@ public class JavaEscapeBottomElement extends  AbstractJavaElement {
 				loopName = (AbstractToken) this.parameters.get("loopName");
 				JavaClassElement.javaCodeBuffer.append("//TODO:"+JavaWriteUtilities.toCustomString(loopName)+JavaConstants.NEW_LINE);
 			}
+			JavaClassElement.javaCodeBuffer.append("breakControl=true;"+JavaConstants.NEW_LINE);
 			JavaClassElement.javaCodeBuffer.append("break;"+JavaConstants.NEW_LINE);
 		} catch (Exception e) {
 			logger.debug("//Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()+this.getSourceCode().getCommandName());

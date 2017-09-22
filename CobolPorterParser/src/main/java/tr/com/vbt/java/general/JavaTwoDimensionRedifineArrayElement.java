@@ -88,13 +88,13 @@ public class JavaTwoDimensionRedifineArrayElement extends AbstractJavaElement {
 			dataType = (String) this.parameters.get("dataType");
 			//length=(int) this.parameters.get("length");
 			dataName = (String) this.parameters.get("dataName");
-			arrayLength=(int) this.parameters.get("arrayLength");
-			arrayLength2=(int) this.parameters.get("arrayLength2");
+			arrayLength=(int)((long) this.parameters.get("arrayLength"));
+			arrayLength2=(int) ((long)this.parameters.get("arrayLength2"));
 			redefinedCommand=(AbstractCommand) this.parameters.get("redefinedCommand");
 			
 			
 			if(parameters.get("lengthAfterDot")!=null){
-				lengthAfterDot=(int) parameters.get("lengthAfterDot");
+				lengthAfterDot=(int)((long) parameters.get("lengthAfterDot"));
 			}
 
 			

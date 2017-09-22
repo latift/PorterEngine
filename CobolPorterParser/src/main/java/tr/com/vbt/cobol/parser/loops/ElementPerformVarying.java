@@ -14,11 +14,11 @@ public class ElementPerformVarying extends AbstractMultipleLinesCommand{
 	
 	private String variable;
 	
-	private int from;
+	private long from;
 	 
-	private int by;
+	private long by;
 	
-	private int until;
+	private long until;
 	
 	private List<String> conditionList=new ArrayList<String>();
 	
@@ -96,27 +96,27 @@ public class ElementPerformVarying extends AbstractMultipleLinesCommand{
 		this.variable = variable;
 	}
 
-	public int getFrom() {
+	public long getFrom() {
 		return from;
 	}
 
-	public void setFrom(int from) {
+	public void setFrom(long from) {
 		this.from = from;
 	}
 
-	public int getBy() {
+	public long getBy() {
 		return by;
 	}
 
-	public void setBy(int by) {
+	public void setBy(long by) {
 		this.by = by;
 	}
 
-	public int getUntil() {
+	public long getUntil() {
 		return until;
 	}
 
-	public void setUntil(int until) {
+	public void setUntil(long until) {
 		this.until = until;
 	}
 

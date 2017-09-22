@@ -9,7 +9,7 @@ import tr.com.vbt.token.AbstractToken;
 // 6214 DELETE
 public class ElementDelete extends AbstractCommand{
 	
-	private int recNumber;
+	private long recNumber;
 	
 	public ElementDelete(AbstractToken baseToken,
 			List<AbstractToken> tokenListesi, AbstractCommand parent) {
@@ -41,11 +41,11 @@ public class ElementDelete extends AbstractCommand{
 		return sb.toString();
 	}
 
-	public int getRecNumber() {
+	public long getRecNumber() {
 		return recNumber;
 	}
 
-	public void setRecNumber(int recNumber) {
+	public void setRecNumber(long recNumber) {
 		this.recNumber = recNumber;
 	}
 	

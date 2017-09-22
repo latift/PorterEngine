@@ -67,7 +67,7 @@ public class PaternAtTopOfPage extends AbstractPattern{
 		super.setSatirNumarasi(matchedCommand,currentTokenForMatch, abstractTokenInPattern);if(abstractTokenInPattern.getSourceFieldName()==null){
 		
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("printNumber")){ 
-				matchedCommandAdd.setPrintNumber((int) currentTokenForMatch.getDeger());
+				matchedCommandAdd.setPrintNumber((long) currentTokenForMatch.getDeger());
 				matchedCommandAdd.getParameters().put("printNumber", matchedCommandAdd.getPrintNumber());
 		}
 	}		

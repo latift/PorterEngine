@@ -9,9 +9,9 @@ import tr.com.vbt.token.AbstractToken;
 
 public class ElementSize extends AbstractCommand{
 	
-	int lineCount;
+	long lineCount;
 	
-	int lineLength;
+	long lineLength;
 	
 	public ElementSize(AbstractToken baseToken,
 			List<AbstractToken> tokenListesi, AbstractCommand parent) {
@@ -44,15 +44,15 @@ public class ElementSize extends AbstractCommand{
 		return sb.toString();
 	}
 
-	public int getLineCount() {
+	public long getLineCount() {
 		return lineCount;
 	}
 
-	public void setLineCount(int lineCount) {
+	public void setLineCount(long lineCount) {
 		this.lineCount = lineCount;
 	}
 
-	public int getLineLength() {
+	public long getLineLength() {
 		return lineLength;
 	}
 
