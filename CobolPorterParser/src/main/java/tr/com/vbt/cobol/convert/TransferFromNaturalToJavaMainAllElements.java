@@ -75,10 +75,11 @@ public class TransferFromNaturalToJavaMainAllElements {
 				logModel.setConversionFileType(ConversionFileType.PROGRAM);
 				fromNaturalToJavaMain.operateConversionForAModule();
 				
-				SQLManager.writeSQLStringToFile();
 				
 				logModel.setConversionFileType(ConversionFileType.SUBPROGRAM);
 				fromNaturalToJavaMain.operateConversionForAModule();
+		
+				SQLManager.writeSQLStringToFile();
 				
 				logModel.setConversionFileType(ConversionFileType.MAP);
 				fromNaturalToJavaMain.operateConversionForAModule();
