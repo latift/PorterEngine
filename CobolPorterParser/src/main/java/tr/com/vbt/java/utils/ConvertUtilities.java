@@ -255,7 +255,7 @@ public class ConvertUtilities {
 	public static String getVariableTypeOfString(AbstractToken variable) {
 		Double d = 0.0;
 		if (variable.getTip().equals(TokenTipi.Sayi)) {
-			if (variable.getDeger() instanceof Integer) {
+			if (variable.getDeger() instanceof Long || variable.getDeger() instanceof Integer) {
 				return "long";
 			} else {
 

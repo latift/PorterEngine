@@ -1710,6 +1710,23 @@ public class NaturalCommandList extends AbstractCommandList {
 						if(redefinedCommandList.get(k) instanceof ElementOneDimenRedefineArrayOfSimpleDataType){
 							current.setRedefinedVariableDimensionToSimple(true);
 						}
+					}else if (current.getLinkedToken()!=null &&  redefinedCommandList.get(k).getDataName().equals(current.getLinkedToken().getDeger().toString())) {
+						current.getLinkedToken().setRedefinedVariable(true);
+						if(redefinedCommandList.get(k) instanceof ElementRedefineDataTypeOfSimpleDataType){
+							simpleRedefine=(ElementRedefineDataTypeOfSimpleDataType) redefinedCommandList.get(k);
+						
+							String varType=simpleRedefine.getDataType();
+							if(varType.equals("A")){
+								current.getLinkedToken().setVarType(VariableTypes.STRING_TYPE);
+							}else if(varType.equals("N")){
+								current.getLinkedToken().setVarType(VariableTypes.LONG_TYPE);
+							}else if(varType.equals("D")){
+								current.getLinkedToken().setVarType(VariableTypes.DATE_TYPE);
+							}
+						}
+						if(redefinedCommandList.get(k) instanceof ElementOneDimenRedefineArrayOfSimpleDataType){
+							current.getLinkedToken().setRedefinedVariableDimensionToSimple(true);
+						}
 					}
 				}
 			}

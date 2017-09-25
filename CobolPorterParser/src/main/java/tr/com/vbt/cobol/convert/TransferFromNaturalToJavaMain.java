@@ -32,7 +32,9 @@ import tr.com.vbt.lexer.ConversionLogModel;
 import tr.com.vbt.lexer.ConversionLogReport;
 import tr.com.vbt.lexer.NaturalLexing;
 import tr.com.vbt.lexer.Phase;
+import tr.com.vbt.natural.parser.general.ElementMainStart;
 import tr.com.vbt.natural.parser.general.ElementNaturalProgram;
+import tr.com.vbt.natural.parser.general.ElementSubroutine;
 import tr.com.vbt.patern.CommandList;
 import tr.com.vbt.patern.NaturalCommandList;
 import tr.com.vbt.patern.PaternManager;
@@ -700,6 +702,8 @@ public class TransferFromNaturalToJavaMain {
 			// 3 Command Dizisini Abstract Cobol Ağacına Çevir.
 			ep = new ElementNaturalProgram(commandList.getCommandList());
 			ep.parseBaslat();
+			
+			//moveOnErrorMethod(ep);
 
 			// 3.1 Abstract Cobol Ağacını Yazdır.
 			sb = ep.exportBaslat(logModel.getFullSourceTreeFileName());
@@ -726,10 +730,12 @@ public class TransferFromNaturalToJavaMain {
 				conversionLogger.logConversion(logModel);
 
 				if (ep.startGenerateTree()) {
+					
 					javaTreeElement = (JavaClassGeneral) JavaClassGeneral.getInstance(); // Oluşan
 																							// java
 																							// sınıfını
 																							// dön.
+					
 					// 4.1 Soyut Java Ağacını XML dosyaya yaz.
 					sb = javaTreeElement.exportJavaTreeBaslat(logModel.getFullJavaTreeFileName());
 
@@ -761,6 +767,42 @@ public class TransferFromNaturalToJavaMain {
 		}
 
 	}
+
+	private void moveOnErrorMethod(ElementNaturalProgram ep) {
+		List<AbstractCommand> children=ep.getChildElementList();
+		
+		AbstractCommand child=null;
+		ElementMainStart mainStart=null;
+		ElementSubroutine subroutine=null, onErrorSubroutine=null;
+		
+		for(int i=0; i<children.size(); i++){
+			child=children.get(i);
+			if(child.getCommandName().equals("MAIN_START")){
+				mainStart=(ElementMainStart) child;
+				break;
+			}
+		}
+		
+		if(mainStart!=null){
+			children=mainStart.getChildElementList();
+			for(int i=0; i<children.size(); i++){
+				child=children.get(i);
+				if(child.getCommandName().equals("SUBROUTINE") && ((ElementSubroutine)child).getSubroutineName().equals("ON_ERROR")){
+						onErrorSubroutine=subroutine;
+						children.remove(i);
+						break;
+				}
+			}
+		}
+		
+		if(onErrorSubroutine!=null){
+			ep.getChildElementList().add(onErrorSubroutine);
+			
+		}
+		
+		
+	}
+
 
 	private void writeMapTester(JavaClassGeneral javaTreeElement) {
 	

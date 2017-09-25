@@ -91,19 +91,29 @@ public class JavaCompressElementV3 extends AbstractJavaElement {
 
 	private boolean compressToSimple() throws Exception {
 		
+		boolean objectTypeSet=false;
 		
 		//NATURAL CODE:2230   :.0 COMPRESS FULL AVEKDOGYIL - AVEKDOGAY 
 		//setPojoValue("TVEKALET"DOGTARAVEKDOGYIL.getValue() + "-" + AVEKDOGAY.getValue() + "-" + AVEKDOGGUN.getValue());
 		//Dogrusu:  	TVEKALET.setDogtar(FrameworkConvertUtilities.stringToSqlDate(MAP_P.AVEKDOGYIL + "-" + MAP_P.AVEKDOGAY + "-" + MAP_P.AVEKDOGGUN));
 		JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomSetterString(dest));
 		
-		if(!dest.isPojoVariable() && !dest.isRedefinedVariable()){
+		if(dest.isPojoVariable() || dest.isRedefinedVariable() || (dest.getLinkedToken()!=null && dest.getLinkedToken().isRedefinedVariable())){
+			objectTypeSet=true;
+		}
+	
+		logger.debug(JavaClassElement.javaCodeBuffer.substring(JavaClassElement.javaCodeBuffer.length()-20).toString());
+		
+		if (objectTypeSet) {
+			//JavaClassElement.javaCodeBuffer.append("(");
+		}
+		else{
 			JavaClassElement.javaCodeBuffer.append("=");
 		}
 
 		writeSourcePart();
 
-		if (dest.isPojoVariable() || dest.isRedefinedVariable()) {
+		if (objectTypeSet) {
 		
 			JavaClassElement.javaCodeBuffer.append(")");
 		
@@ -133,6 +143,14 @@ public class JavaCompressElementV3 extends AbstractJavaElement {
 				String typeOfCopyTo=ConvertUtilities.getTypeOfVariable(dest);
 				
 				String typeOfCopyFrom=ConvertUtilities.getTypeOfVariable(source);
+				
+				if(typeOfCopyTo==null){
+					typeOfCopyTo="";
+				}
+				
+				if(typeOfCopyFrom==null){
+					typeOfCopyFrom="";
+				}
 				
 				if(!(typeOfCopyTo.equalsIgnoreCase("string") && typeOfCopyFrom.equalsIgnoreCase("long"))){
 					

@@ -114,9 +114,9 @@ public class JavaRedefineDataTypeElement extends AbstractJavaElement {
 			redefinedDataName= (String) this.parameters.get("redefinedDataName");
 			
 			try {
-				redefineStartIndex= (int) ((long)this.parameters.get("redefineStartIndex"));
+				redefineStartIndex= (int) this.parameters.get("redefineStartIndex");
 					
-				redefineEndIndex= (int) ((long)this.parameters.get("redefineEndIndex"));
+				redefineEndIndex= (int) this.parameters.get("redefineEndIndex");
 			} catch (Exception e) {
 				dataType="A";
 				redefinedDataType="A";

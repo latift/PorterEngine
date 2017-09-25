@@ -130,7 +130,7 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 				
 				JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomSetterString(copyTo));
 				
-				JavaClassElement.javaCodeBuffer.append("(");
+				//JavaClassElement.javaCodeBuffer.append("(");
 				for (int i = 0; i < copyFrom.size(); i++) {
 					JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(copyFrom.get(i)));
 				}

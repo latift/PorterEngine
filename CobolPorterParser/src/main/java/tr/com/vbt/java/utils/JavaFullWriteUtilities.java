@@ -342,7 +342,10 @@ public class JavaFullWriteUtilities {
 		try {
 			if(token.isPojoVariable()){
 				variableType= ConvertUtilities.getVariableTypeOfPojoAsString(token);
-				if(variableType.equalsIgnoreCase("string")){
+				if(variableType.equalsIgnoreCase("date")){
+					basaBoslukEkle=false;
+					basaSifirEkle=false;
+				}else if(variableType.equalsIgnoreCase("string")){
 					basaBoslukEkle=true;
 				}else{
 					basaSifirEkle=true;

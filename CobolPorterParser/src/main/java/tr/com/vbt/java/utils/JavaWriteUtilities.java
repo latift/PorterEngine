@@ -1296,6 +1296,8 @@ public class JavaWriteUtilities {
 					tempCodeBuffer.append("["+addIntCastForArrays()+secDimension.getDeger()+"-1]");
 				}
 			}
+		}else if(token.getLinkedToken()!=null && token.getLinkedToken().isRedefinedVariable()){
+			tempCodeBuffer.append(".setValue(");
 		}else if(token.getLinkedToken().getTip().equals(TokenTipi.Kelime)){
 				//Do nothing
 		}else{
@@ -1319,11 +1321,11 @@ public class JavaWriteUtilities {
 				type="String";
 			}else if(token.getDeger().toString().contains("DAT")){
 				type="Date";
-			}else if(token.getDeger().toString().equalsIgnoreCase("TIME")){
+			}else if(token.getDeger().toString().equalsIgnoreCase("TIME")
+					||token.getDeger().toString().contains("TIMX")){
 				type="Time";
 			}
 			else if(token.getDeger().toString().equals("TIME")
-					||token.getDeger().toString().equals("TIMX")
 					||token.getDeger().toString().equals("LANGUAGE")
 					||token.getDeger().toString().equals("PROGRAM")
 					||token.getDeger().toString().contains("COUNTER")

@@ -57,6 +57,11 @@ public class JavaSqlSelectElement extends  AbstractJavaElement{
 			queryTokenList = (List<AbstractToken>) this.parameters.get("queryTokenList");
 			
 			convertConditions(); // Tek token olmayan filtre operatorlerini tek tokena düşürür.
+			
+			if(queryTokenList==null || queryTokenList.size()==0){
+				JavaClassElement.javaCodeBuffer.append("//TODO: JavaSqlSelectElement: queryTokenList null");
+				return true;
+			}
 			defineConditionTokenTypes();
 			
 			if(isFunctionSQL()){

@@ -39,4 +39,7 @@ public class JavaFunctionElement extends  AbstractJavaElement{
 		}
 		return true;
 	}
+
+	
+	
 }
