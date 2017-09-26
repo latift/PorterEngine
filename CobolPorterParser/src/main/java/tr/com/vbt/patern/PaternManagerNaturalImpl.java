@@ -191,7 +191,7 @@ public class PaternManagerNaturalImpl  extends AbstractPaternManagerNatural{
 		
 		commmandPatternList.add(new PaternDo());
 		commmandPatternList.add(new PaternDoEnd());
-		commmandPatternList.add(new PaternOnError());
+		//commmandPatternList.add(new PaternOnError());
 		
 		//BasicVerbs
 		commmandPatternList.add(new PaternDisplay());
