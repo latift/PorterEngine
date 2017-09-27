@@ -1,6 +1,8 @@
 package tr.com.vbt.patern;
 
 import tr.com.vbt.cobol.parser.file.patern.PaternCloseFile;
+import tr.com.vbt.lexer.ConversionLogModel;
+import tr.com.vbt.lexer.NaturalMode;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternAdd;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternAssign;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternAtEndOfPage;
@@ -173,7 +175,9 @@ public class PaternManagerNaturalImpl  extends AbstractPaternManagerNatural{
 		commmandPatternList.add(new PaternLocalUsing());
 		commmandPatternList.add(new PaternSubroutine());
 		commmandPatternList.add(new PaternEndSubroutine());
-		commmandPatternList.add(new PaternOnError());
+		if(ConversionLogModel.getInstance().isMB()){
+			commmandPatternList.add(new PaternOnError());
+		}
 		commmandPatternList.add(new PaternEndError());
 		
 		commmandPatternList.add(new PaternBackoutTransaction());
