@@ -43,7 +43,7 @@ public class ConvertUtilities {
 	public static long MILISECOND_TO_DAY = 1000 * 60 * 60 * 24;
 
 	// #DATX (D) bu duruma dikkat.
-	public static int getMaxSize(String variableName) {
+	public static long getMaxSize(String variableName) {
 		JavaClassGeneral javaTreeElement = (JavaClassGeneral) JavaClassGeneral.getInstance(); // Oluşan
 																								// java
 																								// sınıfını
@@ -513,6 +513,51 @@ public class ConvertUtilities {
 		String className = Utility.viewNameToPojoName(currentToken.getDeger().toString());
 
 		String fieldName = Utility.columnNameToPojoFieldName(currentToken.getColumnNameToken().getDeger().toString());
+
+		Class c = null;
+
+		c = Utility.findPojoClass(className);
+		
+		Field field;
+
+		try {
+			field = c.getDeclaredField(fieldName);
+		
+			field.setAccessible(true);
+		
+			return field.getType().getSimpleName();
+
+		} catch (Exception e) {
+			
+			try {
+				Class cPK = null;
+				
+				cPK = Utility.findPojoClass(className+"PK");
+				
+				field = cPK.getDeclaredField(fieldName);
+				
+				field.setAccessible(true);
+				
+				return field.getType().getSimpleName();
+	
+			} catch (Exception e1) {
+				return "UndefinedPojoFieldType";
+			}
+			
+		}
+		
+	}
+	
+	
+	public static String getPojosFieldType(String pojoName,AbstractToken columnToken) {
+		// THESAP -->Thesap
+		String className = Utility.viewNameToPojoName(pojoName);
+		
+		if(columnToken.getColumnNameToken()!=null){
+			columnToken=columnToken.getColumnNameToken();
+		}
+
+		String fieldName = Utility.columnNameToPojoFieldName(columnToken.getDeger().toString());
 
 		Class c = null;
 

@@ -82,7 +82,7 @@ public class PaternDataTypeFiller_XX extends AbstractPattern{
 		super.setSatirNumarasi(matchedCommand,currentTokenForMatch, abstractTokenInPattern);if(abstractTokenInPattern.getSourceFieldName()==null){
 		
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("levelNumber")){
-			matchedCommandAdd.setLevelNumber(((Double)currentTokenForMatch.getDeger()).intValue());
+			matchedCommandAdd.setLevelNumber(((Double)currentTokenForMatch.getDeger()).longValue());
 			matchedCommandAdd.getParameters().put("levelNumber", matchedCommandAdd.getLevelNumber());
 			
 			matchedCommandAdd.setDataType("X");

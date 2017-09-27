@@ -113,10 +113,10 @@ public class PaternProgramDataTypeNatural extends AbstractDataTypePattern{
 			matchedCommandAdd.setDataType(deger.substring(0,1));
 			matchedCommandAdd.getParameters().put("dataType", matchedCommandAdd.getDataType());
 			
-			int len=0;
+			long len=0;
 			try {
 				if(deger.length()>1){
-					len=Integer.parseInt(deger.substring(1));
+					len=Long.parseLong(deger.substring(1));
 				}else{
 					len=0;
 				}
@@ -132,9 +132,9 @@ public class PaternProgramDataTypeNatural extends AbstractDataTypePattern{
 			Long lengthInt;
 			if(currentTokenForMatch.getDeger()  instanceof Double){
 				lenghtD=(Double) currentTokenForMatch.getDeger();
-				matchedCommandAdd.setLengthAfterDot(lenghtD.intValue());
+				matchedCommandAdd.setLengthAfterDot(lenghtD.longValue());
 				matchedCommandAdd.getParameters().put("lengthAfterDot", matchedCommandAdd.getLengthAfterDot());
-			}else if(currentTokenForMatch.getDeger()  instanceof Integer){
+			}else if(currentTokenForMatch.getDeger()  instanceof Long){
 				lengthInt=(Long) currentTokenForMatch.getDeger();
 				matchedCommandAdd.setLengthAfterDot(lengthInt);
 				matchedCommandAdd.getParameters().put("lengthAfterDot", matchedCommandAdd.getLengthAfterDot());

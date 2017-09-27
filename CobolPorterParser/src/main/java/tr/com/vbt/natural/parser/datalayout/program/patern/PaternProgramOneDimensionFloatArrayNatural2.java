@@ -119,7 +119,7 @@ public class PaternProgramOneDimensionFloatArrayNatural2 extends AbstractDataTyp
 			matchedCommandAdd.getParameters().put("dataType", matchedCommandAdd.getDataType());
 			if(deger.length()>1){
 				try {
-					matchedCommandAdd.setLength(Integer.parseInt(deger.substring(1)));
+					matchedCommandAdd.setLength(Long.parseLong(deger.substring(1)));
 					matchedCommandAdd.getParameters().put("length", matchedCommandAdd.getLength());
 				} catch (NumberFormatException e) {
 					logger.error(e.getMessage(),e);

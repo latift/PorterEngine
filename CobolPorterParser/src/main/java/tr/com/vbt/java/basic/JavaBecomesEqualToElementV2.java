@@ -113,8 +113,6 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 				//Pojodan Arraya
 			}else if(copyFrom.get(0).isPojoVariable() && (copyTo.getTip().equals(TokenTipi.Array)|| (copyTo.getLinkedToken()!=null &&copyTo.getLinkedToken().getTip().equals(TokenTipi.Array)))){
 				
-				cast=JavaWriteUtilities.addCast(copyTo,copyFrom.get(0));
-				
 				fromPojoToArraySelectedItems();
 				
 				JavaWriteUtilities.endCast(cast);
@@ -139,11 +137,11 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 				
 			}else if(typeOfCopyTo.equals("bigdecimal")){
 				
-				cast=JavaWriteUtilities.addCast(copyTo,copyFrom.get(0));
+				//cast=JavaWriteUtilities.addCast(copyTo,copyFrom.get(0));
 				
 				fromBigDecimalToBigDecimal();
 				
-				JavaWriteUtilities.endCast(cast);
+				//JavaWriteUtilities.endCast(cast);
 				
 				JavaWriteUtilities.addTypeChangeFunctionToEnd(copyTo,copyFrom.get(0));
 				
@@ -299,7 +297,12 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 					+copyTo.getDeger().toString()+")");
 			//4470 MAP_DIZISI.MEBLAG(I):= IDGIDBS-THESAP.ACMEBLAG
 		}else if(copyFrom.get(0).isPojoVariable() && !copyFrom.get(0).isAllArrayItems() && copyTo.isRecordVariable() && copyTo.getLinkedToken().isArray() && !copyTo.getLinkedToken().isAllArrayItems()){
-			JavaClassElement.javaCodeBuffer.append( JavaWriteUtilities.toCustomString(copyTo)+"="+JavaWriteUtilities.toCustomString(copyFrom.get(0)) );
+			JavaClassElement.javaCodeBuffer.append( JavaWriteUtilities.toCustomString(copyTo)+"=");
+		
+			cast=JavaWriteUtilities.addCast(copyTo,copyFrom.get(0));
+			
+			JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(copyFrom.get(0)) );
+			
 		}else{
 			JavaClassElement.javaCodeBuffer.append("FCU.copyPojoSubTableToArray("
 					+ JavaWriteUtilities.pojosSubTablesArray(copyFrom.get(0))

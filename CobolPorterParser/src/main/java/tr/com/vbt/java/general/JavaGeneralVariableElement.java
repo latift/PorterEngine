@@ -38,9 +38,9 @@ public class JavaGeneralVariableElement extends AbstractJavaElement {
 
 	private String dataType;
 	
-	private int length;
+	private long length;
 	
-	private int lengthAfterDot;
+	private long lengthAfterDot;
 	
 	private String dataName;
 
@@ -73,11 +73,11 @@ public class JavaGeneralVariableElement extends AbstractJavaElement {
 		this.dataType = dataType;
 	}
 
-	public int getLength() {
+	public long getLength() {
 		return length;
 	}
 
-	public void setLength(int length) {
+	public void setLength(long length) {
 		this.length = length;
 	}
 
@@ -99,10 +99,10 @@ public class JavaGeneralVariableElement extends AbstractJavaElement {
 			writeFieldAnnotation();
 			
 			dataType = (String) this.parameters.get("dataType");
-			length=(int)((long) this.parameters.get("length"));
+			length=(long) this.parameters.get("length");
 			dataName = (String) this.parameters.get("dataName");
 			if(parameters.get("lengthAfterDot")!=null){
-				lengthAfterDot=(int) ((long)parameters.get("lengthAfterDot"));
+				lengthAfterDot=(long)parameters.get("lengthAfterDot");
 			}
 			if(parameters.get("initialValue")!=null){
 				initialValue= (String) parameters.get("initialValue");
@@ -170,11 +170,11 @@ C 1 Control (whether modified)
 		
 	}
 
-	public int getLengthAfterDot() {
+	public long getLengthAfterDot() {
 		return lengthAfterDot;
 	}
 
-	public void setLengthAfterDot(int lengthAfterDot) {
+	public void setLengthAfterDot(long lengthAfterDot) {
 		this.lengthAfterDot = lengthAfterDot;
 	}
 	

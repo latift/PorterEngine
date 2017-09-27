@@ -43,6 +43,8 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 	
 	protected String pojoType; // Liman 
 
+	private String endCastStr="";
+
 	protected void convertConditionsToFilters() {
 		conditionListWithFiltersAndParantesiz = new ArrayList();
 		Filter fl;
@@ -297,11 +299,14 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 					continue;
 				}
 	
-				if(curFilter.getFilterValue().isSayi()){
-					findByString.append("(long)");
-				}
+				findByString.append(addCastForConstantNumber(curFilter));
+			
 				
 				findByString.append(JavaWriteUtilities.toCustomString(curFilter.getFilterValue()));
+				
+				findByString.append(endCastStr);
+				
+				endCastStr="";
 				
 				
 				
@@ -318,6 +323,28 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 		return findByString.toString();
 	}
 
+
+	private String addCastForConstantNumber(Filter curFilter) {
+		
+		if(!curFilter.getFilterValue().isSayi()){
+			return "";
+		}
+		
+		StringBuffer castString=new StringBuffer();
+		
+		String filterType=ConvertUtilities.getPojosFieldType(pojoType, curFilter.getFilterName());
+		
+		if(filterType.equalsIgnoreCase("bigdecimal")){
+			castString.append("BigDecimal.valueOf(");
+			endCastStr=")";
+		}
+		else if(curFilter.getFilterValue().isSayi()){
+			castString.append("(long)");
+		}
+		
+		return castString.toString();
+		
+	}
 
 	private String createMethodName(String isFindByOrReadBy) {
 	

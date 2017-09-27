@@ -89,9 +89,9 @@ public class PaternDBDataTypeNatural extends AbstractDataTypePattern{
 			Long lengthInt;
 			if(currentTokenForMatch.getDeger()  instanceof Double){
 				lenghtD=(Double) currentTokenForMatch.getDeger();
-				matchedCommandAdd.setLengthAfterDot(lenghtD.intValue());
+				matchedCommandAdd.setLengthAfterDot(lenghtD.longValue());
 				matchedCommandAdd.getParameters().put("lengthAfterDot", matchedCommandAdd.getLengthAfterDot());
-			}else if(currentTokenForMatch.getDeger()  instanceof Integer){
+			}else if(currentTokenForMatch.getDeger()  instanceof Long){
 				lengthInt=(Long) currentTokenForMatch.getDeger();
 				matchedCommandAdd.setLengthAfterDot(lengthInt);
 				matchedCommandAdd.getParameters().put("lengthAfterDot", matchedCommandAdd.getLengthAfterDot());

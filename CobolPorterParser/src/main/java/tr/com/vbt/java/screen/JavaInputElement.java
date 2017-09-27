@@ -318,11 +318,10 @@ public class JavaInputElement extends AbstractJavaElement {
 				
 				screenInputOutputArray.add(newScreenIO);
 				
-				offset = 0;
-	
-				logger.debug("Input Match matchsPaternWord:" + newScreenIO.toString());
-
 			}
+			offset = 0;
+			
+			logger.debug("Input Match matchsPaternWord:" + newScreenIO.toString());
 	
 			return true;
 		}
@@ -643,6 +642,7 @@ public class JavaInputElement extends AbstractJavaElement {
 					){
 				buttonPFKey=tokenDeger.substring(0,3);
 				buttonName=tokenDeger.substring(3);
+				buttonPFKey="P"+buttonPFKey;
 			}else if(tokenDeger.startsWith("F9")
 					||tokenDeger.startsWith("F8")
 					||tokenDeger.startsWith("F7")
@@ -655,8 +655,12 @@ public class JavaInputElement extends AbstractJavaElement {
 					){
 				buttonPFKey=tokenDeger.substring(0,2);
 				buttonName=tokenDeger.substring(2);
+				buttonPFKey="P"+buttonPFKey;
+			}else if(tokenDeger.contains("ENTER")){
+				buttonPFKey="ENTER";
+				buttonName=tokenDeger.replaceAll("ENTER","").trim();
 			}
-			buttonPFKey="P"+buttonPFKey;
+			
 			logger.debug("Register Button: "+buttonPFKey +" "+buttonName);
 			if(ConversionLogModel.getInstance().isMapOrMapTester()){
 				JavaClassElement.javaCodeBuffer.append("natprog.");
@@ -675,17 +679,17 @@ public class JavaInputElement extends AbstractJavaElement {
 		
 		tokenDeger=currToken.getDeger().toString();
 		
-		if(tokenDeger.toUpperCase().startsWith("ENTER")
-				|| tokenDeger.toUpperCase().startsWith("ENTR")
-				|| tokenDeger.toUpperCase().startsWith("F1")
-				|| tokenDeger.toUpperCase().startsWith("F2")
-				|| tokenDeger.toUpperCase().startsWith("F3")
-				|| tokenDeger.toUpperCase().startsWith("F4")
-				|| tokenDeger.toUpperCase().startsWith("F5")
-				|| tokenDeger.toUpperCase().startsWith("F6")
-				|| tokenDeger.toUpperCase().startsWith("F7")
-				|| tokenDeger.toUpperCase().startsWith("F8")
-				|| tokenDeger.toUpperCase().startsWith("F9")){
+		if(tokenDeger.toUpperCase().trim().startsWith("ENTER")
+				|| tokenDeger.toUpperCase().trim().startsWith("ENTR")
+				|| tokenDeger.toUpperCase().trim().startsWith("F1")
+				|| tokenDeger.toUpperCase().trim().startsWith("F2")
+				|| tokenDeger.toUpperCase().trim().startsWith("F3")
+				|| tokenDeger.toUpperCase().trim().startsWith("F4")
+				|| tokenDeger.toUpperCase().trim().startsWith("F5")
+				|| tokenDeger.toUpperCase().trim().startsWith("F6")
+				|| tokenDeger.toUpperCase().trim().startsWith("F7")
+				|| tokenDeger.toUpperCase().trim().startsWith("F8")
+				|| tokenDeger.toUpperCase().trim().startsWith("F9")){
 			return true;
 		}
 		return false;	

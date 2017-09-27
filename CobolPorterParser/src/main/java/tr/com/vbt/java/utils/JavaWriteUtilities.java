@@ -440,7 +440,7 @@ public class JavaWriteUtilities {
 			if(tokenDegerLong.equals(0)){
 				tempCodeBuffer.append("0"); //token.getDeger kullansam 0.0 üretirki bu da long tiplerde compile hatası verir.
 			}else{
-				tempCodeBuffer.append(token.getDeger());
+				tempCodeBuffer.append(token.getDeger()+"l");
 			}
 		}else{
 			tempCodeBuffer.append(token.getDeger());

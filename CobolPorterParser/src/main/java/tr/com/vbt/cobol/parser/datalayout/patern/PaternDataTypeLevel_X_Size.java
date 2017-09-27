@@ -108,7 +108,7 @@ public class PaternDataTypeLevel_X_Size extends AbstractPattern{
 		super.setSatirNumarasi(matchedCommand,currentTokenForMatch, abstractTokenInPattern);if(abstractTokenInPattern.getSourceFieldName()==null){
 		
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("levelNumber")){
-			matchedCommandAdd.setLevelNumber(((Double)currentTokenForMatch.getDeger()).intValue());
+			matchedCommandAdd.setLevelNumber(((Double)currentTokenForMatch.getDeger()).longValue());
 			matchedCommandAdd.getParameters().put("levelNumber", matchedCommandAdd.getLevelNumber());
 			matchedCommandAdd.setDataType("X");
 			matchedCommandAdd.getParameters().put("type","String");
@@ -121,7 +121,7 @@ public class PaternDataTypeLevel_X_Size extends AbstractPattern{
 		}
 		
 		else if(abstractTokenInPattern.getSourceFieldName().equals("length")){
-			matchedCommandAdd.setLength( ((Double)currentTokenForMatch.getDeger()).intValue());
+			matchedCommandAdd.setLength( ((Double)currentTokenForMatch.getDeger()).longValue());
 			matchedCommandAdd.getParameters().put("length", matchedCommandAdd.getLength());
 		}
 		else if(abstractTokenInPattern.getSourceFieldName().equals("REDEFINES")){
@@ -130,7 +130,7 @@ public class PaternDataTypeLevel_X_Size extends AbstractPattern{
 		}
 		else if(abstractTokenInPattern.getSourceFieldName().equals("VALUE")){
 			System.out.println(currentTokenForMatch.toString());
-			if(((KeyValueOzelKelimeToken)currentTokenForMatch).getValue() instanceof Integer) {
+			if(((KeyValueOzelKelimeToken)currentTokenForMatch).getValue() instanceof Long) {
 				Long valueAsInt= (Long) ((KeyValueOzelKelimeToken)currentTokenForMatch).getValue();
 				matchedCommandAdd.setValueAsInt(valueAsInt);
 				

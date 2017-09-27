@@ -103,7 +103,7 @@ public class PaternDataTypeFiller_X_Size extends AbstractPattern{
 		super.setSatirNumarasi(matchedCommand,currentTokenForMatch, abstractTokenInPattern);if(abstractTokenInPattern.getSourceFieldName()==null){
 		
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("levelNumber")){
-			matchedCommandAdd.setLevelNumber(((Double)currentTokenForMatch.getDeger()).intValue());
+			matchedCommandAdd.setLevelNumber(((Double)currentTokenForMatch.getDeger()).longValue());
 			matchedCommandAdd.getParameters().put("levelNumber", matchedCommandAdd.getLevelNumber());
 			matchedCommandAdd.setDataType("X");
 			matchedCommandAdd.getParameters().put("type","String");
@@ -111,7 +111,7 @@ public class PaternDataTypeFiller_X_Size extends AbstractPattern{
 			matchedCommandAdd.setDataName((String) currentTokenForMatch.getDeger());
 			matchedCommandAdd.getParameters().put("dataName", matchedCommandAdd.getDataName());
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("length")){
-			matchedCommandAdd.setLength( ((Double)currentTokenForMatch.getDeger()).intValue());
+			matchedCommandAdd.setLength( ((Double)currentTokenForMatch.getDeger()).longValue());
 			matchedCommandAdd.getParameters().put("length", matchedCommandAdd.getLength());
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("OCCURS")){
 			matchedCommandAdd.setOccuringCount((long) ((KeyValueOzelKelimeToken)currentTokenForMatch).getValue());

@@ -26,7 +26,7 @@ public class ElementDataTypeCobol extends AbstractCommand implements Levelable {
 
 	private String dataType; // 9, X, A //mandatory
 
-	private int length; // (5) Parantez içindeki ifade //optional
+	private long length; // (5) Parantez içindeki ifade //optional
 
 	private Long decimalLength; // (5) Parantez içindeki ifade //optional
 
@@ -116,11 +116,11 @@ public class ElementDataTypeCobol extends AbstractCommand implements Levelable {
 		this.dataType = dataType;
 	}
 
-	public int getLength() {
+	public long getLength() {
 		return length;
 	}
 
-	public void setLength(int length) {
+	public void setLength(long length) {
 		this.length = length;
 	}
 

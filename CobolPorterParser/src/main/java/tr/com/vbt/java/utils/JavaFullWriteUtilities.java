@@ -222,7 +222,11 @@ public class JavaFullWriteUtilities {
 			
 		}else{
 			
+			tempCodeBuffer.append(addBasaSifirYadaBoslukEkle(token));
+			
 			tempCodeBuffer.append(toCustomDefaultVariableString(token));
+			
+			tempCodeBuffer.append( addBasaSifirYadaBoslukEkleSon(token));
 			
 		}
 		
@@ -337,6 +341,10 @@ public class JavaFullWriteUtilities {
 	private static String addBasaSifirYadaBoslukEkle(AbstractToken token){
 		
 		StringBuffer sb=new StringBuffer();
+		
+		if(token==null || token.isSubstringCommand()){
+			return "";
+		}
 		
 		String variableType;
 		try {

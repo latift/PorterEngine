@@ -100,7 +100,7 @@ public class PaternDataTypeLevel_99V99 extends AbstractPattern{
 		super.setSatirNumarasi(matchedCommand,currentTokenForMatch, abstractTokenInPattern);if(abstractTokenInPattern.getSourceFieldName()==null){
 		
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("levelNumber")){
-			matchedCommandAdd.setLevelNumber(((Double)currentTokenForMatch.getDeger()).intValue());
+			matchedCommandAdd.setLevelNumber(((Double)currentTokenForMatch.getDeger()).longValue());
 			matchedCommandAdd.getParameters().put("levelNumber", matchedCommandAdd.getLevelNumber());
 			matchedCommandAdd.setDataType("9");
 			matchedCommandAdd.getParameters().put("type","number");
@@ -127,7 +127,7 @@ public class PaternDataTypeLevel_99V99 extends AbstractPattern{
 		}
 		else if(abstractTokenInPattern.getSourceFieldName().equals("VALUE")){
 			System.out.println(currentTokenForMatch.toString());
-			if(((KeyValueOzelKelimeToken)currentTokenForMatch).getValue() instanceof Integer) {
+			if(((KeyValueOzelKelimeToken)currentTokenForMatch).getValue() instanceof Long) {
 				Long valueAsInt= (Long) ((KeyValueOzelKelimeToken)currentTokenForMatch).getValue();
 				matchedCommandAdd.setValueAsInt(valueAsInt);
 				

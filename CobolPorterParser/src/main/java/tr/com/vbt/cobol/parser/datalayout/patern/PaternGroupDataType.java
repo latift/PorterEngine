@@ -69,7 +69,7 @@ public class PaternGroupDataType extends AbstractPattern{
 		super.setSatirNumarasi(matchedCommand,currentTokenForMatch, abstractTokenInPattern);if(abstractTokenInPattern.getSourceFieldName()==null){
 		
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("levelNumber")){
-			matchedCommandAdd.setLevelNumber(((Double)currentTokenForMatch.getDeger()).intValue());
+			matchedCommandAdd.setLevelNumber(((Double)currentTokenForMatch.getDeger()).longValue());
 			matchedCommandAdd.getParameters().put("levelNumber", matchedCommandAdd.getLevelNumber());
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("dataName")){
 			matchedCommandAdd.setDataName((String) currentTokenForMatch.getDeger());
