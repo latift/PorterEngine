@@ -43,8 +43,13 @@ public class JavaReInputElement extends AbstractJavaElement {
 		try {
 			for (AbstractToken item : dataToDisplay) {
 
-				dataToDisplayAsStr = dataToDisplayAsStr + JavaWriteUtilities.toCustomString(item);
+				if(!item.isKarakter('-')){
+					dataToDisplayAsStr = dataToDisplayAsStr + JavaWriteUtilities.toCustomString(item);
+				}
+				logger.debug(dataToDisplayAsStr);
 			}
+			dataToDisplayAsStr=dataToDisplayAsStr.replace("\"", " ");
+			logger.debug(dataToDisplayAsStr);
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 //			e1.printStackTrace();

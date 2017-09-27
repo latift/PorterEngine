@@ -20,6 +20,7 @@ public class JavaCaseElement extends  AbstractJavaElement {
 		
 		JavaClassElement.javaCodeBuffer.append("case "+JavaWriteUtilities.toCustomString(valueToken)+":" + JavaConstants.NEW_LINE);	
 		this.writeChildrenJavaToStream();
+		JavaClassElement.javaCodeBuffer.append("break"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);	
 		
 		return true;
 	}

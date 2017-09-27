@@ -4141,6 +4141,10 @@ public class NaturalLexing extends AbstractLexing {
 				endDefineReached = isEndDefineReached(astCurrent);
 				continue;
 			}
+			
+			if(astCurrent.isKelime("WHERE")|| astCurrent.isOzelKelime("WHERE")){
+				continue;
+			}
 
 			logger.debug("astCurrent:" + astCurrent);
 			logger.debug(" astStartParantez:" + astStartParantez);
@@ -4238,6 +4242,10 @@ public class NaturalLexing extends AbstractLexing {
 
 			if (!endDefineReached) {
 				endDefineReached = isEndDefineReached(astCurrent);
+				continue;
+			}
+			
+			if(astCurrent.isKelime("WHERE")|| astCurrent.isOzelKelime("WHERE")){
 				continue;
 			}
 

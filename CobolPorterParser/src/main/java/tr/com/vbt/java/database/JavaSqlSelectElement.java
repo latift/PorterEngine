@@ -394,13 +394,27 @@ public class JavaSqlSelectElement extends  AbstractJavaElement{
 			params.add(new SQLParameter("NKS2", NK2S));
 	 */	
 	private void writeParameters() {
+		
+		String paramName;
+		
+		String paramValue;
 		JavaClassElement.javaCodeBuffer.append("params=new ArrayList<>()"+ JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
 		for(int i=0; i<queryTokenList.size();i++){
 
 			curToken=queryTokenList.get(i);
 			
 			if(curToken.isFiltreValue() && !curToken.isConstantVariableWithQuota()){
-				JavaClassElement.javaCodeBuffer.append("params.add(new SQLParameter(\""+curToken.getFiltreNameToken().getDeger().toString()+"\", "+curToken.getDeger().toString()+"))"+ JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
+				if(curToken.getFiltreNameToken()!=null && curToken.getFiltreNameToken().getLinkedToken()!=null){
+					
+					paramName=curToken.getFiltreNameToken().getLinkedToken().getDeger().toString();
+				}else{
+					paramName=curToken.getFiltreNameToken().getDeger().toString();
+				}
+				
+				paramValue=curToken.getDeger().toString();
+			
+				JavaClassElement.javaCodeBuffer.append("params.add(new SQLParameter(\""+paramName+"\", "+paramValue+"))"+ JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
+				
 			}
 		}
 		
@@ -429,13 +443,25 @@ public class JavaSqlSelectElement extends  AbstractJavaElement{
 				
 				}else if(curToken.isFiltreValue() && !curToken.isConstantVariableWithQuota()){
 					sqlString.append(":");
-					sqlString.append(curToken.getFiltreNameToken().getDeger().toString());
-				}else if(curToken.getSchemaNameToken()!=null){ //TAblo ismi ise.
+					if(curToken.getFiltreNameToken().getLinkedToken()!=null){
+						sqlString.append(JavaWriteUtilities.toCustomString(curToken.getFiltreNameToken().getLinkedToken()));
+					}else if(curToken.getFiltreNameToken().getColumnNameToken()!=null){
+						sqlString.append(JavaWriteUtilities.toCustomString(curToken.getFiltreNameToken().getColumnNameToken()));
+					}else{
+						sqlString.append(JavaWriteUtilities.toCustomString(curToken.getFiltreNameToken()));
+					}
+				}else if(curToken.getSchemaNameToken()!=null && curToken.isTable()){ //TAblo ismi ise.
 					sqlString.append(curToken.getSchemaNameToken().getDeger().toString()+"."+curToken.getDeger().toString());
-				
+				}else if(curToken.getLinkedToken()!=null) {
+					sqlString.append(JavaWriteUtilities.toCustomString(curToken.getLinkedToken()));
+				}else if(curToken.getColumnNameToken()!=null)  {
+					sqlString.append(JavaWriteUtilities.toCustomString(curToken.getColumnNameToken()));
 				}else {
 					sqlString.append(JavaWriteUtilities.toCustomString(curToken));
 				}
+				
+				logger.debug(sqlString.toString());
+				logger.debug("");
 				
 			
 		}

@@ -92,7 +92,7 @@ public class JavaWriteElement extends AbstractJavaElement {
 			removeAdParameters();
 			
 			removeParantezI();
-			if(inputParameters==null || inputParameters.size()<3) {
+			if(inputParameters==null || inputParameters.size()==0) {
 				return true;
 			}
 			for (int index = 0; index < inputParameters.size(); index++) {
