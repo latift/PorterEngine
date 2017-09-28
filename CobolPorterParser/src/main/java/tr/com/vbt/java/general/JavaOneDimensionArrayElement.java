@@ -122,8 +122,12 @@ public class JavaOneDimensionArrayElement extends AbstractJavaElement {
 				JavaClassElement.javaCodeBuffer
 						.append("Untransmitted_Constant_Name");
 			}
-			JavaClassElement.javaCodeBuffer.append("=new ");
-			JavaClassElement.javaCodeBuffer.append(type + "["+arrayLength+"]");
+			if(type.equalsIgnoreCase("bigdecimal")){
+				JavaClassElement.javaCodeBuffer.append("=FCU.BigDecimalArray("+length+","+lengthAfterDot+")");
+			}else{
+				JavaClassElement.javaCodeBuffer.append("=new ");
+				JavaClassElement.javaCodeBuffer.append(type + "["+arrayLength+"]");
+			}
 			
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA);
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);

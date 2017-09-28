@@ -386,6 +386,7 @@ public class JavaInputElement extends AbstractJavaElement {
 					return true;
 				}
 			}
+		
 		} catch (Exception e) {
 			logger.debug(e.getMessage(), e);
 			return false;

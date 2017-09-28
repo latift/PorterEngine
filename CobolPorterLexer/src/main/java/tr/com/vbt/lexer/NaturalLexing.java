@@ -998,6 +998,8 @@ public class NaturalLexing extends AbstractLexing {
 		AbstractToken curToken, parantezOpenToken, adToken, equalsToken, inputADParameters, curParameter;
 
 		StringBuffer parameters;
+		
+		mergeMITWithTire();
 
 		for (int index = 0; index < tokenListesi.size() - 3; index++) {
 			try {
@@ -1036,8 +1038,18 @@ public class NaturalLexing extends AbstractLexing {
 
 					inputADParameters.setDeger(parameters.toString());
 					
+					AbstractToken tokenBeforeParantezOpen;
+					
 					if(adToken.isADParameters()){
+						if(curToken.isKarakter(')')){
+							tokenBeforeParantezOpen = getWordBeforeOpenParantez(index);
+							if(tokenBeforeParantezOpen!=null){
+
+								curToken =tokenBeforeParantezOpen;
+							}
+						}
 						curToken.setInputADParameters(inputADParameters);
+						
 					}
 					
 					
@@ -1047,14 +1059,50 @@ public class NaturalLexing extends AbstractLexing {
 						tokenListesi.add(index+1, inputADParameters);
 					}
 
+					
 				}
 			} catch (Exception e) {
 				logger.error(e.getMessage(), e);
 			}
 		}
-
+		
 	}
 	
+	private AbstractToken getWordBeforeOpenParantez(int index) {
+		
+		try {
+			AbstractToken curToken;
+			int index2;
+			for(index2=index;index2>0; index2--){
+				curToken=tokenListesi.get(index2);
+				if(curToken.isKarakter('(')){
+					break;
+				}
+			}
+			return tokenListesi.get(index2-1);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	// MIT'_' --> MIT_
+	private void mergeMITWithTire() {
+		
+		AbstractToken mitToken, tireToken;
+		
+		for (int index = 0; index < tokenListesi.size() - 1; index++) {
+			mitToken=tokenListesi.get(index);
+			tireToken=tokenListesi.get(index+1);
+			logger.debug("MITTOKEN:"+mitToken);
+			if(mitToken.isKelime("MIT") && tireToken.isKelime("_")){
+				mitToken.setDeger("MIT_");
+				tokenListesi.remove(index+1);
+			}
+			
+		}
+		
+	}
+
 	
 
 	private void removeJoinedCauseOfKeyValueTokens() {
@@ -3155,12 +3203,14 @@ public class NaturalLexing extends AbstractLexing {
 			}
 			if (current.getTip().equals(TokenTipi.Kelime)) {
 				
-				
+				logger.debug("Current:"+current.getDeger().toString());
+				logger.debug("");
 				   for (Map.Entry<String, FieldWrapper> entry : includeFieldList.entrySet()) {
 					    String key = entry.getKey();
 					    FieldWrapper fWrapper = entry.getValue();
-					   
-					    if(current.getDeger().equals(fWrapper.getField().getName()) && current.isLocalVariable()){
+					    
+					   logger.debug("key:"+key);
+					    if(current.getDeger().equals(fWrapper.getField().getName()) && (!current.isPojoVariable())){
 								
 					    	
 					    	/*if(fWrapper.getFieldOwnerFile().contains("TOPSCRG1")||fWrapper.getFieldOwnerFile().contains("KETLV0G1")){
@@ -4179,6 +4229,7 @@ public class NaturalLexing extends AbstractLexing {
 
 				arrayToken = new ArrayToken(astCurrent.getDeger(), astCurrent.getSatirNumarasi(),
 						astCurrent.getUzunluk(), astCurrent.getSatirdakiTokenSirasi(), astPreDimension);
+				arrayToken.setInputADParameters(astCurrent.getInputADParameters());
 
 				tokenListesi.add(i, arrayToken);
 

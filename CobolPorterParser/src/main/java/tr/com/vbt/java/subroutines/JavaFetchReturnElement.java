@@ -30,7 +30,7 @@ public class JavaFetchReturnElement extends  AbstractJavaElement{
 		try {
 			programName=(String) this.parameters.get("programName");
 			
-			JavaClassElement.javaCodeBuffer.append("fetchReturn(\""+programName+"\")"+JavaConstants.DOT_WITH_COMMA);
+			JavaClassElement.javaCodeBuffer.append("fetchReturnV2(\""+programName+"\",null)"+JavaConstants.DOT_WITH_COMMA);
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 		} catch (Exception e) {
 			logger.debug("//Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()+this.getSourceCode().getCommandName());

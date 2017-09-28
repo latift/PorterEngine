@@ -139,7 +139,9 @@ public class ConvertUtilities {
 					if (programData.getDataType().substring(0, 1).equals("A")) {
 						return VariableTypes.STRING_TYPE;
 					} else if (programData.getDataType().substring(0, 1).equals("N") || programData.getDataType().substring(0, 1).equals("P")) {
-						if (programData.getLengthAfterDot() == 0) {
+						if (programData.getLength() > 18) {
+							return VariableTypes.BIG_DECIMAL_TYPE;
+						}else if (programData.getLengthAfterDot() == 0) {
 							return VariableTypes.LONG_TYPE;
 						} else {
 							return VariableTypes.BIG_DECIMAL_TYPE;
@@ -362,7 +364,9 @@ public class ConvertUtilities {
 		String type;
 		if (dataType.equals("A") || dataType.equals("String")) {
 			type = "String";
-		} else if (((dataType.equals("N") || dataType.equals("P") || dataType.equals("int") || dataType.equals("I")) && lengthAfterDot == 0) ) {
+		} else if (((dataType.equals("N")) && length > 18) ) {
+			type = "BigDecimal";
+		}  else if (((dataType.equals("N") || dataType.equals("P") || dataType.equals("int") || dataType.equals("I")) && lengthAfterDot == 0) ) {
 			type = "long";
 		} else if (((dataType.equals("N") || dataType.equals("P") || dataType.equals("float")) && lengthAfterDot != 0) ) {
 			type = "BigDecimal";

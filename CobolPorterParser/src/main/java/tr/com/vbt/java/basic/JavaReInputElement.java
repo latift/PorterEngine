@@ -21,7 +21,9 @@ public class JavaReInputElement extends AbstractJavaElement {
 
 	private List<AbstractToken> dataToDisplay;
 
-	String dataToDisplayAsStr = "";
+	StringBuilder dataToDisplayBuilder = new StringBuilder();
+	
+	String dataToDisplayAsStr;
 
 	private AbstractToken markValue;
 	private ArrayToken markValueToken;
@@ -44,17 +46,18 @@ public class JavaReInputElement extends AbstractJavaElement {
 			for (AbstractToken item : dataToDisplay) {
 
 				if(!item.isKarakter('-')){
-					dataToDisplayAsStr = dataToDisplayAsStr + JavaWriteUtilities.toCustomString(item);
+					dataToDisplayBuilder.append(JavaWriteUtilities.toCustomString(item));
 				}
-				logger.debug(dataToDisplayAsStr);
+				logger.debug(dataToDisplayBuilder.toString());
 			}
-			dataToDisplayAsStr=dataToDisplayAsStr.replace("\"", " ");
+			dataToDisplayAsStr=dataToDisplayBuilder.toString().replace("\"", " ");
+			dataToDisplayAsStr="\""+dataToDisplayAsStr+"\"";
 			logger.debug(dataToDisplayAsStr);
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 //			e1.printStackTrace();
 		}
-		changeDoubleQuotaToSingleQuota();
+		//changeDoubleQuotaToSingleQuota();
 		try {
 			JavaClassElement.javaCodeBuffer.append("showDialogV2(" + dataToDisplayAsStr + ")" + JavaConstants.DOT_WITH_COMMA + JavaConstants.NEW_LINE);
 		} catch (Exception e) {
