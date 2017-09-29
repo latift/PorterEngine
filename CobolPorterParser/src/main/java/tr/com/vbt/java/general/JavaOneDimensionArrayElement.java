@@ -111,7 +111,7 @@ public class JavaOneDimensionArrayElement extends AbstractJavaElement {
 				lengthAfterDot=(int)((long) parameters.get("lengthAfterDot"));
 			}
 
-			type=ConvertUtilities.getJavaVariableType(dataType, arrayLength, lengthAfterDot);
+			type=ConvertUtilities.getJavaVariableType(dataType, length, lengthAfterDot);
 	
 			//String[4] SECIM_YURT_ICI_AKARYAKIT=new String[4];
 			//int[15] ROL1=new int[15];  

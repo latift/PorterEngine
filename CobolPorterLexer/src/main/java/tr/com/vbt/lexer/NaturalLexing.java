@@ -3210,7 +3210,7 @@ public class NaturalLexing extends AbstractLexing {
 					    FieldWrapper fWrapper = entry.getValue();
 					    
 					   logger.debug("key:"+key);
-					    if(current.getDeger().equals(fWrapper.getField().getName()) && (!current.isPojoVariable())){
+					    if(current.getDeger().equals(fWrapper.getField().getName()) && (!current.isPojoVariable())&& current.isLocalVariable()){
 								
 					    	
 					    	/*if(fWrapper.getFieldOwnerFile().contains("TOPSCRG1")||fWrapper.getFieldOwnerFile().contains("KETLV0G1")){
@@ -3270,6 +3270,7 @@ public class NaturalLexing extends AbstractLexing {
 		}
 	}
 
+	
 	//CTY_AIRPORT --> KET_AIRLINE.CITY_AIRPORT
 	public void addTableNameForColumnsWithoutTable() {
 
@@ -3278,6 +3279,8 @@ public class NaturalLexing extends AbstractLexing {
 		String columnName;
 		
 		boolean isDefinitionPart=true;
+		
+		AbstractToken pojoToken = null;
 
 		
 		for (int i = 0; i < tokenListesi.size() - 1; i++) {
@@ -3286,6 +3289,7 @@ public class NaturalLexing extends AbstractLexing {
 			
 			if(current.getDeger()!=null && current.getDeger().equals(ReservedNaturalKeywords.END_DEFINE)){
 				isDefinitionPart=false;
+				continue;
 			}
 			
 			if(isDefinitionPart){
@@ -3297,6 +3301,13 @@ public class NaturalLexing extends AbstractLexing {
 				if(previous.getTip().equals(TokenTipi.Nokta)){
 					continue;
 				}
+			}
+			
+			if(current.isOneOfOzelKelime("FIND")){
+				
+				pojoToken=tokenListesi.get(i+1);
+				
+				continue;
 			}
 			
 			logger.debug("current:" + current);
@@ -3317,14 +3328,25 @@ public class NaturalLexing extends AbstractLexing {
 							schemaName = tableColumnReferans.get(columnName);
 						}
 
+				
+						if(current.isKelime("KALMEBLAG")){
+							logger.debug("");
+						}
 						if(isLocalVariable(current)){
 							continue;
 						}
-						String tableNameDeger = tableColumnReferans.get(columnName)
-								.substring(tableColumnReferans.get(columnName).indexOf('.') + 1);
+						
+						String tableNameDeger ;
+						
+						if(pojoToken==null){
+							tableNameDeger = tableColumnReferans.get(columnName).substring(tableColumnReferans.get(columnName).indexOf('.') + 1);
+								
+						}else{
+							tableNameDeger = pojoToken.getDeger().toString();
+						}
 
 						logger.debug(columnName + " kolonu için "+tableNameDeger + " Tablo ismi ekle" ) ;
-						
+				
 						
 						tokenListesi.add(i, new KelimeToken<>(tableNameDeger, current.getSatirNumarasi(), 0, 0));  //Tablo ismini ekle.
 						tokenListesi.add(i+1, new NoktaToken<>("."));  //Nokta ekle
@@ -3339,7 +3361,7 @@ public class NaturalLexing extends AbstractLexing {
 	}
 	
 	private boolean isLocalVariable(AbstractToken controlToken) {
-	
+		
 		AbstractToken current;
 		
 		for (int i = 0; i < tokenListesi.size() - 1; i++) {

@@ -132,11 +132,9 @@ C 1 Control (whether modified)
 						.append("Untransmitted_Constant_Name");
 			}
 			if(type.equals("String")){ //Add new String("  ");
-				JavaClassElement.javaCodeBuffer.append(" = new String(\"");
-				/*for(int i=0; i<length;i++){
-					JavaClassElement.javaCodeBuffer.append(" ");
-				}*/
-				JavaClassElement.javaCodeBuffer.append("\")");
+				//JavaClassElement.javaCodeBuffer.append(" = new String(\"");
+				//JavaClassElement.javaCodeBuffer.append("\")");
+				JavaClassElement.javaCodeBuffer.append("=StringUtils.repeat(\" \", "+length+")");
 			}
 			
 			else if(type.toLowerCase().equals("bigdecimal")){
