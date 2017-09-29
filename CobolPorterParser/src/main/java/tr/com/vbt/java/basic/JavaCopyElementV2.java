@@ -74,6 +74,10 @@ public class JavaCopyElementV2 extends AbstractJavaElement {
 	
 	// NATURAL CODE:801 :.0 MOVE SUBSTR ( PBASVURUTARIHI , 1.0 , 4.0 ) TO SUBSTR ( BASVURUTARIHIGAY , 7.0 , 4.0 )
 	//BASVURUTARIHIGAY = moveToSubstring(BASVURUTARIHIGAY, 6, 4, PBASVURUTARIHI.substring(0, 4));
+	//BASVURUTARIHIGAY = moveToSubstring(BASVURUTARIHIGAY, 6, 4, PBASVURUTARIHI.substring(0, 4));
+	
+	// NATURAL CODE:1477 :.0 MOVE MAP .YAZADRES1 TO SUBSTR ( IDGIDBS-TKARTEX.ADRES , 1.0 , 60.0 )
+	//TKARTEX.setAdres(moveToSubstring( getStringPojoValue("TKARTEX.getAdres()"), 0, 60, MAP_P.YAZADRES1));
 	private boolean controlAndWriteMoveToSubstringCommand()  throws Exception{
 	
 		AbstractToken destVariableFirst=destVariable.get(0);
@@ -86,11 +90,25 @@ public class JavaCopyElementV2 extends AbstractJavaElement {
 				
 				destVariableFirst.setSubstringCommand(false);
 				
-				JavaClassElement.javaCodeBuffer.append("moveToSubstring(this,"+ JavaWriteUtilities.toCustomString(destVariableFirst)+","+destVariableFirst.getSubStringStartIndex()+","+destVariableFirst.getSubStringEndIndex()+",");
+				if(destVariableFirst.isPojoVariable() || destVariableFirst.isRedefinedVariable()|| destVariableFirst.isRedefinedVariableDimensionToSimple()){
 					
-				JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(dataToMove));
+					JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomSetterString(destVariableFirst));
+							
+					JavaClassElement.javaCodeBuffer.append("moveToSubstring("+JavaWriteUtilities.toCustomString(destVariableFirst)+","+destVariableFirst.getSubStringStartIndex()+","+destVariableFirst.getSubStringEndIndex()+",");
+					
+					JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(dataToMove));
 
-				JavaClassElement.javaCodeBuffer.append(")"+JavaConstants.DOT_WITH_COMMA + JavaConstants.NEW_LINE);
+					JavaClassElement.javaCodeBuffer.append("))"+JavaConstants.DOT_WITH_COMMA + JavaConstants.NEW_LINE);
+				}else{
+					JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(destVariableFirst));
+					JavaClassElement.javaCodeBuffer.append("=");
+				
+					JavaClassElement.javaCodeBuffer.append("moveToSubstring("+JavaWriteUtilities.toCustomString(destVariableFirst)+","+destVariableFirst.getSubStringStartIndex()+","+destVariableFirst.getSubStringEndIndex()+",");
+						
+					JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(dataToMove));
+	
+					JavaClassElement.javaCodeBuffer.append(")"+JavaConstants.DOT_WITH_COMMA + JavaConstants.NEW_LINE);
+				}
 		} catch (Exception e) {
 			logger.debug("//Conversion Error" + this.getClass() + this.getSourceCode().getSatirNumarasi()
 					+ this.getSourceCode().getCommandName());
