@@ -1317,9 +1317,13 @@ public class JavaWriteUtilities {
 			StringBuilder tempCodeBuffer = new StringBuilder();
 			
 			String type=ConvertUtilities.getTypeOfVariable(token);
-			if(token.getDeger().toString().contains("DATEKRAN")){
+			if(token.isOneOfKelime("DATD","DATE","DATI","DATJ","DATU","DAT4D","DAT4E","DAT4I","DAT4J","DAT4U")){
 				type="String";
-			}else if(token.getDeger().toString().contains("DAT")){
+			}if(token.getDeger().toString().contains("DATEKRAN")){
+				type="String";
+			}else if(token.getDeger().toString().equalsIgnoreCase("DATN")){
+				type="Long";
+			}else if(token.getDeger().toString().equalsIgnoreCase("DATX")){
 				type="Date";
 			}else if(token.getDeger().toString().equalsIgnoreCase("TIME")
 					||token.getDeger().toString().contains("TIMX")){
@@ -1342,6 +1346,8 @@ public class JavaWriteUtilities {
 				tempCodeBuffer.append("getSystemVariableDate(\""+token.getDeger().toString()+"\")");
 			}else if(type.equalsIgnoreCase("Time")){
 				tempCodeBuffer.append("getSystemVariableTime(\""+token.getDeger().toString()+"\")");
+			}else if(type.equalsIgnoreCase("Long")){
+				tempCodeBuffer.append("getSystemVariableLong(\""+token.getDeger().toString()+"\")");
 			}else{
 				tempCodeBuffer.append("getSystemVariable(\""+token.getDeger().toString()+"\")");
 			}
@@ -1479,7 +1485,7 @@ public class JavaWriteUtilities {
 				endCastStr=",\"yyyy-MM-dd\"";
 			}else if(typeOfCopyTo.equalsIgnoreCase("long") && typeOfCopyFrom.equalsIgnoreCase("date")){
 				result=" Long.valueOf(FCU.dateToStringwithFormat(";
-				endCastStr=",\"yyyy-MM-dd\")";
+				endCastStr=",\"yyyyMMdd\")";
 			}
 			return result;
 	}

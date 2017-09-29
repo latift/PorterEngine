@@ -403,8 +403,8 @@ public class ConvertUtilities {
 			return "String";
 		}else if(variable.isSystemVariable()) {
 		
-			if (variable.getDeger().toString().startsWith("DAT")) {
-				return "Date";
+			if (variable.getDeger().toString().contains("DAT")) {
+				return getTypeOfSystemVariableDAT(variable);
 			}else if (variable.getDeger().toString().equalsIgnoreCase("PF_KEY") || variable.getDeger().toString().equalsIgnoreCase("USER")
 					|| variable.getDeger().toString().equalsIgnoreCase("PROGRAM") || variable.getDeger().toString().equalsIgnoreCase("DEVICE")
 					|| variable.getDeger().toString().equalsIgnoreCase("LANGUAGE") || variable.getDeger().toString().startsWith("DAT")) {
@@ -446,6 +446,16 @@ public class ConvertUtilities {
 					programDataTypeDefinition.getLength(), programDataTypeDefinition.getLengthAfterDot());
 		}
 		return null; 
+	}
+
+	private static String getTypeOfSystemVariableDAT(AbstractToken variable) {
+		if (variable.isKelime("DATN")) {
+			return "long";
+		}else if(variable.isKelime("DATX")){
+			return "date";
+		}else{
+			return "String";
+		}
 	}
 
 	// STORE IDGIDBS-TGECICI --> TGECICIDAO.save(TGECICI);
