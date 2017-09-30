@@ -2742,6 +2742,7 @@ public class NaturalLexing extends AbstractLexing {
 								ReservedNaturalKeywords.OR,
 								ReservedNaturalKeywords.INTO,
 								ReservedNaturalKeywords.MAX,
+								ReservedNaturalKeywords.SUM,
 								ReservedNaturalKeywords.DISTINCT,
 								ReservedNaturalKeywords.ORDER_BY,
 								ReservedNaturalKeywords.COUNT,

@@ -736,6 +736,8 @@ public class TransferFromNaturalToJavaMain {
 																							// sınıfını
 																							// dön.
 					
+					javaTreeElement.moveAllLevelElementsIntoValidationBranch();
+					
 					// 4.1 Soyut Java Ağacını XML dosyaya yaz.
 					sb = javaTreeElement.exportJavaTreeBaslat(logModel.getFullJavaTreeFileName());
 

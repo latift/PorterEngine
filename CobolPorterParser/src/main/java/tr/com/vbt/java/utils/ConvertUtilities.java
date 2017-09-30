@@ -106,6 +106,10 @@ public class ConvertUtilities {
 		if (variable.isSayi()) {
 			return VariableTypes.LONG_TYPE;
 		}
+		
+		if(variable.isVal()){
+			return VariableTypes.LONG_TYPE;
+		}
 		ElementProgramDataTypeNatural programData;
 		ElementProgramGrupNatural programGrupData;
 		ElementProgramOneDimensionArrayNatural elementProgramOneDimensionArrayNatural;
@@ -445,7 +449,7 @@ public class ConvertUtilities {
 			return ConvertUtilities.getJavaVariableType(programDataTypeDefinition.getDataType(),
 					programDataTypeDefinition.getLength(), programDataTypeDefinition.getLengthAfterDot());
 		}
-		return null; 
+		return ""; 
 	}
 
 	private static String getTypeOfSystemVariableDAT(AbstractToken variable) {

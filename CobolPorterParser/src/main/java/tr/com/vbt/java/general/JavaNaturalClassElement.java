@@ -3,15 +3,8 @@ package tr.com.vbt.java.general;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
+import tr.com.vbt.java.AbstractJava;
 import tr.com.vbt.java.AbstractJavaElement;
-import tr.com.vbt.java.screen.JavaAtEndOfPageElement;
-import tr.com.vbt.java.screen.JavaAtTopOfPageElement;
-import tr.com.vbt.lexer.ConversionFileType;
 import tr.com.vbt.lexer.ConversionLogModel;
 import tr.com.vbt.util.ConverterConfiguration;
 
@@ -254,7 +247,7 @@ public class JavaNaturalClassElement extends  AbstractJavaElement{
 
 	public List<JavaGeneralVariableElement> getGeneralVariables() {
 		List<JavaGeneralVariableElement> resultList=new ArrayList<JavaGeneralVariableElement>();
-		for (AbstractJavaElement aje : children) {
+		for (AbstractJava aje : children) {
 			if(aje instanceof JavaGeneralVariableElement){
 				resultList.add((JavaGeneralVariableElement) aje);
 			}
@@ -267,13 +260,13 @@ public class JavaNaturalClassElement extends  AbstractJavaElement{
 		
 		AbstractJavaElement curChild, javaFunctionMainElement,javaAtTopOfPageElement,javaAtEndOfPageElement;
 		
-		javaFunctionMainElement=this.getChildWithName("JavaFunctionMainElement");
+		javaFunctionMainElement=(AbstractJavaElement) this.getChildWithName("JavaFunctionMainElement");
 		
 		if(javaFunctionMainElement!=null){
 		
-			javaAtTopOfPageElement= javaFunctionMainElement.getChildWithName("JavaAtTopOfPageElement");
+			javaAtTopOfPageElement= (AbstractJavaElement) javaFunctionMainElement.getChildWithName("JavaAtTopOfPageElement");
 			
-			javaAtEndOfPageElement= javaFunctionMainElement.getChildWithName("JavaAtEndOfPageElement");
+			javaAtEndOfPageElement= (AbstractJavaElement) javaFunctionMainElement.getChildWithName("JavaAtEndOfPageElement");
 			
 			if(javaAtTopOfPageElement!=null){
 				this.registerChild(javaAtTopOfPageElement);

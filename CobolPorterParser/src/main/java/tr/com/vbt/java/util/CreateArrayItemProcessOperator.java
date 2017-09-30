@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
+import tr.com.vbt.java.AbstractJava;
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaClassElement;
 import tr.com.vbt.java.general.JavaClassGeneral;
@@ -44,7 +45,7 @@ public class CreateArrayItemProcessOperator extends ProcessOperator {
 		
 		List<String> detailNameList=Arrays.asList(detailNameArray);
 		
-		AbstractJavaElement abj=RuleUtility.getRootDestJavaElement();
+		AbstractJava abj=RuleUtility.getRootDestJavaElement();
 		
 		for (String detailName : detailNameList) {
 		
@@ -54,7 +55,7 @@ public class CreateArrayItemProcessOperator extends ProcessOperator {
 				
 					cobolParameter=this.rule.getCobolParameter();
 					
-					List<AbstractJavaElement> children=((JavaClassElement)abj).getChildren();
+					List<AbstractJava> children=((JavaClassElement)abj).getChildren();
 					
 					abj=abj.getChildWithName(cobolParameter);
 					
@@ -80,7 +81,7 @@ public class CreateArrayItemProcessOperator extends ProcessOperator {
 
 
 	@Override
-	public AbstractJavaElement operateRule(Rule rule, AbstractCommand sourceElement) {
+	public AbstractJava operateRule(Rule rule, AbstractCommand sourceElement) {
 	
 		String javaElement=rule.getJavaElement();
 		
@@ -131,7 +132,7 @@ public class CreateArrayItemProcessOperator extends ProcessOperator {
 
 
 	private void setParentJava(Rule rule, AbstractCommand sourceElement) {
-		AbstractJavaElement aje;
+		AbstractJava aje;
 		String[] detailedName;
 		if(rule.getJavaDetailedParentName()!=null&&rule.getJavaDetailedParentName().length()>0){
 			if(ConverterConfiguration.destLan.equals("JSP")){

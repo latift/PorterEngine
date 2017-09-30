@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
-import tr.com.vbt.java.AbstractJavaElement;
+import tr.com.vbt.java.AbstractJava;
 import tr.com.vbt.java.JavaUndefinedElement;
 import tr.com.vbt.java.basic.JavaAcceptElement;
 import tr.com.vbt.java.basic.JavaAddElement;
@@ -130,7 +130,7 @@ public class CreateProcessOperator extends ProcessOperator {
 	}
 
 	@Override
-	public AbstractJavaElement operateRule(Rule rule, AbstractCommand sourceElement) {
+	public AbstractJava operateRule(Rule rule, AbstractCommand sourceElement) {
 		String javaElement = rule.getJavaElement();
 
 		switch (javaElement) {
@@ -491,7 +491,7 @@ public class CreateProcessOperator extends ProcessOperator {
 		default:
 		}
 
-		AbstractJavaElement aje;
+		AbstractJava aje;
 		if (!javaElement.equals("JavaClassGeneral") && !javaElement.equals("JSPGeneral")) {
 			aje = sourceElement.getParent().getJavaElement();
 			if (aje == null) {

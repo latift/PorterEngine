@@ -163,6 +163,7 @@ public NaturalOzelKelimeler() {
 	
 	ozelKelimeler.add("INTO");
 	ozelKelimeler.add("MAX");
+	ozelKelimeler.add("SUM");
 	ozelKelimeler.add("DISTINCT");
 	ozelKelimeler.add("FROM");
 	ozelKelimeler.add("COUNT");

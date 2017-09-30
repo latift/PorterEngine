@@ -39,6 +39,16 @@ public class JavaDivideElement extends AbstractJavaElement {
 		kalan = (AbstractToken) this.getParameters().get("kalan");
 
 		try {
+			
+			String typeOfCopyTo=ConvertUtilities.getTypeOfVariable(sonuc);
+			
+			String typeOfCopFrom=ConvertUtilities.getTypeOfVariable(bolunen);
+			
+			if(typeOfCopyTo!=null && typeOfCopyTo.equalsIgnoreCase("bigdecimal") && typeOfCopFrom!=null && typeOfCopFrom.equalsIgnoreCase("bigdecimal")){
+				divideBigDecimal();
+				return true;
+			}
+			
 			// sonuc= bolunen/bolen;
 			if (sonuc != null) {
 				JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(sonuc));
@@ -98,6 +108,48 @@ public class JavaDivideElement extends AbstractJavaElement {
 		}
 
 		return true;
+	}
+
+	private void divideBigDecimal() throws Exception {
+					// sonuc= bolunen/bolen;
+					//bg3 = bg1.divide(bg2, 3, RoundingMode.CEILING);
+					if (sonuc != null) {
+						JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(sonuc));
+
+						JavaClassElement.javaCodeBuffer.append("=");
+						
+						JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(bolunen));
+
+						JavaClassElement.javaCodeBuffer.append(".divide(");
+
+						JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(bolen));
+						
+						JavaClassElement.javaCodeBuffer.append(",2 , RoundingMode.CEILING )"); //scale
+						
+				
+						JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA + JavaConstants.NEW_LINE);
+					}
+
+					//MathContext mc = new MathContext(2); // 2 precision
+					// bg3 = bg1.remainder(bg2, mc);
+
+					if (kalan != null) {
+						JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(kalan));
+
+						JavaClassElement.javaCodeBuffer.append("=");
+						
+						JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(bolunen));
+
+						JavaClassElement.javaCodeBuffer.append(".remainder(");
+
+						JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(bolen));
+						
+						JavaClassElement.javaCodeBuffer.append(",new MathContext(2))"); //scale
+						
+				
+						JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA + JavaConstants.NEW_LINE);
+					}
+		
 	}
 
 	@Override

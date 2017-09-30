@@ -40,13 +40,13 @@ public class JavaInputUsingMapElement extends  AbstractJavaElement {
 //				validationError = false;
 //				try {
 					
-			addValidationLoopStarter();
+			//addValidationLoopStarter();
 			
 				
 			//JavaClassElement.javaCodeBuffer.append("=openScreen("+mapName+")"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
 			JavaClassElement.javaCodeBuffer.append("	inputUsingMap(\""+mapName+"\")"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
 	
-			addValidationLoopEnder();
+			//addValidationLoopEnder();
 			
 //		} catch (VBTValidationException e) {
 //

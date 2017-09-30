@@ -6,9 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import tr.com.vbt.java.AbstractJavaElement;
-import tr.com.vbt.java.MethodImplementation;
-import tr.com.vbt.java.MethodSignature;
+import tr.com.vbt.java.AbstractJava;
 import tr.com.vbt.java.general.JavaClassElement;
 import tr.com.vbt.java.general.JavaConstants;
 import tr.com.vbt.java.util.Utility;
@@ -16,7 +14,6 @@ import tr.com.vbt.java.utils.ConvertUtilities;
 import tr.com.vbt.lexer.ConversionLogModel;
 import tr.com.vbt.lexer.ReservedNaturalKeywords;
 import tr.com.vbt.token.AbstractToken;
-import tr.com.vbt.token.OzelKelimeToken;
 import tr.com.vbt.token.TokenTipi;
 
 // 4218   FIND IDGIDBS-TAZIL WITH MUSNO=+MUSNO2 SORTED BY GIRTAR GIRZAM   
@@ -108,7 +105,7 @@ public class JavaFindNumberWithElement extends AbsctractConditionalJavaElement {
 	String findByString,itName; //method call from natural
 
 	
-	private AbstractJavaElement javaIfNoRecords;
+	private AbstractJava javaIfNoRecords;
 	
 	public boolean writeJavaToStream() throws Exception{
 		super.writeJavaToStream();

@@ -6,20 +6,16 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import tr.com.vbt.java.AbstractJava;
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaClassElement;
 import tr.com.vbt.java.general.JavaConstants;
 import tr.com.vbt.java.loops.JavaDoElement;
 import tr.com.vbt.java.utils.ConditionUtilities;
 import tr.com.vbt.java.utils.ConvertUtilities;
-import tr.com.vbt.java.utils.JavaWriteUtilities;
 import tr.com.vbt.lexer.ConversionLogModel;
 import tr.com.vbt.lexer.NaturalMode;
-import tr.com.vbt.lexer.ReservedNaturalKeywords;
-import tr.com.vbt.natural.parser.datalayout.program.ElementProgramGrupNatural;
 import tr.com.vbt.token.AbstractToken;
-import tr.com.vbt.token.ArrayToken;
-import tr.com.vbt.token.TokenTipi;
 
 //IF A = '1' AND A = '2' --> IF (A == '1' && A == '2')
 
@@ -85,7 +81,7 @@ public class JavaIfElementV2 extends AbstractJavaElement {
 
 
 	private boolean isFirstChildDoElement() {
-		AbstractJavaElement child0;
+		AbstractJava child0;
 		if(this.getChildren()==null || this.getChildren().isEmpty()){
 			return false;
 		}

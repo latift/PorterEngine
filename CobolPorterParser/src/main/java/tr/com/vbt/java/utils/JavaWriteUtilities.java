@@ -1226,6 +1226,22 @@ public class JavaWriteUtilities {
 		
 		int secDimensionSize;
 		
+		if(token.isVal() || token.getLinkedToken().isVal()){
+			
+			String typeOfCopyFrom=ConvertUtilities.getTypeOfVariable(token.getLinkedToken());
+			
+			if(typeOfCopyFrom.equalsIgnoreCase("string")){
+				tempCodeBuffer.append("Long.valueOf(");
+				tempCodeBuffer.append(token.getDeger().toString());  //MAP_DIZISI
+				tempCodeBuffer.append(".");
+				tempCodeBuffer.append(token.getLinkedToken().getDeger().toString()); //D_SIRA
+				tempCodeBuffer.append(")");
+				return tempCodeBuffer.toString();
+			}else{
+				
+			}
+		}
+		
 		tempCodeBuffer.append(token.getDeger().toString());  //MAP_DIZISI
 		tempCodeBuffer.append(".");
 		if(token.getLinkedToken().isRedefinedVariable()){

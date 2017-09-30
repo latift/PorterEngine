@@ -93,6 +93,8 @@ public class JavaCompressElementV3 extends AbstractJavaElement {
 		
 		boolean objectTypeSet=false;
 		
+		String typeOfCopyTo=ConvertUtilities.getTypeOfVariable(dest);
+		
 		//NATURAL CODE:2230   :.0 COMPRESS FULL AVEKDOGYIL - AVEKDOGAY 
 		//setPojoValue("TVEKALET"DOGTARAVEKDOGYIL.getValue() + "-" + AVEKDOGAY.getValue() + "-" + AVEKDOGGUN.getValue());
 		//Dogrusu:  	TVEKALET.setDogtar(FrameworkConvertUtilities.stringToSqlDate(MAP_P.AVEKDOGYIL + "-" + MAP_P.AVEKDOGAY + "-" + MAP_P.AVEKDOGGUN));
@@ -111,8 +113,11 @@ public class JavaCompressElementV3 extends AbstractJavaElement {
 			JavaClassElement.javaCodeBuffer.append("=");
 		}
 
-		writeSourcePart();
-
+		if(typeOfCopyTo.equalsIgnoreCase("date")){
+			writeSourcePartToDate();
+		}else{
+			writeSourcePart();
+		}
 		if (objectTypeSet) {
 		
 			JavaClassElement.javaCodeBuffer.append(")");
@@ -124,6 +129,60 @@ public class JavaCompressElementV3 extends AbstractJavaElement {
 	}
 
 	
+	private void writeSourcePartToDate() throws Exception {
+		String castStr;
+		
+		StringBuffer sb=new StringBuffer();
+
+		for (int i = 0; i < sourceList.size(); i++) {
+
+			source = sourceList.get(i);
+			
+			//Compress de - işlemi olmaz. Compress string join yapar.
+			if(source.isKarakter('-')){
+				source=new KelimeToken<>("-",0,0,0);
+				source.setConstantVariableWithQuota(true); 
+			}
+
+			if(isFull){  // Trim yapma
+				
+				String typeOfCopyTo="String"; //Date olmasına ragmen String yazıyor ve string operasyonu yapıyoruz. Sonra en son oluşan Stringe cast yapacağız.
+				
+				String typeOfCopyFrom=ConvertUtilities.getTypeOfVariable(source);
+				
+				if(typeOfCopyTo==null){
+					typeOfCopyTo="";
+				}
+				
+				if(typeOfCopyFrom==null){
+					typeOfCopyFrom="";
+				}
+				
+				sb.append(JavaFullWriteUtilities.toCustomString(source));
+				
+				if(i<sourceList.size()-1){
+					sb.append("+");
+				}
+				
+				
+				
+			}
+
+		}
+		
+		cast=JavaWriteUtilities.addCast(dest,source);	
+		
+		JavaClassElement.javaCodeBuffer.append(sb);
+	
+		JavaWriteUtilities.endCast(cast);
+	
+		JavaWriteUtilities.addTypeChangeFunctionToEnd(dest,source);
+	
+		
+		
+		
+	}
+
 	private void writeSourcePart() throws Exception {
 		
 		String castStr;

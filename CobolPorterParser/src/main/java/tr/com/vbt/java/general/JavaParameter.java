@@ -3,6 +3,7 @@ package tr.com.vbt.java.general;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import tr.com.vbt.java.AbstractJava;
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.utils.ConvertUtilities;
 import tr.com.vbt.java.utils.CustomAnnotations;
@@ -22,7 +23,7 @@ public class JavaParameter extends  AbstractJavaElement{
 			}
 			
 			if(children!=null){
-				for (AbstractJavaElement aje : children) {
+				for (AbstractJava aje : children) {
 					if(aje!=null){
 						try {
 							aje.setAnnotationStr(CustomAnnotations.CallNatParameter);

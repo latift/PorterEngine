@@ -1,5 +1,6 @@
 package tr.com.vbt.java.general;
 
+import tr.com.vbt.java.AbstractJava;
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.util.CustomStringUtils;
 
@@ -32,7 +33,7 @@ public class JavaInnerClassElement extends  AbstractJavaElement{
 		
 		AbstractJavaElement.javaCodeBuffer.append("public "+JavaConstants.CLASS+ " "+  CustomStringUtils.replaceMiddleLineWithSubLine(className)+ " "+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE );
 			if(this.children!=null){
-			for (AbstractJavaElement jge : children) {
+			for (AbstractJava jge : children) {
 				jge.writeJavaToStream();
 			}
 		}
