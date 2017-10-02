@@ -508,6 +508,8 @@ public class CreateProcessOperator extends ProcessOperator {
 
 			}
 			sourceElement.getParentJavaElement().getChildren().add(elementForCreate);
+			
+			elementForCreate.setParent(sourceElement.getParentJavaElement());
 		}
 		try {
 			elementForCreate.setParameters(sourceElement.getParameters());

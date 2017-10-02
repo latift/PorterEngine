@@ -1374,34 +1374,44 @@ public class JavaWriteUtilities {
 
 
 	////JavaWriteUtilities.pojosSubTablesArray(copyTo, ddm)  =KET_TAX.getKetTaxAls()
-	public static String pojosSubTablesArray(AbstractToken copyTo) {
+	public static String pojosSubTablesArray(AbstractToken copyTo) throws Exception {
 		
 		StringBuilder tempCodeBuffer = new StringBuilder();
 		
-		DDM ddm= DDMList.getInstance().getFirstLevelDDM(copyTo);
+		if(ConversionLogModel.getInstance().isMB()){
+			
+			tempCodeBuffer.append(Utility.viewAndColumnNameToPojoAndGetterMethodName(copyTo));
+			
+			return tempCodeBuffer.toString();
+		}else{
 		
-		if(ddm==null){
+			
+			
+			DDM ddm= DDMList.getInstance().getFirstLevelDDM(copyTo);
+			
+			if(ddm==null){
+				
+				tempCodeBuffer.append(copyTo.getDeger().toString()); //KETTAX;
+				
+				tempCodeBuffer.append(".");
+				
+				tempCodeBuffer.append(Utility.viewNameToPojoGetterName(copyTo.getDeger().toString()));
+				
+				tempCodeBuffer.append("()");
+				
+				return tempCodeBuffer.toString();
+			}
 			
 			tempCodeBuffer.append(copyTo.getDeger().toString()); //KETTAX;
-			
+		
 			tempCodeBuffer.append(".");
 			
-			tempCodeBuffer.append(Utility.viewNameToPojoGetterName(copyTo.getDeger().toString()));
+			tempCodeBuffer.append(Utility.viewNameToPojoGetterName(copyTo.getColumnNameToken().getDeger()+"_"+ddm.getDB()+"s"));
 			
 			tempCodeBuffer.append("()");
 			
 			return tempCodeBuffer.toString();
 		}
-		
-		tempCodeBuffer.append(copyTo.getDeger().toString()); //KETTAX;
-	
-		tempCodeBuffer.append(".");
-		
-		tempCodeBuffer.append(Utility.viewNameToPojoGetterName(copyTo.getDeger()+"_"+ddm.getDB()+"s"));
-		
-		tempCodeBuffer.append("()");
-		
-		return tempCodeBuffer.toString();
 		
 	}
 

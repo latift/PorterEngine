@@ -61,7 +61,7 @@ public class JavaNaturalClassElement extends  AbstractJavaElement{
 		AbstractJavaElement.javaCodeBuffer.append("import org.springframework.beans.factory.annotation.*;"+JavaConstants.NEW_LINE);
 		
 		AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
-		
+		AbstractJavaElement.javaCodeBuffer.append("import org.apache.commons.lang.StringUtils;"+JavaConstants.NEW_LINE);
 		AbstractJavaElement.javaCodeBuffer.append("import org.slf4j.Logger;"+JavaConstants.NEW_LINE);
 		AbstractJavaElement.javaCodeBuffer.append("import org.slf4j.LoggerFactory;"+JavaConstants.NEW_LINE);
 		
@@ -71,6 +71,7 @@ public class JavaNaturalClassElement extends  AbstractJavaElement{
 		AbstractJavaElement.javaCodeBuffer.append("import tr.com.vbt.natural.html.*;"+JavaConstants.NEW_LINE);
 		AbstractJavaElement.javaCodeBuffer.append("import tr.com.vbt.java.utils.*;"+JavaConstants.NEW_LINE);
 		AbstractJavaElement.javaCodeBuffer.append("import tr.com.vbt.lexer.*;"+JavaConstants.NEW_LINE);
+		AbstractJavaElement.javaCodeBuffer.append("import tr.com.vbt.natural.core.*;"+JavaConstants.NEW_LINE);
 		AbstractJavaElement.javaCodeBuffer.append("import tr.com.vbt.util.FrameworkConfiguration;"+JavaConstants.NEW_LINE);
 		
 		AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);

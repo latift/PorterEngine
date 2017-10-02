@@ -20,9 +20,15 @@ public class JavaRepeatElement extends  AbstractJavaElement {
 		try {
 			loopName = (String) this.parameters.get("loopName");
 			JavaClassElement.javaCodeBuffer.append("while (true)"+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE);
-			JavaClassElement.javaCodeBuffer.append("//"+loopName+JavaConstants.NEW_LINE);
-			JavaClassElement.javaCodeBuffer.append("continueControl= false"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+			if(loopName!=null){
+				JavaClassElement.javaCodeBuffer.append("//"+loopName+JavaConstants.NEW_LINE);
+			}
+			
+			addTryBlock();
 			this.writeChildrenJavaToStream();
+			
+			addCatchBlock();
+			
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.CLOSE_BRACKET+JavaConstants.NEW_LINE);
 		} catch (Exception e) {
 			logger.debug("//Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()+this.getSourceCode().getCommandName());
@@ -34,5 +40,6 @@ public class JavaRepeatElement extends  AbstractJavaElement {
 		return true;
 	}
 	
+
 
 }

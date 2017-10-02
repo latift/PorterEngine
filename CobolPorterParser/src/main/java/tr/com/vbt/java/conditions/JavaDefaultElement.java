@@ -9,9 +9,20 @@ import tr.com.vbt.java.general.JavaConstants;
 public class JavaDefaultElement extends  AbstractJavaElement {
 	
 	
+	boolean parentIsSwitchDecideFirstCondition=false;
+	
 	public boolean writeJavaToStream() throws Exception{ 
 		super.writeJavaToStream();
-		JavaClassElement.javaCodeBuffer.append("default :"+ JavaConstants.NEW_LINE);
+		
+		if(this.parent.getJavaElementName().equalsIgnoreCase("JavaWhen") &&
+				this.parent.getParent().getJavaElementName().equalsIgnoreCase("JavaSwitchDecideFirstCondition")	){
+			parentIsSwitchDecideFirstCondition=true;
+		}
+		
+		if(!parentIsSwitchDecideFirstCondition){
+			JavaClassElement.javaCodeBuffer.append("default :"+ JavaConstants.NEW_LINE);
+				
+		}
 		this.writeChildrenJavaToStream();
 		return true;
 	}

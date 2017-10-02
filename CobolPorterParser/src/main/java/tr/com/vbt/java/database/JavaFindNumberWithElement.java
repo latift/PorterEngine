@@ -127,8 +127,8 @@ public class JavaFindNumberWithElement extends AbsctractConditionalJavaElement {
 
 		calculatedResultListName = "";// LIMAN_RESULT_LIST
 		calculatedDAOName = "";
-		findByString=createFindByString("findBy");
-		findByMethodSignature=createFindByMethodString("findBy", pojoType);
+		findByString=createFindByString("findOneBy");
+		findByMethodSignature=createFindByMethodString("findOneBy", pojoType);
 		
 		//itName="it"+pojoType;
 		itName=itNameManager.createIteratorName(pojoType);

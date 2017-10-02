@@ -111,7 +111,7 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 				JavaWriteUtilities.addTypeChangeFunctionToEnd(copyTo,copyFrom.get(0));
 				
 				//Pojodan Arraya
-			}else if(copyFrom.get(0).isPojoVariable() && (copyTo.getTip().equals(TokenTipi.Array)|| (copyTo.getLinkedToken()!=null &&copyTo.getLinkedToken().getTip().equals(TokenTipi.Array)))){
+			}else if(copyFrom.get(0).isPojoVariable() && (copyTo.getTip().equals(TokenTipi.Array) && copyTo.isAllArrayItems())|| (copyTo.getLinkedToken()!=null &&copyTo.getLinkedToken().getTip().equals(TokenTipi.Array) && copyTo.getLinkedToken().isAllArrayItems())){
 				
 				fromPojoToArraySelectedItems();
 				

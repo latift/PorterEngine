@@ -62,8 +62,10 @@ public class JavaRepeatUntilElement extends  AbstractJavaElement {
 			}
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 
+			addTryBlock();
 			this.writeChildrenJavaToStream();
-
+			addCatchBlock();
+			
 			if (ConversionLogModel.getInstance().getMode().equals(NaturalMode.STRUCTRURED)) {
 				JavaClassElement.javaCodeBuffer.append(JavaConstants.CLOSE_BRACKET + "// if");
 			}

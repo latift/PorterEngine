@@ -181,7 +181,8 @@ public class JavaFindWithElement extends AbsctractConditionalJavaElement {
 								
 								//		while(it.hasnext()){
 								JavaClassElement.javaCodeBuffer.append("while("+itName+".hasNext()){"+ JavaConstants.NEW_LINE);
-			
+											
+											addTryBlock();
 											//			LIMAN=it.next();
 											JavaClassElement.javaCodeBuffer.append(viewName.toCustomString()+"="+itName+".next()"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
 											
@@ -191,6 +192,7 @@ public class JavaFindWithElement extends AbsctractConditionalJavaElement {
 											
 											//			ULKE_KODU=LIMAN.getLUlkeKodu();
 											this.writeChildrenJavaToStream();
+											addCatchBlock();
 			
 								//		}
 								JavaClassElement.javaCodeBuffer.append("}"+"//While Iterator End"+ JavaConstants.NEW_LINE);

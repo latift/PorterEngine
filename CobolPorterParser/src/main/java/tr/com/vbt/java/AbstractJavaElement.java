@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tr.com.vbt.java.basic.JavaCallFunctionElement;
-import tr.com.vbt.java.basic.JavaSubtractElement;
+import tr.com.vbt.java.general.JavaClassElement;
 import tr.com.vbt.java.general.JavaClassGeneral;
+import tr.com.vbt.java.general.JavaConstants;
 import tr.com.vbt.java.general.JavaFunctionElement;
 import tr.com.vbt.java.general.JavaFunctionMainElement;
 import tr.com.vbt.java.general.JavaNaturalClassElement;
@@ -227,4 +228,19 @@ public class AbstractJavaElement extends AbstractJava{
 		
 		return ;
 	}
+	
+
+	public void addCatchBlock(){
+		JavaClassElement.javaCodeBuffer.append("} catch (VBTBreak e) {"+JavaConstants.NEW_LINE);
+		JavaClassElement.javaCodeBuffer.append("break"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		JavaClassElement.javaCodeBuffer.append("} catch (VBTContinue e) {"+JavaConstants.NEW_LINE);
+		JavaClassElement.javaCodeBuffer.append("continue"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		JavaClassElement.javaCodeBuffer.append("} "+JavaConstants.NEW_LINE);
+	
+	}
+	
+	public void addTryBlock(){
+		JavaClassElement.javaCodeBuffer.append("		try {"+JavaConstants.NEW_LINE); //validation try block
+	}
+	
 }

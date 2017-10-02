@@ -19,15 +19,28 @@ public class JavaEscapeTopElement extends  AbstractJavaElement {
 	
 	AbstractToken loopName;
 	
+	boolean hasVBTWhileStatement=false;
+	
+	boolean isContinueNotInLoop=false; //Subroutine icinde ise ve loop icinde değilse 
+	
 	public boolean writeJavaToStream() throws Exception{ super.writeJavaToStream();
 		
+		
 		try {
+		
+			//hasVBTWhileStatement=hasStatementByName("JavaValidationElement");
+			
+			//isContinueNotInLoop=isStatementInLoop();
+			
 			if(this.parameters.get("loopName") !=null){
 				loopName = (AbstractToken) this.parameters.get("loopName");
 				JavaClassElement.javaCodeBuffer.append("//TODO:"+JavaWriteUtilities.toCustomString(loopName)+JavaConstants.NEW_LINE);
 			}
-			JavaClassElement.javaCodeBuffer.append("	continueControl=true"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
-			JavaClassElement.javaCodeBuffer.append("	continue;"+JavaConstants.NEW_LINE);
+			//if(hasVBTWhileStatement || isContinueNotInLoop){
+				JavaClassElement.javaCodeBuffer.append("	throw new VBTContinue()"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+			//}else{
+			//	JavaClassElement.javaCodeBuffer.append("	continue"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+			//}
 		} catch (Exception e) {
 			logger.debug("//Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()+this.getSourceCode().getCommandName());
 			JavaClassElement.javaCodeBuffer.append("/*Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()

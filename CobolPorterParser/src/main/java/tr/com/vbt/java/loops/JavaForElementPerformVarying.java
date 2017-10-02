@@ -33,7 +33,11 @@ public class JavaForElementPerformVarying extends  AbstractJavaElement {
 			
 			JavaClassElement.javaCodeBuffer.append("for (int "+variable+"=0; "+variable+"<100;"+ variable+"="+variable+"+"+by+")"+JavaConstants.NEW_LINE);
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE);
+			
+			addTryBlock();
 			this.writeChildrenJavaToStream();
+			addCatchBlock();
+			
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.CLOSE_BRACKET+JavaConstants.NEW_LINE);
 		} catch (Exception e) {
 			logger.debug("//Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()+this.getSourceCode().getCommandName());

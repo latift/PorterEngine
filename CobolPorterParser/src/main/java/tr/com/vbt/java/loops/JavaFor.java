@@ -88,7 +88,11 @@ public class JavaFor extends  AbstractJavaElement{
 				
 			}
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
+			
+			addTryBlock();
 			writeChildrenJavaToStream();
+			addCatchBlock();
+			
 			JavaClassElement.javaCodeBuffer.append("}"+"// for");
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA);
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);

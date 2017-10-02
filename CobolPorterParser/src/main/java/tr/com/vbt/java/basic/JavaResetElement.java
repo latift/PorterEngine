@@ -13,6 +13,7 @@ import tr.com.vbt.java.utils.ConvertUtilities;
 import tr.com.vbt.java.utils.JavaWriteUtilities;
 import tr.com.vbt.java.utils.VariableTypes;
 import tr.com.vbt.natural.parser.datalayout.program.ElementProgramDataTypeNatural;
+import tr.com.vbt.natural.parser.datalayout.program.ElementProgramGrupNatural;
 import tr.com.vbt.natural.parser.datalayout.program.ElementProgramOneDimensionArrayNatural;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.ArrayToken;
@@ -117,7 +118,21 @@ public class JavaResetElement extends  AbstractJavaElement {
 				}else if(variableType==VariableTypes.GRUP_TYPE){
 					linkedToken=variable.getLinkedToken();
 					if(variableDefinitionCommand!=null){
-						if(variable.getLinkedToken()==null){  // Dizinin tamamı resetleniyorsa. 
+						if(variableDefinitionCommand instanceof ElementProgramGrupNatural && variable.getLinkedToken()==null &&((ElementProgramGrupNatural)variableDefinitionCommand).getArrayLength()!=0){  // Dizinin tamamı resetleniyorsa.
+						
+							/*
+							 *  0550 1 MAP_DIZISI  (200)
+								0560   2 D_ADSOYAD      (A58)
+								0570   2 D_DOVIZ        (N2)
+								0580   2 D_HESAP        (A1)
+								0590   2 D_HESAPNO      (N8)
+								0600   2 D_SICIL        (N5)
+							 */
+							//RESET MAP_DIZISI(*)  -->  MAP_DIZISI[]=new MAP_DIZISI[200];
+							long arrayLength=((ElementProgramGrupNatural)variableDefinitionCommand).getArrayLength();
+							JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(variable)+" = new "+ JavaWriteUtilities.toCustomString(variable)+"["+arrayLength+"];");
+							JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+						}else if(variable.getLinkedToken()==null){  // Dizinin tamamı resetleniyorsa. 
 							// 1048 RESET MAP_DIZISI  --> MAP_DIZISI = new MAP_DIZISI();
 							JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(variable)+" = new "+ variable.getDeger().toString().replaceAll("-", "_")+"()");
 							JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);

@@ -17,49 +17,57 @@ import tr.com.vbt.lexer.ConversionLogModel;
 import tr.com.vbt.lexer.NaturalMode;
 import tr.com.vbt.token.AbstractToken;
 
-public class JavaWhen extends  AbstractJavaElement{
-	
+public class JavaWhen extends AbstractJavaElement {
+
 	final static Logger logger = LoggerFactory.getLogger(JavaWhen.class);
-	
+
 	private List<AbstractToken> conditionList = new ArrayList<AbstractToken>();
-	
-	ConditionUtilities conUtilities=new ConditionUtilities();
 
-	@Override
-	public boolean writeJavaToStream() throws Exception{ super.writeJavaToStream();
-		
-	super.writeJavaToStream();
-	
+	ConditionUtilities conUtilities = new ConditionUtilities();
+
 	boolean childIsDoElement;
-	try {
+	
+	
+	@Override
+	public boolean writeJavaToStream() throws Exception {
 		
-		conditionList = (List<AbstractToken>) this.parameters.get("conditionList");
+		super.writeJavaToStream();
 
-		if(conditionList==null){
-			
-			JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
-			
-			JavaClassElement.javaCodeBuffer.append("else ");
-			
-			childIsDoElement=isFirstChildDoElement();
-			if (ConversionLogModel.getInstance().getMode().equals(NaturalMode.STRUCTRURED) || !childIsDoElement) {
-				JavaClassElement.javaCodeBuffer.append(JavaConstants.OPEN_BRACKET);
+		try {
+
+			conditionList = (List<AbstractToken>) this.parameters.get("conditionList");
+
+			childIsDoElement = isFirstChildDoElement();
+
+			if (this.parent != null
+					&& this.parent.getJavaElementName().equalsIgnoreCase("JavaSwitchDecideFirstCondition")) {
+				writeSwitchDecideFirstCondition();
+				return true;
 			}
-			JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
-	
-			this.writeChildrenJavaToStream();
-	
-			if (ConversionLogModel.getInstance().getMode().equals(NaturalMode.STRUCTRURED) || !childIsDoElement) {
-				JavaClassElement.javaCodeBuffer.append(JavaConstants.CLOSE_BRACKET + "// if");
-			}
-			
-		}
-		else{
-			
+
+			if (conditionList == null) {
+
+				JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
+
+				JavaClassElement.javaCodeBuffer.append("else ");
+
+				if (ConversionLogModel.getInstance().getMode().equals(NaturalMode.STRUCTRURED) || !childIsDoElement) {
+					JavaClassElement.javaCodeBuffer.append(JavaConstants.OPEN_BRACKET);
+				}
+				JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
+
+				this.writeChildrenJavaToStream();
+
+				if (ConversionLogModel.getInstance().getMode().equals(NaturalMode.STRUCTRURED) || !childIsDoElement) {
+					JavaClassElement.javaCodeBuffer.append(JavaConstants.CLOSE_BRACKET + "// if");
+				}
+
+			} else {
+
 				conUtilities.processConditions(conditionList);
-		
+
 				JavaClassElement.javaCodeBuffer.append("if ");
-				
+
 				try {
 					conUtilities.writeConditions();
 				} catch (Exception e) {
@@ -71,48 +79,109 @@ public class JavaWhen extends  AbstractJavaElement{
 					logger.error("//Conversion Error:" + e.getMessage(), e);
 					ConvertUtilities.writeconversionErrors(e, this);
 				}
-		
-				childIsDoElement=isFirstChildDoElement();
+
 				if (ConversionLogModel.getInstance().getMode().equals(NaturalMode.STRUCTRURED) || !childIsDoElement) {
 					JavaClassElement.javaCodeBuffer.append(JavaConstants.OPEN_BRACKET);
 				}
 				JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
-		
+
 				this.writeChildrenJavaToStream();
-		
+
 				if (ConversionLogModel.getInstance().getMode().equals(NaturalMode.STRUCTRURED) || !childIsDoElement) {
 					JavaClassElement.javaCodeBuffer.append(JavaConstants.CLOSE_BRACKET + "// if");
 				}
 
+			}
+			JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
+
+		} catch (Exception e) {
+			logger.debug("//Conversion Error" + this.getClass() + this.getSourceCode().getSatirNumarasi()
+					+ this.getSourceCode().getCommandName());
+			JavaClassElement.javaCodeBuffer
+					.append("/*Conversion Error" + this.getClass() + this.getSourceCode().getSatirNumarasi()
+							+ this.getSourceCode().getCommandName() + "*/" + JavaConstants.NEW_LINE);
+			logger.error("//Conversion Error:" + e.getMessage(), e);
+			ConvertUtilities.writeconversionErrors(e, this);
+		}
+		return true;
+	}
+
+	private void writeSwitchDecideFirstCondition() throws Exception {
+		
+		JavaSwitchDecideFirstCondition parentElement=(JavaSwitchDecideFirstCondition) this.parent;
+		
+		if (conditionList == null) {
+
+			JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
+
+			JavaClassElement.javaCodeBuffer.append("else ");
+
+			childIsDoElement = isFirstChildDoElement();
+			if (ConversionLogModel.getInstance().getMode().equals(NaturalMode.STRUCTRURED) || !childIsDoElement) {
+				JavaClassElement.javaCodeBuffer.append(JavaConstants.OPEN_BRACKET);
+			}
+			JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
+
+			this.writeChildrenJavaToStream();
+
+			if (ConversionLogModel.getInstance().getMode().equals(NaturalMode.STRUCTRURED) || !childIsDoElement) {
+				JavaClassElement.javaCodeBuffer.append(JavaConstants.CLOSE_BRACKET + "// if");
+			}
+
+		} else {
+
+			conUtilities.processConditions(conditionList);
+
+			if(!parentElement.firstChildIfOperated){
+
+				JavaClassElement.javaCodeBuffer.append("if ");
+				
+				parentElement.firstChildIfOperated=true;
+			}else{
+				JavaClassElement.javaCodeBuffer.append("else if ");
+			}
+
+			try {
+				conUtilities.writeConditions();
+			} catch (Exception e) {
+				logger.debug("//Conversion Error" + this.getClass() + this.getSourceCode().getSatirNumarasi()
+						+ this.getSourceCode().getCommandName());
+				JavaClassElement.javaCodeBuffer
+						.append("/*Conversion Error" + this.getClass() + this.getSourceCode().getSatirNumarasi()
+								+ this.getSourceCode().getCommandName() + "*/" + JavaConstants.NEW_LINE);
+				logger.error("//Conversion Error:" + e.getMessage(), e);
+				ConvertUtilities.writeconversionErrors(e, this);
+			}
+
+			childIsDoElement = isFirstChildDoElement();
+			if (ConversionLogModel.getInstance().getMode().equals(NaturalMode.STRUCTRURED) || !childIsDoElement) {
+				JavaClassElement.javaCodeBuffer.append(JavaConstants.OPEN_BRACKET);
+			}
+			JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
+
+			this.writeChildrenJavaToStream();
+
+			if (ConversionLogModel.getInstance().getMode().equals(NaturalMode.STRUCTRURED) || !childIsDoElement) {
+				JavaClassElement.javaCodeBuffer.append(JavaConstants.CLOSE_BRACKET + "// if");
+			}
+
 		}
 		JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 
-	} catch (Exception e) {
-		logger.debug("//Conversion Error" + this.getClass() + this.getSourceCode().getSatirNumarasi()
-				+ this.getSourceCode().getCommandName());
-		JavaClassElement.javaCodeBuffer
-				.append("/*Conversion Error" + this.getClass() + this.getSourceCode().getSatirNumarasi()
-						+ this.getSourceCode().getCommandName() + "*/" + JavaConstants.NEW_LINE);
-		logger.error("//Conversion Error:" + e.getMessage(), e);
-		ConvertUtilities.writeconversionErrors(e, this);
 	}
-	return true;
-	}
-
 
 	private boolean isFirstChildDoElement() {
 		AbstractJava child0;
-		if(this.getChildren()==null || this.getChildren().isEmpty()){
+		if (this.getChildren() == null || this.getChildren().isEmpty()) {
 			return false;
 		}
-		if(this.getChildren().get(0)!=null){
-			child0=this.getChildren().get(0);
-			if(child0 instanceof JavaDoElement){
+		if (this.getChildren().get(0) != null) {
+			child0 = this.getChildren().get(0);
+			if (child0 instanceof JavaDoElement) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
 
 }

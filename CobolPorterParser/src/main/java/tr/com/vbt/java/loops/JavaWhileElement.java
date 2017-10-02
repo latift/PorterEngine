@@ -23,7 +23,11 @@ public class JavaWhileElement extends  AbstractJavaElement {
 			paragraghName = (String) this.parameters.get("paragraghName");
 			runCount = (String) this.parameters.get("runCount");
 			JavaClassElement.javaCodeBuffer.append("for (int i=0; i<"+runCount+"; i++)"+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE);
+			
+			addTryBlock();
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.TAB+ paragraghName+"();"+ JavaConstants.NEW_LINE);
+			addCatchBlock();
+			
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.CLOSE_BRACKET+JavaConstants.NEW_LINE);
 		} catch (Exception e) {
 			logger.debug("//Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()+this.getSourceCode().getCommandName());
