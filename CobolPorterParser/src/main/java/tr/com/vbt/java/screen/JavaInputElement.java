@@ -94,7 +94,7 @@ public class JavaInputElement extends AbstractJavaElement {
 			removeAdParameters();
 			
 			removeParantezI();
-			if(inputParameters==null || inputParameters.size()<3) {
+			if(inputParameters==null) {
 				return true;
 			}
 			for (int index = 0; index < inputParameters.size(); index++) {

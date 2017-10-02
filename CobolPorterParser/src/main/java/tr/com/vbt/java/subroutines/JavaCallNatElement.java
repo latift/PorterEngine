@@ -75,6 +75,9 @@ public class JavaCallNatElement extends  AbstractJavaElement{
 						}else if(parameter.isPojoVariable() && parameter.getColumnNameToken()!=null){
 							JavaClassElement.javaCodeBuffer.append("new Parameter(\""+parameter.getColumnNameToken().getDeger().toString()+"\","+JavaWriteUtilities.toCustomString(parameter)+")");
 									
+						}else if(parameter.isRecordVariable() && parameter.getLinkedToken()!=null){
+							JavaClassElement.javaCodeBuffer.append("new Parameter(\""+parameter.getLinkedToken().getDeger().toString()+"\","+JavaWriteUtilities.toCustomString(parameter)+")");
+									
 						}else {
 							JavaClassElement.javaCodeBuffer.append("new Parameter(\""+parameter.getDeger().toString()+"\","+JavaWriteUtilities.toCustomString(parameter)+")");
 									

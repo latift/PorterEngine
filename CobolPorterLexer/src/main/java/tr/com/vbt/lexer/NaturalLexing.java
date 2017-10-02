@@ -2742,6 +2742,7 @@ public class NaturalLexing extends AbstractLexing {
 								ReservedNaturalKeywords.OR,
 								ReservedNaturalKeywords.INTO,
 								ReservedNaturalKeywords.MAX,
+								ReservedNaturalKeywords.MIN,
 								ReservedNaturalKeywords.SUM,
 								ReservedNaturalKeywords.DISTINCT,
 								ReservedNaturalKeywords.ORDER_BY,
@@ -3275,7 +3276,7 @@ public class NaturalLexing extends AbstractLexing {
 	//CTY_AIRPORT --> KET_AIRLINE.CITY_AIRPORT
 	public void addTableNameForColumnsWithoutTable() {
 
-		AbstractToken current, previous;
+		AbstractToken current, previous, next, nexter, nextnexter;
 
 		String columnName;
 		
@@ -3287,6 +3288,9 @@ public class NaturalLexing extends AbstractLexing {
 		for (int i = 0; i < tokenListesi.size() - 1; i++) {
 
 			current = tokenListesi.get(i);
+			
+			
+			
 			
 			if(current.getDeger()!=null && current.getDeger().equals(ReservedNaturalKeywords.END_DEFINE)){
 				isDefinitionPart=false;
@@ -3304,6 +3308,20 @@ public class NaturalLexing extends AbstractLexing {
 				}
 			}
 			
+			if(current.isOneOfOzelKelime("FIND") ){ // FIND ONE
+				if(i<tokenListesi.size() - 3){
+					next=tokenListesi.get(i+1);
+					nexter=tokenListesi.get(i+2);
+					nextnexter=tokenListesi.get(i+3);
+				
+					if(next.isKarakter('(')&& nexter.isSayi()&& nextnexter.isKarakter(')')){
+						pojoToken=tokenListesi.get(i+4);
+						continue;
+					}
+				}
+			}
+				
+				
 			if(current.isOneOfOzelKelime("FIND")){
 				
 				pojoToken=tokenListesi.get(i+1);
@@ -3330,7 +3348,7 @@ public class NaturalLexing extends AbstractLexing {
 						}
 
 				
-						if(current.isKelime("KALMEBLAG")){
+						if(current.isKelime("Şube")){
 							logger.debug("");
 						}
 						if(isLocalVariable(current)){
@@ -3339,21 +3357,25 @@ public class NaturalLexing extends AbstractLexing {
 						
 						String tableNameDeger ;
 						
-						if(pojoToken==null){
-							tableNameDeger = tableColumnReferans.get(columnName).substring(tableColumnReferans.get(columnName).indexOf('.') + 1);
-								
-						}else{
+						//if(pojoToken==null){
+						//	tableNameDeger = tableColumnReferans.get(columnName).substring(tableColumnReferans.get(columnName).indexOf('.') + 1);
+						//		
+						//}else{
+						
+						//}
+						
+						
+						if(pojoToken!=null){
 							tableNameDeger = pojoToken.getDeger().toString();
+						
+							logger.debug(columnName + " kolonu için "+tableNameDeger + " Tablo ismi ekle" ) ;
+							
+							tokenListesi.add(i, new KelimeToken<>(tableNameDeger, current.getSatirNumarasi(), 0, 0));  //Tablo ismini ekle.
+							tokenListesi.add(i+1, new NoktaToken<>("."));  //Nokta ekle
+							
+							i=i+2;
 						}
-
-						logger.debug(columnName + " kolonu için "+tableNameDeger + " Tablo ismi ekle" ) ;
-				
 						
-						tokenListesi.add(i, new KelimeToken<>(tableNameDeger, current.getSatirNumarasi(), 0, 0));  //Tablo ismini ekle.
-						tokenListesi.add(i+1, new NoktaToken<>("."));  //Nokta ekle
-						
-						i=i+2;
-
 				}
 
 			}

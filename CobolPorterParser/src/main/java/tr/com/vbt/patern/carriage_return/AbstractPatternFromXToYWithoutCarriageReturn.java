@@ -91,6 +91,7 @@ public abstract class AbstractPatternFromXToYWithoutCarriageReturn extends Abstr
 					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.THRU)
 					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.INTO)
 					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.MAX)
+					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.MIN)
 					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.COUNT)
 					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.SUM)
 					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.MIN)

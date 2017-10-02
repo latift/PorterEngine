@@ -385,7 +385,7 @@ public class JavaFullWriteUtilities {
 			if(basaSifirEkle){
 				sb.append("FCU.basaSifirEkleStr(");
 			}else if(basaBoslukEkle){
-				sb.append("FCU.basaBoslukEkleStr(");
+				sb.append("FCU.sonaBoslukEkleStr(");
 			}
 			
 		} catch (Exception e) {

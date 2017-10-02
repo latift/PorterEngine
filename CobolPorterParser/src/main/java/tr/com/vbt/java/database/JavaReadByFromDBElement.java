@@ -160,7 +160,7 @@ public class JavaReadByFromDBElement extends AbsctractConditionalJavaElement {
 			//while(finderIndex){
 			JavaClassElement.javaCodeBuffer.append("while(finderIndex){"+ JavaConstants.NEW_LINE);
 		
-		
+					addTryBlock();
 					//	if(LIMAN_RESULT_LIST==null || LIMAN_RESULT_LIST.size==0){
 					JavaClassElement.javaCodeBuffer.append("if("+calculatedResultListName+"==null || "+calculatedResultListName+".size()==0){"+ JavaConstants.NEW_LINE);
 		
@@ -179,7 +179,7 @@ public class JavaReadByFromDBElement extends AbsctractConditionalJavaElement {
 							//		while(it.hasnext()){
 							JavaClassElement.javaCodeBuffer.append("while("+itName+".hasNext()){"+ JavaConstants.NEW_LINE);
 		
-										addTryBlock();
+										
 										//			LIMAN=it.next();
 										JavaClassElement.javaCodeBuffer.append(viewName.toCustomString()+"="+itName+".next()"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
 										
@@ -189,7 +189,7 @@ public class JavaReadByFromDBElement extends AbsctractConditionalJavaElement {
 										//			ULKE_KODU=LIMAN.getLUlkeKodu();
 										this.writeChildrenJavaToStream();
 										
-										addCatchBlock();
+										
 		
 							//		}
 							JavaClassElement.javaCodeBuffer.append("}"+"//While Iterator End"+ JavaConstants.NEW_LINE);
@@ -199,7 +199,9 @@ public class JavaReadByFromDBElement extends AbsctractConditionalJavaElement {
 		
 					//finderIndex=false;
 					JavaClassElement.javaCodeBuffer.append("finderIndex=false"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
-		
+					
+				addCatchBlock();
+					
 			//}
 			JavaClassElement.javaCodeBuffer.append("}"+ "//While End"+ JavaConstants.NEW_LINE);
 		//}
