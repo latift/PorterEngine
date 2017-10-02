@@ -65,6 +65,9 @@ public class AbstractJavaElement extends AbstractJava{
 			
 			subroutineToken =getSubroutineJavaElement(pargraphname);
 			
+			if(subroutineToken==null){
+				return false;
+			}
 			return subroutineToken.hasInputChild();
 			
 		}
