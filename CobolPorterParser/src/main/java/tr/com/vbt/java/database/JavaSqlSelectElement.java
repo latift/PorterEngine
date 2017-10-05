@@ -393,7 +393,7 @@ public class JavaSqlSelectElement extends  AbstractJavaElement{
 			params.add(new SQLParameter("NKS", NKS));
 			params.add(new SQLParameter("NKS2", NK2S));
 	 */	
-	private void writeParameters() {
+	private void writeParameters() throws Exception {
 		
 		String paramName;
 		
@@ -413,9 +413,7 @@ public class JavaSqlSelectElement extends  AbstractJavaElement{
 					paramName=curToken.getFiltreNameToken().getDeger().toString();
 				}
 				
-				paramValue=curToken.getDeger().toString();
-			
-				JavaClassElement.javaCodeBuffer.append("params.add(new SQLParameter(\""+paramName+"\", "+paramValue+"))"+ JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
+				JavaClassElement.javaCodeBuffer.append("params.add(new SQLParameter(\""+paramName+"\", "+JavaWriteUtilities.toCustomString(curToken)+"))"+ JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
 				
 			}
 		}
