@@ -13,7 +13,7 @@ public class JavaCallFunctionElement extends  AbstractJavaElement{
 	
 	final static Logger logger = LoggerFactory.getLogger(JavaCallFunctionElement.class);
 	//Paramaters: functionName;
-	String paragraphName;
+	public String paragraphName;
 	
 	@Override
 	public boolean writeJavaToStream() throws Exception{ super.writeJavaToStream();

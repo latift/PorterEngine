@@ -63,6 +63,8 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 				return true;
 			}
 			
+			copyFrom.set(0, createTableNameTokenForColumnsWithoutTable(copyFrom.get(0)));
+			
 			String typeOfCopyTo=ConvertUtilities.getTypeOfVariable(copyTo);
 			
 			if(typeOfCopyTo==null){
@@ -184,6 +186,9 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 		}
 		return true;
 	}
+
+
+
 
 
 

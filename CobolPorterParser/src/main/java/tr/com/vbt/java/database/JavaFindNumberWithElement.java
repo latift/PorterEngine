@@ -14,6 +14,7 @@ import tr.com.vbt.java.utils.ConvertUtilities;
 import tr.com.vbt.lexer.ConversionLogModel;
 import tr.com.vbt.lexer.ReservedNaturalKeywords;
 import tr.com.vbt.token.AbstractToken;
+import tr.com.vbt.token.KelimeToken;
 import tr.com.vbt.token.TokenTipi;
 
 // 4218   FIND IDGIDBS-TAZIL WITH MUSNO=+MUSNO2 SORTED BY GIRTAR GIRZAM   
@@ -88,13 +89,15 @@ import tr.com.vbt.token.TokenTipi;
         												or ise  crit.or(c3); yap.
         
  */ 
-public class JavaFindNumberWithElement extends AbsctractConditionalJavaElement {
+public class JavaFindNumberWithElement extends AbsctractConditionalJavaElement implements FinderJavaElement{
 	
 	ConversionLogModel logModel=ConversionLogModel.getInstance();
 
 	final static Logger logger = LoggerFactory.getLogger(JavaDBViewOfDataTypeElement.class);
 
 	private String viewName; // LIMAN
+	
+	private AbstractToken viewNameToken; //LIMAN;
 	
 	private List<AbstractToken> sortList;
 	
@@ -111,6 +114,8 @@ public class JavaFindNumberWithElement extends AbsctractConditionalJavaElement {
 		super.writeJavaToStream();
 
 		viewName = (String) this.getParameters().get("viewName");
+		
+		viewNameToken=new KelimeToken(viewName, 0, 0, 0);  //Tablo ismi.
 		
 		pojoType=Utility.viewNameToPojoName(viewName);
 		conditionList = (List<AbstractToken>) this.parameters.get("conditionList");
@@ -249,6 +254,15 @@ public class JavaFindNumberWithElement extends AbsctractConditionalJavaElement {
 
 	public void setViewName(String viewName) {
 		this.viewName = viewName;
+	}
+
+
+
+
+
+	@Override
+	public AbstractToken getPojoToken() {
+		return viewNameToken;
 	}
 
 

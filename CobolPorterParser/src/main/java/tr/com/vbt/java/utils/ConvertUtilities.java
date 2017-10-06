@@ -610,6 +610,48 @@ public class ConvertUtilities {
 		}
 		
 	}
+	
+	public static boolean pojoHasField(AbstractToken pojoName,AbstractToken columnToken) {
+		// THESAP -->Thesap
+		String className = Utility.viewNameToPojoName(pojoName.getDeger().toString());
+		
+		if(columnToken.getColumnNameToken()!=null){
+			columnToken=columnToken.getColumnNameToken();
+		}
+
+		String fieldName = Utility.columnNameToPojoFieldName(columnToken.getDeger().toString());
+
+		Class c = null;
+
+		c = Utility.findPojoClass(className);
+		
+		Field field;
+
+		try {
+			field = c.getDeclaredField(fieldName);
+		
+			return true; //field varsa return true;
+
+		} catch (Exception e) {
+			
+			try {
+				Class cPK = null;
+				
+				cPK = Utility.findPojoClass(className+"PK");
+				
+				field = cPK.getDeclaredField(fieldName);
+				
+				field.setAccessible(true);
+				
+				return true; //field varsa return true;
+	
+			} catch (Exception e1) {
+				return false;
+			}
+			
+		}
+		
+	}
 
 	public static StringBuffer writeInterfaceHeader(String pojoName) {
 		StringBuffer interfaceHeader = new StringBuffer();
@@ -892,7 +934,8 @@ public class ConvertUtilities {
 		}
 		return parameterField;
 	}
-
+	
+	
 	public static void writeconversionErrors(Exception e, AbstractJavaElement javaElement) throws Exception {
 
 		ConversionLogModel logModel = ConversionLogModel.getInstance();

@@ -2,8 +2,10 @@ package tr.com.vbt.java;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import tr.com.vbt.java.basic.JavaCallFunctionElement;
+import tr.com.vbt.java.database.FinderJavaElement;
 import tr.com.vbt.java.general.JavaClassElement;
 import tr.com.vbt.java.general.JavaClassGeneral;
 import tr.com.vbt.java.general.JavaConstants;
@@ -11,6 +13,9 @@ import tr.com.vbt.java.general.JavaFunctionElement;
 import tr.com.vbt.java.general.JavaFunctionMainElement;
 import tr.com.vbt.java.general.JavaNaturalClassElement;
 import tr.com.vbt.java.general.JavaValidationElement;
+import tr.com.vbt.java.utils.ConvertUtilities;
+import tr.com.vbt.token.AbstractToken;
+import tr.com.vbt.token.KelimeToken;
 
 public class AbstractJavaElement extends AbstractJava{
 
@@ -95,12 +100,86 @@ public class AbstractJavaElement extends AbstractJava{
 		
 	}
 	
-	public AbstractJava getSubroutineWithName(String subroutineName){
+	private AbstractJavaElement getSubroutineCallerJavaElement(String subroutineName) {
+		
+		JavaClassGeneral javaTreeElement = (JavaClassGeneral) JavaClassGeneral.getInstance();
+		
+		JavaNaturalClassElement javaNaturalClassElement =(JavaNaturalClassElement) javaTreeElement.getChildWithName("JavaNaturalClassElement");
+		
+		AbstractJavaElement aje=null, result;
+		
+		for (AbstractJava aj : javaNaturalClassElement.children) {
+			
+			aje=(AbstractJavaElement) aj;
+			
+			if(aje instanceof JavaCallFunctionElement &&  ((JavaCallFunctionElement)aje).paragraphName.equals(subroutineName)){
+					return aje;
+			}
+		}
+	
+		
+		for (AbstractJava aj : javaNaturalClassElement.children) {
+			
+			aje=(AbstractJavaElement) aj;
+			
+			result= aje.getSubroutineCallerJavaElement(subroutineName, aje);
+			
+			if(result==null){
+				continue;
+			}else{
+				return result;
+			}
+			
+		}
+		
+		return null;
+		
+	}
+	
+	private AbstractJavaElement getSubroutineCallerJavaElement(String subroutineName, AbstractJavaElement ajeParam) {
+		
+		AbstractJavaElement aje, result;
+		
+		for (AbstractJava aj : ajeParam.children) {
+			
+			logger.debug(aj.getJavaElementName());
+			
+			aje=(AbstractJavaElement) aj;
+			
+			if(aje instanceof JavaCallFunctionElement &&  ((JavaCallFunctionElement)aje).paragraphName.equals(subroutineName)){
+					return aje;
+			}
+		}
+
+		
+		for (AbstractJava aj : ajeParam.children) {
+			
+			logger.debug(aj.getJavaElementName());
+			
+			aje=(AbstractJavaElement) aj;
+			
+			result= aje.getSubroutineCallerJavaElement(subroutineName, aje);
+				
+			if(result==null){
+				continue;
+			}else{
+				return result;
+			}
+		}
+		return null;
+		
+	}
+	
+	public AbstractJavaElement getSubroutineWithName(String subroutineName){
 		
 		String pargraphname;
-	
-		for (AbstractJava aje : children) {
 		
+		AbstractJavaElement aje;
+	
+		for (AbstractJava aj : children) {
+			
+			aje=(AbstractJavaElement) aj;
+			
 			if(aje instanceof JavaFunctionElement){
 
 				pargraphname = (String) aje.parameters.get("paragraghName");
@@ -245,5 +324,116 @@ public class AbstractJavaElement extends AbstractJava{
 	public void addTryBlock(){
 		JavaClassElement.javaCodeBuffer.append("		try {"+JavaConstants.NEW_LINE); //validation try block
 	}
+	
+
+	@Override
+	protected void createTableNameTokenForColumnsWithoutTable() {
+		
+		AbstractToken curToken;
+		
+		List curTokenList;
+		List newTokenList=new ArrayList<AbstractToken>();
+		
+		if(this instanceof FinderJavaElement){ //Find gibilerde bu işlem yapılmaz.
+			return ;
+		}
+		
+		for(Map.Entry<String, Object> entry : parameters.entrySet()) {
+		    String key = entry.getKey();
+		    Object value = entry.getValue();
+		    if(value instanceof AbstractToken){
+		    	curToken=(AbstractToken) value;
+		    	curToken=createTableNameTokenForColumnsWithoutTable(curToken);
+		    	parameters.put(key, curToken);
+		    }else if(value instanceof List){
+		    	
+		    	curTokenList=(List) value;
+		    	
+		    	for(int i=0; i<curTokenList.size();i++){
+		    		if(curTokenList.get(i) instanceof AbstractToken){
+			    		curToken=(AbstractToken) curTokenList.get(i);
+				    	curToken=createTableNameTokenForColumnsWithoutTable(curToken);
+				    	newTokenList.add(curToken);
+					}else{
+		    			newTokenList.add(curTokenList.get(i));
+		    		}
+		    	}
+		    	parameters.put(key, newTokenList);
+		    }
+		 }
+	}
+	
+	protected AbstractToken createTableNameTokenForColumnsWithoutTable(AbstractToken abstractToken) {
+		
+		if(!abstractToken.isTableNotDefined()){
+			return abstractToken;
+		}
+		
+		
+		AbstractToken newToken = null;
+		FinderJavaElement finderElement=findParentFind(abstractToken);
+		
+		if(finderElement==null){
+			return abstractToken;
+		}
+		
+		newToken=new KelimeToken(finderElement.getPojoToken().getDeger()+"", abstractToken.getSatirNumarasi(), 0, 0);  //Tablo ismi.
+		newToken.setColumnNameToken(abstractToken);
+		return newToken;
+	}
+
+	public FinderJavaElement findParentFind(AbstractToken abstractToken) {
+		FinderJavaElement finderElement;
+		
+		AbstractJavaElement aje;
+
+		if(this instanceof JavaFunctionElement){  //Parent Function ise o functionın perform edildigi yerden devam et.
+			 
+			aje=getSubroutineCallerJavaElement(((JavaFunctionElement)this).subroutineName);
+			
+			if(aje==null){
+				return null;
+			}
+	
+			return aje.findParentFind(abstractToken);
+		}
+		
+		if(parent==null){
+			return null;
+		}
+		
+		if(!(parent instanceof AbstractJavaElement)){
+			return null;
+		}
+		
+		AbstractJavaElement parentJava=(AbstractJavaElement) parent;
+		
+		
+		if(parentJava instanceof FinderJavaElement && controlIfFinderElementHasColumn((FinderJavaElement) parentJava, abstractToken)){  //Parent Find ise ve columu iceriyorsa
+			
+				return (FinderJavaElement) this.parent;
+		}else{
+			return parentJava.findParentFind(abstractToken);
+		}
+
+	}
+
+	private boolean controlIfFinderElementHasColumn(FinderJavaElement finderElement, AbstractToken abstractToken) {
+		
+		boolean pojoHasFieldType;
+		
+		AbstractToken tableNameToken;
+		
+		tableNameToken=finderElement.getPojoToken(); // TGECICI
+		
+		pojoHasFieldType=ConvertUtilities.pojoHasField(tableNameToken,  abstractToken);
+		
+		if(pojoHasFieldType){
+			
+			return true;
+		}
+		return false;
+	}
+
 	
 }

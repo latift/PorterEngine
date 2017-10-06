@@ -3280,16 +3280,21 @@ public class NaturalLexing extends AbstractLexing {
 
 		String columnName;
 		
-		boolean isDefinitionPart=true;
+		boolean selectFindReached=false, whereReached=false; 
 		
-		AbstractToken pojoToken = null;
-
+		boolean isDefinitionPart=true;
 		
 		for (int i = 0; i < tokenListesi.size() - 1; i++) {
 
 			current = tokenListesi.get(i);
 			
+			next=tokenListesi.get(i+1);
 			
+			logger.debug(current.getDeger().toString());
+			
+			if(current.getDeger().toString().equals("DOVIZ")){
+				logger.debug(current.toString());
+			}
 			
 			
 			if(current.getDeger()!=null && current.getDeger().equals(ReservedNaturalKeywords.END_DEFINE)){
@@ -3308,24 +3313,29 @@ public class NaturalLexing extends AbstractLexing {
 				}
 			}
 			
-			if(current.isOneOfOzelKelime("FIND") ){ // FIND ONE
-				if(i<tokenListesi.size() - 3){
-					next=tokenListesi.get(i+1);
-					nexter=tokenListesi.get(i+2);
-					nextnexter=tokenListesi.get(i+3);
-				
-					if(next.isKarakter('(')&& nexter.isSayi()&& nextnexter.isKarakter(')')){
-						pojoToken=tokenListesi.get(i+4);
-						continue;
-					}
-				}
+			if(current.isOzelKelime("SELECT") || current.isOzelKelime("FIND")){  //Select görünce
+				selectFindReached=true;
+				whereReached=false;
+				continue;
 			}
-				
-				
-			if(current.isOneOfOzelKelime("FIND")){
-				
-				pojoToken=tokenListesi.get(i+1);
-				
+			 
+			if(current.isOzelKelime("WHERE") || current.isKelime("WHERE")){  //Where GÖrünce
+				whereReached=true; 
+				selectFindReached=false;
+				continue;
+			}
+
+			if(whereReached  && (current.isOzelKelime() &&!current.isConditionJoiner()&!current.isConditionJoinKeyword()) ){  //Where den sonra özel kelime görünce yani where bitince
+				selectFindReached=false;
+				whereReached=false;
+			}
+			
+			if(selectFindReached && !whereReached){ //Select ile Where arasındaysa yada Find ile Where arasındaysa işlem yapma
+				continue;
+			}
+		
+			
+			if(next.isConditionOperator() && whereReached ){ //Where icinde ise ve next conditionOperatorse bir şey yapma
 				continue;
 			}
 			
@@ -3351,30 +3361,24 @@ public class NaturalLexing extends AbstractLexing {
 						if(current.isKelime("Şube")){
 							logger.debug("");
 						}
-						if(isLocalVariable(current)){
+						if(isLocalVariable(current) || current.isConstantVariableWithQuota() || current.isArray() ){
 							continue;
 						}
 						
-						String tableNameDeger ;
+						current.setPojoVariable(true);
 						
-						//if(pojoToken==null){
-						//	tableNameDeger = tableColumnReferans.get(columnName).substring(tableColumnReferans.get(columnName).indexOf('.') + 1);
-						//		
-						//}else{
+						current.setTableNotDefined(true);
 						
-						//}
+						String tableNameDeger = tableColumnReferans.get(columnName)
+								.substring(tableColumnReferans.get(columnName).indexOf('.') + 1);
+
+						logger.debug(columnName + " kolonu için "+tableNameDeger + " Tablo ismi ekle" ) ;
 						
 						
-						if(pojoToken!=null){
-							tableNameDeger = pojoToken.getDeger().toString();
+						tokenListesi.add(i, new KelimeToken<>(tableNameDeger, current.getSatirNumarasi(), 0, 0));  //Tablo ismini ekle.
+						tokenListesi.add(i+1, new NoktaToken<>("."));  //Nokta ekle
 						
-							logger.debug(columnName + " kolonu için "+tableNameDeger + " Tablo ismi ekle" ) ;
-							
-							tokenListesi.add(i, new KelimeToken<>(tableNameDeger, current.getSatirNumarasi(), 0, 0));  //Tablo ismini ekle.
-							tokenListesi.add(i+1, new NoktaToken<>("."));  //Nokta ekle
-							
-							i=i+2;
-						}
+						i=i+2;
 						
 				}
 
@@ -3387,10 +3391,14 @@ public class NaturalLexing extends AbstractLexing {
 		
 		AbstractToken current;
 		
+		if(controlToken.isPojoVariable() || controlToken.isConstantVariableWithQuota()){
+			return false;
+		}
+		
 		for (int i = 0; i < tokenListesi.size() - 1; i++) {
 
 			current = tokenListesi.get(i);
-			
+	
 			if(current.isOzelKelime(ReservedNaturalKeywords.END_DEFINE)){
 				return false;
 			}else if(current.isKelime()&& controlToken.isKelime() && current.valueEquals(controlToken)){

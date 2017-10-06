@@ -231,9 +231,6 @@ public class JavaWriteUtilities {
 	}
 	
 
-
-
-
 	private static Object toCustomInputParametersVariableString(AbstractToken token) {
 	
 		StringBuffer resultList=new StringBuffer("");

@@ -408,7 +408,7 @@ public class JavaSqlSelectElement extends  AbstractJavaElement{
 					
 					paramName=curToken.getFiltreNameToken().getLinkedToken().getDeger().toString();
 				}else if(curToken.getFiltreNameToken()!=null && curToken.getFiltreNameToken().getColumnNameToken()!=null){
-					paramName=curToken.getColumnNameToken().getDeger().toString();
+					paramName=curToken.getFiltreNameToken().getColumnNameToken().getDeger().toString();
 				}else{
 					paramName=curToken.getFiltreNameToken().getDeger().toString();
 				}

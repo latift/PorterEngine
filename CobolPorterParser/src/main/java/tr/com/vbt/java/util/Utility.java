@@ -272,7 +272,7 @@ public class Utility {
 					
 				} catch (Exception e1) {
 				
-					return biggerPojoName+"."+getterMethod+"()";
+					return "";
 				}
 				
 	
@@ -282,7 +282,7 @@ public class Utility {
 		
 	public static String findViewAndColumnNamesReturnType(AbstractToken condition){
 			
-			String getterString, tableName, className, biggerPojoName, columnName, getterMethod;
+			String getterString, tableName, className, biggerPojoName, columnName = null, getterMethod;
 			
 			Method primaryKeyGetterMethod,method, pkClassGetterMethod = null;
 			
@@ -290,7 +290,12 @@ public class Utility {
 			biggerPojoName=Utility.viewNameToBiggerPojoName(tableName);
 			className=Utility.viewNameToPojoName(tableName);
 				
-			columnName=condition.getColumnNameToken().getDeger().toString();
+			try {
+				columnName=condition.getColumnNameToken().getDeger().toString();
+			} catch (Exception e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
 			getterMethod =Utility.viewNameToPojoGetterName(columnName);
 			
 		

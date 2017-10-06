@@ -12,7 +12,7 @@ public class JavaFunctionElement extends  AbstractJavaElement{
 	final static Logger logger = LoggerFactory.getLogger(JavaFunctionElement.class);
 	
 	//Paramaters: functionName;
-	String subroutineName;
+	public String subroutineName;
 	
 	//Fonksiyona ait değişken tanımları (JavaFunctionVariablesElement) children da tutulur.
 	

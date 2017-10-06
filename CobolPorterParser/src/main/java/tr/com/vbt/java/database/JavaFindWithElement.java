@@ -88,7 +88,7 @@ import tr.com.vbt.token.TokenTipi;
         												or ise  crit.or(c3); yap.
         
  */ 
-public class JavaFindWithElement extends AbsctractConditionalJavaElement {
+public class JavaFindWithElement extends AbsctractConditionalJavaElement implements FinderJavaElement{
 	
 	ConversionLogModel logModel=ConversionLogModel.getInstance();
 
@@ -308,5 +308,12 @@ public class JavaFindWithElement extends AbsctractConditionalJavaElement {
 	public void setViewName(AbstractToken viewName) {
 		this.viewName = viewName;
 	}
+	
+
+	@Override
+	public AbstractToken getPojoToken() {
+		return viewName;
+	}
+
 
 }
