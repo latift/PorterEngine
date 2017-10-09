@@ -251,7 +251,11 @@ public class Utility {
 			biggerPojoName=Utility.viewNameToBiggerPojoName(tableName);
 			className=Utility.viewNameToPojoName(tableName);
 				
-			columnName=condition.getColumnNameToken().getDeger().toString();
+			try {
+				columnName=condition.getColumnNameToken().getDeger().toString();
+			} catch (Exception e2) {
+				columnName=condition.getDeger().toString();
+			}
 			getterMethod =Utility.viewNameToPojoGetterName(columnName);
 			
 			Class c = null;
@@ -293,8 +297,7 @@ public class Utility {
 			try {
 				columnName=condition.getColumnNameToken().getDeger().toString();
 			} catch (Exception e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
+				columnName=condition.getDeger().toString();
 			}
 			getterMethod =Utility.viewNameToPojoGetterName(columnName);
 			

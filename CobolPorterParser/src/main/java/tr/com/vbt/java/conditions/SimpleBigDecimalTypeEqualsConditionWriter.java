@@ -32,7 +32,7 @@ public class SimpleBigDecimalTypeEqualsConditionWriter implements SimpleConditio
 		
 		JavaWriteUtilities.addTypeChangeFunctionToEnd(conditionLeft,conditionRight);
 		
-		JavaClassElement.javaCodeBuffer.append(")0");
+		JavaClassElement.javaCodeBuffer.append(")==0");
 		
 		ConversionLogModel.getInstance().writeError(1, conditionLeft,"== olması gereken > olmuş");
 		
