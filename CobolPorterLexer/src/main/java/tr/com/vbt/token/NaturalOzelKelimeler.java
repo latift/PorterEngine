@@ -200,6 +200,7 @@ public NaturalOzelKelimeler() {
 	ozelKelimeler.add("SUBTRACT");
 	ozelKelimeler.add("POSITION");
 	ozelKelimeler.add("WHEN");
+	ozelKelimeler.add("MULTIPLY");
 	/*
 	ozelKelimeler.add("PF1");
 	ozelKelimeler.add("PF2");

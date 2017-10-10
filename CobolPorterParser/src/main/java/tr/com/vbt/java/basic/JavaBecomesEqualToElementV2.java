@@ -79,9 +79,13 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 				copyTo.setAllArrayItems(true);
 			}
 			
-			
+			if(typeOfCopyTo.equalsIgnoreCase("bigdecimal") && copyFrom!=null && copyFrom.size()>1 && copyFrom.get(1)!=null && copyFrom.get(1).isKarakter('-')){
+				 minusOperationBigDecimal();
+			}else if(copyFrom!=null && copyFrom.size()>1 && copyFrom.get(1)!=null && copyFrom.get(1).isKarakter('-')){
+				 minusOperation();
+			}
 			//*S**ASSIGN SCR-PAX-DSCR(*)  = TAX-PAX-DSCR(*)
-			if(copyTo.isAllArrayItems() &&copyFrom.get(0).isPojoVariable()&& copyFrom.get(0).getColumnNameToken().isAllArrayItems()){  
+			else if(copyTo.isAllArrayItems() &&copyFrom.get(0).isPojoVariable()&& copyFrom.get(0).getColumnNameToken().isAllArrayItems()){  
 					
 					cast=JavaWriteUtilities.addCast(copyTo,copyFrom.get(0));
 				
@@ -185,6 +189,86 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 			ConvertUtilities.writeconversionErrors(e, this);
 		}
 		return true;
+	}
+
+
+
+
+
+
+
+
+	private void minusOperationBigDecimal() throws Exception {
+		
+		if(copyTo.isPojoVariable()){
+			
+			StringBuilder tempCodeBuffer=new StringBuilder();
+			
+		
+			
+			boolean closeParantez=false;
+			for (int i = 0; i < copyFrom.size(); i++) {
+				
+				if(copyFrom.get(i).isKarakter('-')){
+					tempCodeBuffer.append(".subtract(");
+					closeParantez=true;
+				}
+				
+				tempCodeBuffer.append(")");
+				
+			}
+				
+			JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomSetterString(copyTo, tempCodeBuffer.toString()));
+				
+			
+		}else{
+		
+			JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(copyTo));
+			JavaClassElement.javaCodeBuffer.append("=");
+			boolean closeParantez=false;
+			for (int i = 0; i < copyFrom.size(); i++) {
+				
+				cast=JavaWriteUtilities.addCast(copyTo,copyFrom.get(i));
+				
+				//KONTMEB:=D_SCEKMEB(I)+D_SVFMEB(I)-D_SME(I) --> KONTMEB=D_SCEKMEB(I).add(D_SVFMEB(I)).mınus(D_SME(I));
+				if(copyFrom.get(i).isKarakter('+')){
+					JavaClassElement.javaCodeBuffer.append(".add(");
+					closeParantez=true;
+				}else if(copyFrom.get(i).isKarakter('-')){
+					JavaClassElement.javaCodeBuffer.append(".subtract(");
+					closeParantez=true;
+				}else if(copyFrom.get(i).isKarakter('/')){
+					JavaClassElement.javaCodeBuffer.append(".divide(");
+					closeParantez=true;
+				}else if(copyFrom.get(i).isKarakter('*')){
+					JavaClassElement.javaCodeBuffer.append(".multiply(");
+					closeParantez=true;
+				}else{
+					JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(copyFrom.get(i)));
+					if(closeParantez){
+						JavaClassElement.javaCodeBuffer.append(")");
+						closeParantez=false;
+					}
+				}
+				
+				JavaWriteUtilities.endCast(cast);
+				
+				JavaWriteUtilities.addTypeChangeFunctionToEnd(copyTo,copyFrom.get(i));
+							
+			}
+		}
+		
+	}
+	
+	private void minusOperation() throws Exception {
+		
+		JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(copyTo));
+		JavaClassElement.javaCodeBuffer.append("=");
+		JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(copyFrom.get(0)));
+		JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(copyFrom.get(1)));
+		JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(copyFrom.get(2)));
+		
+			
 	}
 
 

@@ -124,7 +124,7 @@ public class JavaDivideElement extends AbstractJavaElement {
 
 						JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(bolen));
 						
-						JavaClassElement.javaCodeBuffer.append(",2 , RoundingMode.CEILING )"); //scale
+						JavaClassElement.javaCodeBuffer.append(").setScale(2,RoundingMode.DOWN)"); //scale
 						
 				
 						JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA + JavaConstants.NEW_LINE);
@@ -144,7 +144,7 @@ public class JavaDivideElement extends AbstractJavaElement {
 
 						JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(bolen));
 						
-						JavaClassElement.javaCodeBuffer.append(",new MathContext(2))"); //scale
+						JavaClassElement.javaCodeBuffer.append(").setScale(2,RoundingMode.DOWN)"); //scale
 						
 				
 						JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA + JavaConstants.NEW_LINE);

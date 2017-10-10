@@ -3312,6 +3312,9 @@ public class NaturalLexing extends AbstractLexing {
 					continue;
 				}
 			}
+			if(current.isKelime("GDASB1")){
+				logger.debug("");
+			}
 			
 			if(current.isOzelKelime("SELECT") || current.isOzelKelime("FIND")){  //Select görünce
 				selectFindReached=true;
@@ -3319,7 +3322,7 @@ public class NaturalLexing extends AbstractLexing {
 				continue;
 			}
 			 
-			if(current.isOzelKelime("WHERE") || current.isKelime("WHERE")){  //Where GÖrünce
+			if(current.isOzelKelime("WHERE") || current.isKelime("WHERE")|| current.isOzelKelime("WITH") || current.isKelime("WITH")){  //Where GÖrünce
 				whereReached=true; 
 				selectFindReached=false;
 				continue;
@@ -3358,7 +3361,7 @@ public class NaturalLexing extends AbstractLexing {
 						}
 
 				
-						if(current.isKelime("Şube")){
+						if(current.isKelime("GDASB1")){
 							logger.debug("");
 						}
 						if(isLocalVariable(current) || current.isConstantVariableWithQuota() || current.isArray() ){

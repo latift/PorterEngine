@@ -96,6 +96,7 @@ public IkiliOzelKelimelerNatural() {
 	ikiliKelimeler.add(new DoubleWordKeyword("COMPUTE","ROUNDED"));
 	ikiliKelimeler.add(new DoubleWordKeyword("ORDER","BY"));
 	ikiliKelimeler.add(new DoubleWordKeyword("GROUP","BY"));
+	ikiliKelimeler.add(new DoubleWordKeyword("MULTIPLY","ROUNDED"));
 }
 
 }

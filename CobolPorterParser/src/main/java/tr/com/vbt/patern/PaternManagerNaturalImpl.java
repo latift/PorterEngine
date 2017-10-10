@@ -39,6 +39,7 @@ import tr.com.vbt.natural.parser.basicverbs.patern.PaternMoveAD;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternMoveByName;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternMoveLeftJustified;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternMoveRightJustified;
+import tr.com.vbt.natural.parser.basicverbs.patern.PaternMultiply;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternPerform;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternRedefine;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternReset;
@@ -236,6 +237,7 @@ public class PaternManagerNaturalImpl  extends AbstractPaternManagerNatural{
 		commmandPatternList.add(new PaternBecomesEqualTo2());
 		commmandPatternList.add(new PaternRedefine());
 		commmandPatternList.add(new PaternDivide());
+		commmandPatternList.add(new PaternMultiply());
 		commmandPatternList.add(new PaternCompress());
 		commmandPatternList.add(new PaternNewPage());
 		commmandPatternList.add(new PaternNewPage2());

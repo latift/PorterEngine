@@ -76,6 +76,22 @@ public class JavaWriteUtilities {
 		
 		return tempCodeBuffer;
 	}
+	
+
+	public static StringBuilder toCustomSetterString(AbstractToken token, String string) throws Exception {
+		
+		StringBuilder tempCodeBuffer=new StringBuilder();
+
+		 if(token.isPojoVariable()){ //MB
+			
+			// IDGIDBS-TGECICI .HSONVALOR : = *DAT4I  --> TGECICI.setHSONVALOR(getSystemVAriable(DAT4I));
+			tempCodeBuffer.append(toCustomPojoVariableSetterString(token));
+			
+		}
+		 
+			return tempCodeBuffer;
+	}
+
 
 	public static StringBuilder toCustomSetterString(AbstractToken token, AbstractToken newValueToken) throws Exception {
 		
@@ -579,6 +595,26 @@ public class JavaWriteUtilities {
 			
 			
 		}
+		
+		// IDGIDBS-TGECICI .HSONVALOR : = *DAT4I --> TGECICI.setHSonValor(getSystemVariable(DAT4I));
+		//TNAZIM.setUptar(FrameworkConvertUtilities.stringToSqlDate("11111111", "yyyy.MM.dd"));
+			private static String toCustomPojoDB2VariableSetterString(AbstractToken token, String newValueStr) throws Exception{
+				
+				StringBuilder setterString=new StringBuilder();
+				
+				setterString.append(Utility.viewNameToPojoFullSetterName(token));
+				
+				setterString.append("(");  //Pojo Starter
+				
+				setterString.append(newValueStr);
+				
+				setterString.append(")"); //Pojo Ender
+				logger.debug("6"+setterString.toString());
+				
+				return setterString.toString();
+				
+				
+			}
 	
 		//NATURAL CODE:2969   :.0 IDGIDBS-TGECICI .HSDGGIRZAM : = YENIZAMAN 
 		//TGECICI.setHsdggirzam(FrameworkConvertUtilities.stringToSqlTime(YENIZAMAN));
