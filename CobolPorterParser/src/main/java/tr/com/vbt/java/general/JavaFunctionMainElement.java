@@ -51,7 +51,7 @@ public class JavaFunctionMainElement extends  AbstractJavaElement{
 				AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 				
 			}else{
-				AbstractJavaElement.javaCodeBuffer.append("public void mainProgram()"+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE);
+				/*AbstractJavaElement.javaCodeBuffer.append("public void mainProgram()"+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE);
 			
 				AbstractJavaElement.javaCodeBuffer.append("		try {"+JavaConstants.NEW_LINE);
 						
@@ -67,11 +67,11 @@ public class JavaFunctionMainElement extends  AbstractJavaElement{
 				
 				AbstractJavaElement.javaCodeBuffer.append(JavaConstants.CLOSE_BRACKET+ "//Main Program End");
 				
-				AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
+				AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);*/
 				
 				AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 				
-				AbstractJavaElement.javaCodeBuffer.append("private void naturalProgram()"+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE);
+				AbstractJavaElement.javaCodeBuffer.append("public void naturalProgram()"+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE);
 				
 			}
 			

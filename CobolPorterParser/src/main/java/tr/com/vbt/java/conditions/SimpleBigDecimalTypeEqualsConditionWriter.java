@@ -1,8 +1,9 @@
 package tr.com.vbt.java.conditions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import tr.com.vbt.java.general.JavaClassElement;
-import tr.com.vbt.java.general.JavaConstants;
-import tr.com.vbt.java.utils.ConvertUtilities;
 import tr.com.vbt.java.utils.JavaWriteUtilities;
 import tr.com.vbt.lexer.ConversionLogModel;
 import tr.com.vbt.token.AbstractToken;
@@ -34,7 +35,15 @@ public class SimpleBigDecimalTypeEqualsConditionWriter implements SimpleConditio
 		
 		JavaClassElement.javaCodeBuffer.append(")==0");
 		
-		ConversionLogModel.getInstance().writeError(1, conditionLeft,"== olması gereken > olmuş");
+		List errorTokenList=new ArrayList<>();
+		errorTokenList.add(conditionLeft);
+		errorTokenList.add(conditionRight);
+		errorTokenList.add(conOperator);
+		errorTokenList.add(conditionJoiner);
+		
+		
+		
+		ConversionLogModel.getInstance().writeError(1, errorTokenList,"== olması gereken > olmuş");
 		
 		
 	}

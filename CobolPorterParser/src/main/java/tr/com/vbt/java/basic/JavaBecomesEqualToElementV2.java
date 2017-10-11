@@ -200,6 +200,7 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 
 	private void minusOperationBigDecimal() throws Exception {
 		
+		
 		if(copyTo.isPojoVariable()){
 			
 			StringBuilder tempCodeBuffer=new StringBuilder();
@@ -219,6 +220,15 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 			}
 				
 			JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomSetterString(copyTo, tempCodeBuffer.toString()));
+			
+			
+			List errorTokenList=new ArrayList<>();
+			errorTokenList.add(copyTo);
+			errorTokenList.add(copyFrom.get(0));
+			errorTokenList.add(copyFrom.get(1));
+			errorTokenList.add(copyFrom.get(2));
+			
+			ConversionLogModel.getInstance().writeError(3, errorTokenList,"Eksi Matematik operasyonu olması gereken üretilmemiş. Bigdecimal Pojo");
 				
 			
 		}else{
@@ -256,6 +266,20 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 				JavaWriteUtilities.addTypeChangeFunctionToEnd(copyTo,copyFrom.get(i));
 							
 			}
+			
+			List errorTokenList=new ArrayList<>();
+			errorTokenList.add(copyTo);
+			if(copyFrom.size()>0){
+				errorTokenList.add(copyFrom.get(0));
+			}
+			if(copyFrom.size()>1){
+				errorTokenList.add(copyFrom.get(1));
+			}
+			if(copyFrom.size()>2){
+				errorTokenList.add(copyFrom.get(2));
+			}
+			
+			ConversionLogModel.getInstance().writeError(4, errorTokenList,"Eksi Matematik operasyonu olması gereken üretilmemiş. Bigdecimal");
 		}
 		
 	}
@@ -267,6 +291,14 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 		JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(copyFrom.get(0)));
 		JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(copyFrom.get(1)));
 		JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(copyFrom.get(2)));
+		
+		List errorTokenList=new ArrayList<>();
+		errorTokenList.add(copyTo);
+		errorTokenList.add(copyFrom.get(0));
+		errorTokenList.add(copyFrom.get(1));
+		errorTokenList.add(copyFrom.get(2));
+		
+		ConversionLogModel.getInstance().writeError(2, errorTokenList,"Eksi Matematik operasyonu olması gereken üretilmemiş.");
 		
 			
 	}
