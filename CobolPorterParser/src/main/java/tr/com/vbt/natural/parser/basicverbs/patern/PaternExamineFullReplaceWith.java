@@ -10,17 +10,19 @@ import tr.com.vbt.token.KelimeToken;
 import tr.com.vbt.token.OzelKelimeToken;
 
 /**
- //  EXAMINE  BASLIK '-' REPLACE WITH ' '
+ //  EXAMINE FULL PADI1 FOR ' '  REPLACE WITH '*'
   * 
-  * EXAMINE  Uzunluk:0 Satir No:98 Tipi:OzelKelime
-BASLIK  Uzunluk:0 Satir No:98 Tipi:Kelime LocalVariable
--  Uzunluk:0 Satir No:98 Tipi:Kelime
-REPLACE  Uzunluk:0 Satir No:98 Tipi:Kelime LocalVariable
-WITH  Uzunluk:0 Satir No:98 Tipi:OzelKelime
-   Uzunluk:0 Satir No:98 Tipi:Kelime
+EXAMINE_FULL  Uzunluk:0 Satir No:6 Tipi:OzelKelime
+PADI1  Uzunluk:0 Satir No:6 Tipi:Kelime LocalVariable
+FOR  Uzunluk:0 Satir No:6 Tipi:OzelKelime
+   Uzunluk:0 Satir No:6 Tipi:Kelime
+REPLACE  Uzunluk:0 Satir No:6 Tipi:Kelime LocalVariable
+WITH  Uzunluk:0 Satir No:6 Tipi:OzelKelime
+*  Uzunluk:0 Satir No:6 Tipi:Kelime
+END_EXAMINE  Uzunluk:0 Satir No:7 Tipi:OzelKelime
  *
  */
-public class PaternExamineReplaceWith extends AbstractPattern{
+public class PaternExamineFullReplaceWith extends AbstractPattern{
 
 	/**
 	 * @param args
@@ -31,44 +33,44 @@ public class PaternExamineReplaceWith extends AbstractPattern{
 	}
 	
 
-	public PaternExamineReplaceWith() {
+	public PaternExamineFullReplaceWith() {
 		super();
 		
-			//EXAMINE
-				AbstractToken starterToken=new OzelKelimeToken("EXAMINE", 0, 0, 0);
-				starterToken.setSourceFieldName("FIRST_COMMAND");
-				starterToken.setTekrarlayabilir("+");
-				patternTokenList.add(starterToken);
+		//EXAMINE
+		AbstractToken starterToken=new OzelKelimeToken("EXAMINE_FULL", 0, 0, 0);
+		starterToken.setSourceFieldName("FIRST_COMMAND");
+		starterToken.setTekrarlayabilir("+");
+		patternTokenList.add(starterToken);
+		
+		
+		//formatString
+		AbstractToken midfieldToken=new GenelTipToken();
+		midfieldToken.setTekrarlayabilir("+");
+		midfieldToken.setSourceFieldName("sourceToken");
+		patternTokenList.add(midfieldToken);
+		
+		//FOR
+		AbstractToken astFor=new OzelKelimeToken("EXAMINEFOR", 0, 0, 0);
+		patternTokenList.add(astFor);
+		
+		
+		// #R-LIMAN
+		AbstractToken astSearchVar=new GenelTipToken();
+		astSearchVar.setSourceFieldName("searchVar");
+		patternTokenList.add(astSearchVar);
 				
-				
-				//formatString
-				AbstractToken midfieldToken=new GenelTipToken();
-				midfieldToken.setTekrarlayabilir("+");
-				midfieldToken.setSourceFieldName("sourceToken");
-				patternTokenList.add(midfieldToken);
-				
-				//FOR
-				AbstractToken astFor=new OzelKelimeToken("EXAMINEFOR", 0, 0, 0);
-				patternTokenList.add(astFor);
-				
-				
-				// #R-LIMAN
-				AbstractToken astSearchVar=new GenelTipToken();
-				astSearchVar.setSourceFieldName("searchVar");
-				patternTokenList.add(astSearchVar);
-						
-				//REPLACE_WITH
-				AbstractToken astKeyword2=new OzelKelimeToken("REPLACE_WITH", 0, 0, 0);
-				patternTokenList.add(astKeyword2);
-				
-				//*
-				AbstractToken astIndex=new KelimeToken();
-				astIndex.setSourceFieldName("replaceVar");
-				patternTokenList.add(astIndex);
-				
-				//Ender
-				AbstractToken enderToken=new OzelKelimeToken(ReservedNaturalKeywords.END_EXAMINE,0,0,0);
-				patternTokenList.add(enderToken);
+		//REPLACE_WITH
+		AbstractToken astKeyword2=new OzelKelimeToken("REPLACE_WITH", 0, 0, 0);
+		patternTokenList.add(astKeyword2);
+		
+		//*
+		AbstractToken astIndex=new KelimeToken();
+		astIndex.setSourceFieldName("replaceVar");
+		patternTokenList.add(astIndex);
+		
+		//Ender
+		AbstractToken enderToken=new OzelKelimeToken(ReservedNaturalKeywords.END_EXAMINE,0,0,0);
+		patternTokenList.add(enderToken);
 		
 	}
 	

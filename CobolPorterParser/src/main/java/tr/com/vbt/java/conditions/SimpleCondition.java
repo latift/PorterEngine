@@ -94,10 +94,12 @@ public class SimpleCondition implements ConditionInterface {
 			if(conditionLeftType!=null && conditionRightType!=null){
 				primitiveType=(conditionLeftType.equals(VariableTypes.INT_TYPE) || conditionLeftType.equals(VariableTypes.LONG_TYPE)) &&
 							(conditionRightType.equals(VariableTypes.INT_TYPE) ||  conditionRightType.equals(VariableTypes.LONG_TYPE));
+				
+				if(conditionLeftType.equals(VariableTypes.BIG_DECIMAL_TYPE)  ||conditionRightType.equals(VariableTypes.BIG_DECIMAL_TYPE) ){
+					isBigDecimalType=true;
 				}
-			if(conditionLeftType.equals(VariableTypes.BIG_DECIMAL_TYPE)  ||conditionRightType.equals(VariableTypes.BIG_DECIMAL_TYPE) ){
-				isBigDecimalType=true;
 			}
+		
 			
 			
 		

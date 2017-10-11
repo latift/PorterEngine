@@ -18,6 +18,7 @@ import tr.com.vbt.java.basic.JavaDivideElement;
 import tr.com.vbt.java.basic.JavaExamineForGivingIndexElement;
 import tr.com.vbt.java.basic.JavaExamineForGivingPositionElement;
 import tr.com.vbt.java.basic.JavaExamineFullForGivingLengthInElement;
+import tr.com.vbt.java.basic.JavaExamineFullForReplaceWithElement;
 import tr.com.vbt.java.basic.JavaExitElement;
 import tr.com.vbt.java.basic.JavaGlobalUsing;
 import tr.com.vbt.java.basic.JavaIncludeElement;
@@ -189,6 +190,9 @@ public class CreateProcessOperator extends ProcessOperator {
 			break;
 		case "JavaExamineFullForGivingLengthInElement":
 			elementForCreate = new JavaExamineFullForGivingLengthInElement();
+			break;
+		case "JavaExamineFullForReplaceWithElement":
+			elementForCreate = new JavaExamineFullForReplaceWithElement();
 			break;
 		case "JavaExamineForGivingPositionElement":
 			elementForCreate = new JavaExamineForGivingPositionElement();

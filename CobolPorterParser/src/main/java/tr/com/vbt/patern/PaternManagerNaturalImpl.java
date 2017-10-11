@@ -2,7 +2,6 @@ package tr.com.vbt.patern;
 
 import tr.com.vbt.cobol.parser.file.patern.PaternCloseFile;
 import tr.com.vbt.lexer.ConversionLogModel;
-import tr.com.vbt.lexer.NaturalMode;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternAdd;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternAssign;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternAtEndOfPage;
@@ -27,6 +26,7 @@ import tr.com.vbt.natural.parser.basicverbs.patern.PaternExamineForGivingNumber;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternExamineForGivingPosition;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternExamineForGivingPositionIn;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternExamineFullForGivingLengthIn;
+import tr.com.vbt.natural.parser.basicverbs.patern.PaternExamineFullReplaceWith;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternExamineGivingPositionIn;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternExamineReplaceWith;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternFetch;
@@ -212,6 +212,10 @@ public class PaternManagerNaturalImpl  extends AbstractPaternManagerNatural{
 		commmandPatternList.add(new PaternExamineForGiving());
 		commmandPatternList.add(new PaternExamineForGivingNumber());
 		commmandPatternList.add(new PaternExamineReplaceWith());
+		commmandPatternList.add(new PaternExamineFullReplaceWith());
+		
+		
+		
 		commmandPatternList.add(new PaternAdd());
 		commmandPatternList.add(new PaternPerform());
 		commmandPatternList.add(new PaternMove());

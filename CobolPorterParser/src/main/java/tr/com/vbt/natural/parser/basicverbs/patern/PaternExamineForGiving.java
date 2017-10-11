@@ -49,7 +49,7 @@ public class PaternExamineForGiving extends AbstractPattern{
 		patternTokenList.add(astSource);
 		
 		//FOR
-		AbstractToken astFor=new OzelKelimeToken("FOR", 0, 0, 0);
+		AbstractToken astFor=new OzelKelimeToken("EXAMINEFOR", 0, 0, 0);
 		patternTokenList.add(astFor);
 		
 		// #R-LIMAN

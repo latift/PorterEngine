@@ -461,6 +461,8 @@ public class NaturalLexing extends AbstractLexing {
 
 	private void addEnderForExamine() {
 		
+		changeForOfExamineToForr();
+		
 		AbstractToken astCurrent,astNext;
 		
 		boolean astExamineReached=false;
@@ -471,11 +473,12 @@ public class NaturalLexing extends AbstractLexing {
 		
 			if(astExamineReached  && (!astCurrent.getTip().equals(TokenTipi.OzelKelime) ||  
 						astCurrent.isOzelKelime(ReservedNaturalKeywords.WITH)||
-						astCurrent.isOzelKelime(ReservedNaturalKeywords.FOR)||
+						astCurrent.isOzelKelime("EXAMINEFOR")||
 						astCurrent.isOzelKelime(ReservedNaturalKeywords.GIVING)||
 						astCurrent.isOzelKelime(ReservedNaturalKeywords.GIVING_INDEX)||
 						astCurrent.isOzelKelime(ReservedNaturalKeywords.GIVING_LENGTH_IN)||
 						astCurrent.isOzelKelime(ReservedNaturalKeywords.EXAMINE_GIVING_POSITION)||
+						astCurrent.isOzelKelime("REPLACE_WITH")||
 						astCurrent.isOzelKelime(ReservedNaturalKeywords.GIVING_POSITION)||
 						astCurrent.isOzelKelime(ReservedNaturalKeywords.GIVING_POSITION_IN)||
 						astCurrent.isOzelKelime(ReservedNaturalKeywords.GIVING_INDEX_IN)||
@@ -504,6 +507,26 @@ public class NaturalLexing extends AbstractLexing {
 
 	}
 	
+	//EXAMINE FULL PADI1 FOR  -->EXAMINE FULL PADI1 FORR
+	private void changeForOfExamineToForr() {
+		
+		AbstractToken astExamine,astFor;
+		
+		for (int i = 0; i < tokenListesi.size() - 3; i++) {
+			
+			astExamine=tokenListesi.get(i);
+			
+			astFor=tokenListesi.get(i+2);
+			
+			if((astExamine.isOzelKelime(ReservedNaturalKeywords.EXAMINE_FULL)|| astExamine.isOzelKelime(ReservedNaturalKeywords.EXAMINE))&&
+					astFor.isOzelKelime(ReservedNaturalKeywords.FOR)){
+				astFor.setDeger("EXAMINEFOR");
+			}
+			
+		}
+		
+	}
+
 	private void addEnderForAmpersand() {
 		
 		AbstractToken astCurrent;

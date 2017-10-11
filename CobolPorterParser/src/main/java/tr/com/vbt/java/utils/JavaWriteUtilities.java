@@ -531,7 +531,11 @@ public class JavaWriteUtilities {
 
 
 	private static String toCustomConstantVariableString(AbstractToken token) {
-		return "\""+token.getDeger().toString().trim().toString()+"\"";
+		if(token.getDeger().toString().trim().length()==0){
+			return "\""+token.getDeger().toString()+"\"";
+		}else{
+			return "\""+token.getDeger().toString().trim().toString()+"\"";
+		}
 		
 	}
 	

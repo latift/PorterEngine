@@ -44,7 +44,7 @@ public class PaternExamineForDelete extends AbstractPattern{
 		patternTokenList.add(astSource);
 				
 		//FOR
-		AbstractToken astKeyword2=new OzelKelimeToken("FOR", 0, 0, 0);
+		AbstractToken astKeyword2=new OzelKelimeToken("EXAMINEFOR", 0, 0, 0);
 		astKeyword2.setTekrarlayabilir("+");
 		patternTokenList.add(astKeyword2);
 		
