@@ -1,5 +1,6 @@
 package tr.com.vbt.natural.parser.datalayout.program.patern;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -157,6 +158,19 @@ public class PaternProgramOneDimensionArrayNaturalWithInit extends AbstractDataT
 		else if(abstractTokenInPattern.getSourceFieldName().equals("arrayLength")){
 			matchedCommandAdd.setArrayLength( (long) currentTokenForMatch.getDeger());
 			matchedCommandAdd.getParameters().put("arrayLength", matchedCommandAdd.getArrayLength());
+		}else if(abstractTokenInPattern.getSourceFieldName().equals("initialValue")){
+			
+			matchedCommandAdd.getInitValues().add(currentTokenForMatch);
+			
+			List<AbstractToken> sourceList;
+			if(matchedCommandAdd.getParameters().get("initialValue")!=null){
+				sourceList=(List<AbstractToken>) matchedCommandAdd.getParameters().get("initialValue");
+			}else{
+				sourceList=new ArrayList<AbstractToken>();
+			}
+			String deger = null;
+			sourceList.add(currentTokenForMatch);
+			matchedCommandAdd.getParameters().put("initialValue", sourceList);	
 		}
 	}
 
@@ -273,6 +287,8 @@ public AbstractCommand getmatchedCommand(List<AbstractToken> tokenListesi, int o
 					iterateCurrentToken=true;
 					lastElementMatched=true;
 			}
+			
+			
 		}
 		/*if(!lastElementMatched){ //Son Token optional ise son token match olmadan da patern match edebilir. Bu durumda currentToken daki son iterasyondaki puan artisi geriye alinir. 
 			matchedCommand.decreaseCommandsMatchPoint();

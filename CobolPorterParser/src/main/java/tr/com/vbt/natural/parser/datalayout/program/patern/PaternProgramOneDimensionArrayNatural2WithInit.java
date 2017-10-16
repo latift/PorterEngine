@@ -1,5 +1,6 @@
 package tr.com.vbt.natural.parser.datalayout.program.patern;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -152,6 +153,19 @@ public class PaternProgramOneDimensionArrayNatural2WithInit extends AbstractData
 				matchedCommandAdd.setArrayLength((long) currentTokenForMatch.getDeger());
 			}
 			matchedCommandAdd.getParameters().put("arrayLength", matchedCommandAdd.getArrayLength());
+		}else if(abstractTokenInPattern.getSourceFieldName().equals("initialValue")){
+			
+			matchedCommandAdd.getInitValues().add(currentTokenForMatch);
+			
+			List<AbstractToken> sourceList;
+			if(matchedCommandAdd.getParameters().get("initialValue")!=null){
+				sourceList=(List<AbstractToken>) matchedCommandAdd.getParameters().get("initialValue");
+			}else{
+				sourceList=new ArrayList<AbstractToken>();
+			}
+			String deger = null;
+			sourceList.add(currentTokenForMatch);
+			matchedCommandAdd.getParameters().put("initialValue", sourceList);	
 		}
 	}
 

@@ -135,8 +135,8 @@ public class JavaFindWithElement extends AbsctractConditionalJavaElement impleme
 		logger.debug("findByMethodSignature :"+findByMethodSignature);
 
 
-		calculatedResultListName = viewName.toCustomString() + "_RESULT_LIST";
-		calculatedDAOName = viewName.getTypeNameOfView() + "_DAO";
+		calculatedResultListName = viewName.toCustomString().replaceAll("_", "") + "_RESULT_LIST";
+		calculatedDAOName = viewName.getTypeNameOfView().replaceAll("_", "") + "_DAO";
 		
 		javaIfNoRecords=this.getChildWithName("JavaIfNoRecords");
 		
@@ -185,10 +185,10 @@ public class JavaFindWithElement extends AbsctractConditionalJavaElement impleme
 											
 											
 											//			LIMAN=it.next();
-											JavaClassElement.javaCodeBuffer.append(viewName.toCustomString()+"="+itName+".next()"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
+											JavaClassElement.javaCodeBuffer.append(viewName.toCustomString().replaceAll("_", "")+"="+itName+".next()"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
 											
 											if(ConversionLogModel.getInstance().getCustomer().equals("THY")){
-												JavaClassElement.javaCodeBuffer.append("ISN=(int) "+viewName.toCustomString()+".getIsn()"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
+												JavaClassElement.javaCodeBuffer.append("ISN=(int) "+viewName.toCustomString().replaceAll("_", "")+".getIsn()"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
 											}
 											
 											//			ULKE_KODU=LIMAN.getLUlkeKodu();

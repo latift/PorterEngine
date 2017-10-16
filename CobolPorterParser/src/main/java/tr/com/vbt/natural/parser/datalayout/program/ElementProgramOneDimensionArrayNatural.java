@@ -1,5 +1,6 @@
 package tr.com.vbt.natural.parser.datalayout.program;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
@@ -26,6 +27,8 @@ public class ElementProgramOneDimensionArrayNatural extends AbstractCommand impl
 	private long length;
 	
 	private long lengthAfterDot;
+	
+	private List<AbstractToken> initValues=new ArrayList<AbstractToken>();
 	
 	
 	@Override
@@ -133,6 +136,16 @@ public class ElementProgramOneDimensionArrayNatural extends AbstractCommand impl
 
 	public void setLengthAfterDot(long lengthAfterDot) {
 		this.lengthAfterDot = lengthAfterDot;
+	}
+
+
+	public List<AbstractToken> getInitValues() {
+		return initValues;
+	}
+
+
+	public void setInitValues(List<AbstractToken> initValues) {
+		this.initValues = initValues;
 	}
 
 

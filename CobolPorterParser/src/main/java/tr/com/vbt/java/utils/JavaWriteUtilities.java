@@ -78,18 +78,34 @@ public class JavaWriteUtilities {
 	}
 	
 
-	public static StringBuilder toCustomSetterString(AbstractToken token, String string) throws Exception {
+	public static StringBuilder toCustomSetterString(AbstractToken token, String newValueStr) throws Exception {
 		
 		StringBuilder tempCodeBuffer=new StringBuilder();
 
 		 if(token.isPojoVariable()){ //MB
 			
 			// IDGIDBS-TGECICI .HSONVALOR : = *DAT4I  --> TGECICI.setHSONVALOR(getSystemVAriable(DAT4I));
-			tempCodeBuffer.append(toCustomPojoVariableSetterString(token));
+			tempCodeBuffer.append(toCustomPojoVariableSetterString(token, newValueStr));
 			
 		}
 		 
 			return tempCodeBuffer;
+	}
+
+
+	private static StringBuilder toCustomPojoVariableSetterString(AbstractToken token, String newValueStr) {
+		
+		StringBuilder setterString=new StringBuilder();
+		
+		setterString.append(Utility.viewNameToPojoFullSetterName(token));
+		
+		setterString.append("(");  //Pojo Starter
+		
+		setterString.append(newValueStr);
+		
+		setterString.append(")"); //Pojo Ender
+		
+		return setterString;
 	}
 
 
@@ -1539,7 +1555,9 @@ public class JavaWriteUtilities {
 				endCastStr=",\"yyyy-MM-dd\"";
 			}else if(typeOfCopyTo.equalsIgnoreCase("string") && typeOfCopyFrom.equalsIgnoreCase("date")){
 				result=" FCU.dateToStringwithFormat(";
-				endCastStr=",\"yyyy-MM-dd\"";
+				//endCastStr=",\"yyyy-MM-dd\""; // 16-10-2017 Mevlütün isteği ile. GetDatePojoValue icin yapildi. Veritabanından gelen deger becomesEqualTo ile Stringe atanma durum için yapıldı.
+				endCastStr=",\"dd.MM.yyyy\"";
+				
 			}
 			
 			//Date-Long

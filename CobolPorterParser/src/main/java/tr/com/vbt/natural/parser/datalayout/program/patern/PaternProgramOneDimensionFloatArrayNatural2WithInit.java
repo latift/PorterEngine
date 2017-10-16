@@ -1,5 +1,6 @@
 package tr.com.vbt.natural.parser.datalayout.program.patern;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -153,6 +154,20 @@ public class PaternProgramOneDimensionFloatArrayNatural2WithInit extends Abstrac
 		else if(abstractTokenInPattern.getSourceFieldName().equals("lengthAfterDot")){
 			matchedCommandAdd.setLengthAfterDot( (long) currentTokenForMatch.getDeger());
 			matchedCommandAdd.getParameters().put("lengthAfterDot", matchedCommandAdd.getLengthAfterDot());
+		}
+		else if(abstractTokenInPattern.getSourceFieldName().equals("initialValue")){
+			
+			matchedCommandAdd.getInitValues().add(currentTokenForMatch);
+			
+			List<AbstractToken> sourceList;
+			if(matchedCommandAdd.getParameters().get("initialValue")!=null){
+				sourceList=(List<AbstractToken>) matchedCommandAdd.getParameters().get("initialValue");
+			}else{
+				sourceList=new ArrayList<AbstractToken>();
+			}
+			String deger = null;
+			sourceList.add(currentTokenForMatch);
+			matchedCommandAdd.getParameters().put("initialValue", sourceList);	
 		}
 	}
 

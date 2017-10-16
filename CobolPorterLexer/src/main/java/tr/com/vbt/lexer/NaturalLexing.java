@@ -2393,7 +2393,7 @@ public class NaturalLexing extends AbstractLexing {
 	private void loadIncludedFields(String customer, String module) throws Exception {
 		module = module.toLowerCase();
 		module = module.replaceAll("/seperatedprograms", "");
-			Object includedFileObject;
+			Object includedFileObject = null;
 		
 			for (String fileName : includeFileList.values()) {
 	
@@ -2402,8 +2402,14 @@ public class NaturalLexing extends AbstractLexing {
 					includedFileObject = Class.forName("tr.com."+customer.toLowerCase()+".dal.variables.global." + fileName)
 							.newInstance();
 				} catch (Exception e) {
-					includedFileObject = Class.forName("tr.com."+customer.toLowerCase()+".dal.variables.local." + fileName)
-							.newInstance();
+					try {
+						includedFileObject = Class.forName("tr.com."+customer.toLowerCase()+".dal.variables.local." + fileName)
+								.newInstance();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+						continue;
+					}
 				}
 	
 				Field f[]=includedFileObject.getClass().getDeclaredFields();
@@ -2425,7 +2431,7 @@ public class NaturalLexing extends AbstractLexing {
 		module = module.toLowerCase();
 		module = module.replaceAll("/seperatedprograms", "");
 		
-		Object includedFileObject, includedFileObjectInstance;
+		Object includedFileObject = null, includedFileObjectInstance;
 		
 		Method loadDefinitions;
 		
@@ -2443,8 +2449,14 @@ public class NaturalLexing extends AbstractLexing {
 					includedFileObject = Class.forName("tr.com."+customer.toLowerCase()+".dal.variables.global." + fileName)
 							.newInstance();
 				} catch (Exception e) {
-					includedFileObject = Class.forName("tr.com."+customer.toLowerCase()+".dal.variables.local." + fileName)
-							.newInstance();
+					try {
+						includedFileObject = Class.forName("tr.com."+customer.toLowerCase()+".dal.variables.local." + fileName)
+								.newInstance();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+						continue;
+					}
 				}
 
 				
@@ -2476,7 +2488,7 @@ public class NaturalLexing extends AbstractLexing {
 		
 		module = module.replaceAll("/seperatedprograms", "");
 		
-		Object includedFileObject;
+		Object includedFileObject = null;
 		
 		Field field;
 		
@@ -2487,8 +2499,14 @@ public class NaturalLexing extends AbstractLexing {
 					includedFileObject = Class.forName("tr.com."+customer.toLowerCase()+".dal.variables.global." + fileName)
 							.newInstance();
 				} catch (Exception e) {
-					includedFileObject = Class.forName("tr.com."+customer.toLowerCase()+".dal.variables.local." + fileName)
-							.newInstance();
+					try {
+						includedFileObject = Class.forName("tr.com."+customer.toLowerCase()+".dal.variables.local." + fileName)
+								.newInstance();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+						continue;
+					}
 				}
 
 				try {

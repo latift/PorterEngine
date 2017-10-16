@@ -80,7 +80,7 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 			}
 			
 			if(typeOfCopyTo.equalsIgnoreCase("bigdecimal") && copyFrom!=null && copyFrom.size()>1 && copyFrom.get(1)!=null && copyFrom.get(1).isKarakter('-')){
-				 minusOperationBigDecimal();
+				 fourOperationsBigDecimal();
 			}else if(copyFrom!=null && copyFrom.size()>1 && copyFrom.get(1)!=null && copyFrom.get(1).isKarakter('-')){
 				 minusOperation();
 			}
@@ -198,39 +198,10 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 
 
 
-	private void minusOperationBigDecimal() throws Exception {
-		
+	private void fourOperationsBigDecimal() throws Exception {
 		
 		if(copyTo.isPojoVariable()){
-			
-			StringBuilder tempCodeBuffer=new StringBuilder();
-			
-		
-			
-			boolean closeParantez=false;
-			for (int i = 0; i < copyFrom.size(); i++) {
-				
-				if(copyFrom.get(i).isKarakter('-')){
-					tempCodeBuffer.append(".subtract(");
-					closeParantez=true;
-				}
-				
-				tempCodeBuffer.append(")");
-				
-			}
-				
-			JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomSetterString(copyTo, tempCodeBuffer.toString()));
-			
-			
-			List errorTokenList=new ArrayList<>();
-			errorTokenList.add(copyTo);
-			errorTokenList.add(copyFrom.get(0));
-			errorTokenList.add(copyFrom.get(1));
-			errorTokenList.add(copyFrom.get(2));
-			
-			ConversionLogModel.getInstance().writeError(3, errorTokenList,"Eksi Matematik operasyonu olması gereken üretilmemiş. Bigdecimal Pojo");
-				
-			
+			fourOperationsBigDecimalPojo();
 		}else{
 		
 			JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(copyTo));
@@ -284,6 +255,47 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 		
 	}
 	
+	private void fourOperationsBigDecimalPojo() throws Exception {
+		StringBuilder tempCodeBuffer=new StringBuilder();
+		
+		tempCodeBuffer.append(JavaWriteUtilities.toCustomString(copyFrom.get(0)));
+		
+		if(copyFrom.get(1).isKarakter('-')){
+			tempCodeBuffer.append(".subtract(");
+		}else if(copyFrom.get(1).isKarakter('+')){
+			tempCodeBuffer.append(".add(");
+		}else if(copyFrom.get(1).isKarakter('/')){
+			tempCodeBuffer.append(".divide(");
+		}else if(copyFrom.get(1).isKarakter('*')){
+			tempCodeBuffer.append(".multiply(");
+		}else{
+			tempCodeBuffer.append(".unknownOperation(");
+		}
+
+		tempCodeBuffer.append(JavaWriteUtilities.toCustomString(copyFrom.get(2)));
+			
+		tempCodeBuffer.append(")");
+			
+		JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomSetterString(copyTo, tempCodeBuffer.toString()));
+		
+		List errorTokenList=new ArrayList<>();
+		errorTokenList.add(copyTo);
+		errorTokenList.add(copyFrom.get(0));
+		errorTokenList.add(copyFrom.get(1));
+		errorTokenList.add(copyFrom.get(2));
+		
+		ConversionLogModel.getInstance().writeError(3, errorTokenList,"Eksi Matematik operasyonu olması gereken üretilmemiş. Bigdecimal Pojo");
+			
+		
+	}
+
+
+
+
+
+
+
+
 	private void minusOperation() throws Exception {
 		
 		JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(copyTo));

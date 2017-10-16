@@ -113,6 +113,8 @@ public class JavaFindNumberWithElement extends AbsctractConditionalJavaElement i
 	public boolean writeJavaToStream() throws Exception{
 		super.writeJavaToStream();
 
+		String viewNameWithoutUnderscore;
+		
 		viewName = (String) this.getParameters().get("viewName");
 		
 		viewNameToken=new KelimeToken(viewName, 0, 0, 0);  //Tablo ismi.
@@ -138,9 +140,10 @@ public class JavaFindNumberWithElement extends AbsctractConditionalJavaElement i
 		//itName="it"+pojoType;
 		itName=itNameManager.createIteratorName(pojoType);
 
+		viewNameWithoutUnderscore=viewName.replaceAll("-", "").replaceAll("_", "");
 
-		calculatedResultListName = viewName.replaceAll("-", "_") + "_RESULT_LIST";
-		calculatedDAOName = viewName.replaceAll("-", "_") + "_DAO";
+		calculatedResultListName = viewNameWithoutUnderscore + "_RESULT_LIST";
+		calculatedDAOName = viewNameWithoutUnderscore + "_DAO";
 		
 		javaIfNoRecords=this.getChildWithName("JavaIfNoRecords");
 		

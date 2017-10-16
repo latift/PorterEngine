@@ -1,10 +1,15 @@
 package tr.com.vbt.java.general;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.utils.ConvertUtilities;
+import tr.com.vbt.java.utils.JavaWriteUtilities;
+import tr.com.vbt.token.AbstractToken;
 
 //*S**01 #SECIM-YURT-ICI-AKARYAKIT(A1/4)  --> String[4] SECIM_YURT_ICI_AKARYAKIT=new String[4];
 //*S**01 #ROL1(N1/15) --> int[15] ROL1=new int[15];  
@@ -51,6 +56,8 @@ public class JavaOneDimensionArrayElement extends AbstractJavaElement {
 	private int arrayLength;
 	
 	private int levelNumber;
+	
+	private List<AbstractToken> initialValue;
 	
 	public String getType() {
 		return type;
@@ -110,6 +117,10 @@ public class JavaOneDimensionArrayElement extends AbstractJavaElement {
 			if(parameters.get("lengthAfterDot")!=null){
 				lengthAfterDot=(int)((long) parameters.get("lengthAfterDot"));
 			}
+			
+			if(parameters.get("initialValue")!=null){
+				initialValue= (List<AbstractToken>) parameters.get("initialValue");
+			}
 
 			type=ConvertUtilities.getJavaVariableType(dataType, length, lengthAfterDot);
 	
@@ -122,8 +133,19 @@ public class JavaOneDimensionArrayElement extends AbstractJavaElement {
 				JavaClassElement.javaCodeBuffer
 						.append("Untransmitted_Constant_Name");
 			}
-			if(type.equalsIgnoreCase("bigdecimal")){
+			if(type.equalsIgnoreCase("bigdecimal") && (initialValue==null ||  initialValue.size()==0)){
 				JavaClassElement.javaCodeBuffer.append("=FCU.BigDecimalArray("+length+","+lengthAfterDot+")");
+			}else if(initialValue!=null && initialValue.size()>0){
+				//public String[] YETPROG=new String[]{IDGP0011,IDGP0013,IDGP0012,};
+				JavaClassElement.javaCodeBuffer.append("=new ");
+				JavaClassElement.javaCodeBuffer.append(type + "[]{");
+				for(int i=0; i<initialValue.size()-1; i++){
+					JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(initialValue.get(i)));
+					JavaClassElement.javaCodeBuffer.append(",");
+				}
+				JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(initialValue.get(initialValue.size()-1)));
+				JavaClassElement.javaCodeBuffer.append("}");
+				
 			}else{
 				JavaClassElement.javaCodeBuffer.append("=new ");
 				JavaClassElement.javaCodeBuffer.append(type + "["+arrayLength+"]");

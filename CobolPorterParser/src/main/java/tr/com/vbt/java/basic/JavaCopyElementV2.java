@@ -80,6 +80,10 @@ public class JavaCopyElementV2 extends AbstractJavaElement {
 	//TKARTEX.setAdres(moveToSubstring( getStringPojoValue("TKARTEX.getAdres()"), 0, 60, MAP_P.YAZADRES1));
 	private boolean controlAndWriteMoveToSubstringCommand()  throws Exception{
 	
+		if(destVariable==null){
+			return false;
+		}
+		
 		AbstractToken destVariableFirst=destVariable.get(0);
 		
 		if(destVariableFirst==null || !destVariableFirst.isSubstringCommand()){
