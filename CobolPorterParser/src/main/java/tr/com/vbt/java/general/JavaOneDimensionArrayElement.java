@@ -134,7 +134,7 @@ public class JavaOneDimensionArrayElement extends AbstractJavaElement {
 						.append("Untransmitted_Constant_Name");
 			}
 			if(type.equalsIgnoreCase("bigdecimal") && (initialValue==null ||  initialValue.size()==0)){
-				JavaClassElement.javaCodeBuffer.append("=FCU.BigDecimalArray("+length+","+lengthAfterDot+")");
+				JavaClassElement.javaCodeBuffer.append("=FCU.BigDecimalArray("+arrayLength+","+lengthAfterDot+")");
 			}else if(initialValue!=null && initialValue.size()>0){
 				//public String[] YETPROG=new String[]{IDGP0011,IDGP0013,IDGP0012,};
 				JavaClassElement.javaCodeBuffer.append("=new ");

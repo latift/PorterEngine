@@ -68,12 +68,12 @@ public class PaternBase extends AbstractPattern{
 		super.setSatirNumarasi(matchedCommand,currentTokenForMatch, abstractTokenInPattern);if(abstractTokenInPattern.getSourceFieldName()==null){
 		
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("baseX")){
-			double deger=(double) currentTokenForMatch.getDeger();
+			long deger=(long) currentTokenForMatch.getDeger();
 			
 			matchedCommandAdd.setBaseX((long) deger);
 			matchedCommandAdd.getParameters().put("baseX", matchedCommandAdd.getBaseX());
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("baseY")){
-			double deger=(double) currentTokenForMatch.getDeger();
+			long deger=(long) currentTokenForMatch.getDeger();
 			matchedCommandAdd.setBaseY((long) deger);
 			matchedCommandAdd.getParameters().put("baseY", matchedCommandAdd.getBaseY());
 		}

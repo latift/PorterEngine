@@ -3,6 +3,7 @@ package tr.com.vbt.natural.parser.screen;
 import java.util.List;
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
+import tr.com.vbt.java.general.JavaConstants;
 import tr.com.vbt.lexer.ReservedNaturalKeywords;
 import tr.com.vbt.token.AbstractToken;
 
@@ -37,8 +38,7 @@ public class ElementBase extends AbstractCommand{
 	@Override
 	public String exportContents() {
 		StringBuilder sb=new StringBuilder();
-		sb.append(" "+ReservedNaturalKeywords.BASE +" baseX"+ this.baseX+" baseY"+ this.baseY+"\n");
-		sb.append("\"\n");
+		sb.append(ReservedNaturalKeywords.BASE +" baseX"+ this.baseX+" baseY"+ this.baseY+JavaConstants.NEW_LINE);
 		return sb.toString();
 	}
 
@@ -51,8 +51,7 @@ public class ElementBase extends AbstractCommand{
 	@Override
 	public String exportCommands() {
 		StringBuilder sb=new StringBuilder();
-		sb.append(" "+ReservedNaturalKeywords.BASE +" baseX"+ this.baseX+" baseY"+ this.baseY+"\n");
-		sb.append("\"\n");
+		sb.append(ReservedNaturalKeywords.BASE +" baseX"+ this.baseX+" baseY"+ this.baseY+JavaConstants.NEW_LINE);
 		return sb.toString();
 	}
 

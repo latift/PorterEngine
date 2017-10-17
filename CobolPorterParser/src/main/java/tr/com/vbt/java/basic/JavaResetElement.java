@@ -51,7 +51,7 @@ public class JavaResetElement extends  AbstractJavaElement {
 		
 		for (AbstractToken variable : resetVariableList) {
 			
-			if(variable.getTip().equals(TokenTipi.Kelime)){
+			if(variable.getTip().equals(TokenTipi.Kelime) || !variable.isAllArrayItems()){
 				
 				variableType=ConvertUtilities.getVariableType(variable);
 				
@@ -156,9 +156,11 @@ public class JavaResetElement extends  AbstractJavaElement {
 			}else if(variable.getTip().equals(TokenTipi.Array)){
 				if(variable.isPojoVariable()){
 					JavaClassElement.javaCodeBuffer.append("//TODO POJO RESETLEME ARRAY VAR DİKKAT!");
-				}else{
+				}else if(variable.isAllArrayItems()){
 					
 					JavaClassElement.javaCodeBuffer.append("FCU.resetArray("+JavaWriteUtilities.toCustomString(variable)+");");
+				}else{
+					JavaClassElement.javaCodeBuffer.append("UnimplementedCode");
 				}
 
 			}

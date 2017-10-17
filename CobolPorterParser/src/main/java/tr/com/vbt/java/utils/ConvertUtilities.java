@@ -368,7 +368,7 @@ public class ConvertUtilities {
 		String type;
 		if (dataType.equals("A") || dataType.equals("String")) {
 			type = "String";
-		} else if (((dataType.equals("N")) && length > 18) ) {
+		} else if (	(dataType.equals("N") || dataType.equals("P") || dataType.equals("int") || dataType.equals("I"))		 && length > 18 ) {
 			type = "BigDecimal";
 		}  else if (((dataType.equals("N") || dataType.equals("P") || dataType.equals("int") || dataType.equals("I")) && lengthAfterDot == 0) ) {
 			type = "long";

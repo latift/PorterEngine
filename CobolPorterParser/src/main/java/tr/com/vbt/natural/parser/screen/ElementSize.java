@@ -26,7 +26,6 @@ public class ElementSize extends AbstractCommand{
 	public String exportContents() {
 		StringBuilder sb=new StringBuilder();
 		sb.append(" "+ReservedNaturalKeywords.SIZE +" SatirSayisi"+ this.lineCount+" SatirBoyu"+ this.lineLength+"\n");
-		sb.append("\"\n");
 		return sb.toString();
 	}
 
@@ -40,7 +39,6 @@ public class ElementSize extends AbstractCommand{
 	public String exportCommands() {
 		StringBuilder sb=new StringBuilder();
 		sb.append(" "+ReservedNaturalKeywords.SIZE +" SatirSayisi"+ this.lineCount+" SatirBoyu"+ this.lineLength+"\n");
-		sb.append("\"\n");
 		return sb.toString();
 	}
 

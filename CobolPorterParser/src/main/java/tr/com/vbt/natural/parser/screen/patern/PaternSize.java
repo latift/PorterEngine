@@ -70,7 +70,7 @@ public class PaternSize extends AbstractPattern{
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("lineLength")){
 			long deger=(long) currentTokenForMatch.getDeger();
 			matchedCommandAdd.setLineCount((long) deger);
-			matchedCommandAdd.getParameters().put("lineLength", matchedCommandAdd.getLineCount());
+			matchedCommandAdd.getParameters().put("lineLength", matchedCommandAdd.getLineLength());
 		}
 	}
 	
