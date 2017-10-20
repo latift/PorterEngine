@@ -65,6 +65,9 @@ public class NaturalLexing extends AbstractLexing {
 	private void initGlobalVariablesSet() {
 		GLOBAL_VARIABLES_SET.add("MUSNO1");
 		GLOBAL_VARIABLES_SET.add("MUSNO2");
+		GLOBAL_VARIABLES_SET.add("GLOBAL_KRITER1");
+		GLOBAL_VARIABLES_SET.add("GLOBAL_KRITER2");
+		GLOBAL_VARIABLES_SET.add("GLOBAL_KRITER3");
 		GLOBAL_VARIABLES_SET.add("KRX_KOD");
 		GLOBAL_VARIABLES_SET.add("HESCINSI");
 		GLOBAL_VARIABLES_SET.add("DOVIZ");
@@ -79,7 +82,6 @@ public class NaturalLexing extends AbstractLexing {
 		GLOBAL_VARIABLES_SET.add("PIKYAZICI");
 		GLOBAL_VARIABLES_SET.add("HESDOKYAZICI");
 		GLOBAL_VARIABLES_SET.add("SW_PIKYAZ");
-
 	}
 
 	/**
