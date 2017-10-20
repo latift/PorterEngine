@@ -96,8 +96,6 @@ public class JavaFindWithElement extends AbsctractConditionalJavaElement impleme
 
 	private AbstractToken viewName; // LIMAN
 	
-	private List<AbstractToken> sortList;
-	
 	String calculatedResultListName = "";// LIMAN_RESULT_LIST
 	String calculatedDAOName = "";
 	

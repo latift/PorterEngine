@@ -44,6 +44,8 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 	protected String pojoType; // Liman 
 
 	private String endCastStr="";
+	
+	protected List<AbstractToken> sortList;
 
 	protected void convertConditionsToFilters() {
 		conditionListWithFiltersAndParantesiz = new ArrayList();
@@ -397,8 +399,41 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 			}
 
 		}
+		createdFindByMethodName=addSortPartToMethodName(createdFindByMethodName);
 		return createdFindByMethodName.toString();
 		
+	}
+
+	private StringBuilder addSortPartToMethodName(StringBuilder createdFindByMethodName) {
+		
+		if(sortList==null || sortList.size()==0){
+			return createdFindByMethodName;
+		}
+		
+		try {
+			AbstractToken curSortToken;
+			createdFindByMethodName.append("_SortedBy");
+			for(int i=1; i<sortList.size(); i++ ){
+				curSortToken=sortList.get(i);
+				curSortToken.setPojoVariable(false);
+				String sortKey;
+				if(curSortToken.getLinkedToken()!=null){
+					curSortToken.getLinkedToken().setPojoVariable(false);
+					 sortKey=Utility.viewNameToPojoName(JavaWriteUtilities.toCustomString(curSortToken.getLinkedToken()).toString());
+					
+				}else if(curSortToken.getColumnNameToken()!=null){
+					curSortToken.getColumnNameToken().setPojoVariable(false);
+					 sortKey=Utility.viewNameToPojoName(JavaWriteUtilities.toCustomString(curSortToken.getColumnNameToken()).toString());
+				}else{
+					 sortKey=Utility.viewNameToPojoName(JavaWriteUtilities.toCustomString(curSortToken).toString());				
+				}
+				createdFindByMethodName.append("_"+sortKey);
+			}
+		} catch (Exception e) {
+			logger.debug(e.getMessage(), e);
+			return createdFindByMethodName;
+		}
+		return createdFindByMethodName;
 	}
 
 	protected void writeDAOInterfaceCode() {
