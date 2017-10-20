@@ -31,6 +31,7 @@ import tr.com.vbt.java.basic.JavaResetElement;
 import tr.com.vbt.java.basic.JavaReturnElement;
 import tr.com.vbt.java.basic.JavaScannerElement;
 import tr.com.vbt.java.basic.JavaSetControl;
+import tr.com.vbt.java.basic.JavaSetWindow;
 import tr.com.vbt.java.basic.JavaSubtractElement;
 import tr.com.vbt.java.basic.JavaUpdateElement;
 import tr.com.vbt.java.conditions.JavaBackoutTransaction;
@@ -425,6 +426,9 @@ public class CreateProcessOperator extends ProcessOperator {
 
 		case "JavaBaseElement":
 			elementForCreate = new JavaBaseElement();
+			break;
+		case "JavaSetWindow":
+			elementForCreate = new JavaSetWindow();
 			break;
 		case "JavaClosePrinter":
 			elementForCreate = new JavaClosePrinter();

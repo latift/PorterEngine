@@ -76,7 +76,7 @@ public class JavaCallNatElement extends  AbstractJavaElement{
 							JavaClassElement.javaCodeBuffer.append("new Parameter(\""+parameter.getColumnNameToken().getDeger().toString()+"\","+JavaWriteUtilities.toCustomString(parameter)+")");
 									
 						}else if(parameter.isRecordVariable() && parameter.getLinkedToken()!=null){
-							JavaClassElement.javaCodeBuffer.append("new Parameter(\""+parameter.getLinkedToken().getDeger().toString()+"\","+JavaWriteUtilities.toCustomString(parameter)+")");
+							JavaClassElement.javaCodeBuffer.append("new Parameter(\""+JavaWriteUtilities.toCustomString(parameter)+"\","+JavaWriteUtilities.toCustomString(parameter)+")");
 									
 						}else {
 							JavaClassElement.javaCodeBuffer.append("new Parameter(\""+parameter.getDeger().toString()+"\","+JavaWriteUtilities.toCustomString(parameter)+")");

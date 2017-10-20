@@ -73,8 +73,8 @@ public class PaternSetWindow extends AbstractPattern{
 			matchedCommandAdd.getParameters().put("controlName", matchedCommandAdd.getWindowName());
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("windowOffState")){
 			String windowOffState=(String) currentTokenForMatch.getDeger();
-			matchedCommandAdd.setWindowName(windowOffState);
-			matchedCommandAdd.getParameters().put("windowOffState", matchedCommandAdd.isWindowOffState());
+			matchedCommandAdd.setWindowOffState(windowOffState);
+			matchedCommandAdd.getParameters().put("windowOffState", matchedCommandAdd.getWindowOffState());
 		}
 	}
 		

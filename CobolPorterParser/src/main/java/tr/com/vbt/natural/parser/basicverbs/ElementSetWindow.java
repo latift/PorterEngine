@@ -12,7 +12,7 @@ public class ElementSetWindow extends AbstractCommand{
 	
 	private String windowName;
 	
-	private boolean windowOffState;
+	private String windowOffState;
 	
 	
 	public ElementSetWindow(AbstractToken baseToken,
@@ -61,13 +61,14 @@ public class ElementSetWindow extends AbstractCommand{
 		this.windowName = windowName;
 	}
 
-	public boolean isWindowOffState() {
+	public String getWindowOffState() {
 		return windowOffState;
 	}
 
-	public void setWindowOffState(boolean windowOffState) {
+	public void setWindowOffState(String windowOffState) {
 		this.windowOffState = windowOffState;
 	}
+
 
 	
 
