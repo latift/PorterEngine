@@ -611,6 +611,48 @@ public class ConvertUtilities {
 		
 	}
 	
+	//Girtar --> girtar
+	//Hescinsi --> id.hescinsi
+	public static String getPojosFieldTypeForHibernate(String pojoName, String columnName) {
+		
+		String className = Utility.viewNameToPojoName(pojoName);
+		
+		columnName=columnName.substring(0,1).toLowerCase()+columnName.substring(1);
+		
+		String fieldName = columnName;
+
+		Class c = null;
+
+		c = Utility.findPojoClass(className);
+		
+		Field field;
+
+		try {
+			field = c.getDeclaredField(fieldName);
+		
+			return columnName;
+
+		} catch (Exception e) {
+			
+			try {
+				Class cPK = null;
+				
+				cPK = Utility.findPojoClass(className+"PK");
+				
+				field = cPK.getDeclaredField(fieldName);
+				
+				field.setAccessible(true);
+				
+				return "id."+columnName;
+	
+			} catch (Exception e1) {
+				logger.debug(e1.getMessage(),e1);
+				return "";
+			}
+			
+		}
+		
+	}
 	public static boolean pojoHasField(AbstractToken pojoName,AbstractToken columnToken) {
 		// THESAP -->Thesap
 		String className = Utility.viewNameToPojoName(pojoName.getDeger().toString());

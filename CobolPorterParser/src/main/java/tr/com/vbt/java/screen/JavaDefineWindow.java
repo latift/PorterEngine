@@ -16,7 +16,7 @@ public class JavaDefineWindow extends  AbstractJavaElement{
 		
 		
 		try{
-			JavaClassElement.javaCodeBuffer.append(windowName+"=new Window()");
+			JavaClassElement.javaCodeBuffer.append("Window"+windowName+"=new Window()");
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA);
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 			writeChildrenJavaToStream();

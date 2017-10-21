@@ -7,6 +7,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javassist.compiler.Javac;
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.MethodImplementation;
@@ -558,13 +559,60 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 		if(orCondition){
 			createFilterWithOrConditions();
 		}
+		findByMethodImplemantation.getMethodImplementation().append(createSortRestrictionsForHibernate());
+	
 		findByMethodImplemantation.getMethodImplementation().append("return main_crit.list();");
 		
 		JavaClassElement.javaHibernateCodeMap.put(findByMethodSignature.toUniqueString(), findByMethodImplemantation);
 
 	}
 	
-	//main_crit.add(Restrictions.or(Restrictions.eq("musno1", MUSNO1),Restrictions.eq("musno2", MUSNO2)));
+	//main_crit.addOrder(Order.asc("Girtar"));
+	//main_crit.addOrder(Order.asc("Girsaat"))
+	//main_crit.addOrder(Order.asc("Desc"))
+	
+	private String createSortRestrictionsForHibernate() {
+		
+		StringBuilder sb;
+		try {
+			if(sortList==null || sortList.size()==0){
+				return "";
+			}
+			
+			sb=new StringBuilder();
+			String sortKey;
+			AbstractToken curSortToken;
+			for(int i=1; i< sortList.size(); i++){
+				curSortToken = sortList.get(i);
+				if(curSortToken.getLinkedToken()!=null){
+					curSortToken.getLinkedToken().setPojoVariable(false);
+					 sortKey=Utility.viewNameToPojoName(JavaWriteUtilities.toCustomString(curSortToken.getLinkedToken()).toString());
+					
+				}else if(curSortToken.getColumnNameToken()!=null){
+					curSortToken.getColumnNameToken().setPojoVariable(false);
+					 sortKey=Utility.viewNameToPojoName(JavaWriteUtilities.toCustomString(curSortToken.getColumnNameToken()).toString());
+				}else{
+					 sortKey=Utility.viewNameToPojoName(JavaWriteUtilities.toCustomString(curSortToken).toString());				
+				}
+				
+				//Hescinsi --> id.hescinsi
+				sortKey=ConvertUtilities.getPojosFieldTypeForHibernate(pojoType,sortKey);
+				
+				if(curSortToken.isDescending()){
+					sb.append("main_crit.addOrder(Order.desc(\""+sortKey+"\"))");
+				}else{
+					sb.append("main_crit.addOrder(Order.asc(\""+sortKey+"\"))");
+				}
+				sb.append(JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+			}
+		} catch (Exception e) {
+			logger.debug(e.getMessage(),e);
+			return "";
+		}
+		return sb.toString();
+	}
+
+		//main_crit.add(Restrictions.or(Restrictions.eq("musno1", MUSNO1),Restrictions.eq("musno2", MUSNO2)));
 		// Aşağıdaki method Restrictions.or(Restrictions.eq("musno1", MUSNO1),Restrictions.eq("musno2", MUSNO2)) donmeli.
 		private String writeHibernateCodeInParantez(List conditionListInParantesiz) {
 			
@@ -716,6 +764,60 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 			findByMethodImplemantation.getMethodImplementation().append(result.toString());
 			findByMethodImplemantation.getMethodImplementation().append(JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
 			
+		}
+
+		/*
+		private String createFindByString() {
+			StringBuffer findBy=new StringBuffer("findBy");
+			for(int index=0; index<filterList.size();index++){
+				findBy.append(filterList.get(index).getFilterName());
+				findBy.append(filterList.get(index).getFilterOperator());
+				findBy.append(filterList.get(index).getFilterValue());
+			}
+			return findBy.toString();
+		}*/
+
+		// 4218   FIND IDGIDBS-TAZIL WITH MUSNO=+MUSNO2 SORTED BY GIRTAR GIRZAM    --> FIND IDGIDBS-TAZIL WITH MUSNO=+MUSNO2  ve  SORTED BY GIRTAR GIRZAM
+		protected void parseSortList() { 
+			 List<AbstractToken> newConditionList=new ArrayList<AbstractToken>();
+			 List<AbstractToken> newSortList=new ArrayList<AbstractToken>();
+			 boolean sortReached=false;
+			 boolean descanding=false;
+			 int sortByIndex=0;
+			for(int index=0; index<conditionList.size();index++){
+				if(conditionList.get(index).isKelime(ReservedNaturalKeywords.SORTED_BY)){
+					sortByIndex=index;
+					break;
+				}else{
+					newConditionList.add(conditionList.get(index));
+				}
+		
+			}
+			
+			AbstractToken curToken=null, nextToken=null;
+			
+			for(int index=sortByIndex; index<conditionList.size();index++){
+				
+				curToken=conditionList.get(index);
+				if(index<conditionList.size()-1){
+					nextToken=conditionList.get(index+1);
+				}
+			
+				if(nextToken.isKelime("DESC")){
+						curToken.setDescending(true);
+						conditionList.remove(index+1);
+				}else if(nextToken.isKelime("ASC")){
+						curToken.setDescending(false);
+						conditionList.remove(index+1);
+				}
+				
+				newSortList.add(curToken);
+				
+			
+			}
+			this.conditionList=newConditionList;
+			
+			this.sortList=newSortList;
 		}
 
 		

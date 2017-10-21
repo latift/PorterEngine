@@ -95,7 +95,7 @@ public class JavaFindNumberWithElement extends AbsctractConditionalJavaElement i
 
 	final static Logger logger = LoggerFactory.getLogger(JavaDBViewOfDataTypeElement.class);
 
-	private String viewName; // LIMAN
+	private AbstractToken viewName; // LIMAN
 	
 	private AbstractToken viewNameToken; //LIMAN;
 	
@@ -115,12 +115,14 @@ public class JavaFindNumberWithElement extends AbsctractConditionalJavaElement i
 
 		String viewNameWithoutUnderscore;
 		
-		viewName = (String) this.getParameters().get("viewName");
+		viewName = (AbstractToken) this.getParameters().get("viewName");
 		
 		viewNameToken=new KelimeToken(viewName, 0, 0, 0);  //Tablo ismi.
 		
-		pojoType=Utility.viewNameToPojoName(viewName);
+		pojoType=Utility.viewNameToPojoName(viewName.getTypeNameOfView());
+		
 		conditionList = (List<AbstractToken>) this.parameters.get("conditionList");
+		
 		parseSortList();
 		convertConditions(); // Tek token olmayan filtre operatorlerini tek tokena düşürür.
 		defineConditionTokenTypes();
@@ -131,6 +133,13 @@ public class JavaFindNumberWithElement extends AbsctractConditionalJavaElement i
 			e1.printStackTrace();
 		}
 		
+		
+		calculatedResultListName = viewName.toCustomString().replaceAll("_", "") + "_RESULT_LIST";
+		calculatedDAOName = viewName.getTypeNameOfView().replaceAll("_", "") + "_DAO";
+		
+		javaIfNoRecords=this.getChildWithName("JavaIfNoRecords");
+		
+		
 
 		calculatedResultListName = "";// LIMAN_RESULT_LIST
 		calculatedDAOName = "";
@@ -140,10 +149,8 @@ public class JavaFindNumberWithElement extends AbsctractConditionalJavaElement i
 		//itName="it"+pojoType;
 		itName=itNameManager.createIteratorName(pojoType);
 
-		viewNameWithoutUnderscore=viewName.replaceAll("-", "").replaceAll("_", "");
-
-		calculatedResultListName = viewNameWithoutUnderscore + "_RESULT_LIST";
-		calculatedDAOName = viewNameWithoutUnderscore + "_DAO";
+		calculatedResultListName = viewName.toCustomString().replaceAll("_", "") + "_RESULT_LIST";
+		calculatedDAOName = viewName.getTypeNameOfView().replaceAll("_", "") + "_DAO";
 		
 		javaIfNoRecords=this.getChildWithName("JavaIfNoRecords");
 		
@@ -217,51 +224,14 @@ public class JavaFindNumberWithElement extends AbsctractConditionalJavaElement i
 		
 	}
 
-	
-	
-	/*
-	private String createFindByString() {
-		StringBuffer findBy=new StringBuffer("findBy");
-		for(int index=0; index<filterList.size();index++){
-			findBy.append(filterList.get(index).getFilterName());
-			findBy.append(filterList.get(index).getFilterOperator());
-			findBy.append(filterList.get(index).getFilterValue());
-		}
-		return findBy.toString();
-	}*/
-
-	// 4218   FIND IDGIDBS-TAZIL WITH MUSNO=+MUSNO2 SORTED BY GIRTAR GIRZAM    --> FIND IDGIDBS-TAZIL WITH MUSNO=+MUSNO2  ve  SORTED BY GIRTAR GIRZAM
-	private void parseSortList() { 
-		 List<AbstractToken> newConditionList=new ArrayList<AbstractToken>();
-		 List<AbstractToken> newSortList=new ArrayList<AbstractToken>();
-		 boolean sortReached=false;
-		for(int index=0; index<conditionList.size();index++){
-			if(conditionList.get(index).getTip().equals(TokenTipi.Kelime)&& conditionList.get(index).getDeger().equals(ReservedNaturalKeywords.SORTED_BY)){
-				sortReached=true;
-			}
-			
-			if(sortReached){
-				newSortList.add(conditionList.get(index));
-			}else{
-				newConditionList.add(conditionList.get(index));
-			}
-		}
-		this.conditionList=newConditionList;
-		this.sortList=newSortList;
-	}
-
-
-	public String getViewName() {
+	public AbstractToken getViewName() {
 		return viewName;
 	}
 
-	public void setViewName(String viewName) {
+
+	public void setViewName(AbstractToken viewName) {
 		this.viewName = viewName;
 	}
-
-
-
-
 
 	@Override
 	public AbstractToken getPojoToken() {

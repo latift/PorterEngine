@@ -265,36 +265,6 @@ public class JavaFindWithElement extends AbsctractConditionalJavaElement impleme
 
 	
 	
-	/*
-	private String createFindByString() {
-		StringBuffer findBy=new StringBuffer("findBy");
-		for(int index=0; index<filterList.size();index++){
-			findBy.append(filterList.get(index).getFilterName());
-			findBy.append(filterList.get(index).getFilterOperator());
-			findBy.append(filterList.get(index).getFilterValue());
-		}
-		return findBy.toString();
-	}*/
-
-	// 4218   FIND IDGIDBS-TAZIL WITH MUSNO=+MUSNO2 SORTED BY GIRTAR GIRZAM    --> FIND IDGIDBS-TAZIL WITH MUSNO=+MUSNO2  ve  SORTED BY GIRTAR GIRZAM
-	private void parseSortList() { 
-		 List<AbstractToken> newConditionList=new ArrayList<AbstractToken>();
-		 List<AbstractToken> newSortList=new ArrayList<AbstractToken>();
-		 boolean sortReached=false;
-		for(int index=0; index<conditionList.size();index++){
-			if(conditionList.get(index).getTip().equals(TokenTipi.Kelime)&& conditionList.get(index).getDeger().equals(ReservedNaturalKeywords.SORTED_BY)){
-				sortReached=true;
-			}
-			
-			if(sortReached){
-				newSortList.add(conditionList.get(index));
-			}else{
-				newConditionList.add(conditionList.get(index));
-			}
-		}
-		this.conditionList=newConditionList;
-		this.sortList=newSortList;
-	}
 
 
 

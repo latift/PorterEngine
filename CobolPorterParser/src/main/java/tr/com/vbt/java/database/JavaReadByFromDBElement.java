@@ -96,8 +96,6 @@ public class JavaReadByFromDBElement extends AbsctractConditionalJavaElement {
 
 	private AbstractToken viewName; // LIMAN
 	
-	private List<AbstractToken> sortList;
-	
 	String calculatedResultListName = "";// LIMAN_RESULT_LIST
 	String calculatedDAOName = "";
 	
@@ -274,75 +272,8 @@ public class JavaReadByFromDBElement extends AbsctractConditionalJavaElement {
 		return findBy.toString();
 	}*/
 
-	// 4218   FIND IDGIDBS-TAZIL WITH MUSNO=+MUSNO2 SORTED BY GIRTAR GIRZAM    --> FIND IDGIDBS-TAZIL WITH MUSNO=+MUSNO2  ve  SORTED BY GIRTAR GIRZAM
-	private void parseSortList() { 
-		 List<AbstractToken> newConditionList=new ArrayList<AbstractToken>();
-		 List<AbstractToken> newSortList=new ArrayList<AbstractToken>();
-		 boolean sortReached=false;
-		if(conditionList==null){
-			return;
-		}
-		for(int index=0; index<conditionList.size();index++){
-			if(conditionList.get(index).getTip().equals(TokenTipi.Kelime)&& conditionList.get(index).getDeger().equals(ReservedNaturalKeywords.SORTED_BY)){
-				sortReached=true;
-			}
-			
-			if(sortReached){
-				newSortList.add(conditionList.get(index));
-			}else{
-				newConditionList.add(conditionList.get(index));
-			}
-		}
-		this.conditionList=newConditionList;
-		this.sortList=newSortList;
-	}
-
+		
 	
-
-	private void convertStartingFromToFilter() {
-	
-		
-	}
-
-	private void convertStartingFromEndingAtToFilter() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	private boolean conditionListContainsStartingFrom() {
-		
-		AbstractToken curToken;
-		for(int index=0;index<conditionList.size();index++){
-			
-			curToken=conditionList.get(index);
-			if(curToken.isOzelKelime(ReservedNaturalKeywords.STARTING_FROM)){
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private boolean conditionListContainsStartingFromAndEndingAt() {
-		AbstractToken curToken;
-		
-		boolean hasStartingFrom = false, hasEndingAt = false;
-		for(int index=0;index<conditionList.size();index++){
-			
-			curToken=conditionList.get(index);
-			if(curToken.isOzelKelime(ReservedNaturalKeywords.STARTING_FROM)){
-				hasStartingFrom=true;
-			}else if(curToken.isOzelKelime(ReservedNaturalKeywords.ENDING_AT)){
-				hasEndingAt=true;
-			}
-			
-			if(hasStartingFrom&&hasEndingAt){
-				return true;
-			}
-			
-		}
-		return false;
-	}
-
 	public AbstractToken getViewName() {
 		return viewName;
 	}

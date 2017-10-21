@@ -4269,19 +4269,25 @@ public class NaturalLexing extends AbstractLexing {
 	// #SIRALIMAN-SAYFA(#SAYFA) --> #SIRALIMAN-SAYFA
 	// SCR-EXEMPT-CODE (LNSTART+2) --> SCR-EXEMPT-CODE
 	private void controlOneDimensionArrayParameters() {
-		AbstractToken astCurrent = null, astStartParantez = null, astPreDimension, astNextDimension;
+		AbstractToken astCurrent = null, astStartParantez = null, astPreDimension, astNextDimension, astPrevious=null;
 
 		boolean endDefineReached = false;
 		ArrayToken arrayToken = null;
 
-		for (int i = 0; i < tokenListesi.size() - 3; i++) {
+		for (int i = 1; i < tokenListesi.size() - 3; i++) {
 
+			astPrevious = tokenListesi.get(i-1);
 			astCurrent = tokenListesi.get(i);
 			astStartParantez = tokenListesi.get(i + 1);
 			astPreDimension = tokenListesi.get(i + 2);
 			astNextDimension = tokenListesi.get(i + 3);
 
 			if (astCurrent.isPojoVariable()) {
+
+				continue;
+			}
+			
+			if (astPrevious.isOzelKelime("FIND")) {
 
 				continue;
 			}
@@ -4375,14 +4381,16 @@ public class NaturalLexing extends AbstractLexing {
 
 	// #SIRALIMAN-SAYFA(#SAYFA) --> #SIRALIMAN-SAYFA
 	private void controlTwoDimensionArrayParameters() {
-		AbstractToken astCurrent = null, astStartParantez = null, astFirstDimension = null, astSecondDimension = null,
+		AbstractToken astCurrent = null, astStartParantez = null, astFirstDimension = null, astSecondDimension = null,astPrevious=null,
 				astEndParantez = null, astComma;
 
 		ArrayToken arrayToken = null;
 
 		boolean endDefineReached = false;
 
-		for (int i = 0; i < tokenListesi.size() - 5; i++) {
+		for (int i = 1; i < tokenListesi.size() - 5; i++) {
+			
+			astPrevious=tokenListesi.get(i-1);
 			astCurrent = tokenListesi.get(i);
 			astStartParantez = tokenListesi.get(i + 1);
 			astFirstDimension = tokenListesi.get(i + 2);
@@ -4396,6 +4404,11 @@ public class NaturalLexing extends AbstractLexing {
 			}
 			
 			if(astCurrent.isKelime("WHERE")|| astCurrent.isOzelKelime("WHERE")){
+				continue;
+			}
+			
+			if (astPrevious.isOzelKelime("FIND")) {
+
 				continue;
 			}
 

@@ -92,7 +92,7 @@ public class PaternFindOneWith extends AbstractPatternFromXToYWithoutCarriageRet
 	@Override
 	public AbstractCommand createElement() {
 		ElementFindOneWith createdElement = new ElementFindOneWith(
-				ReservedNaturalKeywords.FIND_ONE_WITH, "DATABASE.*.FIND_WITH");
+				ReservedNaturalKeywords.FIND_ONE_WITH, "DATABASE.*.FIND_NUMBER_WITH");
 		return createdElement;
 	}
 
