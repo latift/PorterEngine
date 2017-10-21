@@ -764,8 +764,13 @@ public class TransferFromNaturalToJavaMain {
 			
 			DDMList.getInstance().writeUndefinedDDMList();
 			
+			javaTreeElement.resetSourceCode();
+			IteratorNameManager.resetIteratorNameManager();
+			
 			writeMapTester(javaTreeElement);
 	
+			javaTreeElement.resetSourceCode();
+			IteratorNameManager.resetIteratorNameManager();
 		}
 
 	}
