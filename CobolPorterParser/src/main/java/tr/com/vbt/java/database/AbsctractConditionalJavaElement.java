@@ -796,28 +796,31 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 			
 			AbstractToken curToken=null, nextToken=null;
 			
-			for(int index=sortByIndex; index<conditionList.size();index++){
+			if(sortByIndex!=0){
+				for(int index=sortByIndex; index<conditionList.size();index++){
+					
+					curToken=conditionList.get(index);
+					if(index<conditionList.size()-1){
+						nextToken=conditionList.get(index+1);
+					}
 				
-				curToken=conditionList.get(index);
-				if(index<conditionList.size()-1){
-					nextToken=conditionList.get(index+1);
+					if(nextToken.isKelime("DESC")){
+							curToken.setDescending(true);
+							conditionList.remove(index+1);
+					}else if(nextToken.isKelime("ASC")){
+							curToken.setDescending(false);
+							conditionList.remove(index+1);
+					}
+					
+					newSortList.add(curToken);
+					
+				
 				}
-			
-				if(nextToken.isKelime("DESC")){
-						curToken.setDescending(true);
-						conditionList.remove(index+1);
-				}else if(nextToken.isKelime("ASC")){
-						curToken.setDescending(false);
-						conditionList.remove(index+1);
-				}
-				
-				newSortList.add(curToken);
-				
-			
+				this.sortList=newSortList;
 			}
 			this.conditionList=newConditionList;
 			
-			this.sortList=newSortList;
+			
 		}
 
 		
