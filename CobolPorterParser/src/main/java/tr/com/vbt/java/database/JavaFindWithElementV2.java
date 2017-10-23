@@ -88,11 +88,11 @@ import tr.com.vbt.token.TokenTipi;
         												or ise  crit.or(c3); yap.
         
  */ 
-public class JavaFindWithElement extends AbsctractConditionalJavaElement implements FinderJavaElement{
+public class JavaFindWithElementV2 extends AbsctractConditionalJavaElement implements FinderJavaElement{
 	
 	ConversionLogModel logModel=ConversionLogModel.getInstance();
 
-	final static Logger logger = LoggerFactory.getLogger(JavaFindWithElement.class);
+	final static Logger logger = LoggerFactory.getLogger(JavaFindWithElementV2.class);
 
 	private AbstractToken viewName; // LIMAN
 	
@@ -103,7 +103,7 @@ public class JavaFindWithElement extends AbsctractConditionalJavaElement impleme
 	
 	private AbstractJava javaIfNoRecords;
 	
-	private AbstractToken maxResultCount; //Liman
+	
 	
 	public boolean writeJavaToStream() throws Exception{
 		super.writeJavaToStream();

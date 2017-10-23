@@ -23,6 +23,9 @@ public class ElementFindWith extends AbstractMultipleLinesCommand{
 	
 	private AbstractToken viewName; //Liman
 	
+	private AbstractToken maxResultCount; //Liman
+	
+	
 	private List<AbstractToken> conditionList=new ArrayList<AbstractToken>();
 	
 	
@@ -88,5 +91,15 @@ public class ElementFindWith extends AbstractMultipleLinesCommand{
 	public void setConditionList(List<AbstractToken> conditionList) {
 		this.conditionList = conditionList;
 	}
+
+	public AbstractToken getMaxResultCount() {
+		return maxResultCount;
+	}
+
+	public void setMaxResultCount(AbstractToken maxResultCount) {
+		this.maxResultCount = maxResultCount;
+	}
+	
+	
 	
 }

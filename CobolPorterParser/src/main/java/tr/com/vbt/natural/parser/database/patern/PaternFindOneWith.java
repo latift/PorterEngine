@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.lexer.ReservedCobolKeywords;
 import tr.com.vbt.lexer.ReservedNaturalKeywords;
-import tr.com.vbt.natural.parser.database.ElementFindOneWith;
 import tr.com.vbt.natural.parser.database.ElementFindWith;
 import tr.com.vbt.patern.carriage_return.AbstractPatternFromXToYWithoutCarriageReturn;
 import tr.com.vbt.token.AbstractToken;
@@ -61,6 +60,7 @@ public class PaternFindOneWith extends AbstractPatternFromXToYWithoutCarriageRet
 		patternTokenList.add(astParOpen);
 		
 		astRecordNum=new SayiToken<>();
+		astRecordNum.setSourceFieldName("maxResultCount");
 		patternTokenList.add(astRecordNum);
 		
 		astParClose=new KarakterToken(')', 0,0,0);
@@ -91,8 +91,8 @@ public class PaternFindOneWith extends AbstractPatternFromXToYWithoutCarriageRet
 
 	@Override
 	public AbstractCommand createElement() {
-		ElementFindOneWith createdElement = new ElementFindOneWith(
-				ReservedNaturalKeywords.FIND_ONE_WITH, "DATABASE.*.FIND_NUMBER_WITH");
+		ElementFindWith createdElement = new ElementFindWith(
+				ReservedNaturalKeywords.FIND_ONE_WITH, "DATABASE.*.FIND_WITH");
 		return createdElement;
 	}
 
@@ -101,7 +101,7 @@ public class PaternFindOneWith extends AbstractPatternFromXToYWithoutCarriageRet
 			AbstractToken currentTokenForMatch,
 			AbstractToken abstractTokenInPattern) {
 
-		ElementFindOneWith matchedCommandAdd = (ElementFindOneWith) matchedCommand;
+		ElementFindWith matchedCommandAdd = (ElementFindWith) matchedCommand;
 
 		super.setSatirNumarasi(matchedCommand,currentTokenForMatch, abstractTokenInPattern);if(abstractTokenInPattern.getSourceFieldName()==null){
 			
@@ -109,6 +109,11 @@ public class PaternFindOneWith extends AbstractPatternFromXToYWithoutCarriageRet
 		
 			matchedCommandAdd.setViewName(currentTokenForMatch);
 			matchedCommandAdd.getParameters().put("viewName",matchedCommandAdd.getViewName());
+			
+		}else if (abstractTokenInPattern.getSourceFieldName().equals("maxResultCount")) {
+		
+			matchedCommandAdd.setViewName(currentTokenForMatch);
+			matchedCommandAdd.getParameters().put("maxResultCount",matchedCommandAdd.getViewName());
 			
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("conditionList")){
 			

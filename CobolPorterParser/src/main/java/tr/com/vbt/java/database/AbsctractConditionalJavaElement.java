@@ -47,6 +47,8 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 	private String endCastStr="";
 	
 	protected List<AbstractToken> sortList;
+	
+	protected AbstractToken maxResultCount; //Liman
 
 	protected void convertConditionsToFilters() {
 		conditionListWithFiltersAndParantesiz = new ArrayList();
