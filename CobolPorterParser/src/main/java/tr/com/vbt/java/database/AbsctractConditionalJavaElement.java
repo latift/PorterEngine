@@ -186,9 +186,9 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 			return "GE";
 		} else if (curFilter.getFilterOperator().getDeger().equals("<=")) {
 			return "LE";
-		} else if (curFilter.getFilterOperator().getDeger().equals(">")) {
+		} else if (curFilter.getFilterOperator().getDeger().equals(">") || curFilter.getFilterOperator().isKarakter('>')) {
 			return "GT";
-		} else if (curFilter.getFilterOperator().getDeger().equals(">")) {
+		} else if (curFilter.getFilterOperator().getDeger().equals("<") || curFilter.getFilterOperator().isKarakter('<')) {
 			return "LT";
 		} else if (curFilter.getFilterOperator().getDeger().equals("^=")) {
 			return "NE";
@@ -562,6 +562,8 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 			createFilterWithOrConditions();
 		}
 		findByMethodImplemantation.getMethodImplementation().append(createSortRestrictionsForHibernate());
+		
+		findByMethodImplemantation.getMethodImplementation().append(createMaxResult());
 	
 		findByMethodImplemantation.getMethodImplementation().append("return main_crit.list();");
 		
@@ -569,6 +571,25 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 
 	}
 	
+	private String createMaxResult() {
+		StringBuilder sb;
+		try {
+			if(maxResultCount==null){
+				return "";
+			}
+			
+			sb=new StringBuilder();
+				
+			sb.append("main_crit.addOrder(Order.desc(\""+JavaWriteUtilities.toCustomString(maxResultCount)+"\"))");
+				
+			sb.append(JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+		} catch (Exception e) {
+			logger.debug(e.getMessage(),e);
+			return "";
+		}
+		return sb.toString();
+	}
+
 	//main_crit.addOrder(Order.asc("Girtar"));
 	//main_crit.addOrder(Order.asc("Girsaat"))
 	//main_crit.addOrder(Order.asc("Desc"))
@@ -693,15 +714,21 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 				findByMethodImplemantation.getMethodImplementation().append("main_crit.add(Restrictions.unknown(");
 			}
 
+			String criteriaName;
+			criteriaName=createFilterName(filter.getFilterName().getDeger().toString());
 			if(filter.getFilterValue().getTip().equals(TokenTipi.Sayi)){
 				findByMethodImplemantation.getMethodImplementation().append(filter.getFilterName().getDeger().toString().replaceAll("-","_").toLowerCase()+"\", "+filter.getFilterName().getDeger().toString().replaceAll("-","_")+")");
 			}else if(filter.getFilterValue().isRecordVariable()){
-				findByMethodImplemantation.getMethodImplementation().append(Utility.columnNameToPojoFieldName(filter.getFilterName().getDeger().toString())+"\", "+filter.getFilterValue().getLinkedToken().getDeger().toString().replaceAll("-","_")+")");
+				findByMethodImplemantation.getMethodImplementation().append(criteriaName+"\", "+filter.getFilterValue().getLinkedToken().getDeger().toString().replaceAll("-","_")+")");
 			}else if(filter.getFilterValue().isPojoVariable()){
-				findByMethodImplemantation.getMethodImplementation().append(Utility.columnNameToPojoFieldName(filter.getFilterName().getDeger().toString())+"\", "+filter.getFilterValue().getColumnNameToken().getDeger().toString().replaceAll("-","_")+")");
-			}else{
-				findByMethodImplemantation.getMethodImplementation().append(Utility.columnNameToPojoFieldName(filter.getFilterName().getDeger().toString())+"\", "+filter.getFilterValue().getDeger().toString().replaceAll("-","_")+")");
+				findByMethodImplemantation.getMethodImplementation().append(criteriaName+"\", "+filter.getFilterValue().getColumnNameToken().getDeger().toString().replaceAll("-","_")+")");
+			}else if(filter.getFilterName().getLinkedToken()!=null){
+				findByMethodImplemantation.getMethodImplementation().append(criteriaName+"\", "+filter.getFilterValue().getDeger().toString().replaceAll("-","_")+")");
+			}else if(filter.getFilterName().getColumnNameToken()!=null){
+				findByMethodImplemantation.getMethodImplementation().append(criteriaName+"\", "+filter.getFilterValue().getDeger().toString().replaceAll("-","_")+")");
+			}else {
 				
+				findByMethodImplemantation.getMethodImplementation().append(criteriaName+"\", "+filter.getFilterValue().getDeger().toString().replaceAll("-","_")+")");
 			}
 			
 			findByMethodImplemantation.getMethodImplementation().append(")");
@@ -711,6 +738,11 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 			
 		}
 		
+
+		private String createFilterName(String filterOrjName) {
+			String filterName=ConvertUtilities.getPojosFieldTypeForHibernate(pojoType,Utility.columnNameToPojoFieldName(filterOrjName));
+			return filterName;
+		}
 
 		private void createFilterWithOrConditions() {
 			AbstractToken curToken;

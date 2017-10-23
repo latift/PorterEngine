@@ -48,7 +48,7 @@ import tr.com.vbt.java.conditions.JavaWhen;
 import tr.com.vbt.java.database.JavaDBViewOfDataTypeElement;
 import tr.com.vbt.java.database.JavaDeleteElement;
 import tr.com.vbt.java.database.JavaFindNumberWithElement;
-import tr.com.vbt.java.database.JavaFindWithElement;
+import tr.com.vbt.java.database.JavaFindWithElementV2;
 import tr.com.vbt.java.database.JavaGetElement;
 import tr.com.vbt.java.database.JavaIfNoRecordsElement;
 import tr.com.vbt.java.database.JavaReadByFromDBElement;
@@ -408,8 +408,8 @@ public class CreateProcessOperator extends ProcessOperator {
 		case "JavaReadByFromDBElement":
 			elementForCreate = new JavaReadByFromDBElement();
 			break;
-		case "JavaFindWithElement":
-			elementForCreate = new JavaFindWithElement();
+		case "JavaFindWithElementV2":
+			elementForCreate = new JavaFindWithElementV2();
 			break;
 		case "JavaFindNumberWithElement":
 			elementForCreate = new JavaFindNumberWithElement();
@@ -517,7 +517,12 @@ public class CreateProcessOperator extends ProcessOperator {
 			}
 			sourceElement.getParentJavaElement().getChildren().add(elementForCreate);
 			
-			elementForCreate.setParent(sourceElement.getParentJavaElement());
+			try {
+				elementForCreate.setParent(sourceElement.getParentJavaElement());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		try {
 			elementForCreate.setParameters(sourceElement.getParameters());

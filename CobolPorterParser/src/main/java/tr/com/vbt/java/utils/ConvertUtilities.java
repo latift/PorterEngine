@@ -274,6 +274,8 @@ public class ConvertUtilities {
 
 			}
 
+		}else if(variable.isConstantVariableWithQuota()){
+			return "String";
 		}
 		
 		String variableDeger = variable.getDeger().toString();
@@ -615,7 +617,7 @@ public class ConvertUtilities {
 	//Hescinsi --> id.hescinsi
 	public static String getPojosFieldTypeForHibernate(String pojoName, String columnName) {
 		
-		String className = Utility.viewNameToPojoName(pojoName);
+		//String className = Utility.viewNameToPojoName(pojoName);
 		
 		columnName=columnName.substring(0,1).toLowerCase()+columnName.substring(1);
 		
@@ -623,7 +625,7 @@ public class ConvertUtilities {
 
 		Class c = null;
 
-		c = Utility.findPojoClass(className);
+		c = Utility.findPojoClass(pojoName);
 		
 		Field field;
 
@@ -637,7 +639,7 @@ public class ConvertUtilities {
 			try {
 				Class cPK = null;
 				
-				cPK = Utility.findPojoClass(className+"PK");
+				cPK = Utility.findPojoClass(pojoName+"PK");
 				
 				field = cPK.getDeclaredField(fieldName);
 				

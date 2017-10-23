@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import tr.com.vbt.java.AbstractJavaElement;
+import tr.com.vbt.java.database.JavaIfNoRecordsElement;
 import tr.com.vbt.java.general.JavaClassElement;
 import tr.com.vbt.java.general.JavaConstants;
 import tr.com.vbt.java.utils.ConvertUtilities;
@@ -29,6 +30,10 @@ public class JavaEscapeBottomElement extends  AbstractJavaElement {
 			//hasVBTWhileStatement=hasStatementByName("JavaValidationElement");
 			
 			//isContinueNotInLoop=isStatementInLoop();
+			
+			if(this.parent instanceof JavaIfNoRecords || this.parent instanceof JavaIfNoRecordsElement){
+				return true;
+			}
 			
 			if(this.parameters.get("loopName") !=null){
 				loopName = (AbstractToken) this.parameters.get("loopName");
