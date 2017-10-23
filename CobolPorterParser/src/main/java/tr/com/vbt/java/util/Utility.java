@@ -306,6 +306,20 @@ public class Utility {
 
 			c=findPojoClass(className);
 			
+			if(c==null){ // find icindeki kolonların tablo ismi kayboldugundan boyle.
+				if(columnName.substring(columnName.length()-3).equalsIgnoreCase("LOR")){
+					return "date";
+				}else if(columnName.substring(columnName.length()-3).equalsIgnoreCase("TAR")){
+					return "date";
+				}else if(columnName.substring(columnName.length()-5).equalsIgnoreCase("TARIH")){
+					return "date";
+				}else if(columnName.substring(columnName.length()-3).equalsIgnoreCase("ZAM")){
+					return "time";
+				}else if(columnName.substring(columnName.length()-5).equalsIgnoreCase("ZAMAN")){
+					return "time";
+				}
+			}
+			
 		    try {
 				method= c.getDeclaredMethod(getterMethod, null);
 				returnClass=method.getReturnType();

@@ -251,6 +251,8 @@ public class ConvertUtilities {
 			return VariableTypes.LONG_TYPE;
 		}else if(columnReturnType.equals("date")){
 			return VariableTypes.DATE_TYPE;
+		}else if(columnReturnType.equals("time")){
+			return VariableTypes.TIME_TYPE;
 		}else if(columnReturnType.equals("grup")){
 			return VariableTypes.GRUP_TYPE;
 		}

@@ -18,6 +18,7 @@ import tr.com.vbt.java.general.JavaConstants;
 import tr.com.vbt.java.util.Utility;
 import tr.com.vbt.java.utils.ConvertUtilities;
 import tr.com.vbt.java.utils.JavaWriteUtilities;
+import tr.com.vbt.java.utils.VariableTypes;
 import tr.com.vbt.lexer.ConversionLogModel;
 import tr.com.vbt.lexer.ReservedNaturalKeywords;
 import tr.com.vbt.natural.parser.datalayout.program.ElementProgramDataTypeNatural;
@@ -580,7 +581,8 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 			
 			sb=new StringBuilder();
 				
-			sb.append("main_crit.addOrder(Order.desc(\""+JavaWriteUtilities.toCustomString(maxResultCount)+"\"))");
+			//main_crit.setMaxResults(1);
+			sb.append("main_crit.setMaxResults("+JavaWriteUtilities.toCustomString(maxResultCount)+")");
 				
 			sb.append(JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
 		} catch (Exception e) {
@@ -715,6 +717,7 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 			}
 
 			String criteriaName;
+			String filterType, filterValue="", columnType;
 			criteriaName=createFilterName(filter.getFilterName().getDeger().toString());
 			if(filter.getFilterValue().getTip().equals(TokenTipi.Sayi)){
 				findByMethodImplemantation.getMethodImplementation().append(filter.getFilterName().getDeger().toString().replaceAll("-","_").toLowerCase()+"\", "+filter.getFilterName().getDeger().toString().replaceAll("-","_")+")");
@@ -727,8 +730,20 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 			}else if(filter.getFilterName().getColumnNameToken()!=null){
 				findByMethodImplemantation.getMethodImplementation().append(criteriaName+"\", "+filter.getFilterValue().getDeger().toString().replaceAll("-","_")+")");
 			}else {
-				
-				findByMethodImplemantation.getMethodImplementation().append(criteriaName+"\", "+filter.getFilterValue().getDeger().toString().replaceAll("-","_")+")");
+				filterType=getFilterType(filter.getFilterValue());
+				filter.getFilterName().setPojoVariable(true);
+				columnType=getFilterType(filter.getFilterName());
+				if(filterType.equalsIgnoreCase("string_type") && columnType.equalsIgnoreCase("date_type")){
+					filterValue=filter.getFilterValue().getDeger().toString().replaceAll("-","_");
+					filterValue="FrameworkConvertUtilities.stringToSqlDate("+filterValue+",\"yyyy-MM-dd\")";
+				}else if(filterType.equalsIgnoreCase("string_type") && columnType.equalsIgnoreCase("time_type")){
+					filterValue=filter.getFilterValue().getDeger().toString().replaceAll("-","_");
+					filterValue="FrameworkConvertUtilities.stringToSqlTime("+filterValue+")";
+				}else{
+					filterValue=filter.getFilterValue().getDeger().toString().replaceAll("-","_");
+					
+				}
+				findByMethodImplemantation.getMethodImplementation().append(criteriaName+"\", "+filterValue+")");
 			}
 			
 			findByMethodImplemantation.getMethodImplementation().append(")");
@@ -738,6 +753,11 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 			
 		}
 		
+
+		private String getFilterType(AbstractToken type) {
+			VariableTypes varType=ConvertUtilities.getVariableType(type);
+			return varType.toString();
+		}
 
 		private String createFilterName(String filterOrjName) {
 			String filterName=ConvertUtilities.getPojosFieldTypeForHibernate(pojoType,Utility.columnNameToPojoFieldName(filterOrjName));
