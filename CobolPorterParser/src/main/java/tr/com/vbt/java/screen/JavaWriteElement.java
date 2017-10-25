@@ -403,9 +403,9 @@ public class JavaWriteElement extends AbstractJavaElement {
 
 		ScreenIO sIO = null;
 		
-		if(isMap || isMapTester){
+		/*if(isMap || isMapTester){
 			JavaClassElement.javaCodeBuffer.append("natprog.");
-		}
+		}*/
 		JavaClassElement.javaCodeBuffer.append("write(");
 		JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 
@@ -519,9 +519,9 @@ public class JavaWriteElement extends AbstractJavaElement {
 
 		JavaClassElement.javaCodeBuffer.append(",");
 
-		if(isMap || isMapTester){
+		/*if(isMap || isMapTester){
 			JavaClassElement.javaCodeBuffer.append("natprog.");
-		}
+		}*/
 
 		JavaClassElement.javaCodeBuffer.append(sIO.getValue());
 

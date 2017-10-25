@@ -364,6 +364,7 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 
 		
 		
+		createdFindByMethodName.append(createRecMaxNumber());
 		
 		for (int index = 0; index < conditionListWithFiltersAndParantesiz.size(); index++) {
 			curFilter = null;
@@ -406,6 +407,22 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 		createdFindByMethodName=addSortPartToMethodName(createdFindByMethodName);
 		return createdFindByMethodName.toString();
 		
+	}
+
+	private String createRecMaxNumber() {
+		
+		try {
+			if(maxResultCount==null){
+				return "";
+			}
+			
+			return maxResultCount.getDeger().toString();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "";
+		}
+					
 	}
 
 	private StringBuilder addSortPartToMethodName(StringBuilder createdFindByMethodName) {
@@ -838,6 +855,9 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 			 boolean sortReached=false;
 			 boolean descanding=false;
 			 int sortByIndex=0;
+			 if(conditionList==null ||conditionList.size()==0){
+				 return;
+			 }
 			for(int index=0; index<conditionList.size();index++){
 				if(conditionList.get(index).isKelime(ReservedNaturalKeywords.SORTED_BY)){
 					sortByIndex=index;

@@ -531,9 +531,9 @@ public class JavaInputElement extends AbstractJavaElement {
 
 		
 		
-		if(logModel.isMapOrMapTester()){
+		/*if(logModel.isMapOrMapTester()){
 			JavaClassElement.javaCodeBuffer.append("natprog.");
-		}
+		}*/
 	
 		JavaClassElement.javaCodeBuffer.append("input(");
 		JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
@@ -607,17 +607,17 @@ public class JavaInputElement extends AbstractJavaElement {
 		boolean enterButtonVisible=false;
 		enterButtonVisible=isEnterButtonVisible();
 		String buttonPFKey="", tokenDeger, buttonName="";
-		if(ConversionLogModel.getInstance().isMapOrMapTester()){
+		/*if(ConversionLogModel.getInstance().isMapOrMapTester()){
 			JavaClassElement.javaCodeBuffer.append("natprog.");
-		}
+		}*/
 		
 		JavaClassElement.javaCodeBuffer.append("unRegisterPFKeyAll()");
 		JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
 		
 		if(!enterButtonVisible){
-			if(ConversionLogModel.getInstance().isMapOrMapTester()){
+			/*if(ConversionLogModel.getInstance().isMapOrMapTester()){
 				JavaClassElement.javaCodeBuffer.append("natprog.");
-			}
+			}*/
 			JavaClassElement.javaCodeBuffer.append("unRegisterEnterKey()");
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
 		}
@@ -659,9 +659,9 @@ public class JavaInputElement extends AbstractJavaElement {
 			}
 			
 			logger.debug("Register Button: "+buttonPFKey +" "+buttonName);
-			if(ConversionLogModel.getInstance().isMapOrMapTester()){
+			/*if(ConversionLogModel.getInstance().isMapOrMapTester()){
 				JavaClassElement.javaCodeBuffer.append("natprog.");
-			}
+			}*/
 			JavaClassElement.javaCodeBuffer.append("registerPFKey(\""+buttonPFKey+"\", \""+buttonName+"\", true, true, \"\", \"\")");
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
 		}
@@ -774,9 +774,9 @@ public class JavaInputElement extends AbstractJavaElement {
 
 		JavaClassElement.javaCodeBuffer.append(",");
 
-		if(logModel.isMapOrMapTester()){
+		/*if(logModel.isMapOrMapTester()){
 			JavaClassElement.javaCodeBuffer.append("natprog.");
-		}
+		}*/
 
 		JavaClassElement.javaCodeBuffer.append(sIO.getValue());
 
@@ -810,9 +810,9 @@ public class JavaInputElement extends AbstractJavaElement {
 		JavaClassElement.javaCodeBuffer.append(",");
 
 		logger.debug("Value:"+sIO.getValue());
-		if(logModel.isMapOrMapTester() && !sIO.isDoubleQouta()){
+		/*if(logModel.isMapOrMapTester() && !sIO.isDoubleQouta()){
 			JavaClassElement.javaCodeBuffer.append("natprog.");
-		}
+		}*/
 		
 		JavaClassElement.javaCodeBuffer.append( sIO.getValue());
 					

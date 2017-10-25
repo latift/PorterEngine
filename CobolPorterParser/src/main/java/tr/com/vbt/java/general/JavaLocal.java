@@ -16,9 +16,9 @@ public class JavaLocal extends  AbstractJavaElement{
 		
 		try {
 			
-			if(ConversionLogModel.getInstance().isMapOrMapTester()){
+			/*if(ConversionLogModel.getInstance().isMapOrMapTester()){
 				return true;
-			}
+			}*/
 			
 			this.writeChildrenJavaToStream();
 			

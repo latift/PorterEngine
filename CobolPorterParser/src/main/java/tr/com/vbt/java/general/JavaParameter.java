@@ -18,9 +18,9 @@ public class JavaParameter extends  AbstractJavaElement{
 		
 		try {
 			
-			if(ConversionLogModel.getInstance().isMapOrMapTester()){
+			/*if(ConversionLogModel.getInstance().isMapOrMapTester()){
 				return true;
-			}
+			}*/
 			
 			if(children!=null){
 				for (AbstractJava aje : children) {

@@ -30,7 +30,7 @@ public class JavaFunctionMainElement extends  AbstractJavaElement{
 		
 		try {
 			//AbstractJavaElement.javaCodeBuffer.append("public static void main(String[] args)"+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE);
-			if(logModel.isMapOrMapTester()){
+		/*	if(logModel.isMapOrMapTester()){
 				
 				AbstractJavaElement.javaCodeBuffer.append("public void parseMap()"+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE);
 				AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
@@ -51,6 +51,7 @@ public class JavaFunctionMainElement extends  AbstractJavaElement{
 				AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 				
 			}else{
+			*/
 				/*AbstractJavaElement.javaCodeBuffer.append("public void mainProgram()"+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE);
 			
 				AbstractJavaElement.javaCodeBuffer.append("		try {"+JavaConstants.NEW_LINE);
@@ -73,7 +74,7 @@ public class JavaFunctionMainElement extends  AbstractJavaElement{
 				
 				AbstractJavaElement.javaCodeBuffer.append("public void naturalProgram()"+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE);
 				
-			}
+			//}
 			
 			this.writeChildrenJavaToStream();
 			

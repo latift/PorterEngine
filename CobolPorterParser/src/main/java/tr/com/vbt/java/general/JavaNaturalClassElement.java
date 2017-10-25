@@ -141,7 +141,7 @@ public class JavaNaturalClassElement extends  AbstractJavaElement{
 		}
 		
 		if(logModel.isMapOrMapTester()){
-			AbstractJavaElement.javaCodeBuffer.append(classSecurity+ " " +JavaConstants.CLASS+ " "+ interfaceName+  " extends AbstractNaturalMap "+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE );
+			AbstractJavaElement.javaCodeBuffer.append(classSecurity+ " " +JavaConstants.CLASS+ " "+ interfaceName+  " extends AbstractNaturalIsciDovizleriProgram "+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE );
 		}else{
 			if(logModel.getCustomer().equals("MB")){
 				AbstractJavaElement.javaCodeBuffer.append(classSecurity+ " " +JavaConstants.CLASS+ " "+ implementsClassName+  " extends AbstractNaturalIsciDovizleriProgram implements "+ interfaceName+JavaConstants.OPEN_BRACKET+JavaConstants.NEW_LINE );
