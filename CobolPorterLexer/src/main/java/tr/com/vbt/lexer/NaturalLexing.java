@@ -1796,6 +1796,8 @@ public class NaturalLexing extends AbstractLexing {
 			ex.printStackTrace();
 		}
 		
+		fixMapRecordStructure();
+		
 		setNaturalMode();
 		
 		replaceGlobalVariables();
@@ -1907,6 +1909,33 @@ public class NaturalLexing extends AbstractLexing {
 	}
 
 	
+	/*
+	 * Sadece MAP conversion durumunda çalışır
+	 * 
+	 *  a)   İlk 1 MAP.XYZ gördügünde öncesine bir tane 1 MAP ekleyecek
+	 *  b)    1 MAP.XYZ -- 2 XYZ 
+	 */
+	private void fixMapRecordStructure() {
+		if(!ConversionLogModel.getInstance().isMapOrMapTester()){
+			return;				
+		}
+		
+		AbstractToken curToken, nextToken, nextter,nextter1,nextter2;
+		
+		
+		for (int i = 0; i < tokenListesi.size()-4; i++) {
+			curToken=tokenListesi.get(i);
+			nextToken=tokenListesi.get(i+1);
+			nextter=tokenListesi.get(i+2);
+			nextter1=tokenListesi.get(i+3);
+			nextter2=tokenListesi.get(i+4);
+			if(nextToken.getDeger().toString().equals("1.0")&&nextter.getDeger().toString().equalsIgnoreCase("MAP")){
+				
+			}
+		}
+		
+	}
+
 	private void structureCorrection() {
 		// TODO Auto-generated method stub
 
