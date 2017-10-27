@@ -15,11 +15,11 @@ import tr.com.vbt.java.utils.VariableTypes;
 import tr.com.vbt.lexer.ConversionLogModel;
 import tr.com.vbt.natural.html.IOModeType;
 import tr.com.vbt.natural.html.NaturalTagTypes;
-import tr.com.vbt.natural.html.ScreenIO;
-import tr.com.vbt.natural.html.ScreenIOIntegerInput;
-import tr.com.vbt.natural.html.ScreenIOLabel;
-import tr.com.vbt.natural.html.ScreenIOStringInput;
-import tr.com.vbt.natural.html.ScreenIOUndefined;
+import tr.com.vbt.natural.html.EngineIO;
+import tr.com.vbt.natural.html.EngineIOIntegerInput;
+import tr.com.vbt.natural.html.EngineIOLabel;
+import tr.com.vbt.natural.html.EngineIOStringInput;
+import tr.com.vbt.natural.html.EngineIOUndefined;
 import tr.com.vbt.natural.html.XCoordinationTypes;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.ArrayToken;
@@ -47,9 +47,9 @@ public class JavaWriteElement extends AbstractJavaElement {
 	// Paramaters: functionName;
 	private List<AbstractToken> inputParameters;
 
-	private List<ScreenIO> screenInputOutputArray;
+	private List<EngineIO> screenInputOutputArray;
 
-	ScreenIO newScreenIO;
+	EngineIO newScreenIO;
 
 	int offset;
 
@@ -224,8 +224,8 @@ public class JavaWriteElement extends AbstractJavaElement {
 		
 			if (currToken.isConstantVariableWithQuota() || currToken.isSystemVariable()) {
 
-				newScreenIO = new ScreenIOLabel(xCoord, yCoord, IOModeType.AD_D, value, XCoordinationTypes.REFERANCE,
-						XCoordinationTypes.EXACT,(long)0,maxLength, currToken.isConstantVariableWithQuota());
+				newScreenIO = new EngineIOLabel((int)xCoord, (int)yCoord, IOModeType.AD_D, value, XCoordinationTypes.REFERANCE,
+						XCoordinationTypes.EXACT,0,(int)maxLength, currToken.isConstantVariableWithQuota());
 				
 			} else if (currToken.getTip().equals(TokenTipi.Kelime)) { // #SECIM
 
@@ -233,18 +233,18 @@ public class JavaWriteElement extends AbstractJavaElement {
 
 				if (varType.equals(VariableTypes.INT_TYPE)|| varType.equals(VariableTypes.LONG_TYPE)) {
 
-					newScreenIO = new ScreenIOIntegerInput(xCoord, yCoord, IOModeType.AD_D, name, value,
-							XCoordinationTypes.REFERANCE, XCoordinationTypes.EXACT,0,maxLength);
+					newScreenIO = new EngineIOIntegerInput((int)xCoord, (int)yCoord, IOModeType.AD_D, name, value,
+							XCoordinationTypes.REFERANCE, XCoordinationTypes.EXACT,0,(int)maxLength);
 
 				}else{
 					
-					newScreenIO = new ScreenIOStringInput(xCoord, yCoord, IOModeType.AD_D, name, value,
-							XCoordinationTypes.REFERANCE, XCoordinationTypes.EXACT,0,maxLength);
+					newScreenIO = new EngineIOStringInput((int)xCoord, (int)yCoord, IOModeType.AD_D, name, value,
+							XCoordinationTypes.REFERANCE, XCoordinationTypes.EXACT,0,(int)maxLength);
 				}
 			} else if (currToken.getTip().equals(TokenTipi.Sayi)) { //
 
-				newScreenIO = new ScreenIOIntegerInput(xCoord, yCoord, IOModeType.AD_D, name, value,
-						XCoordinationTypes.REFERANCE, XCoordinationTypes.EXACT,0,maxLength);
+				newScreenIO = new EngineIOIntegerInput((int)xCoord, (int)yCoord, IOModeType.AD_D, name, value,
+						XCoordinationTypes.REFERANCE, XCoordinationTypes.EXACT,0,(int)maxLength);
 			}
 
 			if(value.length()>maxLength){
@@ -281,7 +281,7 @@ public class JavaWriteElement extends AbstractJavaElement {
 			sb.append(undefined.toCustomString());
 			
 		}
-		newScreenIO = new ScreenIOUndefined(xCoord, yCoord, IOModeType.AD_D, sb.toString(), XCoordinationTypes.REFERANCE,  XCoordinationTypes.EXACT,0,ConverterConfiguration.DEFAULT_MAX_LENGTH_FOR_LABEL);
+		newScreenIO = new EngineIOUndefined((int)xCoord, (int)yCoord, IOModeType.AD_D, sb.toString(), XCoordinationTypes.REFERANCE,  XCoordinationTypes.EXACT,0,ConverterConfiguration.DEFAULT_MAX_LENGTH_FOR_LABEL);
 		
 		screenInputOutputArray.add(newScreenIO);
 		
@@ -323,8 +323,8 @@ public class JavaWriteElement extends AbstractJavaElement {
 				
 					xCoord=xCoord+1;
 						
-					newScreenIO = new ScreenIOLabel(xCoord, yCoord, IOModeType.AD_D, value+"["+i+"]", XCoordinationTypes.EXACT,
-						XCoordinationTypes.EXACT,0,maxLength);
+					newScreenIO = new EngineIOLabel((int)xCoord, (int)yCoord, IOModeType.AD_D, value+"["+i+"]", XCoordinationTypes.EXACT,
+						XCoordinationTypes.EXACT,0,(int)maxLength);
 	
 					screenInputOutputArray.add(newScreenIO);
 	
@@ -335,11 +335,11 @@ public class JavaWriteElement extends AbstractJavaElement {
 				value = JavaWriteUtilities.toCustomString(currToken).toString();
 	
 				if(currToken.getDeger().equals("_") || currToken.getDeger().equals("=")){
-					newScreenIO = new ScreenIOLabel(xCoord, yCoord, IOModeType.AD_D, value, XCoordinationTypes.EXACT, XCoordinationTypes.EXACT,0,maxLength);
+					newScreenIO = new EngineIOLabel((int)xCoord, (int)yCoord, IOModeType.AD_D, value, XCoordinationTypes.EXACT, XCoordinationTypes.EXACT,0,(int)maxLength);
 					
 				}else{
-					newScreenIO = new ScreenIOLabel(xCoord, yCoord, IOModeType.AD_D, value+"["+ConvertUtilities.castToInt()+arrayToken.getFirstDimension().getDeger().toString()+"]", XCoordinationTypes.EXACT,
-							XCoordinationTypes.EXACT,0,maxLength);
+					newScreenIO = new EngineIOLabel((int)xCoord,(int) yCoord, IOModeType.AD_D, value+"["+ConvertUtilities.castToInt()+arrayToken.getFirstDimension().getDeger().toString()+"]", XCoordinationTypes.EXACT,
+							XCoordinationTypes.EXACT,0,(int)maxLength);
 					
 				}
 	
@@ -401,7 +401,7 @@ public class JavaWriteElement extends AbstractJavaElement {
 
 		String label = "", ADParameters;
 
-		ScreenIO sIO = null;
+		EngineIO sIO = null;
 		
 		/*if(isMap || isMapTester){
 			JavaClassElement.javaCodeBuffer.append("natprog.");
@@ -437,7 +437,7 @@ public class JavaWriteElement extends AbstractJavaElement {
 				}
 			}*/
 			
-			if(sIO instanceof ScreenIOUndefined)
+			if(sIO instanceof EngineIOUndefined)
 			{
 				writeUndefined(sIO);
 			}else{
@@ -464,7 +464,7 @@ public class JavaWriteElement extends AbstractJavaElement {
 
 	// new
 	// ScreenIOIntegerInput(0,1,IOModeType.AD_MI_,"DIYEZ_SECIM",DIYEZ_SECIM,XCoordinationTypes.REFERANCE),
-	private void writeNumberInputField(ScreenIO sIO) {
+	private void writeNumberInputField(EngineIO sIO) {
 
 		JavaClassElement.javaCodeBuffer.append("new ScreenIOIntegerInput(" + sIO.getXCoord() + "," + sIO.getYCoord());
 
@@ -504,7 +504,7 @@ public class JavaWriteElement extends AbstractJavaElement {
 	
 	// new
 	// ScreenIOIntegerInput(0,1,IOModeType.AD_MI_,"DIYEZ_SECIM",DIYEZ_SECIM,XCoordinationTypes.REFERANCE),
-	private void writeStringInputField(ScreenIO sIO) {
+	private void writeStringInputField(EngineIO sIO) {
 
 		JavaClassElement.javaCodeBuffer.append("new ScreenIOStringInput(" + sIO.getXCoord() + "," + sIO.getYCoord());
 
@@ -544,7 +544,7 @@ public class JavaWriteElement extends AbstractJavaElement {
 		JavaClassElement.javaCodeBuffer.append(")");
 
 	}
-	private void writeLabel(ScreenIO sIO) {
+	private void writeLabel(EngineIO sIO) {
 
 		JavaClassElement.javaCodeBuffer.append("new ScreenIOLabel(" + sIO.getXCoord() + "," + sIO.getYCoord());
 
@@ -577,7 +577,7 @@ public class JavaWriteElement extends AbstractJavaElement {
 
 	}
 	
-	private void writeUndefined(ScreenIO sIO) {
+	private void writeUndefined(EngineIO sIO) {
 
 		JavaClassElement.javaCodeBuffer.append("new ScreenIOUndefined(" + sIO.getXCoord() + "," + sIO.getYCoord());
 	

@@ -1920,16 +1920,43 @@ public class NaturalLexing extends AbstractLexing {
 			return;				
 		}
 		
-		AbstractToken curToken, nextToken, nextter,nextter1,nextter2;
+		AbstractToken curToken, mapToken, dotToken, newGeneratedOneToken, newGeneratedMapToken;
 		
 		
-		for (int i = 0; i < tokenListesi.size()-4; i++) {
+		boolean firstMapKeywordAdded=false;
+		for (int i = 0; i < tokenListesi.size()-2; i++) {
 			curToken=tokenListesi.get(i);
-			nextToken=tokenListesi.get(i+1);
-			nextter=tokenListesi.get(i+2);
-			nextter1=tokenListesi.get(i+3);
-			nextter2=tokenListesi.get(i+4);
-			if(nextToken.getDeger().toString().equals("1.0")&&nextter.getDeger().toString().equalsIgnoreCase("MAP")){
+			mapToken=tokenListesi.get(i+1);
+			dotToken=tokenListesi.get(i+2);
+			if(curToken.getDeger().equals("MAPMN02")){
+				logger.debug("123");
+			}
+			if(curToken.isSayi(1)&&(mapToken.isOzelKelime("MAP")|| (mapToken.isKelime() &&mapToken.getDeger().toString().contains("MAP"))) && dotToken.isNoktaToken()){
+				
+				
+				// a)   İlk 1 MAP.XYZ gördügünde öncesine bir tane 1 MAP ekleyecek
+				if(!firstMapKeywordAdded){
+					newGeneratedOneToken=new SayiToken(1l, mapToken.getSatirNumarasi(), 0, 0);
+					if(mapToken.isOzelKelime()){
+						newGeneratedMapToken=new OzelKelimeToken(mapToken.getDeger().toString(), mapToken.getSatirNumarasi(), 0, 0);
+					}else{
+						newGeneratedMapToken=new KelimeToken(mapToken.getDeger().toString(), mapToken.getSatirNumarasi(), 0, 0);
+					}
+					tokenListesi.add(i, newGeneratedOneToken);
+					tokenListesi.add(i+1, newGeneratedMapToken);
+					
+				//	tokenListesi.remove(i+4); //Remove Nokta
+				//	tokenListesi.remove(i+3); //Remove Map
+				//	tokenListesi.set(i+2, new SayiToken(2l, mapToken.getSatirNumarasi(), 0, 0)); //Replace 1 To 2 
+					
+				}else{
+					 //b)    1 MAP.XYZ -- 2 XYZ 
+					tokenListesi.remove(i+2); //Remove Nokta
+					tokenListesi.remove(i+1); //Remove Map
+					tokenListesi.set(i, new SayiToken(2l, mapToken.getSatirNumarasi(), 0, 0)); //Replace 1 To 2 
+				}
+				
+				firstMapKeywordAdded=true;
 				
 			}
 		}

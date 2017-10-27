@@ -10,6 +10,11 @@
   <version>0.0.1-SNAPSHOT</version>
 
    <dependencies>
+   		<dependency>
+			<artifactId>PorterFramework</artifactId>
+			<groupId>tr.com.vbt.porter.framework</groupId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	<dependency>
 	   <groupId>tr.com.vbt.porter.lexer</groupId>
 	   <artifactId>Commons</artifactId>

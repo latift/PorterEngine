@@ -767,7 +767,7 @@ public class TransferFromNaturalToJavaMain {
 			javaTreeElement.resetSourceCode();
 			IteratorNameManager.resetIteratorNameManager();
 			
-			writeMapTester(javaTreeElement);
+			//writeMapTester(javaTreeElement);
 	
 			javaTreeElement.resetSourceCode();
 			IteratorNameManager.resetIteratorNameManager();

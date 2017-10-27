@@ -25,17 +25,17 @@ import tr.com.vbt.util.ConverterConfiguration;
  *
  */
 
-public class ScreenInputOutPutArray implements ScreenIO {
+public class EngineIOUndefined extends AbstractEngineIO implements EngineIO {
 
-	private String[] valueArray;
-	
 	protected long XCoord;
 
 	protected XCoordinationTypes xCoordinationType;
+	
+	protected XCoordinationTypes yCoordinationType;
 
 	protected long YCoord;
 
-	protected NaturalTagTypes tagType;
+	protected NaturalTagTypes tagType=NaturalTagTypes.LABEL;
 
 	protected IOModeType modeType;
 
@@ -43,14 +43,50 @@ public class ScreenInputOutPutArray implements ScreenIO {
 
 	protected String value;
 	
+	protected long minLength;
+	
+	protected long maxLength;
+	
 	protected HtmlColor color;
 	
-	private String caller;
-	
-	private String called;
 
-	public ScreenInputOutPutArray(long xCoord, String yCoord, NaturalTagTypes tagType, IOModeType modeType,
-			String[] sCRLINES, XCoordinationTypes xCoordinationType) {
+	public EngineIOUndefined(long xCoord, long yCoord, IOModeType modeType, String value,
+			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, long minLen, long maxLen) {
+
+		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
+		if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
+			XCoord = xCoord;
+		} else {
+			this.XCoord = this.XCoord + xCoord;
+		}
+
+		XCoord = xCoord;
+		YCoord = yCoord;
+		this.modeType = modeType;
+		this.value = value;
+		this.xCoordinationType = xCoordinationType;
+		this.yCoordinationType = yCoordinationType;
+		this.minLength=minLen;
+		this.maxLength=maxLen;
+	}
+
+	public EngineIOUndefined(long xCoord, String yCoord, IOModeType modeType, String value,
+			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType) {
+
+		long YCoordCarpan;
+
+		if (yCoord != null && !yCoord.trim().isEmpty()) {
+			
+			//13.0T --> 13
+			YCoordCarpan = Integer.valueOf(yCoord.substring(0, yCoord.length()- 3));  //13.0T --> 13
+			if (yCoord.contains("X")) {
+				YCoord = YCoordCarpan * ConverterConfiguration.NATURAL_X_LENGTH;
+			} else if (yCoord.contains("T")) {
+				YCoord = YCoordCarpan * ConverterConfiguration.NATURAL_T_LENGTH;
+			} else { // Hata durumda en azından boyle göstersin
+				YCoord = YCoordCarpan * ConverterConfiguration.NATURAL_T_LENGTH;
+			}
+		}
 
 		if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
 			XCoord = xCoord;
@@ -58,16 +94,10 @@ public class ScreenInputOutPutArray implements ScreenIO {
 			this.XCoord = this.XCoord + xCoord;
 		}
 
-		long YCoordCarpan = Integer.valueOf(yCoord.substring(0, yCoord.length() - 1));
-		if (yCoord.contains("X")) {
-			YCoord = YCoordCarpan * ConverterConfiguration.NATURAL_X_LENGTH;
-		} else if (yCoord.contains("T")) {
-			YCoord = YCoordCarpan * ConverterConfiguration.NATURAL_T_LENGTH;
-		} else { // Hata durumda en azından boyle göstersin
-			YCoord = YCoordCarpan * ConverterConfiguration.NATURAL_T_LENGTH;
-		}
-
-		this.valueArray=sCRLINES;
+		this.modeType = modeType;
+		this.value = value;
+		this.xCoordinationType = xCoordinationType;
+		this.yCoordinationType = yCoordinationType;
 
 	}
 
@@ -110,34 +140,24 @@ public class ScreenInputOutPutArray implements ScreenIO {
 	public void setValue(String value) {
 		this.value = value;
 	}
-	
-	public String[] getValueArray() {
-		return valueArray;
-	}
-
-	public void setValueArray(String[] valueArray) {
-		this.valueArray = valueArray;
-	}
 
 	@Override
 	public String toString() {
-		StringBuffer sb=new StringBuffer();
-		sb.append(XCoord + " " + YCoord + " " + tagType + " " + modeType + " ");
-		for(int i=0;i<valueArray.length;i++){
-			sb.append(valueArray[i]+ " ");
-		}
-		sb.append(JavaConstants.NEW_LINE);
-		return sb.toString();
+		return XCoord + " " + YCoord + " " + tagType + " " + modeType + " " + value + JavaConstants.NEW_LINE;
 	}
 
-	@Override
 	public XCoordinationTypes getxCoordinationType() {
 		return xCoordinationType;
 	}
 
+	public void setxCoordinationType(XCoordinationTypes xCoordinationType) {
+		this.xCoordinationType = xCoordinationType;
+	}
+
 	@Override
 	public String getName() {
-		return name;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -146,18 +166,30 @@ public class ScreenInputOutPutArray implements ScreenIO {
 		return null;
 	}
 
-	@Override
 	public XCoordinationTypes getyCoordinationType() {
-		// TODO Auto-generated method stub
-		return null;
+		return yCoordinationType;
 	}
 
-	@Override
-	public long getMaxLength() {
-		// TODO Auto-generated method stub
-		return 0;
+	public void setyCoordinationType(XCoordinationTypes yCoordinationType) {
+		this.yCoordinationType = yCoordinationType;
 	}
-	
+
+	public long getMinLength() {
+		return minLength;
+	}
+
+	public void setMinLength(long minLength) {
+		this.minLength = minLength;
+	}
+
+	public long getMaxLength() {
+		return maxLength;
+	}
+
+	public void setMaxLength(long maxLength) {
+		this.maxLength = maxLength;
+	}
+
 	public boolean isDoubleQouta() {
 		return false;
 	}
@@ -172,7 +204,7 @@ public class ScreenInputOutPutArray implements ScreenIO {
 	public String getHotKey() {
 		return "";
 	}
-
+	
 	public HtmlColor getColor() {
 		return color;
 	}
@@ -181,21 +213,16 @@ public class ScreenInputOutPutArray implements ScreenIO {
 		this.color = color;
 	}
 
+	@Override
 	public String getCaller() {
-		return caller;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	public void setCaller(String caller) {
-		this.caller = caller;
-	}
-
+	@Override
 	public String getCalled() {
-		return called;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	public void setCalled(String called) {
-		this.called = called;
-	}
-	
-	
 }

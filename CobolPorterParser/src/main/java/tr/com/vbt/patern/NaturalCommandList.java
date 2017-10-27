@@ -1199,6 +1199,9 @@ public class NaturalCommandList extends AbstractCommandList {
 								offset += newElement.getLength();
 								newElement.setRedefineEndIndex(offset);
 
+								if(redefinedElement==null){
+									continue;
+								}
 								newElement.setRedefinedDataName(redefinedElement.getDataName());
 								newElement.setRedefinedDataType(redefinedElement.getDataType());
 								

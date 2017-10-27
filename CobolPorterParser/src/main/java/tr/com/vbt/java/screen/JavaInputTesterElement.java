@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import tr.com.vbt.java.general.JavaClassElement;
 import tr.com.vbt.java.general.JavaConstants;
 import tr.com.vbt.java.utils.ConvertUtilities;
-import tr.com.vbt.natural.html.ScreenIO;
+import tr.com.vbt.natural.html.EngineIO;
 import tr.com.vbt.natural.html.XCoordinationTypes;
 import tr.com.vbt.token.AbstractToken;
 
@@ -118,7 +118,7 @@ public class JavaInputTesterElement extends JavaInputElement {
 	
 	// new
 	// ScreenIOIntegerInput(0,1,IOModeType.AD_MI_,"DIYEZ_SECIM",DIYEZ_SECIM,XCoordinationTypes.REFERANCE),
-	protected void writeNumberInputField(ScreenIO sIO) {
+	protected void writeNumberInputField(EngineIO sIO) {
 
 		JavaClassElement.javaCodeBuffer.append("new ScreenIOIntegerInput(" + sIO.getXCoord() + "," + sIO.getYCoord());
 
@@ -158,7 +158,7 @@ public class JavaInputTesterElement extends JavaInputElement {
 	
 	// new
 	// ScreenIOIntegerInput(0,1,IOModeType.AD_MI_,"DIYEZ_SECIM",DIYEZ_SECIM,XCoordinationTypes.REFERANCE),
-	protected void writeStringInputField(ScreenIO sIO) {
+	protected void writeStringInputField(EngineIO sIO) {
 
 		JavaClassElement.javaCodeBuffer.append("new ScreenIOStringInput(" + sIO.getXCoord() + "," + sIO.getYCoord());
 
@@ -197,7 +197,7 @@ public class JavaInputTesterElement extends JavaInputElement {
 	}
 	
 	//new ScreenIOLabel(0,2,IOModeType.AD_MI_,"T.C.M.B.",XCoordinationTypes.EXACT , XCoordinationTypes.EXACT,0,5),
-	protected void writeLabel(ScreenIO sIO) {
+	protected void writeLabel(EngineIO sIO) {
 
 		
 		JavaClassElement.javaCodeBuffer.append("new ScreenIOLabel(" + sIO.getXCoord() + "," + sIO.getYCoord());
@@ -231,7 +231,7 @@ public class JavaInputTesterElement extends JavaInputElement {
 
 	}
 	
-	private String getLabelActor(ScreenIO sIO) {
+	private String getLabelActor(EngineIO sIO) {
 		if(sIO.isDoubleQouta()){
 			return sIO.getValue();
 		}else if(sIO.getValue().equals("PROGRAM")){

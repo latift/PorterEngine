@@ -345,22 +345,31 @@ public class ConvertUtilities {
 		ElementProgramGrupNatural grupNatural;
 		
 		ElementProgramOneDimensionArrayNatural elementProgramOneDimensionArrayNatural;
+		
+		AbstractToken searhVariable;
+		if(variable.getLinkedToken()!=null){
+			searhVariable=variable.getLinkedToken();
+		}else if(variable.getColumnNameToken()!=null){
+			searhVariable=variable.getColumnNameToken();
+		}else{
+			searhVariable=variable;
+		}
 
 		for (AbstractCommand abstractCommand : commandList) {
 			logger.debug(abstractCommand.toString());
 			if (abstractCommand instanceof ElementProgramDataTypeNatural) {
 				programData = (ElementProgramDataTypeNatural) abstractCommand;
-				if (programData.getDataName().equals(variable.getDeger())) {
+				if (programData.getDataName().equals(searhVariable.getDeger())) {
 					return programData;
 				}
 			} else if (abstractCommand instanceof ElementProgramGrupNatural) {
 				grupNatural = (ElementProgramGrupNatural) abstractCommand;
-				if (grupNatural.getGrupName().equals(variable.getDeger())) {
+				if (grupNatural.getGrupName().equals(searhVariable.getDeger())) {
 					return grupNatural;
 				}
 			}else if (abstractCommand instanceof ElementProgramOneDimensionArrayNatural) {
 				elementProgramOneDimensionArrayNatural = (ElementProgramOneDimensionArrayNatural) abstractCommand;
-				if (elementProgramOneDimensionArrayNatural.getDataName().equals(variable.getDeger())) {
+				if (elementProgramOneDimensionArrayNatural.getDataName().equals(searhVariable.getDeger())) {
 					return elementProgramOneDimensionArrayNatural;
 				}
 			}
@@ -1004,31 +1013,39 @@ public class ConvertUtilities {
 
 	public static long getVariableMaxLength(AbstractToken currToken) {
 
-		long maxLength = ConverterConfiguration.DEFAULT_MAX_LENGTH_FOR_INPUT;
+			long maxLength = ConverterConfiguration.DEFAULT_MAX_LENGTH_FOR_INPUT;
 
-		ElementProgramDataTypeNatural programData;
-
-		try {
-
+			if(currToken.isConstantVariableWithQuota()){
+				return currToken.getDeger().toString().length();
+			}
 			logger.debug(currToken.toString());
 
 			AbstractCommand dataType = ConvertUtilities.getVariableDefinitinCommand(currToken);
 
-			programData = (ElementProgramDataTypeNatural) dataType;
+			if(dataType instanceof ElementProgramOneDimensionArrayNatural){
+				ElementProgramOneDimensionArrayNatural oneDimensionArray=(ElementProgramOneDimensionArrayNatural) dataType;
+				if(oneDimensionArray.getLengthAfterDot()==0){
+					maxLength= oneDimensionArray.getLength();
+				}else{
+					maxLength= oneDimensionArray.getLength()+oneDimensionArray.getLengthAfterDot()+1;
+				}
+			}else if(dataType instanceof ElementProgramDataTypeNatural){
+				
+				ElementProgramDataTypeNatural programData = (ElementProgramDataTypeNatural) dataType;
 
-			if(programData.getLengthAfterDot()==0){
-				
-				maxLength = programData.getLength();
-				
+				if(programData.getLengthAfterDot()==0){
+					
+					maxLength = programData.getLength();
+					
+				}else{
+					
+					maxLength = programData.getLength() + programData.getLengthAfterDot() + 1;
+			
+				}
 			}else{
-				
-				maxLength = programData.getLength() + programData.getLengthAfterDot() + 1;
-		
+				//throw new RuntimeException("İlgili Veri tipi için kodlama yapılmalı.");
 			}
-		} catch (Exception e) {
-
-		}
-
+			
 		return maxLength;
 	}
 

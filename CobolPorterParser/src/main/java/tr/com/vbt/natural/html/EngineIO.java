@@ -1,6 +1,6 @@
 package tr.com.vbt.natural.html;
 
-public interface ScreenIO {
+public interface EngineIO {
 
 	XCoordinationTypes getxCoordinationType();
 	
@@ -36,5 +36,7 @@ public interface ScreenIO {
 	public String getCaller();
 
 	public String getCalled();
+	
+	public String getControlVariableName();
 	
 }

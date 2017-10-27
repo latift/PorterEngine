@@ -1,10 +1,8 @@
 package tr.com.vbt.natural.html;
 
-import java.math.BigDecimal;
-
 import tr.com.vbt.util.ConverterConfiguration;
 
-public class ScreenIOStringInput   implements ScreenIO{
+public class EngineIOIntegerInput  extends AbstractEngineIO  implements EngineIO{
 
 	protected long XCoord;
 	
@@ -20,7 +18,7 @@ public class ScreenIOStringInput   implements ScreenIO{
 	
 	protected String name;
 	
-	protected String value;
+	protected long value;
 	
 	protected String valueForEngine;
 	
@@ -30,14 +28,15 @@ public class ScreenIOStringInput   implements ScreenIO{
 	
 	protected HtmlColor color;
 	
-	private String caller;
-	
-	private String called;
-	
+	public EngineIOIntegerInput(long xCoord, long yCoord, IOModeType modeType, String name, long value,
+			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType , long minLen, long maxLen, String controlVariableName) {
+		this(xCoord, yCoord, modeType, name, name, xCoordinationType, yCoordinationType, minLen, maxLen);
+		this.controlVariableName=controlVariableName;
+	}
+	public EngineIOIntegerInput(long xCoord, long yCoord, IOModeType modeType, String name, long value,
+			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType , long minLen, long maxLen) {
 
-	public ScreenIOStringInput(long xCoord, long yCoord, IOModeType modeType, String name, String value,
-			XCoordinationTypes xCoordinationType, XCoordinationTypes yCoordinationType, long minLen, long maxLen) {
-		
+		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
 		if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
 			XCoord = xCoord;
 		} else {
@@ -51,76 +50,19 @@ public class ScreenIOStringInput   implements ScreenIO{
 		this.value = value;
 		this.xCoordinationType = xCoordinationType;
 		this.yCoordinationType = yCoordinationType;
+		
 		this.minLength=minLen;
 		this.maxLength=maxLen;
 	}
 	
-	
-	public ScreenIOStringInput(long xCoord, long yCoord, IOModeType modeType, String name, BigDecimal value,
-			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType , long minLen, long maxLen) {
-
-		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
-		if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
-			XCoord = xCoord;
-		} else {
-			this.XCoord = this.XCoord + xCoord;
-		}
-
-		XCoord = xCoord;
-		YCoord = yCoord;
-		this.modeType = modeType;
-		this.name=name;
-		this.value = value.toString();
-		this.xCoordinationType = xCoordinationType;
-		this.yCoordinationType = yCoordinationType;
-		this.minLength=minLen;
-		this.maxLength=maxLen;
+	public EngineIOIntegerInput(long xCoord, String yCoord, IOModeType modeType, String name, long value,
+			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType , long minLen, long maxLen, String controlVariableName) {
+		this(xCoord, yCoord, modeType, name, name, xCoordinationType, yCoordinationType, minLen, maxLen);
+		this.controlVariableName=controlVariableName;
 	}
 	
-	public ScreenIOStringInput(long xCoord, long yCoord, IOModeType modeType, String name, long value,
-			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType , long minLen, long maxLen) {
-
-		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
-		if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
-			XCoord = xCoord;
-		} else {
-			this.XCoord = this.XCoord + xCoord;
-		}
-
-		XCoord = xCoord;
-		YCoord = yCoord;
-		this.modeType = modeType;
-		this.name=name;
-		this.value = String.valueOf(value);
-		this.xCoordinationType = xCoordinationType;
-		this.yCoordinationType = yCoordinationType;
-		this.minLength=minLen;
-		this.maxLength=maxLen;
-	}
-	
-	public ScreenIOStringInput(long xCoord, long yCoord, IOModeType modeType, String name, float value,
-			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType , long minLen, long maxLen) {
-
-		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
-		if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
-			XCoord = xCoord;
-		} else {
-			this.XCoord = this.XCoord + xCoord;
-		}
-
-		XCoord = xCoord;
-		YCoord = yCoord;
-		this.modeType = modeType;
-		this.name=name;
-		this.value = String.valueOf(value);
-		this.xCoordinationType = xCoordinationType;
-		this.yCoordinationType = yCoordinationType;
-		this.minLength=minLen;
-		this.maxLength=maxLen;
-	}
-	
-	public ScreenIOStringInput(long xCoord, String yCoord, IOModeType modeType, String name, String value,
-			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType) {
+	public EngineIOIntegerInput(long xCoord, String yCoord, IOModeType modeType, String name, long value,
+			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, long minLen, long maxLen) {
 
 		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
 		if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
@@ -147,11 +89,78 @@ public class ScreenIOStringInput   implements ScreenIO{
 		this.value = value;
 		this.xCoordinationType = xCoordinationType;
 		this.yCoordinationType = yCoordinationType;
+		
+		this.minLength=minLen;
+		this.maxLength=maxLen;
 	}
 	
-
 	
+	public EngineIOIntegerInput(long xCoord, long yCoord, IOModeType modeType, String name, String value,
+			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType , long minLen, long maxLen, String controlVariableName) {
+		this(xCoord, yCoord, modeType, name, name, xCoordinationType, yCoordinationType, minLen, maxLen);
+		this.controlVariableName=controlVariableName;
+	}
+	
+	public EngineIOIntegerInput(long xCoord, long yCoord, IOModeType modeType, String name, String valueForEngine,
+			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType , long minLen, long maxLen) {
 
+		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
+		if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
+			XCoord = xCoord;
+		} else {
+			this.XCoord = this.XCoord + xCoord;
+		}
+
+		XCoord = xCoord;
+		YCoord = yCoord;
+		this.modeType = modeType;
+		this.name=name;
+		this.valueForEngine = valueForEngine;
+		this.xCoordinationType = xCoordinationType;
+		this.yCoordinationType = yCoordinationType;
+		this.minLength=minLen;
+		this.maxLength=maxLen;
+	}
+	
+	
+	public EngineIOIntegerInput(long xCoord, String yCoord, IOModeType modeType, String name, String value,
+			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType , long minLen, long maxLen, String controlVariableName) {
+		this(xCoord, yCoord, modeType, name, name, xCoordinationType, yCoordinationType, minLen, maxLen);
+		this.controlVariableName=controlVariableName;
+	}
+	
+	public EngineIOIntegerInput(long xCoord, String yCoord, IOModeType modeType, String name, String valueForEngine,
+			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType , long minLen, long maxLen) {
+
+		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
+		if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
+			XCoord = xCoord;
+		} else {
+			XCoord = this.XCoord + xCoord;
+		}
+
+		long YCoordCarpan;
+		
+		if (yCoord != null && !yCoord.trim().isEmpty()) {
+			YCoordCarpan = Integer.valueOf(yCoord.substring(0, yCoord.length() - 1));
+			if (yCoord.contains("X")) {
+				YCoord = YCoordCarpan * ConverterConfiguration.NATURAL_X_LENGTH;
+			} else if (yCoord.contains("T")) {
+				YCoord = YCoordCarpan * ConverterConfiguration.NATURAL_T_LENGTH;
+			} else { // Hata durumda en azından boyle göstersin
+				YCoord = YCoordCarpan * ConverterConfiguration.NATURAL_T_LENGTH;
+			}
+		}
+		
+		
+		this.modeType = modeType;
+		this.name=name;
+		this.valueForEngine = valueForEngine;
+		this.xCoordinationType = xCoordinationType;
+		this.yCoordinationType = yCoordinationType;
+		this.minLength=minLen;
+		this.maxLength=maxLen;
+	}
 
 	public long getXCoord() {
 		return XCoord;
@@ -201,12 +210,11 @@ public class ScreenIOStringInput   implements ScreenIO{
 		this.name = name;
 	}
 
-
 	public String getValue() {
-		return value;
+		return Long.toString(value);
 	}
 
-	public void setValue(String value) {
+	public void setValue(long value) {
 		this.value = value;
 	}
 
@@ -226,11 +234,6 @@ public class ScreenIOStringInput   implements ScreenIO{
 		this.yCoordinationType = yCoordinationType;
 	}
 
-	@Override
-	public long getMaxLength() {
-		return maxLength;
-	}
-
 	public long getMinLength() {
 		return minLength;
 	}
@@ -239,10 +242,15 @@ public class ScreenIOStringInput   implements ScreenIO{
 		this.minLength = minLength;
 	}
 
+	public long getMaxLength() {
+		return maxLength;
+	}
+
 	public void setMaxLength(long maxLength) {
 		this.maxLength = maxLength;
 	}
-	
+
+
 	public boolean isDoubleQouta() {
 		return false;
 	}
@@ -255,8 +263,7 @@ public class ScreenIOStringInput   implements ScreenIO{
 
 	@Override
 	public String getHotKey() {
-		// TODO Auto-generated method stub
-		return null;
+		return "";
 	}
 	
 	public HtmlColor getColor() {
@@ -267,25 +274,15 @@ public class ScreenIOStringInput   implements ScreenIO{
 		this.color = color;
 	}
 
-
+	@Override
 	public String getCaller() {
-		return caller;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-
-	public void setCaller(String caller) {
-		this.caller = caller;
-	}
-
-
+	@Override
 	public String getCalled() {
-		return called;
+		// TODO Auto-generated method stub
+		return null;
 	}
-
-
-	public void setCalled(String called) {
-		this.called = called;
-	}
-	
-	
 }

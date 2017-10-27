@@ -1,5 +1,6 @@
 package tr.com.vbt.natural.html;
 
+import tr.com.vbt.framework.general.PFKey;
 import tr.com.vbt.java.general.JavaConstants;
 import tr.com.vbt.util.ConverterConfiguration;
 
@@ -25,7 +26,7 @@ import tr.com.vbt.util.ConverterConfiguration;
  *
  */
 
-public class ScreenIOUndefined implements ScreenIO {
+public class EngineIOButton extends AbstractEngineIO implements EngineIO {
 
 	protected long XCoord;
 
@@ -35,11 +36,11 @@ public class ScreenIOUndefined implements ScreenIO {
 
 	protected long YCoord;
 
-	protected NaturalTagTypes tagType=NaturalTagTypes.LABEL;
+	protected NaturalTagTypes tagType=NaturalTagTypes.SUBMIT_BUTTON;
 
 	protected IOModeType modeType;
 
-	protected String name;
+	protected String name="Gonder";
 
 	protected String value;
 	
@@ -47,66 +48,75 @@ public class ScreenIOUndefined implements ScreenIO {
 	
 	protected long maxLength;
 	
+	private  static long  buttonYcoord;
+	
+	private String hotKey;
+	
 	protected HtmlColor color;
 	
+	private String caller;
+	
+	private String called;
+	
+	public EngineIOButton(long xCoord, long yCoord, IOModeType modeType, String value,
+			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType , long minLen, long maxLen,String hotKey) {
 
-	public ScreenIOUndefined(long xCoord, long yCoord, IOModeType modeType, String value,
-			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, long minLen, long maxLen) {
-
-		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
+		super();
+		
 		if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
 			XCoord = xCoord;
 		} else {
 			this.XCoord = this.XCoord + xCoord;
 		}
-
-		XCoord = xCoord;
-		YCoord = yCoord;
+		this.YCoord=yCoord;
 		this.modeType = modeType;
 		this.value = value;
 		this.xCoordinationType = xCoordinationType;
 		this.yCoordinationType = yCoordinationType;
 		this.minLength=minLen;
 		this.maxLength=maxLen;
+		this.hotKey=hotKey;
 	}
+	
+	public EngineIOButton(long xCoord, long yCoord, IOModeType modeType, String value,
+			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, String hotKey) {
 
-	public ScreenIOUndefined(long xCoord, String yCoord, IOModeType modeType, String value,
-			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType) {
-
-		long YCoordCarpan;
-
-		if (yCoord != null && !yCoord.trim().isEmpty()) {
-			
-			//13.0T --> 13
-			YCoordCarpan = Integer.valueOf(yCoord.substring(0, yCoord.length()- 3));  //13.0T --> 13
-			if (yCoord.contains("X")) {
-				YCoord = YCoordCarpan * ConverterConfiguration.NATURAL_X_LENGTH;
-			} else if (yCoord.contains("T")) {
-				YCoord = YCoordCarpan * ConverterConfiguration.NATURAL_T_LENGTH;
-			} else { // Hata durumda en azından boyle göstersin
-				YCoord = YCoordCarpan * ConverterConfiguration.NATURAL_T_LENGTH;
-			}
-		}
-
+		super();
+		
 		if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
 			XCoord = xCoord;
 		} else {
 			this.XCoord = this.XCoord + xCoord;
 		}
-
+		this.YCoord=yCoord;
 		this.modeType = modeType;
 		this.value = value;
 		this.xCoordinationType = xCoordinationType;
 		this.yCoordinationType = yCoordinationType;
-
+		this.hotKey=hotKey;
 	}
-
 	public long getXCoord() {
 		return XCoord;
 	}
 
 	public void setXCoord(long xCoord) {
 		XCoord = xCoord;
+	}
+
+	public XCoordinationTypes getxCoordinationType() {
+		return xCoordinationType;
+	}
+
+	public void setxCoordinationType(XCoordinationTypes xCoordinationType) {
+		this.xCoordinationType = xCoordinationType;
+	}
+
+	public XCoordinationTypes getyCoordinationType() {
+		return yCoordinationType;
+	}
+
+	public void setyCoordinationType(XCoordinationTypes yCoordinationType) {
+		this.yCoordinationType = yCoordinationType;
 	}
 
 	public long getYCoord() {
@@ -133,6 +143,14 @@ public class ScreenIOUndefined implements ScreenIO {
 		this.modeType = modeType;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getValue() {
 		return value;
 	}
@@ -142,55 +160,20 @@ public class ScreenIOUndefined implements ScreenIO {
 	}
 
 	@Override
-	public String toString() {
-		return XCoord + " " + YCoord + " " + tagType + " " + modeType + " " + value + JavaConstants.NEW_LINE;
-	}
-
-	public XCoordinationTypes getxCoordinationType() {
-		return xCoordinationType;
-	}
-
-	public void setxCoordinationType(XCoordinationTypes xCoordinationType) {
-		this.xCoordinationType = xCoordinationType;
-	}
-
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public String getValueForEngine() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public XCoordinationTypes getyCoordinationType() {
-		return yCoordinationType;
-	}
-
-	public void setyCoordinationType(XCoordinationTypes yCoordinationType) {
-		this.yCoordinationType = yCoordinationType;
-	}
-
-	public long getMinLength() {
-		return minLength;
-	}
-
-	public void setMinLength(long minLength) {
-		this.minLength = minLength;
-	}
-
+	@Override
 	public long getMaxLength() {
-		return maxLength;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
-	public void setMaxLength(long maxLength) {
-		this.maxLength = maxLength;
-	}
-
+	@Override
 	public boolean isDoubleQouta() {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -200,11 +183,27 @@ public class ScreenIOUndefined implements ScreenIO {
 		return null;
 	}
 
-	@Override
-	public String getHotKey() {
-		return "";
+	public static EngineIOButton createScreenIOButtonFromPfKey(PFKey pfKey) {
+		buttonYcoord++;
+		String value=pfKey.getPfKey().toString()+pfKey.getLabel();
+		EngineIOButton sIO=new EngineIOButton(ConverterConfiguration.NAT_SCREEN_ROW_NUMBER, buttonYcoord, IOModeType.AD_I, value, XCoordinationTypes.EXACT, XCoordinationTypes.EXACT,pfKey.getHotKey());
+		return sIO;
 	}
 	
+	public static EngineIOButton createEnterButton() {
+		buttonYcoord++;
+		EngineIOButton sIO=new EngineIOButton(ConverterConfiguration.NAT_SCREEN_ROW_NUMBER, buttonYcoord, IOModeType.AD_I, "ENTER:Devam", XCoordinationTypes.EXACT, XCoordinationTypes.EXACT,"ENTER");
+		return sIO;
+	}
+
+	public String getHotKey() {
+		return hotKey;
+	}
+
+	public void setHotKey(String hotKey) {
+		this.hotKey = hotKey;
+	}
+
 	public HtmlColor getColor() {
 		return color;
 	}
@@ -213,16 +212,24 @@ public class ScreenIOUndefined implements ScreenIO {
 		this.color = color;
 	}
 
-	@Override
 	public String getCaller() {
-		// TODO Auto-generated method stub
-		return null;
+		return caller;
 	}
 
-	@Override
-	public String getCalled() {
-		// TODO Auto-generated method stub
-		return null;
+	public void setCaller(String caller) {
+		this.caller = caller;
 	}
+
+	public String getCalled() {
+		return called;
+	}
+
+	public void setCalled(String called) {
+		this.called = called;
+	}
+	
+
+
+	
 
 }

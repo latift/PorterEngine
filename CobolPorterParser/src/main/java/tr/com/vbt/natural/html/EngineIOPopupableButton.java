@@ -26,7 +26,7 @@ import tr.com.vbt.util.ConverterConfiguration;
  *
  */
 
-public class ScreenIOPopupableButton implements ScreenIO {
+public class EngineIOPopupableButton extends AbstractEngineIO implements EngineIO {
 
 	protected long XCoord;
 
@@ -59,7 +59,7 @@ public class ScreenIOPopupableButton implements ScreenIO {
 	private String called;
 	
 
-	public ScreenIOPopupableButton(int xCoord, int yCoord, IOModeType modeType, String name, String value, XCoordinationTypes xCoordinationType,
+	public EngineIOPopupableButton(int xCoord, int yCoord, IOModeType modeType, String name, String value, XCoordinationTypes xCoordinationType,
 			XCoordinationTypes yCoordinationType, int min, int max, String caller, String called) {
 	
 		if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {
@@ -79,7 +79,7 @@ public class ScreenIOPopupableButton implements ScreenIO {
 		this.called=called;
 	}
 	
-	public ScreenIOPopupableButton(int xCoord, int yCoord, IOModeType modeType, String name, String value, XCoordinationTypes xCoordinationType,
+	public EngineIOPopupableButton(int xCoord, int yCoord, IOModeType modeType, String name, String value, XCoordinationTypes xCoordinationType,
 			XCoordinationTypes yCoordinationType, int min, int max, String caller, String called,String hotKey) {
 	
 		if (xCoordinationType.equals(XCoordinationTypes.EXACT)) {

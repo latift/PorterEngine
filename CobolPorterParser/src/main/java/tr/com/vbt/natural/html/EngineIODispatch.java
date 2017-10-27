@@ -1,6 +1,6 @@
 package tr.com.vbt.natural.html;
 
-public class ScreenIODispatch implements ScreenIO {
+public class EngineIODispatch extends AbstractEngineIO implements EngineIO {
 
 	protected long XCoord;
 
@@ -22,7 +22,7 @@ public class ScreenIODispatch implements ScreenIO {
 	
 	protected HtmlColor color;
 	
-	public ScreenIODispatch(String destinationJspPage) {
+	public EngineIODispatch(String destinationJspPage) {
 
 		super();
 		this.destinationJspPage=destinationJspPage;

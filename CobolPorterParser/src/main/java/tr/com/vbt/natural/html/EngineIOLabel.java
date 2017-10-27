@@ -27,7 +27,7 @@ import tr.com.vbt.util.ConverterConfiguration;
  *
  */
 
-public class ScreenIOLabel implements ScreenIO {
+public class EngineIOLabel extends AbstractEngineIO implements EngineIO {
 
 	protected long XCoord;
 
@@ -57,7 +57,7 @@ public class ScreenIOLabel implements ScreenIO {
 	
 	protected HtmlColor color=HtmlColor.BLUE;  //Default Blue
 
-	public ScreenIOLabel(long xCoord, long yCoord, IOModeType modeType, String value,
+	public EngineIOLabel(long xCoord, long yCoord, IOModeType modeType, String value,
 			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, long minLen, long maxLen) {
 
 		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
@@ -80,7 +80,7 @@ public class ScreenIOLabel implements ScreenIO {
 		this.maxLength=maxLen;
 	}
 	
-	public ScreenIOLabel(long xCoord, long yCoord, IOModeType modeType, String value,
+	public EngineIOLabel(long xCoord, long yCoord, IOModeType modeType, String value,
 			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, long minLen, long maxLen, HtmlColor color) {
 
 		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
@@ -104,7 +104,7 @@ public class ScreenIOLabel implements ScreenIO {
 		this.color=color;
 	}
 	
-	public ScreenIOLabel(long xCoord, long yCoord, IOModeType modeType, String value,
+	public EngineIOLabel(long xCoord, long yCoord, IOModeType modeType, String value,
 			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, long minLen, long maxLen, boolean doubleQouta) {
 
 		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
@@ -128,7 +128,7 @@ public class ScreenIOLabel implements ScreenIO {
 		this.doubleQouta=doubleQouta;
 	}
 	
-	public ScreenIOLabel(long xCoord, long yCoord, IOModeType modeType, String value,
+	public EngineIOLabel(long xCoord, long yCoord, IOModeType modeType, String value,
 			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, long minLen, long maxLen, boolean doubleQouta, HtmlColor color) {
 
 		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
@@ -153,7 +153,7 @@ public class ScreenIOLabel implements ScreenIO {
 		this.color=color;
 	}
 	
-	public ScreenIOLabel(long xCoord, long yCoord, IOModeType modeType, long value,
+	public EngineIOLabel(long xCoord, long yCoord, IOModeType modeType, long value,
 			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, long minLen, long maxLen) {
 		
 		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
@@ -179,7 +179,7 @@ public class ScreenIOLabel implements ScreenIO {
 		this.maxLength=maxLen;
 	}
 	
-	public ScreenIOLabel(long xCoord, long yCoord, IOModeType modeType, long value,
+	public EngineIOLabel(long xCoord, long yCoord, IOModeType modeType, long value,
 			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, long minLen, long maxLen, HtmlColor color) {
 		
 		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
@@ -206,7 +206,7 @@ public class ScreenIOLabel implements ScreenIO {
 		this.color=color;
 	}
 	
-	public ScreenIOLabel(long xCoord, long yCoord, IOModeType modeType, float value,
+	public EngineIOLabel(long xCoord, long yCoord, IOModeType modeType, float value,
 			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, long minLen, long maxLen) {
 		
 		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
@@ -230,7 +230,7 @@ public class ScreenIOLabel implements ScreenIO {
 		this.maxLength=maxLen;
 	}
 	
-	public ScreenIOLabel(long xCoord, long yCoord, IOModeType modeType, float value,
+	public EngineIOLabel(long xCoord, long yCoord, IOModeType modeType, float value,
 			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, long minLen, long maxLen, HtmlColor color) {
 		
 		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
@@ -255,7 +255,7 @@ public class ScreenIOLabel implements ScreenIO {
 		this.color=color;
 	}
 	
-	public ScreenIOLabel(long xCoord, long yCoord, IOModeType modeType, BigDecimal value,
+	public EngineIOLabel(long xCoord, long yCoord, IOModeType modeType, BigDecimal value,
 			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, long minLen, long maxLen) {
 		
 		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
@@ -279,7 +279,7 @@ public class ScreenIOLabel implements ScreenIO {
 				this.maxLength=maxLen;
 	}
 	
-	public ScreenIOLabel(long xCoord, long yCoord, IOModeType modeType, BigDecimal value,
+	public EngineIOLabel(long xCoord, long yCoord, IOModeType modeType, BigDecimal value,
 			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, long minLen, long maxLen, HtmlColor color) {
 		
 		// 13X '*** TAX , COUNTRY , AIRPORT MANAGEMENT ***'
@@ -304,7 +304,7 @@ public class ScreenIOLabel implements ScreenIO {
 				this.color=color;
 	}
 
-	public ScreenIOLabel(long xCoord, String yCoord, IOModeType modeType, String value,
+	public EngineIOLabel(long xCoord, String yCoord, IOModeType modeType, String value,
 			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType) {
 
 		long YCoordCarpan;
@@ -339,7 +339,7 @@ public class ScreenIOLabel implements ScreenIO {
 
 	}
 	
-	public ScreenIOLabel(long xCoord, String yCoord, IOModeType modeType, String value,
+	public EngineIOLabel(long xCoord, String yCoord, IOModeType modeType, String value,
 			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, HtmlColor color) {
 
 		long YCoordCarpan;
@@ -375,7 +375,7 @@ public class ScreenIOLabel implements ScreenIO {
 
 	}
 	
-	public ScreenIOLabel(long xCoord, String yCoord, IOModeType modeType, long value,
+	public EngineIOLabel(long xCoord, String yCoord, IOModeType modeType, long value,
 			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType) {
 		long YCoordCarpan;
 
@@ -408,7 +408,7 @@ public class ScreenIOLabel implements ScreenIO {
 		this.yCoordinationType = yCoordinationType;
 	}
 	
-	public ScreenIOLabel(long xCoord, String yCoord, IOModeType modeType, long value,
+	public EngineIOLabel(long xCoord, String yCoord, IOModeType modeType, long value,
 			XCoordinationTypes xCoordinationType,XCoordinationTypes yCoordinationType, HtmlColor color) {
 		long YCoordCarpan;
 
