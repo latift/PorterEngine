@@ -368,7 +368,7 @@ public class JavaInputElement extends AbstractJavaElement {
 	private void fixCVParameters(AbstractToken currToken) {
 		
 		
-		if(currToken.getLinkedToken()!=null){
+		if(currToken.getLinkedToken()!=null && currToken.getLinkedToken().getInputADParameters()!=null){
 			
 			String ADParamsStringOrjinal=currToken.getLinkedToken().getInputADParameters().getDeger().toString();
 			
