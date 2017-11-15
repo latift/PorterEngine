@@ -84,7 +84,13 @@ public class JavaCopyElementV2 extends AbstractJavaElement {
 			return false;
 		}
 		
-		AbstractToken destVariableFirst=destVariable.get(0);
+		AbstractToken destVariableFirst;
+		try {
+			destVariableFirst = destVariable.get(0);
+		} catch (Exception e1) {
+			JavaClassElement.javaCodeBuffer.append("Hata_olustu_Manuel_Kontrol_Edilmeli.");
+			return false;
+		}
 		
 		if(destVariableFirst==null || !destVariableFirst.isSubstringCommand()){
 			return false;

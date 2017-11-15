@@ -241,7 +241,12 @@ public class ConvertUtilities {
 
 	public static VariableTypes getVariableTypeOfPojo(AbstractToken variable) {
 		
-		String columnReturnType=Utility.findViewAndColumnNamesReturnType(variable).toLowerCase();
+		String columnReturnType="";
+		try {
+			columnReturnType = Utility.findViewAndColumnNamesReturnType(variable).toLowerCase();
+		} catch (Exception e) {
+			logger.debug(e.getMessage(),e);
+		}
 		
 		if(columnReturnType.equals("string")){
 			return VariableTypes.STRING_TYPE;

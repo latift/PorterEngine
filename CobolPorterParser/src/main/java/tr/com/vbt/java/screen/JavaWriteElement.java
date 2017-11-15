@@ -378,11 +378,11 @@ public class JavaWriteElement extends AbstractJavaElement {
 
 			YCoordCarpan = (int) ((long)(currToken.getDeger()));
 			if (nextToken.getDeger().equals("X")) {
-				yCoord = YCoordCarpan * ConverterConfiguration.NATURAL_X_LENGTH;
+				yCoord = YCoordCarpan * ConverterConfiguration.NATURAL_X_LENGTH+yCoord;
 			} else if (nextToken.getDeger().equals("T")) {
-				yCoord = YCoordCarpan * ConverterConfiguration.NATURAL_T_LENGTH;
+				yCoord = YCoordCarpan * 8+yCoord;
 			} else { // Hata durumda en azından boyle göstersin
-				yCoord = YCoordCarpan * ConverterConfiguration.NATURAL_T_LENGTH;
+				yCoord = YCoordCarpan * 1+yCoord;
 			}
 
 			offset = 1;
