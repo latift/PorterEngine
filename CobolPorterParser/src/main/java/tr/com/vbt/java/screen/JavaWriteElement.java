@@ -125,6 +125,8 @@ public class JavaWriteElement extends AbstractJavaElement {
 			}
 
 			writeOutput();
+			
+			yCoord=0;
 
 		} catch (Exception e) {
 			logger.debug("//Conversion Error" + this.getClass() + this.getSourceCode().getSatirNumarasi()
@@ -380,7 +382,7 @@ public class JavaWriteElement extends AbstractJavaElement {
 			if (nextToken.getDeger().equals("X")) {
 				yCoord = YCoordCarpan * ConverterConfiguration.NATURAL_X_LENGTH+yCoord;
 			} else if (nextToken.getDeger().equals("T")) {
-				yCoord = YCoordCarpan * 8+yCoord;
+				yCoord = YCoordCarpan * ConverterConfiguration.NATURAL_T_LENGTH+yCoord;
 			} else { // Hata durumda en azından boyle göstersin
 				yCoord = YCoordCarpan * 1+yCoord;
 			}
