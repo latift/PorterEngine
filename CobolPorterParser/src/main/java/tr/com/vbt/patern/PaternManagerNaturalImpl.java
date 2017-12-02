@@ -85,6 +85,7 @@ import tr.com.vbt.natural.parser.database.patern.PaternRead;
 import tr.com.vbt.natural.parser.database.patern.PaternReadBy;
 import tr.com.vbt.natural.parser.database.patern.PaternReadByLogicalDescending;
 import tr.com.vbt.natural.parser.database.patern.PaternReadByThru;
+import tr.com.vbt.natural.parser.database.patern.PaternReadInPhysicalSequence;
 import tr.com.vbt.natural.parser.database.patern.PaternReadWith;
 import tr.com.vbt.natural.parser.database.patern.PaternReadWithThru;
 import tr.com.vbt.natural.parser.database.patern.PaternSelect;
@@ -98,6 +99,7 @@ import tr.com.vbt.natural.parser.enders.patern.PaternEndTopOfPage;
 import tr.com.vbt.natural.parser.file.patern.PaternDownloadFile;
 import tr.com.vbt.natural.parser.general.patern.PaternAmpersand;
 import tr.com.vbt.natural.parser.general.patern.PaternBackoutTransaction;
+import tr.com.vbt.natural.parser.general.patern.PaternDefine;
 import tr.com.vbt.natural.parser.general.patern.PaternDefineData;
 import tr.com.vbt.natural.parser.general.patern.PaternDo;
 import tr.com.vbt.natural.parser.general.patern.PaternEndOfTransaction;
@@ -108,6 +110,7 @@ import tr.com.vbt.natural.parser.general.patern.PaternMainStart;
 import tr.com.vbt.natural.parser.general.patern.PaternOnError;
 import tr.com.vbt.natural.parser.general.patern.PaternSubroutine;
 import tr.com.vbt.natural.parser.general.patern.PaternUpdate;
+import tr.com.vbt.natural.parser.loops.patern.PaternAtEndOfData;
 import tr.com.vbt.natural.parser.loops.patern.PaternDoEnd;
 import tr.com.vbt.natural.parser.loops.patern.PaternEscape;
 import tr.com.vbt.natural.parser.loops.patern.PaternEscapeBottom;
@@ -131,6 +134,7 @@ import tr.com.vbt.natural.parser.loops.patern.PaternStackTop;
 import tr.com.vbt.natural.parser.loops.patern.PaternStackTopCommand;
 import tr.com.vbt.natural.parser.loops.patern.PaternTerminate;
 import tr.com.vbt.natural.parser.loops.patern.PaternUntil;
+import tr.com.vbt.natural.parser.loops.patern.enders.PaternEndEndData;
 import tr.com.vbt.natural.parser.loops.patern.enders.PaternEndFor;
 import tr.com.vbt.natural.parser.loops.patern.enders.PaternEndRepeat;
 import tr.com.vbt.natural.parser.screen.patern.PaternBase;
@@ -175,6 +179,7 @@ public class PaternManagerNaturalImpl  extends AbstractPaternManagerNatural{
 		commmandPatternList.add(new PaternGlobalUsing());
 		commmandPatternList.add(new PaternLocalUsing());
 		commmandPatternList.add(new PaternSubroutine());
+		commmandPatternList.add(new PaternDefine());
 		commmandPatternList.add(new PaternEndSubroutine());
 		if(ConversionLogModel.getInstance().isMB()){
 			commmandPatternList.add(new PaternOnError());
@@ -291,6 +296,8 @@ public class PaternManagerNaturalImpl  extends AbstractPaternManagerNatural{
 		commmandPatternList.add(new PaternStackTopCommand());
 		commmandPatternList.add(new PaternStackCommand());
 		commmandPatternList.add(new PaternStackTop());
+		commmandPatternList.add(new PaternAtEndOfData());
+		commmandPatternList.add(new PaternEndEndData());
 		//
 		
 		//Screen
@@ -324,6 +331,7 @@ public class PaternManagerNaturalImpl  extends AbstractPaternManagerNatural{
 		commmandPatternList.add(new PaternReadByLogicalDescending());
 		commmandPatternList.add(new PaternReadWith());
 		commmandPatternList.add(new PaternReadWithThru());
+		commmandPatternList.add(new PaternReadInPhysicalSequence());
 		commmandPatternList.add(new PaternEndRead());
 		commmandPatternList.add(new PaternFindWith());
 		commmandPatternList.add(new PaternFindOneWith());

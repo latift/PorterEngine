@@ -62,6 +62,8 @@ public NaturalOzelKelimeler() {
 	ozelKelimeler.add("PERFORM");
 	ozelKelimeler.add("RESET");
 	ozelKelimeler.add("END-READ");
+	ozelKelimeler.add("END-ENDDATA");
+	
 	
 	ozelKelimeler.add("REINPUT");
 	ozelKelimeler.add("END-REPEAT");
@@ -203,6 +205,11 @@ public NaturalOzelKelimeler() {
 	ozelKelimeler.add("MULTIPLY");
 	ozelKelimeler.add("REPLACE");
 	ozelKelimeler.add("WITH");
+	ozelKelimeler.add("IN");
+	ozelKelimeler.add("PHYSICAL");
+	ozelKelimeler.add("SEQUENCE");
+	
+
 	/*
 	ozelKelimeler.add("PF1");
 	ozelKelimeler.add("PF2");

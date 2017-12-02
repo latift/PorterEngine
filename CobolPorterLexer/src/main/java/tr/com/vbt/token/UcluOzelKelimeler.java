@@ -57,6 +57,7 @@ public UcluOzelKelimeler() {
 	ucluKelimeler.add(new TripleWordKeyword("NOT","INVALID","KEY"));
 	ucluKelimeler.add(new TripleWordKeyword("NOT","AT","END"));
 	ucluKelimeler.add(new TripleWordKeyword("LEAVING","NO","SPACE"));
+	ucluKelimeler.add(new TripleWordKeyword("END","OF","DATA"));
 	
 	
 }

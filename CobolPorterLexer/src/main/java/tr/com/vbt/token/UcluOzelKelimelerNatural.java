@@ -2,6 +2,8 @@ package tr.com.vbt.token;
 
 import java.util.HashSet;
 
+import tr.com.vbt.token.UcluOzelKelimeler.TripleWordKeyword;
+
 
 /*
 ACCESS MODE IS --> ACCESS_MODE_IS
@@ -61,6 +63,8 @@ public UcluOzelKelimelerNatural() {
 	ucluKelimeler.add(new TripleWordKeyword("GIVING","LENGTH","IN"));
 	ucluKelimeler.add(new TripleWordKeyword("FOR","FIRST","CONDITION"));
 	ucluKelimeler.add(new TripleWordKeyword("GIVING","POSITION","IN"));
+	ucluKelimeler.add(new TripleWordKeyword("IN","PHYSICAL","SEQUENCE"));
+	ucluKelimeler.add(new TripleWordKeyword("END","OF","DATA"));
 
 }
 

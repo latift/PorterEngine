@@ -32,6 +32,13 @@
 			<groupId>tr.com.thy.dal</groupId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		
+		<dependency>
+			<artifactId>THY_COMMON_TACTIC_DAL2</artifactId>
+			<groupId>tr.com.thy.dal</groupId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
 		<dependency>
 			<artifactId>MBIsciDovizleriDAL</artifactId>
 			<groupId>tr.com.mb.dal</groupId>

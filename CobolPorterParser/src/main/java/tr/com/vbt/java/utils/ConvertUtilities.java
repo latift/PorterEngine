@@ -420,8 +420,10 @@ public class ConvertUtilities {
 	 */
 
 	public static String getTypeOfVariable(AbstractToken variable) {
-
-		if(variable.isSubstringCommand()){
+		
+		if(variable==null){
+			return "";
+		}else  if(variable.isSubstringCommand()){
 			return "String";
 		}else if(variable.isSystemVariable()) {
 		

@@ -184,6 +184,7 @@ public class NaturalLexing extends AbstractLexing {
 							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.WITH)
 							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.THRU)
 							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.STARTING_FROM)
+							|| astCurrent.isOzelKelime("IN_PHYSICAL_SEQUENCE")
 							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.ENDING_AT)
 							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.DESCENDING)
 							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.ASCENDING)
@@ -238,7 +239,7 @@ public class NaturalLexing extends AbstractLexing {
 						return;
 					}
 					astWith = tokenListesi.get(i);
-					if (astWith.isOzelKelime(ReservedNaturalKeywords.WITH)||astWith.isOzelKelime(ReservedNaturalKeywords.BY)) {
+					if (astWith.isOzelKelime(ReservedNaturalKeywords.WITH)||astWith.isOzelKelime(ReservedNaturalKeywords.BY)||astWith.isOzelKelime("IN_PHYSICAL_SEQUENCE")) {
 						ifFound = true;
 						break;
 					}

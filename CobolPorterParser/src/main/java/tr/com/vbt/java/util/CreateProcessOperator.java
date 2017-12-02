@@ -87,6 +87,7 @@ import tr.com.vbt.java.general.JavaSetKeyElement;
 import tr.com.vbt.java.general.JavaTwoDimensionArrayElement;
 import tr.com.vbt.java.general.JavaTwoDimensionRedifineArrayElement;
 import tr.com.vbt.java.jsp.general.JSPGeneral;
+import tr.com.vbt.java.loops.JavaAtEndOfElement;
 import tr.com.vbt.java.loops.JavaDoElement;
 import tr.com.vbt.java.loops.JavaEscapeBottomElement;
 import tr.com.vbt.java.loops.JavaEscapeRoutineElement;
@@ -264,6 +265,9 @@ public class CreateProcessOperator extends ProcessOperator {
 			break;
 		case "JavaWhileElement":
 			elementForCreate = new JavaWhileElement();
+			break;
+		case "JavaAtEndOfElement":
+			elementForCreate = new JavaAtEndOfElement();
 			break;
 		case "JavaForElementPerformVarying":
 			elementForCreate = new JavaForElementPerformVarying();

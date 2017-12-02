@@ -205,8 +205,12 @@ public class JavaFindWithElementV2 extends AbsctractConditionalJavaElement imple
 			ConvertUtilities.writeconversionErrors(e, this);
 		}
 
-		writeHibernateCode();
-		writeDAOInterfaceCode();
+		try {
+			writeHibernateCode();
+			writeDAOInterfaceCode();
+		} catch (Exception e) {
+			logger.debug(e.getMessage(),e);
+		}
 		return true;
 	}
 
