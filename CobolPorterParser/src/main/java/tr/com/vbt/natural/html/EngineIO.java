@@ -1,5 +1,7 @@
 package tr.com.vbt.natural.html;
 
+import tr.com.vbt.token.AbstractToken;
+
 public interface EngineIO {
 
 	XCoordinationTypes getxCoordinationType();
@@ -38,5 +40,9 @@ public interface EngineIO {
 	public String getCalled();
 	
 	public String getControlVariableName();
+
+	void setToken(AbstractToken currToken);
+	
+	public AbstractToken getToken();
 	
 }

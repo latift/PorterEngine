@@ -150,7 +150,7 @@ public class NaturalCommandList extends AbstractCommandList {
 		String module = ConversionLogModel.getInstance().getModule();
 		module = module.toLowerCase();
 		module = module.replaceAll("/seperatedprograms", "");
-		Object includedFileObject;
+		Object includedFileObject = null;
 
 		for (String fileName : lexer.getIncludeFileList().values()) {
 			
@@ -161,9 +161,14 @@ public class NaturalCommandList extends AbstractCommandList {
 				includedFileObject = Class.forName("tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.variables.local." + fileName)
 						.newInstance();
 			} catch (Exception e) {
-				includedFileObject = Class.forName("tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.variables.global." + fileName)
-						.newInstance();
-				//continue;  //Globallere bakma.
+				try {
+					includedFileObject = Class.forName("tr.com."+ConversionLogModel.getInstance().getCustomer().toLowerCase()+".dal.variables.global." + fileName)
+							.newInstance();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				continue;  //Globallere bakma.
 			}
 
 			Field f[] = includedFileObject.getClass().getFields();

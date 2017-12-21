@@ -248,6 +248,8 @@ public class JavaWriteElement extends AbstractJavaElement {
 				newScreenIO = new EngineIOIntegerInput((int)xCoord, (int)yCoord, IOModeType.AD_D, name, value,
 						XCoordinationTypes.REFERANCE, XCoordinationTypes.EXACT,0,(int)maxLength);
 			}
+			
+			newScreenIO.setToken(currToken);
 
 			if(value.length()>maxLength){
 				yCoord = yCoord + value.length();
@@ -555,9 +557,16 @@ public class JavaWriteElement extends AbstractJavaElement {
 		JavaClassElement.javaCodeBuffer.append("IOModeType.AD_MI_");
 
 		JavaClassElement.javaCodeBuffer.append(",");
+		
+		List errorTokenList=new ArrayList<>();
 
-
-		JavaClassElement.javaCodeBuffer.append( sIO.getValue());
+		if(sIO instanceof EngineIOIntegerInput && sIO.getValue().toString().equals("0")){
+			errorTokenList.add(sIO.getToken());
+			ConversionLogModel.getInstance().writeError(5, errorTokenList,"Write içinde yanlış 0 yazılmış. Olması Gereken:" +sIO.getToken().getDeger().toString());
+			JavaClassElement.javaCodeBuffer.append( sIO.getName());
+		}else{
+			JavaClassElement.javaCodeBuffer.append( sIO.getValue());
+		}
 					
 		JavaClassElement.javaCodeBuffer.append(",");
 

@@ -1,10 +1,12 @@
 package tr.com.vbt.natural.html;
 
-import tr.com.vbt.lexer.ControlEnum;
+import tr.com.vbt.token.AbstractToken;
 
 public abstract class AbstractEngineIO implements EngineIO {
 
 	private HtmlColor backgroundColor;
+	
+	private AbstractToken token;
 	
 	protected String controlVariableName;
 	
@@ -22,6 +24,14 @@ public abstract class AbstractEngineIO implements EngineIO {
 
 	public void setControlVariableName(String controlVariableName) {
 		this.controlVariableName = controlVariableName;
+	}
+
+	public AbstractToken getToken() {
+		return token;
+	}
+
+	public void setToken(AbstractToken token) {
+		this.token = token;
 	}
 
 
