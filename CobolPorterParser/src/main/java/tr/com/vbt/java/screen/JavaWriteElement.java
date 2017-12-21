@@ -205,6 +205,8 @@ public class JavaWriteElement extends AbstractJavaElement {
 		AbstractToken currToken, nextToken;
 
 		currToken = inputParameters.get(index);
+		
+		List<AbstractToken> errorTokenList;
 
 		String value = null;
 
@@ -224,11 +226,17 @@ public class JavaWriteElement extends AbstractJavaElement {
 			
 			writeUndefinedTokens();
 		
-			if (currToken.isConstantVariableWithQuota() || currToken.isSystemVariable()) {
+			if (currToken.isConstantVariableWithQuota() || currToken.isSystemVariable() ||currToken.isPojoVariable()) {
 
 				newScreenIO = new EngineIOLabel((int)xCoord, (int)yCoord, IOModeType.AD_D, value, XCoordinationTypes.REFERANCE,
 						XCoordinationTypes.EXACT,0,(int)maxLength, currToken.isConstantVariableWithQuota());
-				
+			
+				if(currToken.isPojoVariable()){
+					errorTokenList=new ArrayList<>();
+					errorTokenList.add(currToken);
+					ConversionLogModel.getInstance().writeError(5, errorTokenList,"Write içinde yanlış 0 yazılmış. Olması Gereken:" +value);
+			
+				}
 			} else if (currToken.getTip().equals(TokenTipi.Kelime)) { // #SECIM
 
 				VariableTypes varType = ConvertUtilities.getVariableType(currToken);
@@ -562,7 +570,12 @@ public class JavaWriteElement extends AbstractJavaElement {
 
 		if(sIO instanceof EngineIOIntegerInput && sIO.getValue().toString().equals("0")){
 			errorTokenList.add(sIO.getToken());
-			ConversionLogModel.getInstance().writeError(5, errorTokenList,"Write içinde yanlış 0 yazılmış. Olması Gereken:" +sIO.getToken().getDeger().toString());
+			try {
+				ConversionLogModel.getInstance().writeError(5, errorTokenList,"Write içinde yanlış 0 yazılmış. Olması Gereken:" +JavaWriteUtilities.toCustomString(sIO.getToken()));
+			} catch (Exception e) {
+				logger.debug(e.getMessage(),e);
+				ConversionLogModel.getInstance().writeError(5, errorTokenList,"Write içinde yanlış 0 yazılmış. Olması Gereken:" +sIO.getToken().toString());
+			}
 			JavaClassElement.javaCodeBuffer.append( sIO.getName());
 		}else{
 			JavaClassElement.javaCodeBuffer.append( sIO.getValue());
