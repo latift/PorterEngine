@@ -11,6 +11,7 @@ import tr.com.vbt.java.conditions.ConditionJoiner;
 import tr.com.vbt.java.conditions.OneItemSimpleCondition;
 import tr.com.vbt.java.conditions.SimpleCondition;
 import tr.com.vbt.java.general.JavaClassElement;
+import tr.com.vbt.lexer.ConversionLogModel;
 import tr.com.vbt.lexer.ReservedNaturalKeywords;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.KelimeToken;
@@ -57,6 +58,8 @@ public class ConditionUtilities {
 		AbstractToken curToken = null,nextToken=null,nexterToken=null;
 		
 		boolean notCondition = false;
+		
+		List<AbstractToken> errorTokenList;
 		
 		for(int i=0; i<conditionList.size();i++){
 			
@@ -122,6 +125,10 @@ public class ConditionUtilities {
 					}
 				}
 				curCondition.addChildCondition(sCondition);
+			}else {
+				errorTokenList=new ArrayList<>();
+				errorTokenList.add(curToken);
+				ConversionLogModel.getInstance().writeError(6, errorTokenList,"if Condition İçinde Matematik Operasyonuna rastlandı.");
 			}
 		}
 		
