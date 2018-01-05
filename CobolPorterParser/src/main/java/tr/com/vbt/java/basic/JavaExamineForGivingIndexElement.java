@@ -1,7 +1,7 @@
 package tr.com.vbt.java.basic;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaClassElement;
@@ -15,7 +15,7 @@ import tr.com.vbt.util.CustomStringUtils;
 // EXAMINE #LIMANLARXV(*) FOR #R-LIMAN GIVING INDEX LIMANINDEX --> LIMANINDEX=searchArray(LIMANLARXV, R-LIMAN );
 public class JavaExamineForGivingIndexElement extends  AbstractJavaElement {
 	
-	final static Logger logger = LoggerFactory.getLogger(JavaExamineForGivingIndexElement.class);
+	final static Logger logger = Logger.getLogger(JavaExamineForGivingIndexElement.class);
 	
 	private AbstractToken arrayToken;
 	

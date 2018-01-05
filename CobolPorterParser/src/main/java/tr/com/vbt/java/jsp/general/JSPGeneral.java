@@ -2,8 +2,8 @@ package tr.com.vbt.java.jsp.general;
 
 import java.io.IOException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaConstants;
@@ -20,7 +20,7 @@ import tr.com.vbt.util.WriteToFile;
 
 public class JSPGeneral extends AbstractJavaElement{
 	
-	final static Logger logger = LoggerFactory.getLogger(JSPGeneral.class);
+	final static Logger logger = Logger.getLogger(JSPGeneral.class);
 	
 	private static JSPGeneral instance = null;
 

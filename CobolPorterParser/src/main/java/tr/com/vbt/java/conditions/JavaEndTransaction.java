@@ -3,8 +3,8 @@ package tr.com.vbt.java.conditions;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaClassElement;
@@ -18,7 +18,7 @@ import tr.com.vbt.token.ArrayToken;
 
 public class JavaEndTransaction extends  AbstractJavaElement{
 	
-	final static Logger logger = LoggerFactory.getLogger(JavaEndTransaction.class);
+	final static Logger logger = Logger.getLogger(JavaEndTransaction.class);
 
 	
 	

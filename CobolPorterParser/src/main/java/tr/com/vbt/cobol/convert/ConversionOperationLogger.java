@@ -2,14 +2,14 @@ package tr.com.vbt.cobol.convert;
 
 import java.util.Calendar;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.lexer.ConversionLogModel;
 
 public class ConversionOperationLogger {
 	
-	final static Logger logger = LoggerFactory.getLogger(ConversionOperationLogger.class);
+	final static Logger logger = Logger.getLogger(ConversionOperationLogger.class);
 	
 	public void logConversion(ConversionLogModel logModel){
 		logModel.setDate(Calendar.getInstance().getTime());

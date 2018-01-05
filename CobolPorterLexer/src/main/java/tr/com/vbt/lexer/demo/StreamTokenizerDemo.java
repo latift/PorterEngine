@@ -7,12 +7,12 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StreamTokenizer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 public class StreamTokenizerDemo {
 
-	   final static Logger logger = LoggerFactory.getLogger(StreamTokenizerDemo.class);
+	   final static Logger logger = Logger.getLogger(StreamTokenizerDemo.class);
 	
 	   public static void main(String[] args) {
 

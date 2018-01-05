@@ -2,8 +2,8 @@ package tr.com.vbt.natural.parser.datalayout.program.patern;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.lexer.ReservedNaturalKeywords;
@@ -21,7 +21,7 @@ import tr.com.vbt.token.SayiToken;
  **/
 public class PaternProgramOneDimensionFloatArrayNatural2 extends AbstractDataTypePattern{
 
-	final static Logger logger = LoggerFactory.getLogger(PaternProgramOneDimensionFloatArrayNatural2.class);
+	final static Logger logger = Logger.getLogger(PaternProgramOneDimensionFloatArrayNatural2.class);
 	/**
 	 * @param args
 	 */

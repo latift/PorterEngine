@@ -2,8 +2,8 @@ package tr.com.vbt.java.basic;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.java.AbstractJavaElement;
@@ -23,7 +23,7 @@ import tr.com.vbt.token.TokenTipi;
 // RESET #T-BIT-TARIH #T-SEFNO  #CARSEF #U-REG #T-TARIH --> #T-BIT-TARIH=0;  T-SEFNO="";  CARSEF=0;
 public class JavaResetElement extends  AbstractJavaElement {
 	
-	final static Logger logger = LoggerFactory.getLogger(JavaResetElement.class);
+	final static Logger logger = Logger.getLogger(JavaResetElement.class);
 	
 	private List<AbstractToken> resetVariableList;
 	

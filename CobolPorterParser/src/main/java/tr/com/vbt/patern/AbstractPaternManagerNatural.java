@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.cobol.parser.basicverbs.ElementUndefinedCobol;
@@ -14,7 +14,7 @@ import tr.com.vbt.token.TokenTipi;
 
 public abstract class  AbstractPaternManagerNatural  implements PaternManager{
 	
-	final static Logger logger = LoggerFactory.getLogger(AbstractPaternManagerNatural.class);
+	final static Logger logger = Logger.getLogger(AbstractPaternManagerNatural.class);
 
 	protected List<AbstractPattern> commmandPatternList=new ArrayList<AbstractPattern>();
 	

@@ -4,8 +4,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.ddm.DDM;
@@ -22,7 +22,7 @@ import tr.com.vbt.util.WriteToFile;
 
 public class JavaTrimWriteUtilities {
 	
-	final static Logger logger = LoggerFactory.getLogger(JavaTrimWriteUtilities.class);
+	final static Logger logger = Logger.getLogger(JavaTrimWriteUtilities.class);
 	
 	public static StringBuilder toCustomSetterString(AbstractToken token) throws Exception {
 		
@@ -83,7 +83,7 @@ public class JavaTrimWriteUtilities {
 			
 		}else if(token.getTip().equals(TokenTipi.Karakter)){
 		
-		}else if(token.isPojoVariable() && ConversionLogModel.getInstance().isMB()){ //MB
+		}else if(token.isPojoVariable() && ConversionLogModel.getInstance().isRelationalDatabase()){ //MB
 				
 			// IDGIDBS-TGECICI .HSONVALOR : = *DAT4I  --> TGECICI.setHSONVALOR(getSystemVAriable(DAT4I));
 			tempCodeBuffer.append(toCustomPojoDB2VariableSetterString(token, newValueToken));
@@ -138,7 +138,7 @@ public class JavaTrimWriteUtilities {
 		
 		}else if(token.isPojoVariable()){
 			
-			if(ConversionLogModel.getInstance().isMB()){
+			if(ConversionLogModel.getInstance().isRelationalDatabase()){
 			
 				tempCodeBuffer.append(toCustomPojoDB2VariableString(token));
 				

@@ -2,8 +2,8 @@ package tr.com.vbt.java.basic;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaClassElement;
@@ -13,7 +13,7 @@ import tr.com.vbt.java.utils.ConvertUtilities;
 public class JavaDisplayElement extends  AbstractJavaElement{
 	List<String> dataToDisplay;
 	
-	final static Logger logger = LoggerFactory.getLogger(JavaDisplayElement.class);
+	final static Logger logger = Logger.getLogger(JavaDisplayElement.class);
 
 	@Override
 	public boolean writeJavaToStream() throws Exception{ super.writeJavaToStream();

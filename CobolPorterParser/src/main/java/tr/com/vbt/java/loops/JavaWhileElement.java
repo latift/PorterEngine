@@ -1,7 +1,7 @@
 package tr.com.vbt.java.loops;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaClassElement;
@@ -12,7 +12,7 @@ import tr.com.vbt.java.utils.ConvertUtilities;
 // PERFORM B-PARA WITH TEST AFTER UNTIL WS-CNT>3.	while(WS-CNT>3){ B-PARA(); };
 public class JavaWhileElement extends  AbstractJavaElement {
 	
-	final static Logger logger = LoggerFactory.getLogger(JavaWhileElement.class);
+	final static Logger logger = Logger.getLogger(JavaWhileElement.class);
 	
 	private String paragraghName;
 	

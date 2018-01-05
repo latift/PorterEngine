@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.cobol.parser.conditions.AbstractConditionCommand;
@@ -15,7 +15,7 @@ import tr.com.vbt.token.TokenTipi;
 
 public abstract class AbstractPattern  {
 	
-	final static Logger logger = LoggerFactory.getLogger(AbstractPattern.class);
+	final static Logger logger = Logger.getLogger(AbstractPattern.class);
 
 	protected List<AbstractToken> patternTokenList=new ArrayList<AbstractToken>();
 	

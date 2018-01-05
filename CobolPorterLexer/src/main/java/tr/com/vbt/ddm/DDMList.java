@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.map.HashedMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import com.sun.xml.rpc.processor.config.Configuration;
 
@@ -23,7 +23,7 @@ import tr.com.vbt.util.WriteToFile;
 
 public class DDMList {
 	
-	final static Logger logger = LoggerFactory.getLogger(DDMList.class);
+	final static Logger logger = Logger.getLogger(DDMList.class);
 
 	Map<String, DDM> dDMMap = new HashedMap();
 	
@@ -118,7 +118,10 @@ public class DDMList {
 
 			while ((sCurrentLine = br.readLine()) != null) {
 				if(lineNumber>1){
-					logger.debug("fileName:"+fileName+"  sCurrentLine:"+sCurrentLine);
+					if(fileName.contains("TKS-AWB")&& lineNumber==93){
+						logger.debug("");
+					}
+					//logger.debug("fileName:"+fileName+"  sCurrentLine:"+sCurrentLine);
 					addLineToDDM(fileName,sCurrentLine);
 				}
 				lineNumber++;
@@ -178,7 +181,7 @@ public class DDMList {
 				}
 			}
 			
-			logger.debug("File:"+fileName+" Line:"+sCurrentLine);
+			//logger.debug("File:"+fileName+" Line:"+sCurrentLine);
 			
 			if(lineItemsList.get(0).startsWith("A")|| lineItemsList.get(0).startsWith("M")||lineItemsList.get(0).startsWith("P")||lineItemsList.get(0).startsWith("T")||lineItemsList.get(0).startsWith("G")){
 				
@@ -202,7 +205,7 @@ public class DDMList {
 			}
 			
 			String key=d1.getTableName().substring(0,d1.getTableName().length()-3).replaceAll("-", "_") + d1.getName().replaceAll("-", "_");
-			logger.debug("Put To DDM List:"+key);
+			//logger.debug("Put To DDM List:"+key);
 			dDMMap.put(key, d1);
 		} catch (Exception e) {
 			//DDM dosyalarında hatalı satirlar olabilir. Yada yukardaki formata uymayan satirlar. Bunlari ihmal edebilirsin.
@@ -225,8 +228,14 @@ public class DDMList {
 		DDM ddm;
 		
 		String key="";
+		//String key=d1.getTableName().substring(0,d1.getTableName().length()-3).replaceAll("-", "_") + d1.getName().replaceAll("-", "_");
 		if(copyTo.getTypeNameOfView()!=null&& !copyTo.getTypeNameOfView().trim().isEmpty()){
-			key=copyTo.getTypeNameOfView().toString()+"."+copyTo.getColumnNameToken().getDeger().toString();
+			try {
+				key=copyTo.getTypeNameOfView().toString()+"."+copyTo.getColumnNameToken().getDeger().toString();
+			} catch (Exception e) {
+				logger.debug(e.getMessage(),e);
+				throw e;
+			}
 			
 		}else if(copyTo.getSynoynmsRealTableName()!=null&& !copyTo.getSynoynmsRealTableName().trim().isEmpty()){
 			key=copyTo.getSynoynmsRealTableName().toString()+"."+copyTo.getColumnNameToken().getDeger().toString();

@@ -3,8 +3,8 @@ package tr.com.vbt.java.screen;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaClassElement;
@@ -42,7 +42,7 @@ import tr.com.vbt.util.ConverterConfiguration;
  */
 public class JavaWriteElement extends AbstractJavaElement {
 
-	final static Logger logger = LoggerFactory.getLogger(JavaAtTopOfPageElement.class);
+	final static Logger logger = Logger.getLogger(JavaAtTopOfPageElement.class);
 
 	// Paramaters: functionName;
 	private List<AbstractToken> inputParameters;

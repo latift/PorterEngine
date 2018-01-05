@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.lexer.ReservedNaturalKeywords;
@@ -29,7 +29,7 @@ TODO: If icinde ise Nokta ile bitmiyor. NE yapmalı?
  */
 public class PaternComputeRounded extends AbstractPatternFromXToYWithCarriageReturn{
 
-	final static Logger logger = LoggerFactory.getLogger(PaternComputeRounded.class);
+	final static Logger logger = Logger.getLogger(PaternComputeRounded.class);
 	/**
 	 * @param args
 	 */

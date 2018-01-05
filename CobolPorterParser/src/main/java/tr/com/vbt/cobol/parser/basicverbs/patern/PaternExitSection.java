@@ -1,7 +1,7 @@
 package tr.com.vbt.cobol.parser.basicverbs.patern;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.cobol.parser.basicverbs.ElementExitSection;
@@ -17,7 +17,7 @@ import tr.com.vbt.token.OzelKelimeToken;
  */
 public class PaternExitSection extends AbstractPattern{
 
-	final static Logger logger = LoggerFactory.getLogger(PaternExitSection.class);
+	final static Logger logger = Logger.getLogger(PaternExitSection.class);
 	
 	/**
 	 * @param args

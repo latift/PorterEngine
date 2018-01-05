@@ -1,7 +1,7 @@
 package tr.com.vbt.java.general;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.utils.ConvertUtilities;
@@ -33,7 +33,7 @@ import tr.com.vbt.lexer.ConversionLogModel;
  */
 public class JavaRedefineDataTypeElement extends AbstractJavaElement {
 	
-	final static Logger logger = LoggerFactory.getLogger(JavaRedefineDataTypeElement.class);
+	final static Logger logger = Logger.getLogger(JavaRedefineDataTypeElement.class);
 	
 
 	private String type;
@@ -142,20 +142,20 @@ public class JavaRedefineDataTypeElement extends AbstractJavaElement {
 			//Eğer dataType Float ise redefinedDataType da Float ise
 			if(dataType.equalsIgnoreCase("N") && redefinedDataType.equalsIgnoreCase("N")){
 			//RedefinedFloatForFloat dataName=new RedefinedFloatForFloat(ShortImpl.this,redefinedDataName,redefineStartIndex,redefineEndIndex);
-				JavaClassElement.javaCodeBuffer.append("RedefinedFloatForFloat " +dataName.replaceAll("-", "_")+"=new RedefinedFloatForFloat(this,\""+redefinedDataName+"\","+redefineStartIndex+","+redefineEndIndex+")");
+				JavaClassElement.javaCodeBuffer.append("RedefinedAlphabetForAlphabet " +dataName.replaceAll("-", "_")+"=new RedefinedAlphabetForAlphabet(this,\""+redefinedDataName+"\","+redefineStartIndex+","+redefineEndIndex+")");
 			}
 			//Eğer dataType Alphabet ise redefinedDataType da Number ise
 			else if(dataType.equalsIgnoreCase("A") && redefinedDataType.equalsIgnoreCase("N")){
 			//RedefinedAlphabetForNumber dataName=new RedefinedAlphabetForNumber(ShortImpl.this,redefinedDataName,redefineStartIndex,redefineEndIndex);
-				JavaClassElement.javaCodeBuffer.append("RedefinedAlphabetForNumber " +dataName.replaceAll("-", "_")+"=new RedefinedAlphabetForNumber(this,\""+redefinedDataName+"\","+redefineStartIndex+","+redefineEndIndex+")");
+				JavaClassElement.javaCodeBuffer.append("RedefinedAlphabetForAlphabet " +dataName.replaceAll("-", "_")+"=new RedefinedAlphabetForAlphabet(this,\""+redefinedDataName+"\","+redefineStartIndex+","+redefineEndIndex+")");
 			}
 			//Eğer dataType Number ise redefinedDataType da Alphabet ise
 			else if(dataType.equalsIgnoreCase("N") && redefinedDataType.equalsIgnoreCase("A")){
-				JavaClassElement.javaCodeBuffer.append("RedefinedNumberForAlphabet " +dataName.replaceAll("-", "_")+"=new RedefinedNumberForAlphabet(this,\""+redefinedDataName+"\","+redefineStartIndex+","+redefineEndIndex+")");
+				JavaClassElement.javaCodeBuffer.append("RedefinedAlphabetForAlphabet " +dataName.replaceAll("-", "_")+"=new RedefinedAlphabetForAlphabet(this,\""+redefinedDataName+"\","+redefineStartIndex+","+redefineEndIndex+")");
 			}else if(dataType.equalsIgnoreCase("A") && redefinedDataType.equalsIgnoreCase("A")){
 				JavaClassElement.javaCodeBuffer.append("RedefinedAlphabetForAlphabet " +dataName.replaceAll("-", "_")+"=new RedefinedAlphabetForAlphabet(this,\""+redefinedDataName+"\","+redefineStartIndex+","+redefineEndIndex+")");
 			}else{
-				JavaClassElement.javaCodeBuffer.append("RedefinedNumberForAlphabet " +dataName.replaceAll("-", "_")+"=new RedefinedNumberForAlphabet(this,\""+redefinedDataName+"\","+redefineStartIndex+","+redefineEndIndex+")");
+				JavaClassElement.javaCodeBuffer.append("RedefinedAlphabetForAlphabet " +dataName.replaceAll("-", "_")+"=new RedefinedAlphabetForAlphabet(this,\""+redefinedDataName+"\","+redefineStartIndex+","+redefineEndIndex+")");
 			}
 			
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA);

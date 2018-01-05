@@ -2,8 +2,8 @@ package tr.com.vbt.natural.parser.screen.patern;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.lexer.ReservedNaturalKeywords;
@@ -22,7 +22,7 @@ import tr.com.vbt.token.OzelKelimeToken;
  */
 public class PaternInputMap extends AbstractPattern{
 
-	final static Logger logger = LoggerFactory.getLogger(PaternInputMap.class);
+	final static Logger logger = Logger.getLogger(PaternInputMap.class);
 
 
 	/**

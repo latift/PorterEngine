@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.KelimeToken;
@@ -13,7 +13,7 @@ import tr.com.vbt.token.TokenTipi;
 
 public abstract class AbtractViewManager {
 	
-	final static Logger logger = LoggerFactory.getLogger(AbtractViewManager.class);
+	final static Logger logger = Logger.getLogger(AbtractViewManager.class);
 
 	protected static Map<String, String> viewSynonymMap = new HashMap<>();
 	
@@ -83,11 +83,15 @@ public abstract class AbtractViewManager {
 				viewName=tokenListesi.get(i-1);
 				tableName=tokenListesi.get(i+1);
 				viewSynonymMap.put(viewName.getDeger().toString(),tableName.getDeger().toString());
+			}else if(tokenListesi.get(i).isOzelKelime(ReservedNaturalKeywords.VIEW_OF)){
+				viewName=tokenListesi.get(i-1);
+				tableName=tokenListesi.get(i+1);
+				viewSynonymMap.put(viewName.getDeger().toString(),tableName.getDeger().toString());
 			}
 		}
 	}
 	
-	public void setTypeNameOfViews(KelimeToken curToken) {
+	public void setTypeNameOfViews(AbstractToken curToken) {
 		
 		String viewName, synonymName, realTablName;
 		

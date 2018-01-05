@@ -1,7 +1,7 @@
 package tr.com.vbt.java.database;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaClassElement;
@@ -25,7 +25,7 @@ import tr.com.vbt.java.utils.ConvertUtilities;
 
 public class JavaDBViewOfDataTypeElement extends AbstractJavaElement {
 
-	final static Logger logger = LoggerFactory.getLogger(JavaDBViewOfDataTypeElement.class);
+	final static Logger logger = Logger.getLogger(JavaDBViewOfDataTypeElement.class);
 	
 	private String typeName;  // AYK-TESL
 	

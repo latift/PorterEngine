@@ -1,7 +1,7 @@
 package tr.com.vbt.java.loops;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaClassElement;
@@ -12,7 +12,7 @@ import tr.com.vbt.java.utils.ConvertUtilities;
 //PERFORM PARAGRAPH1 THRU PARAGRAPH4  --> PARAGRAPH1(); PARAGRAPH2(); PARAGRAPH3(); PARAGRAPH4();
 public class JavaPerformThru extends  AbstractJavaElement {
 	
-	final static Logger logger = LoggerFactory.getLogger(JavaPerformThru.class);
+	final static Logger logger = Logger.getLogger(JavaPerformThru.class);
 	
 	private String paragraghName;
 	

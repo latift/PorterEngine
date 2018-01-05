@@ -1,7 +1,7 @@
 package tr.com.vbt.java.general;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.screen.JavaAtEndOfPageElement;
@@ -12,7 +12,7 @@ import tr.com.vbt.lexer.ConversionLogModel;
 
 public class JavaFunctionMainElement extends  AbstractJavaElement{
 
-	final static Logger logger = LoggerFactory.getLogger(JavaFunctionMainElement.class);
+	final static Logger logger = Logger.getLogger(JavaFunctionMainElement.class);
 	
 	//Paramaters: functionName;
 	String functionName="main";

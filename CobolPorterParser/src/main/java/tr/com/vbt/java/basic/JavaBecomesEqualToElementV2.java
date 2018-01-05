@@ -3,8 +3,8 @@ package tr.com.vbt.java.basic;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.ddm.DDM;
 import tr.com.vbt.ddm.DDMList;
@@ -36,7 +36,7 @@ import tr.com.vbt.token.TokenTipi;
 
 public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 
-	final static Logger logger = LoggerFactory.getLogger(JavaBecomesEqualToElementV2.class);
+	final static Logger logger = Logger.getLogger(JavaBecomesEqualToElementV2.class);
 
 	private List<AbstractToken> copyFrom = new ArrayList<AbstractToken>(); // #TOPLAM-UPLIFT2 +(T-GYOG*T-UPLIFT)
 	
@@ -125,7 +125,7 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 				
 				JavaWriteUtilities.addTypeChangeFunctionToEnd(copyTo,copyFrom.get(0));
 				
-			}else if(copyTo.isPojoVariable() && ConversionLogModel.getInstance().isMB()){
+			}else if(copyTo.isPojoVariable() && ConversionLogModel.getInstance().isRelationalDatabase()){
 					
 				JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomSetterString(copyTo, copyFrom.get(0)));
 					

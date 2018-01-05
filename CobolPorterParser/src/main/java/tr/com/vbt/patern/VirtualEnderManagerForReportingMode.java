@@ -3,8 +3,8 @@ package tr.com.vbt.patern;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.cobol.parser.AbstractEndingCommand;
@@ -24,7 +24,7 @@ import tr.com.vbt.natural.parser.loops.ElementLoop;
 
 public class VirtualEnderManagerForReportingMode {
 
-	final static Logger logger = LoggerFactory.getLogger(VirtualEnderManagerForReportingMode.class);
+	final static Logger logger = Logger.getLogger(VirtualEnderManagerForReportingMode.class);
 
 	protected List<AbstractCommand> commandList;
 

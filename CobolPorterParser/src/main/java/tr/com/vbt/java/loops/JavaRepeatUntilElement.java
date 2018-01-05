@@ -3,8 +3,8 @@ package tr.com.vbt.java.loops;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaClassElement;
@@ -25,7 +25,7 @@ import tr.com.vbt.token.TokenTipi;
 
 public class JavaRepeatUntilElement extends  AbstractJavaElement {
 	
-	final static Logger logger = LoggerFactory.getLogger(JavaRepeatUntilElement.class);
+	final static Logger logger = Logger.getLogger(JavaRepeatUntilElement.class);
 	
 	private List<AbstractToken> conditionList = new ArrayList<AbstractToken>();
 	

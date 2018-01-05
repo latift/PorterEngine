@@ -3,8 +3,8 @@ package tr.com.vbt.java.util;
 import java.util.Arrays;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.java.AbstractJava;
@@ -24,7 +24,7 @@ import tr.com.vbt.util.ConverterConfiguration;
 
 public class CreateArrayItemProcessOperator extends ProcessOperator {
 
-	final static Logger logger = LoggerFactory.getLogger(CreateArrayItemProcessOperator.class);
+	final static Logger logger = Logger.getLogger(CreateArrayItemProcessOperator.class);
 	
 	public CreateArrayItemProcessOperator(Rule rule, AbstractCommand sourceElement) {
 		super(rule);

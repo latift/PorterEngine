@@ -1,7 +1,7 @@
 package tr.com.vbt.java.database;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaClassElement;
@@ -11,7 +11,7 @@ import tr.com.vbt.java.utils.ConvertUtilities;
 //// 6214 STORE IDGIDBS-TGECICI  --> delete(TGECICI_DAO,TGECICI);
 public class JavaDeleteElement extends  AbstractJavaElement{
 	
-	final static Logger logger = LoggerFactory.getLogger(JavaDeleteElement.class);
+	final static Logger logger = Logger.getLogger(JavaDeleteElement.class);
 
 	private int recNumber;
 	

@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 import org.slf4j.MDC;
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
@@ -57,7 +57,7 @@ import tr.com.vbt.util.WriteToFile;
 
 public class NaturalCommandList extends AbstractCommandList {
 
-	final static Logger logger = LoggerFactory.getLogger(NaturalCommandList.class);
+	final static Logger logger = Logger.getLogger(NaturalCommandList.class);
 	
 	AbstractLexing lexer;
 
@@ -1199,6 +1199,8 @@ public class NaturalCommandList extends AbstractCommandList {
 								} catch (Exception e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
+									break;
+									
 								}
 								newElement.setRedefineStartIndex(offset);
 								offset += newElement.getLength();

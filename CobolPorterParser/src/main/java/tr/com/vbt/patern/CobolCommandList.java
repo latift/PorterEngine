@@ -3,8 +3,8 @@ package tr.com.vbt.patern;
 import java.io.IOException;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.cobol.parser.AbstractEndingCommand;
@@ -45,7 +45,7 @@ import tr.com.vbt.util.WriteToFile;
 
 public class CobolCommandList  extends AbstractCommandList{
 
-	final static Logger logger = LoggerFactory.getLogger(CobolCommandList.class);
+	final static Logger logger = Logger.getLogger(CobolCommandList.class);
 	
 	public CobolCommandList(List<AbstractToken> tokenListesi) {
 		paternManager=new PaternManagerCobolImpl();

@@ -3,8 +3,8 @@ package tr.com.vbt.patern;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.java.util.Utility;
@@ -13,7 +13,7 @@ import tr.com.vbt.token.TokenTipi;
 
 public abstract class AbstractDataTypePattern extends AbstractPattern {
 
-	final static Logger logger = LoggerFactory.getLogger(AbstractDataTypePattern.class);
+	final static Logger logger = Logger.getLogger(AbstractDataTypePattern.class);
 	
 	/**
 	 * @param args

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import javassist.compiler.Javac;
 import tr.com.vbt.cobol.parser.AbstractCommand;
@@ -31,7 +31,7 @@ import tr.com.vbt.token.TokenTipi;
 
 public abstract class AbsctractConditionalJavaElement extends AbstractJavaElement {
 
-	final static Logger logger = LoggerFactory.getLogger(AbsctractConditionalJavaElement.class);
+	final static Logger logger = Logger.getLogger(AbsctractConditionalJavaElement.class);
 
 	protected List conditionListWithFiltersAndParantesiz;
 

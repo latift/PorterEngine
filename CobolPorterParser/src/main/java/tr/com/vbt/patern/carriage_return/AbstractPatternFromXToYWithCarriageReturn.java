@@ -3,8 +3,8 @@ package tr.com.vbt.patern.carriage_return;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.lexer.ReservedCobolKeywords;
@@ -14,7 +14,7 @@ import tr.com.vbt.token.TokenTipi;
 
 public abstract class AbstractPatternFromXToYWithCarriageReturn extends AbstractPattern {
 
-	final static Logger logger = LoggerFactory.getLogger(AbstractPatternFromXToYWithCarriageReturn.class);
+	final static Logger logger = Logger.getLogger(AbstractPatternFromXToYWithCarriageReturn.class);
 
 
 	/** Sadece X TO Y yi destekler.

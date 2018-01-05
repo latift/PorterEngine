@@ -2,8 +2,8 @@ package tr.com.vbt.java.basic;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaClassElement;
@@ -17,7 +17,7 @@ import tr.com.vbt.token.ArrayToken;
 // REINPUT 'No employees meet your criteria.' --> ShowDialog('No employees meet your criteria.');
 public class JavaReInputElement extends AbstractJavaElement {
 
-	final static Logger logger = LoggerFactory.getLogger(JavaReInputElement.class);
+	final static Logger logger = Logger.getLogger(JavaReInputElement.class);
 
 	private List<AbstractToken> dataToDisplay;
 

@@ -1,7 +1,7 @@
 package tr.com.vbt.java.general;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.utils.ConvertUtilities;
@@ -23,7 +23,7 @@ import tr.com.vbt.java.utils.ConvertUtilities;
    */
 public class JavaProgramGrup extends  AbstractJavaElement{
 	
-	final static Logger logger = LoggerFactory.getLogger(JavaProgramGrup.class);
+	final static Logger logger = Logger.getLogger(JavaProgramGrup.class);
 	
 	
 	protected long levelNumber; // mandatory

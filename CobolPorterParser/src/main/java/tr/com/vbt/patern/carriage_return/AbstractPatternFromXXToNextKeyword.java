@@ -3,8 +3,8 @@ package tr.com.vbt.patern.carriage_return;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.patern.AbstractPattern;
@@ -13,7 +13,7 @@ import tr.com.vbt.token.TokenTipi;
 
 public abstract class AbstractPatternFromXXToNextKeyword extends AbstractPattern {
 
-	final static Logger logger = LoggerFactory.getLogger(AbstractPatternFromXXToNextKeyword.class);
+	final static Logger logger = Logger.getLogger(AbstractPatternFromXXToNextKeyword.class);
 
 
 

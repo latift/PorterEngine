@@ -3,8 +3,8 @@ package tr.com.vbt.java.general;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.utils.ConvertUtilities;
@@ -39,7 +39,7 @@ import tr.com.vbt.token.AbstractToken;
  */
 public class JavaOneDimensionArrayElement extends AbstractJavaElement {
 
-	final static Logger logger = LoggerFactory.getLogger(JavaOneDimensionArrayElement.class);
+	final static Logger logger = Logger.getLogger(JavaOneDimensionArrayElement.class);
 	
 	private String type;
 

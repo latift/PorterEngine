@@ -1,7 +1,7 @@
 package tr.com.vbt.java.database;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaClassElement;
@@ -12,7 +12,7 @@ import tr.com.vbt.java.utils.ConvertUtilities;
 // RD1. READ EMPLOYEES-VIEW BY NAME--> select * from employees-view;
 public class JavaReadFromDBElement extends  AbstractJavaElement {
 	
-	final static Logger logger = LoggerFactory.getLogger(JavaReadFromDBElement.class);
+	final static Logger logger = Logger.getLogger(JavaReadFromDBElement.class);
 	
 	public boolean writeJavaToStream() throws Exception{ super.writeJavaToStream();
 		

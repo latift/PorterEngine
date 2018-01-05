@@ -3,8 +3,8 @@ package tr.com.vbt.java.basic;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaClassElement;
@@ -16,7 +16,7 @@ import tr.com.vbt.token.AbstractToken;
 //MOVE 0 TO CAT-CT --> cat-ct=0;
 public class JavaCopyElementV2 extends AbstractJavaElement {
 
-	final static Logger logger = LoggerFactory.getLogger(JavaCopyElementV2.class);
+	final static Logger logger = Logger.getLogger(JavaCopyElementV2.class);
 
 	private AbstractToken dataToMove;
 

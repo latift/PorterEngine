@@ -3,12 +3,12 @@ package tr.com.vbt.lexer.demo;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 public class RegexDemo {
 
-	final static Logger logger = LoggerFactory.getLogger(RegexDemo.class);
+	final static Logger logger = Logger.getLogger(RegexDemo.class);
 	/**
 	 * @param args
 	 */

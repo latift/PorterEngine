@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.lexer.ReservedCobolKeywords;
@@ -26,7 +26,7 @@ import tr.com.vbt.token.TokenTipi;
  */
 public class PaternCompress extends AbstractPattern{
 	
-	final static Logger logger = LoggerFactory.getLogger(PaternCompress.class);
+	final static Logger logger = Logger.getLogger(PaternCompress.class);
 
     protected AbstractToken starterToken; //COMPRESS
     

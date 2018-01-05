@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.lexer.ReservedCobolKeywords;
@@ -24,7 +24,7 @@ import tr.com.vbt.token.TokenTipi;
  */
 public class PaternFindNumberWith extends AbstractPatternFromXToYWithoutCarriageReturn {
 
-	final static Logger logger = LoggerFactory.getLogger(PaternFindNumberWith.class);
+	final static Logger logger = Logger.getLogger(PaternFindNumberWith.class);
 
 	AbstractToken astViewName,astNumberName,astKeywordWith;
 	/**
@@ -95,13 +95,8 @@ public class PaternFindNumberWith extends AbstractPatternFromXToYWithoutCarriage
 			matchedCommandAdd.getParameters().put("count",matchedCommandAdd.getCountName());
 			
 		}else if (abstractTokenInPattern.getSourceFieldName().equals("viewName")) {
-			String viewName;
-			if(currentTokenForMatch.getTypeNameOfView()==null){
-				viewName = (String) currentTokenForMatch.getDeger();
-			}else{
-				viewName = (String) currentTokenForMatch.getTypeNameOfView();
-			}
-			matchedCommandAdd.setViewName(viewName);
+			
+			matchedCommandAdd.setViewName(currentTokenForMatch);
 			matchedCommandAdd.getParameters().put("viewName",matchedCommandAdd.getViewName());
 	
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("conditionList")){

@@ -181,7 +181,7 @@ public class PaternManagerNaturalImpl  extends AbstractPaternManagerNatural{
 		commmandPatternList.add(new PaternSubroutine());
 		commmandPatternList.add(new PaternDefine());
 		commmandPatternList.add(new PaternEndSubroutine());
-		if(ConversionLogModel.getInstance().isMB()){
+		if(ConversionLogModel.getInstance().isFrameworkVersion2()){
 			commmandPatternList.add(new PaternOnError());
 		}
 		commmandPatternList.add(new PaternEndError());

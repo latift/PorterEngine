@@ -4,8 +4,8 @@ package tr.com.vbt.patern.dotEnding;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.patern.AbstractPattern;
@@ -21,7 +21,7 @@ import tr.com.vbt.token.TokenTipi;
 public abstract class AbstractPatternFromXToDot extends AbstractPattern {
 
 
-	final static Logger logger = LoggerFactory.getLogger(AbstractPatternFromXToDot.class);
+	final static Logger logger = Logger.getLogger(AbstractPatternFromXToDot.class);
 
 
 	/** Sadece X TO Y yi destekler.

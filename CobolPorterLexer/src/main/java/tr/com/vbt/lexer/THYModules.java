@@ -24,5 +24,6 @@ public enum THYModules {
 	BUTCEPR,
 	MUHBATCH,
 	TRANSFER,
-	MEINCO
+	MEINCO,
+	TACTIC
 }

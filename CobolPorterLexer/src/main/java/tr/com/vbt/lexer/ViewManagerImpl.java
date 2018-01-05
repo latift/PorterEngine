@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.KelimeToken;
@@ -13,7 +13,7 @@ import tr.com.vbt.token.TokenTipi;
 
 public class ViewManagerImpl extends AbtractViewManager implements ViewManager{
 
-	final static Logger logger = LoggerFactory.getLogger(ViewManagerImpl.class);
+	final static Logger logger = Logger.getLogger(ViewManagerImpl.class);
 	
 	private static ViewManagerImpl instance;
 	

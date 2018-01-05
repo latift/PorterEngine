@@ -1,7 +1,7 @@
 package tr.com.vbt.java.conditions;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaClassElement;
@@ -36,7 +36,7 @@ import tr.com.vbt.token.AbstractToken;
 
 public class JavaSwitchElementV2 extends  AbstractJavaElement {
 	
-	final static Logger logger = LoggerFactory.getLogger(JavaSwitchElementV2.class);
+	final static Logger logger = Logger.getLogger(JavaSwitchElementV2.class);
 	
 	private AbstractToken condition;
 	

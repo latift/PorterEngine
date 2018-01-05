@@ -3,14 +3,14 @@ package tr.com.vbt.lexer;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 public class SysnonymManagerFactory {
 
 	private static Map<String, String> synonymToRealTableNameMap = new HashMap<>();
 
-	final static Logger logger = LoggerFactory.getLogger(SysnonymManagerFactory.class);
+	final static Logger logger = Logger.getLogger(SysnonymManagerFactory.class);
 
 	public static SynonymManager getInstance() {
 		

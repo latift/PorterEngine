@@ -134,6 +134,9 @@ public class DDM {
 
 
 	public DDM getFirstLevelDDM() {
+		if(this.firstLevelDDM==null){
+			return this;
+		}
 		return firstLevelDDM;
 	}
 

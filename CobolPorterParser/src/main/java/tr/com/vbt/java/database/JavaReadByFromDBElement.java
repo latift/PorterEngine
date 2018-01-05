@@ -3,8 +3,8 @@ package tr.com.vbt.java.database;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJava;
 import tr.com.vbt.java.general.JavaClassElement;
@@ -92,7 +92,7 @@ public class JavaReadByFromDBElement extends AbsctractConditionalJavaElement {
 	
 	ConversionLogModel logModel=ConversionLogModel.getInstance();
 
-	final static Logger logger = LoggerFactory.getLogger(JavaReadByFromDBElement.class);
+	final static Logger logger = Logger.getLogger(JavaReadByFromDBElement.class);
 
 	private AbstractToken viewName; // LIMAN
 	

@@ -1,8 +1,8 @@
 package tr.com.vbt.java.basic;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaClassElement;
@@ -11,7 +11,7 @@ import tr.com.vbt.java.utils.ConvertUtilities;
 
 public class JavaIncludeElement extends  AbstractJavaElement{
 	
-	final static Logger logger = LoggerFactory.getLogger(JavaIncludeElement.class);
+	final static Logger logger = Logger.getLogger(JavaIncludeElement.class);
 	
 	private String source;
 	

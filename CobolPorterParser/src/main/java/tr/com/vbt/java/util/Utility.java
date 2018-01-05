@@ -4,8 +4,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.cobol.parser.Levelable;
@@ -23,7 +23,7 @@ public class Utility {
 	
 	public static boolean DEBUG;
 
-	final static Logger logger = LoggerFactory.getLogger(Utility.class);
+	final static Logger logger = Logger.getLogger(Utility.class);
 	
 		public AbstractJavaElement getChildWithName(AbstractJavaElement parent, String childName){
 			/*
@@ -324,6 +324,9 @@ public class Utility {
 			}
 			
 		    try {
+		    	if(getterMethod.contains("gtTimestamp")){
+		    		logger.debug("");
+		    	}
 				method= c.getDeclaredMethod(getterMethod, null);
 				returnClass=method.getReturnType();
 				return returnClass.getSimpleName().toString();
@@ -356,7 +359,7 @@ public class Utility {
 			//THesap --> class(ThesapPK)
 		private static Class findPojosPkClass(String pojoClassName) {
 			
-			if(ConversionLogModel.getInstance().isMB()){
+			if(ConversionLogModel.getInstance().isRelationalDatabase()){
 				
 				String fullPKClassName,schemaName;
 				
@@ -394,7 +397,7 @@ public class Utility {
 
 		public static Class findPojoClass(String className) {
 			
-			if(ConversionLogModel.getInstance().isMB()){
+			if(ConversionLogModel.getInstance().isRelationalDatabase()){
 				
 				String fullClassName,schemaName;
 				
@@ -419,6 +422,15 @@ public class Utility {
 			}else{
 				Class c = null;
 	
+				try {
+					  c = Class.forName("tr.com.thy.dal.pojo."+className);
+				} catch (ClassNotFoundException e) {
+				
+				}
+				if(c!=null){
+					return c;
+				}
+				
 				THYModules[] modules = THYModules.class.getEnumConstants();
 	
 				for(int i=0; i<modules.length;i++){

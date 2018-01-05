@@ -9,8 +9,8 @@ import java.util.List;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.ddm.DDM;
@@ -37,7 +37,7 @@ import tr.com.vbt.util.WriteToFile;
 
 public class ConvertUtilities {
 
-	final static Logger logger = LoggerFactory.getLogger(ConvertUtilities.class);
+	final static Logger logger = Logger.getLogger(ConvertUtilities.class);
 	public static String yyyy_MM_dd = "yyyy_MM_dd";
 
 	public static long MILISECOND_TO_DAY = 1000 * 60 * 60 * 24;
