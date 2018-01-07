@@ -139,22 +139,12 @@ public class JavaFindNumberWithElement extends AbsctractConditionalJavaElement i
 		
 		javaIfNoRecords=this.getChildWithName("JavaIfNoRecords");
 		
-		
-
-		calculatedResultListName = "";// LIMAN_RESULT_LIST
-		calculatedDAOName = "";
 		findByString=createFindByString("findOneBy");
 		findByMethodSignature=createFindByMethodString("findOneBy", pojoType);
 		
 		//itName="it"+pojoType;
 		itName=itNameManager.createIteratorName(pojoType);
 
-		calculatedResultListName = viewName.toCustomString().replaceAll("_", "") + "_RESULT_LIST";
-		calculatedDAOName = viewName.getTypeNameOfView().replaceAll("_", "") + "_DAO";
-		
-		javaIfNoRecords=this.getChildWithName("JavaIfNoRecords");
-		
-		
 		try {
 
 

@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 
 
 import tr.com.vbt.token.AbstractToken;
+import tr.com.vbt.token.KelimeToken;
 import tr.com.vbt.token.TokenTipi;
 import tr.com.vbt.util.ConverterConfiguration;
 
@@ -58,7 +59,8 @@ public class SchemaNameManager {
 					if(schemaName==null || schemaName.length()==0){
 						schemaName="TPS";
 					}
-					schemaToken.setDeger(schemaName + "_" + schemaToken.getDeger());
+					//schemaToken.setDeger(schemaName + "_" + schemaToken.getDeger());
+					schemaToken.setSchemaNameToken(new KelimeToken(schemaName, 0, 0, 0));
 					logger.debug("SchemaManager:"+schemaName+"  is added");
 					logger.debug("");
 				}

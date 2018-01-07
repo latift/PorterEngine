@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 
 import org.slf4j.MDC;
 
+import tr.com.vbt.java.utils.VariableTypes;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.ArrayToken;
 import tr.com.vbt.token.DortluOzelKelimelerNatural;
@@ -1798,7 +1799,7 @@ public class NaturalLexing extends AbstractLexing {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		
+		//First Operation  Part****************************************************************
 		fixMapRecordStructure();
 		
 		setNaturalMode();
@@ -1813,12 +1814,25 @@ public class NaturalLexing extends AbstractLexing {
 		
 		joinKeywordsWithSpaces(); // Remove da icinde.
 		
+		controlDiyezToken();
+		
 		changeLastDotToEnd(); //Bazen kodu . ile bitiriyorlar. Bu durumda END ile replace ediyoruz.
 		
 		removePojosSubTableCountToken();
 
 		replaceDoublesToInteger();
+
 		
+	
+		
+		//Second Operation  Part****************************************************************
+		
+		
+		ViewManagerFactory.getInstance().setTypeNameOfViews(tokenListesi);
+		
+		SysnonymManagerFactory.getInstance().setSynonymsRealTableName(tokenListesi);
+		
+
 		setIncludedFiles(); //includedFiles Listesini doldurur.
 		
 		loadTableColumnReferanses(customer,module); //Include edilen using dosyalarından columnreferans degerlerini toplayıp NaturalLExing in columnReferansına ekler.
@@ -1829,10 +1843,11 @@ public class NaturalLexing extends AbstractLexing {
 		
 		loadTableColumnReferansesForViewOf();
 				
+		addStarterForBecomesEqualToForReportingMode();
 		
-		ViewManagerFactory.getInstance().setTypeNameOfViews(tokenListesi);
+		addStarterForBecomesEqualToForStructuredMode();
 		
-		SysnonymManagerFactory.getInstance().setSynonymsRealTableName(tokenListesi);
+		addWithForFind();
 		
 		//Include filename i onune ekler.
 		addIncludeFileNameForVariablesDefinedInIncludeFile();
@@ -1856,8 +1871,6 @@ public class NaturalLexing extends AbstractLexing {
 	   setAllElementsOfArrayFlag(); // RESET MAP_DIZISI.D_SECIM(*) --> RESET
 										// MAP_DIZISI.D_SECIM yapar ve D_SECIM
 										// in flagini işaretler
-		controlDiyezToken();
-		
 		controlPojo();
 
 		setAllElementsOfPojoFlag();
@@ -1893,12 +1906,6 @@ public class NaturalLexing extends AbstractLexing {
 							// çevirir. subStringStartIndex ve subStringEndIndex
 							// set eder.
 		
-		
-		addWithForFind();
-		
-		addStarterForBecomesEqualToForReportingMode();
-		
-		addStarterForBecomesEqualToForStructuredMode();
 		
 		addIfVisualTokens();
 		
@@ -2475,6 +2482,9 @@ public class NaturalLexing extends AbstractLexing {
 				for(int i=0;i<f.length;i++){
 					
 					if(!f[i].getName().equals("tableColumnReferans")){
+						if(f[i].getName().toUpperCase().contains("TKSGLOB0")){
+							logger.debug("");
+						}
 						
 						includeFieldList.put(f[i].getName(), new FieldWrapper(f[i], fileName));
 					}
@@ -3292,7 +3302,7 @@ public class NaturalLexing extends AbstractLexing {
 
 		replaceArtiWithPlusString();
 		
-		for (int i = 0; i < tokenListesi.size() - 2; i++) {
+		for (int i = 0; i < tokenListesi.size(); i++) {
 
 			current = tokenListesi.get(i);
 			
@@ -3306,7 +3316,7 @@ public class NaturalLexing extends AbstractLexing {
 				continue;
 			}
 				
-		   if(current.getDeger().toString().equals("PREFIX")){
+		   if(current.getDeger().toString().contains("PLUS_KOM_ARR")){
 			   logger.debug("");
 		   }
 		   for (Map.Entry<String, FieldWrapper> entry : includeFieldList.entrySet()) {
@@ -3315,7 +3325,7 @@ public class NaturalLexing extends AbstractLexing {
 			    FieldWrapper fWrapper = entry.getValue();
 			    
 			   logger.debug("key:"+key);
-			   if(current.getDeger().equals("PREFIX")){
+			   if(current.getDeger().toString().contains("PLUS_KOM_ARR")){
 				   logger.debug("key:"+key);
 			   }
 			
@@ -3325,7 +3335,22 @@ public class NaturalLexing extends AbstractLexing {
 			    	current.setIncludedVariable(true);
 			    	current.setGlobalVariable(true);
 			    	current.setIncludedFile(fWrapper.getFieldOwnerFile());
-			
+			    	
+			    	if(fWrapper.getField().getType().toString().toLowerCase().contains("string")){
+			    		current.setVarType(VariableTypes.STRING_TYPE);
+					}else if(fWrapper.getField().getType().toString().toLowerCase().contains("int")){
+						current.setVarType(VariableTypes.INT_TYPE);
+					}else if(fWrapper.getField().getType().toString().toLowerCase().contains("long")){
+						current.setVarType(VariableTypes.LONG_TYPE);
+					}else if(fWrapper.getField().getType().toString().toLowerCase().contains("bigdecimal")){
+						current.setVarType(VariableTypes.BIG_DECIMAL_TYPE);
+					}else if(fWrapper.getField().getType().toString().toLowerCase().contains("date")){
+						current.setVarType(VariableTypes.DATE_TYPE);
+					}else if(fWrapper.getField().getType().toString().toLowerCase().contains("time")){
+						current.setVarType(VariableTypes.TIME_TYPE);
+					}
+			    	
+			    	
 			    	//logger.debug("Add "+ fWrapper.getFieldOwnerFile()+". Before"+current.getDeger());
 			    	
 			    	if(fWrapper.getField().getType().getSimpleName().contains("Redefined")){
@@ -3343,12 +3368,16 @@ public class NaturalLexing extends AbstractLexing {
 		
 		AbstractToken current, plusToken=null;
 
-		for (int i = 0; i < tokenListesi.size() - 2; i++) {
+		for (int i = 0; i < tokenListesi.size(); i++) {
 
 			current = tokenListesi.get(i);
 			
 			logger.debug("Current:"+current.getDeger().toString());
 			logger.debug("");
+			
+			if(current.getSatirNumarasi()==293){
+				logger.debug("");
+			}
 			
 			if(i>0){
 				plusToken=tokenListesi.get(i-1);
@@ -3388,26 +3417,11 @@ public class NaturalLexing extends AbstractLexing {
 
 			current = tokenListesi.get(i);
 
-			usingToken = tokenListesi.get(i + 1);
+			if ( current.isOneOfOzelKelime("LOCAL_USING","GLOBAL_USING")) {
 
-			parameterToken = tokenListesi.get(i + 2);
-			
-			if(current.getDeger()==null){
-				continue;
-			}
-
-			if (current.getTip().equals(TokenTipi.OzelKelime) && ( current.getDeger().toString().equals("GLOBAL")|| current.getDeger().toString().equals("LOCAL"))
-					&& usingToken.getDeger()!=null && usingToken.getDeger().toString().equals("USING")) {
-
-				using = current.getDeger().toString() + "_" + usingToken.getDeger().toString();
-
-				if (current.getTip().equals(TokenTipi.OzelKelime) && usingToken.getTip().equals(TokenTipi.OzelKelime)
-						&& (using.equals(ReservedNaturalKeywords.GLOBAL_USING)
-								|| using.equals(ReservedNaturalKeywords.LOCAL_USING))) {
-
-					includeFileList.put(parameterToken.getDeger().toString(), parameterToken.getDeger().toString());
-				}
-
+				parameterToken = tokenListesi.get(i + 1);
+				
+				includeFileList.put(parameterToken.getDeger().toString(), parameterToken.getDeger().toString());
 			}
 		}
 	}
@@ -3456,7 +3470,7 @@ public class NaturalLexing extends AbstractLexing {
 					continue;
 				}
 			}
-			if(current.isKelime("GDASB1")){
+			if(current.isKelime("AGT_AGENCY_CODE")){
 				logger.debug("");
 			}
 			
@@ -3472,7 +3486,7 @@ public class NaturalLexing extends AbstractLexing {
 				continue;
 			}
 			 
-			if(current.isOzelKelime("WHERE") || current.isKelime("WHERE")|| current.isOzelKelime("WITH") || current.isKelime("WITH")){  //Where GÖrünce
+			if(current.isOneOfOzelKelime(ReservedNaturalKeywords.WITH)){  //Where GÖrünce
 				whereReached=true; 
 				selectFindReached=false;
 				continue;
@@ -3488,7 +3502,8 @@ public class NaturalLexing extends AbstractLexing {
 			}
 		
 			
-			if(next.isConditionOperator() && whereReached ){ //Where icinde ise ve next conditionOperatorse bir şey yapma
+			if(next.isConditionOperator() && whereReached ){ //Where icinde ise ve next conditionOperatorse bir şey yapma, Pojo set edilmişse pojo değil olarak işaretle
+				current.setPojoVariable(false);
 				continue;
 			}
 			
@@ -3511,13 +3526,13 @@ public class NaturalLexing extends AbstractLexing {
 						}
 
 				
-						if(current.isKelime("AWB_CASS_COUNTRY")){
+						if(current.isKelime("AGT_AGENCY_CODE")){
 							logger.debug("");
 						}
 						if(current.getSatirNumarasi()==598){
 							logger.debug("");
 						}
-						if(isLocalVariable(current) || current.isConstantVariableWithQuota() || current.isArray() ){
+						if(current.isConstantVariableWithQuota() || current.isArray() ){
 							continue;
 						}
 						
@@ -3537,8 +3552,6 @@ public class NaturalLexing extends AbstractLexing {
 						tokenListesi.set(i, tabloIsmiToken);
 						//tokenListesi.add(i,tabloIsmiToken );  //Tablo ismini ekle.
 						//tokenListesi.add(i+1, new NoktaToken<>("."));  //Nokta ekle
-						
-						i=i+2;
 						
 				}
 
@@ -3633,7 +3646,11 @@ public class NaturalLexing extends AbstractLexing {
 			if(index<tokenListesi.size()-1){
 				nextToken=tokenListesi.get(index+1);
 			}
-	
+			
+			if(curToken.isKelime("AWB_EXE_DATE")){
+				logger.debug("");
+			}
+			
 			if(curToken.isOzelKelime(ReservedNaturalKeywords.VIEW_OF) || curToken.isOzelKelime(ReservedNaturalKeywords.VIEW)){
 				inViewOfState=true;
 				tableNameToken=tokenListesi.get(index-1);
@@ -4324,10 +4341,14 @@ public class NaturalLexing extends AbstractLexing {
 				}
 
 				tokenListesi.remove(i); // remove Parantez
-
+				
 				arrayToken = new ArrayToken(astCurrent.getDeger(), astCurrent.getSatirNumarasi(),
 						astCurrent.getUzunluk(), astCurrent.getSatirdakiTokenSirasi(), astPreDimension);
 				arrayToken.setInputADParameters(astCurrent.getInputADParameters());
+
+				arrayToken.setGlobalVariable(astCurrent.isGlobalVariable());
+				arrayToken.setIncludedFile(astCurrent.getIncludedFile());
+				arrayToken.setVarType(astCurrent.getVarType());
 
 				tokenListesi.add(i, arrayToken);
 
@@ -4405,6 +4426,7 @@ public class NaturalLexing extends AbstractLexing {
 				continue;
 			}
 
+
 			logger.debug("astCurrent:" + astCurrent);
 			logger.debug(" astStartParantez:" + astStartParantez);
 			logger.debug(" astFirstDimension:" + astFirstDimension);
@@ -4419,6 +4441,9 @@ public class NaturalLexing extends AbstractLexing {
 				arrayToken = new ArrayToken(astCurrent.getDeger(), astCurrent.getSatirNumarasi(),
 						astCurrent.getUzunluk(), astCurrent.getSatirdakiTokenSirasi(), astFirstDimension,
 						astSecondDimension);
+				
+				arrayToken.setGlobalVariable(astCurrent.isGlobalVariable());
+				arrayToken.setIncludedFile(astCurrent.getIncludedFile());
 
 				tokenListesi.remove(i + 5); // )
 				tokenListesi.remove(i + 4); // SecDimension

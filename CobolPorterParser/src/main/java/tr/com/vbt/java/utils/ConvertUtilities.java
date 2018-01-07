@@ -216,26 +216,16 @@ public class ConvertUtilities {
 
 	private static VariableTypes getVariableTypeOfGlobalVariable(AbstractToken variable) {
 	
-		String variableName=variable.getDeger().toString();
-		if(variableName.contains("HESCINSI")||
-				variableName.contains("ISUSER")||
-				variableName.contains("YAZICI")||
-				variableName.contains("LAZERYAZICI")||
-				variableName.contains("GMESAJ")||
-				variableName.contains("PIKYAZICI")||
-				variableName.contains("HESDOKYAZICI")
-				){
-			return VariableTypes.STRING_TYPE;
-		}else{
-			return VariableTypes.LONG_TYPE;
-		}
-	
-
+		return variable.getVarType();
 	}
 	
 	public static String getVariableTypeOfPojoAsString(AbstractToken variable) {
-		
-		return Utility.findViewAndColumnNamesReturnType(variable).toLowerCase();
+		if(ConversionLogModel.getInstance().isRelationalDatabase()){
+			return Utility.findViewAndColumnNamesReturnTypeRelationalDB(variable).toLowerCase();
+				
+		}else{
+			return Utility.findViewAndColumnNamesReturnTypeAdabas(variable).toLowerCase();
+		}
 		
 	}
 
@@ -243,7 +233,11 @@ public class ConvertUtilities {
 		
 		String columnReturnType="";
 		try {
-			columnReturnType = Utility.findViewAndColumnNamesReturnType(variable).toLowerCase();
+			if(ConversionLogModel.getInstance().isRelationalDatabase()){
+				columnReturnType = Utility.findViewAndColumnNamesReturnTypeRelationalDB(variable).toLowerCase();
+			}else{
+				columnReturnType = Utility.findViewAndColumnNamesReturnTypeAdabas(variable).toLowerCase();
+			}
 		} catch (Exception e) {
 			logger.debug(e.getMessage(),e);
 		}

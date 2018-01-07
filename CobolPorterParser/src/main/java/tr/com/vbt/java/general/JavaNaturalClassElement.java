@@ -27,7 +27,7 @@ public class JavaNaturalClassElement extends  AbstractJavaElement{
 		programId=(String) this.parameters.get("PROGRAM_ID");
 		
 		if(programId==null){
-			interfaceName=ConverterConfiguration.className;
+			interfaceName=ConverterConfiguration.className.replaceAll("-", "_");
 		}
 		
 		

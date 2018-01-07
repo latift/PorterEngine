@@ -273,6 +273,19 @@ public class JavaWriteUtilities {
 	
 
 	private static Object toCustomGlobalVariableString(AbstractToken token) {
+		StringBuffer resultList=new StringBuffer("");
+		if(token instanceof ArrayToken){
+			token.setGlobalVariable(false);
+			resultList.append(token.getIncludedFile()+".getInstance(sessionId, programName)." );
+			try {
+				resultList.append(toCustomArrayVariableString(token));
+			} catch (Exception e) {
+				resultList.append("Hata_GlobalArray");
+			}
+			token.setGlobalVariable(true);
+			return resultList.toString();
+		}
+		
 		return token.getIncludedFile()+".getInstance(sessionId, programName)." + token.getDeger();
 		
 	}
@@ -697,7 +710,7 @@ public class JavaWriteUtilities {
 		
 		StringBuilder getterString=new StringBuilder();
 		
-		String columnReturnType=Utility.findViewAndColumnNamesReturnType(token);
+		String columnReturnType=Utility.findViewAndColumnNamesReturnTypeRelationalDB(token);
 		
 		if(columnReturnType.toLowerCase().equals("long")){
 			
@@ -878,12 +891,19 @@ public class JavaWriteUtilities {
 	 * 					1  A8  TAX-DOM-INT --> KetTax.getTaxDomInt()*/
 	private static String ruleEmtpy_1(DDM ddm, AbstractToken token) {
 		
-		String columnReturnType=Utility.findViewAndColumnNamesReturnType(token);
+		String columnReturnType=Utility.findViewAndColumnNamesReturnTypeAdabas(token);
+		if(columnReturnType==null){
+			columnReturnType=Utility.findViewAndColumnNamesReturnTypeAdabas(token);
+		}
 		
 		StringBuilder getterString=new StringBuilder();
 		
-		if(columnReturnType.toLowerCase().equals("long")){
+		if(columnReturnType==null)
+		{
+			getterString.append("getStringPojoValue(\"");
 			
+		}else if(columnReturnType.toLowerCase().equals("long")){
+		
 			getterString.append("getLongPojoValue(\"");
 			
 		}else if(columnReturnType.toLowerCase().equals("int")){  //Pojo da int olmamali ama varsada Long diye cekmeli
@@ -968,6 +988,7 @@ public class JavaWriteUtilities {
 			setterString.append(Utility.viewNameToPojoSetterName(token.getColumnNameToken().getDeger().toString()));
 		}
 		setterString.append("(");
+		
 		return setterString.toString();
 
 	}
@@ -1001,7 +1022,7 @@ public class JavaWriteUtilities {
 		// token.getDeger() = KETTAX
 		//columnt.getDeger() ==TAX_DETAIL
 		
-		String columnReturnType=Utility.findViewAndColumnNamesReturnType(token);
+		String columnReturnType=Utility.findViewAndColumnNamesReturnTypeAdabas(token);
 		
 		StringBuilder getterString=new StringBuilder();
 		
@@ -1072,7 +1093,11 @@ public class JavaWriteUtilities {
 		getterString +=".";
 		getterString +="get"+token.getDeger().toString()+ddm.getDB()+"s()";		//getKetTaxA9s()
 		getterString +=".";
-		getterString +="get("+JavaWriteUtilities.toCustomString(token.getPojosDimension())+"-1)";
+		if(token.getPojosDimension()==null){
+			getterString +="get("+"-1)";
+		}else{
+			getterString +="get("+JavaWriteUtilities.toCustomString(token.getPojosDimension())+"-1)";
+		}
 		getterString +=".";
 		getterString +=Utility.viewNameToPojoSetterName(token.getColumnNameToken().getDeger().toString())+"\""+")";
 		return getterString;
@@ -1135,7 +1160,7 @@ public class JavaWriteUtilities {
 	 * 										--> KetDomesticTax.getKetTaxAh().get(i).getItxCities()*/	 
 	private static String ruleEmpty_2(DDM ddm, AbstractToken token) throws Exception {
 		
-		String columnReturnType=Utility.findViewAndColumnNamesReturnType(token);
+		String columnReturnType=Utility.findViewAndColumnNamesReturnTypeAdabas(token);
 		
 		StringBuilder getterString=new StringBuilder();
 		
@@ -1197,19 +1222,29 @@ public class JavaWriteUtilities {
 		return getterString;
 	}
 	
-	//     2  AD  TAX-EXEMPT-CODE   --> KET_TAX.getKetTaxAcs().get(i-1).getTaxExemptCode()
+	//     2  AD  TAX-EXEMPT-CODE   --> KET_TAX.getKetTaxAcs().get(i-1).setTaxExemptCode(
 	private static String ruleEmpty_2_setter(DDM ddm, AbstractToken token) throws Exception {
-		String getterString;//TESKI;
-			getterString= "\""+token.getDeger().toString();
-		getterString +=".";
-		//getterString +="get"+token.getDeger().toString()+Utility.viewNameToPojoGetterName(ddm.getFirstLevelDDM().getDB())+"s()";		//getKetTaxA9s()
-		getterString +=Utility.viewNameToPojoGetterName(token.getDeger()+"_"+ddm.getFirstLevelDDM().getDB()+"s");
-		getterString +="()";
-		getterString +=".";
-		getterString +="get("+JavaWriteUtilities.toCustomString(token.getPojosDimension())+"-1)";
-		getterString +=".";
-		getterString +=Utility.viewNameToPojoSetterName(token.getColumnNameToken().getDeger().toString())+"\"";
-		return getterString;
+		StringBuilder getterString=new StringBuilder();
+		getterString.append(token.getDeger().toString());
+		getterString .append(".");
+		//getterString .append("get"+token.getDeger().toString()+Utility.viewNameToPojoGetterName(ddm.getFirstLevelDDM().getDB())+"s()";		//getKetTaxA9s()
+		getterString .append(Utility.viewNameToPojoGetterName(token.getDeger()+"_"+ddm.getFirstLevelDDM().getDB()+"s"));
+		getterString .append("()");
+		getterString .append(".");
+		
+		if(token.getPojosDimension()==null){
+			getterString .append("get("+"-1)");
+		}else{
+			getterString .append("get("+JavaWriteUtilities.toCustomString(token.getPojosDimension())+"-1)");
+		}
+		getterString .append(".");
+		if(token.getColumnNameToken()==null){
+			getterString .append("(");
+		}else{
+			getterString .append(Utility.viewNameToPojoSetterName(token.getColumnNameToken().getDeger().toString())+"(");
+		}
+		
+		return getterString.toString();
 	}
 	
 	//     2  AD  TAX-EXEMPT-CODE   --> KET_TAX.getKetTaxAcs().get(i-1).getTaxExemptCode()
@@ -1241,7 +1276,7 @@ public class JavaWriteUtilities {
 	 */
 	private static String ruleM_2(DDM ddm, AbstractToken token) throws Exception {
 		
-		String columnReturnType=Utility.findViewAndColumnNamesReturnType(token);
+		String columnReturnType=Utility.findViewAndColumnNamesReturnTypeAdabas(token);
 		
 		StringBuilder getterString=new StringBuilder();
 		
@@ -1287,19 +1322,26 @@ public class JavaWriteUtilities {
 	
 	private static String ruleM_2_setter(DDM ddm, AbstractToken token) throws Exception {
 		
-		String getterString;//TESKI;
-		getterString="getPojoValue("+ "\""+token.getDeger().toString();
-		getterString +=".";
-		getterString +="get"+token.getDeger().toString()+ddm.getFirstLevelDDM().getDB()+"s()";		//getKetTaxA9s()
-		getterString +=".";
-		getterString +="get("+JavaWriteUtilities.toCustomString(token.getPojosDimension())+"-1)";
-		getterString +=".";
-		getterString +="get"+token.getDeger().toString()+ddm.getDB()+"s()";		//getKetTaxA9s()
-		getterString +=".";
-		getterString +="get(i)";
-		getterString +=".";
-		getterString +=Utility.viewNameToPojoSetterName(token.getColumnNameToken().getDeger().toString())+"\""+")";
-		return getterString;
+		StringBuilder getterString=new StringBuilder();
+		getterString.append(token.getDeger().toString());
+		getterString .append(".");
+		getterString .append("get"+token.getDeger().toString()+ddm.getFirstLevelDDM().getDB()+"s()");		//getKetTaxA9s()
+		getterString .append(".");
+		if(token.getPojosDimension()==null){
+			getterString.append("get(-1)");
+		}else{
+			getterString .append("get("+JavaWriteUtilities.toCustomString(token.getPojosDimension())+"-1)");
+		}
+		getterString .append(".");
+		getterString .append("get"+token.getDeger().toString()+ddm.getDB()+"s()");		//getKetTaxA9s()
+		getterString .append(".");
+		getterString .append("get(i)");
+		getterString .append(".");
+		getterString.append(Utility.viewNameToPojoSetterName(token.getColumnNameToken().getDeger().toString()));
+		
+		getterString.append("(");
+		
+		return getterString.toString();
 	}
 
 	private static String ruleM_2_RedefinedColumnSetter(DDM ddm, AbstractToken token) throws Exception {

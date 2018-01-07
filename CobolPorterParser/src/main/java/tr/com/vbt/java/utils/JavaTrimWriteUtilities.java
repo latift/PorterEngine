@@ -463,7 +463,7 @@ public class JavaTrimWriteUtilities {
 		
 		StringBuilder getterString=new StringBuilder();
 		
-		String columnReturnType=Utility.findViewAndColumnNamesReturnType(token);
+		String columnReturnType=Utility.findViewAndColumnNamesReturnTypeRelationalDB(token);
 		
 		if(columnReturnType.toLowerCase().equals("long")){
 			

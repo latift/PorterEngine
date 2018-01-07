@@ -118,7 +118,7 @@ public class DDMList {
 
 			while ((sCurrentLine = br.readLine()) != null) {
 				if(lineNumber>1){
-					if(fileName.contains("TKS-AWB")&& lineNumber==93){
+					if(fileName.contains("TKS-CRA")&& lineNumber==45){
 						logger.debug("");
 					}
 					//logger.debug("fileName:"+fileName+"  sCurrentLine:"+sCurrentLine);
@@ -183,22 +183,39 @@ public class DDMList {
 			
 			//logger.debug("File:"+fileName+" Line:"+sCurrentLine);
 			
-			if(lineItemsList.get(0).startsWith("A")|| lineItemsList.get(0).startsWith("M")||lineItemsList.get(0).startsWith("P")||lineItemsList.get(0).startsWith("T")||lineItemsList.get(0).startsWith("G")){
+			if(lineItemsList.get(0).startsWith("P")){
 				
 				T=lineItemsList.get(0);
 				L=lineItemsList.get(1);
 				DB=lineItemsList.get(2);
 				Name=lineItemsList.get(3);
+				F="";
+				Leng="";
+				
+			}else if(lineItemsList.get(0).startsWith("A")|| lineItemsList.get(0).startsWith("M")||lineItemsList.get(0).startsWith("P")||lineItemsList.get(0).startsWith("T")||lineItemsList.get(0).startsWith("G")){
+				
+				T=lineItemsList.get(0);
+				L=lineItemsList.get(1);
+				DB=lineItemsList.get(2);
+				Name=lineItemsList.get(3);
+				F=lineItemsList.get(4);
+				Leng=lineItemsList.get(5);
 				
 			}else{
 				L=lineItemsList.get(0);
 				DB=lineItemsList.get(1);
 				Name=lineItemsList.get(2);
-				
+				F=lineItemsList.get(3);
+				Leng=lineItemsList.get(4);
 			}
 			
-			DDM d1 = new DDM(TableName,T,L,DB,Name);
+			DDM d1 = new DDM(TableName,T,L,DB,Name,F,Leng);
 			if(L.equals("1")){
+				d1.setFirstLevelDDM(d1);
+				firstLevelDDM=d1;
+			}else if(L.equals("2") && firstLevelDDM!=null && firstLevelDDM.getT()!=null && firstLevelDDM.getT().equals("G")){ //Groupsa
+				d1.setFirstLevelDDM(d1);
+				d1.setL("1");
 				firstLevelDDM=d1;
 			}else{
 				d1.setFirstLevelDDM(firstLevelDDM);
@@ -249,9 +266,9 @@ public class DDMList {
 			
 			return ddm;
 		}
-		if(ddm.getFirstLevelDDM()!=null &&ddm.getFirstLevelDDM().getT().equals("G")){ //Grupsa
+		/*if(ddm.getFirstLevelDDM()!=null &&ddm.getFirstLevelDDM().getT().equals("G")){ //Grupsa
 			ddm.setL(ddm.getFirstLevelDDM().getL());
-		}
+		}*/
 		return ddm;
 		
 		

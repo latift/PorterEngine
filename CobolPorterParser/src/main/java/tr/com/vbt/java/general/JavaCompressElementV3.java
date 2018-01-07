@@ -113,7 +113,7 @@ public class JavaCompressElementV3 extends AbstractJavaElement {
 			JavaClassElement.javaCodeBuffer.append("=");
 		}
 
-		if(typeOfCopyTo.equalsIgnoreCase("date")){
+		if(typeOfCopyTo!=null &&typeOfCopyTo.equalsIgnoreCase("date")){
 			writeSourcePartToDate();
 		}else{
 			writeSourcePart();

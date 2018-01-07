@@ -9,6 +9,8 @@ import org.apache.log4j.Logger;
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.cobol.parser.Levelable;
+import tr.com.vbt.ddm.DDM;
+import tr.com.vbt.ddm.DDMList;
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaConstants;
 import tr.com.vbt.java.utils.ConvertUtilities;
@@ -284,7 +286,7 @@ public class Utility {
 		}
 
 		
-	public static String findViewAndColumnNamesReturnType(AbstractToken condition){
+	public static String findViewAndColumnNamesReturnTypeRelationalDB(AbstractToken condition){
 			
 			String getterString, tableName, className, biggerPojoName, columnName = null, getterMethod;
 			
@@ -559,6 +561,29 @@ public class Utility {
 				}
 				
 			}
+		}
+
+		/**
+		 * long,
+		 * bigdecimal
+		 * date
+		 * time
+		 * string
+		 * @param token
+		 * @return
+		 */
+		public static String findViewAndColumnNamesReturnTypeAdabas(AbstractToken token) {
+			DDM ddm= DDMList.getInstance().getDDM(token);
+			if(ddm.getF()!=null && ddm.getF().equals("N")&& ddm.getLeng().contains(".")){
+				return "bigdecimal";
+			}else if(ddm.getF()!=null && ddm.getF().equals("N")){
+				return "long";
+			}else if(ddm.getF()!=null && ddm.getF().equals("A")){
+				return "string";
+			}else if(ddm.getF()!=null && ddm.getF().equals("P")){
+				return "date";
+			}
+			return "string"; //Tipini bulamazsa java kodu hatalı da olsa çıksın diye String atıyoruz.
 		}
 
 

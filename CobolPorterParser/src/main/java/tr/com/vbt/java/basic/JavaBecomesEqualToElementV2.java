@@ -125,11 +125,7 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 				
 				JavaWriteUtilities.addTypeChangeFunctionToEnd(copyTo,copyFrom.get(0));
 				
-			}else if(copyTo.isPojoVariable() && ConversionLogModel.getInstance().isRelationalDatabase()){
-					
-				JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomSetterString(copyTo, copyFrom.get(0)));
-					
-			}else if(copyTo.isRedefinedVariable() || (copyTo.getLinkedToken()!=null && copyTo.getLinkedToken().isRedefinedVariable())){
+			}else if(copyTo.isRedefinedVariable() || (copyTo.getLinkedToken()!=null && copyTo.getLinkedToken().isRedefinedVariable()) || copyTo.isPojoVariable()){
 				//*S**ASSIGN TAX-INOUT = SCR-IN-OUT -->KET_TAX.setTaxInout(SCR_IN_OUT);
 				
 				JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomSetterString(copyTo));
@@ -143,11 +139,11 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 				
 			}else if(typeOfCopyTo.equals("bigdecimal")){
 				
-				//cast=JavaWriteUtilities.addCast(copyTo,copyFrom.get(0));
+				cast=JavaWriteUtilities.addCast(copyTo,copyFrom.get(0));
 				
 				fromBigDecimalToBigDecimal();
 				
-				//JavaWriteUtilities.endCast(cast);
+				JavaWriteUtilities.endCast(cast);
 				
 				JavaWriteUtilities.addTypeChangeFunctionToEnd(copyTo,copyFrom.get(0));
 				
