@@ -63,7 +63,12 @@ public class PaternDataTypeFiller_XX extends AbstractPattern{
 
 		//PIC
 		AbstractToken astKeyword=new OzelKelimeToken("PIC", 0, 0, 0);
+		astKeyword.setOptional(true);
 		patternTokenList.add(astKeyword);
+		
+		AbstractToken astXCount=new SayiToken();
+		astXCount.setOptional(true);
+		patternTokenList.add(astXCount);
 		
 		// X Mandatory Kelime(değer verilmeyecek.)
 		AbstractToken astSource4=new KelimeToken<String>("X",0,0,0);

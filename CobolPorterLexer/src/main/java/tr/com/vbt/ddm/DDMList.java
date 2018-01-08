@@ -248,7 +248,11 @@ public class DDMList {
 		//String key=d1.getTableName().substring(0,d1.getTableName().length()-3).replaceAll("-", "_") + d1.getName().replaceAll("-", "_");
 		if(copyTo.getTypeNameOfView()!=null&& !copyTo.getTypeNameOfView().trim().isEmpty()){
 			try {
-				key=copyTo.getTypeNameOfView().toString()+"."+copyTo.getColumnNameToken().getDeger().toString();
+				if(copyTo.getColumnNameToken()!=null){
+					key=copyTo.getTypeNameOfView().toString()+"."+copyTo.getColumnNameToken().getDeger().toString();
+				}else if(copyTo.getLinkedToken()!=null){
+					key=copyTo.getTypeNameOfView().toString()+"."+copyTo.getLinkedToken().getDeger().toString();
+				}
 			} catch (Exception e) {
 				logger.debug(e.getMessage(),e);
 				throw e;

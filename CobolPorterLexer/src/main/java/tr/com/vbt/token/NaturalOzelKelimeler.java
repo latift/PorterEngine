@@ -208,6 +208,7 @@ public NaturalOzelKelimeler() {
 	ozelKelimeler.add("IN");
 	ozelKelimeler.add("PHYSICAL");
 	ozelKelimeler.add("SEQUENCE");
+	ozelKelimeler.add("FILLER");
 	
 
 	/*

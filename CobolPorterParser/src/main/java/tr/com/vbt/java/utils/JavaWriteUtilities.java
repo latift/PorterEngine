@@ -139,19 +139,19 @@ public class JavaWriteUtilities {
 		
 			
 		}else if(token.isRecordVariable()){
-				
+			tempCodeBuffer.append(toCustomRecordVariableSetterString(token));
 		
 		}else if(token.isSubstringCommand()){
-			
+			tempCodeBuffer.append(toCustomDefaultVariableString(token));
 		
 		}else if(token.isEdited()){ //DVANATOPMEB(DOVIZGEC) -->DVANATOPMEB[DOVIZGEC]
-			
+			tempCodeBuffer.append(toCustomDefaultVariableString(token));
 			
 		}else if(token.getTip().equals(TokenTipi.Sayi)){
 			
-			
+			tempCodeBuffer.append(toCustomDefaultVariableString(token));
 		}else if(token.getTip().equals(TokenTipi.Array)){ //DVANATOPMEB(DOVIZGEC) -->DVANATOPMEB[DOVIZGEC]
-			
+			tempCodeBuffer.append(toCustomDefaultVariableString(token));
 			
 		}else{
 			

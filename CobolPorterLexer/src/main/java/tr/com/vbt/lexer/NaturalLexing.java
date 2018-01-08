@@ -1854,6 +1854,8 @@ public class NaturalLexing extends AbstractLexing {
 		
 		//SAdece kolon ismi verilenler için tablo ismini onune ekler.
 		addTableNameForColumnsWithoutTable();
+		
+		setTableNameForColumnsWithTable();
 	
 		setRedefinerOfColumn();
 		// setReservedLineNumberTokens();
@@ -1916,6 +1918,8 @@ public class NaturalLexing extends AbstractLexing {
 	}
 
 	
+
+
 	/*
 	 * Sadece MAP conversion durumunda çalışır
 	 * 
@@ -3470,7 +3474,7 @@ public class NaturalLexing extends AbstractLexing {
 					continue;
 				}
 			}
-			if(current.isKelime("AGT_AGENCY_CODE")){
+			if(current.isKelime("AMB_AWB")){
 				logger.debug("");
 			}
 			
@@ -3513,7 +3517,9 @@ public class NaturalLexing extends AbstractLexing {
 
 				columnName = current.getDeger().toString().replaceAll("-", "_");
 			
-				
+					if(current.getSatirNumarasi()==54){
+						logger.debug("");
+					}
 					if (tableColumnReferans.containsKey(columnName)) {
 
 						String schemaName;
@@ -3526,10 +3532,10 @@ public class NaturalLexing extends AbstractLexing {
 						}
 
 				
-						if(current.isKelime("AGT_AGENCY_CODE")){
+						if(current.isKelime("AIR-CODE-NUM")){
 							logger.debug("");
 						}
-						if(current.getSatirNumarasi()==598){
+						if(current.getSatirNumarasi()==54){
 							logger.debug("");
 						}
 						if(current.isConstantVariableWithQuota() || current.isArray() ){
@@ -3558,6 +3564,61 @@ public class NaturalLexing extends AbstractLexing {
 			}
 		}
 
+	}
+	
+	//TKS-AIRLINE.AIR-CODE-NUM --> TKS_AIRLINE yap ve pojo set et.
+	private void setTableNameForColumnsWithTable() {
+	
+		AbstractToken current, noktaToken, columnToken;
+
+		String columnName;
+		
+		boolean isDefinitionPart=true;
+		
+		AbstractToken tabloIsmiToken;
+		
+		for (int i = 0; i < tokenListesi.size() - 2; i++) {
+
+			current = tokenListesi.get(i);
+			
+			noktaToken=tokenListesi.get(i+1);
+			
+			columnToken=tokenListesi.get(i+2);
+			
+			logger.debug(current.getDeger().toString()+noktaToken.getDeger().toString()+columnToken.getDeger().toString());
+			
+			if(current.getSatirNumarasi()==54){
+				logger.debug("");
+			}
+			if(current.getDeger()!=null && current.getDeger().equals(ReservedNaturalKeywords.END_DEFINE)){
+				isDefinitionPart=false;
+				continue;
+			}
+			
+			if(isDefinitionPart){
+				continue;
+			}
+
+			
+			String tableNameDeger = current.getDeger().toString().replaceAll("-", "_");
+			
+			columnName=columnToken.getDeger().toString().replaceAll("-", "_");
+			
+			if(!current.isKelime() || !noktaToken.isNoktaToken() || !columnToken.isKelime() || !tableColumnReferans.containsKey(columnName) || current.isConstantVariableWithQuota() || current.isArray()
+					|| columnToken.isConstantVariableWithQuota() || columnToken.isArray()){
+				continue;
+			}
+			
+			logger.debug(columnName + " kolonu için "+tableNameDeger + " Tablo ismi zaten tanımlı." ) ;
+			
+			tabloIsmiToken=new KelimeToken<>(tableNameDeger, current.getSatirNumarasi(), 0, 0);
+			tabloIsmiToken.setPojoVariable(true);
+			tabloIsmiToken.setColumnNameToken(columnToken);
+			ViewManagerFactory.getInstance().setTypeNameOfViews(tabloIsmiToken);
+			tokenListesi.set(i, tabloIsmiToken);
+			
+		}
+		
 	}
 	
 	private boolean isLocalVariable(AbstractToken controlToken) {

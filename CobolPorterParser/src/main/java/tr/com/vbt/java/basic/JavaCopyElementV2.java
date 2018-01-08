@@ -38,7 +38,7 @@ public class JavaCopyElementV2 extends AbstractJavaElement {
 			try {
 				for (AbstractToken destVar1 : destVariable) {
 
-					if(destVar1.isPojoVariable() || destVar1.isRedefinedVariable()|| destVar1.isRedefinedVariableDimensionToSimple()){
+					if(destVar1.isPojoVariable() || (destVar1.getLinkedToken()!=null && destVar1.getLinkedToken().isRedefinedVariable()) || destVar1.isRedefinedVariable()|| destVar1.isRedefinedVariableDimensionToSimple()){
 						JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomSetterString(destVar1, dataToMove));
 					}else{
 						JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(destVar1));

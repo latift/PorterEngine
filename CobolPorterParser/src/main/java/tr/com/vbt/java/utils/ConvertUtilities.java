@@ -29,6 +29,7 @@ import tr.com.vbt.natural.parser.datalayout.program.ElementProgramDataTypeNatura
 import tr.com.vbt.natural.parser.datalayout.program.ElementProgramGrupNatural;
 import tr.com.vbt.natural.parser.datalayout.program.ElementProgramOneDimensionArrayNatural;
 import tr.com.vbt.natural.parser.datalayout.program.ElementProgramTwoDimensionArrayNatural;
+import tr.com.vbt.natural.parser.datalayout.program.redefiners.ElementRedefineDataTypeOfSimpleDataType;
 import tr.com.vbt.patern.NaturalCommandList;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.TokenTipi;
@@ -345,6 +346,8 @@ public class ConvertUtilities {
 		
 		ElementProgramOneDimensionArrayNatural elementProgramOneDimensionArrayNatural;
 		
+		ElementRedefineDataTypeOfSimpleDataType elementSimpleTypeRedefiner;
+		
 		AbstractToken searhVariable;
 		if(variable.getLinkedToken()!=null){
 			searhVariable=variable.getLinkedToken();
@@ -356,6 +359,10 @@ public class ConvertUtilities {
 
 		for (AbstractCommand abstractCommand : commandList) {
 			logger.debug(abstractCommand.toString());
+			
+			if(abstractCommand.getSatirNumarasi()==85){
+				logger.debug(abstractCommand.toString());
+			}
 			if (abstractCommand instanceof ElementProgramDataTypeNatural) {
 				programData = (ElementProgramDataTypeNatural) abstractCommand;
 				if (programData.getDataName().equals(searhVariable.getDeger())) {
@@ -370,6 +377,11 @@ public class ConvertUtilities {
 				elementProgramOneDimensionArrayNatural = (ElementProgramOneDimensionArrayNatural) abstractCommand;
 				if (elementProgramOneDimensionArrayNatural.getDataName().equals(searhVariable.getDeger())) {
 					return elementProgramOneDimensionArrayNatural;
+				}
+			}else if (abstractCommand instanceof ElementRedefineDataTypeOfSimpleDataType) {
+				elementSimpleTypeRedefiner = (ElementRedefineDataTypeOfSimpleDataType) abstractCommand;
+				if (elementSimpleTypeRedefiner.getDataName().equals(searhVariable.getDeger())) {
+					return elementSimpleTypeRedefiner;
 				}
 			}
 		}
