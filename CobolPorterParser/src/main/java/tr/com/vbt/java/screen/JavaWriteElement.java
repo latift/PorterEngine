@@ -350,7 +350,7 @@ public class JavaWriteElement extends AbstractJavaElement {
 					newScreenIO = new EngineIOLabel((int)xCoord, (int)yCoord, IOModeType.AD_D, value, XCoordinationTypes.EXACT, XCoordinationTypes.EXACT,0,(int)maxLength);
 					
 				}else{
-					newScreenIO = new EngineIOLabel((int)xCoord,(int) yCoord, IOModeType.AD_D, value+"["+ConvertUtilities.castToInt()+arrayToken.getFirstDimension().getDeger().toString()+"]", XCoordinationTypes.EXACT,
+					newScreenIO = new EngineIOLabel((int)xCoord,(int) yCoord, IOModeType.AD_D, value, XCoordinationTypes.EXACT,
 							XCoordinationTypes.EXACT,0,(int)maxLength);
 					
 				}

@@ -1843,6 +1843,12 @@ public class NaturalLexing extends AbstractLexing {
 		
 		loadTableColumnReferansesForViewOf();
 				
+		setAllElementsOfArrayFlag(); // RESET MAP_DIZISI.D_SECIM(*) --> RESET
+		// MAP_DIZISI.D_SECIM yapar ve D_SECIM
+			// in flagini işaretler
+		
+		setAllElementsOfPojoFlag();
+		   
 		addStarterForBecomesEqualToForReportingMode();
 		
 		addStarterForBecomesEqualToForStructuredMode();
@@ -1870,12 +1876,8 @@ public class NaturalLexing extends AbstractLexing {
 
 		changeKeywordsWhichNotUsedAsKeyword();
 
-	   setAllElementsOfArrayFlag(); // RESET MAP_DIZISI.D_SECIM(*) --> RESET
-										// MAP_DIZISI.D_SECIM yapar ve D_SECIM
-										// in flagini işaretler
-		controlPojo();
 
-		setAllElementsOfPojoFlag();
+		controlPojo();
 
 		controlStarAndDiyezTokenWithoutPojoDefinitions();
 
@@ -2225,6 +2227,10 @@ public class NaturalLexing extends AbstractLexing {
 			astDoubleDot= tokenListesi.get(i + 1);
 			astEquals = tokenListesi.get(i + 2);
 			astRight = tokenListesi.get(i + 3); 
+			
+			if(astLeft.getSatirNumarasi()==146){
+				logger.debug("");
+			}
 			
 			logger.debug("astLeft"+astLeft+"   astDoubleDot:"+astDoubleDot+"   astEquals:"+astEquals);
 			if(!(astEquals.isKarakter('=') &&astDoubleDot.isKarakter(':'))){
@@ -3069,14 +3075,14 @@ public class NaturalLexing extends AbstractLexing {
 		// ekle.
 		
 		//Bütün notları NOT_T yapıyoruz. Sonra Java Condition kısmında bakıp condition içinde NOT_T görürsek NOT yapacağız.
-		for (int i = 0; i < tokenListesi.size() - 2; i++) {
+	/*	for (int i = 0; i < tokenListesi.size() - 2; i++) {
 			curToken = tokenListesi.get(i);
 			
 			if(curToken.isOzelKelime("NOT") ||curToken.isKelime("NOT") ){
 				curToken.setTip(TokenTipi.Kelime);
 				curToken.setDeger("NOTT");
 			}
-		}
+		}*/
 
 
 
@@ -3338,6 +3344,7 @@ public class NaturalLexing extends AbstractLexing {
 					//current.setDeger(fWrapper.getFieldOwnerFile() + ".getInstance(sessionId, programName)." + current.getDeger());
 			    	current.setIncludedVariable(true);
 			    	current.setGlobalVariable(true);
+			    	current.setIncludedVariableField(fWrapper.getField());
 			    	current.setIncludedFile(fWrapper.getFieldOwnerFile());
 			    	
 			    	if(fWrapper.getField().getType().toString().toLowerCase().contains("string")){
@@ -4409,6 +4416,7 @@ public class NaturalLexing extends AbstractLexing {
 
 				arrayToken.setGlobalVariable(astCurrent.isGlobalVariable());
 				arrayToken.setIncludedFile(astCurrent.getIncludedFile());
+				arrayToken.setIncludedVariableField(astCurrent.getIncludedVariableField());
 				arrayToken.setVarType(astCurrent.getVarType());
 
 				tokenListesi.add(i, arrayToken);
@@ -4438,7 +4446,7 @@ public class NaturalLexing extends AbstractLexing {
 					tokenListesi.remove(i); // Remove +
 					globalVariableToken.setDeger(globalVariableToken.getDeger());
 					globalVariableToken.setGlobalVariable(true);
-					globalVariableToken.setLocalVariable(true);
+					//globalVariableToken.setLocalVariable(true);
 				}
 
 			}

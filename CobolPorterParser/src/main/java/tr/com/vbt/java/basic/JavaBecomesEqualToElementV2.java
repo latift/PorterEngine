@@ -62,7 +62,9 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 			if(copyTo==null) {
 				return true;
 			}
-			
+			if(copyTo.getSatirNumarasi()==215){
+				logger.debug("");
+			}
 			copyFrom.set(0, createTableNameTokenForColumnsWithoutTable(copyFrom.get(0)));
 			
 			String typeOfCopyTo=ConvertUtilities.getTypeOfVariable(copyTo);
@@ -132,18 +134,24 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 				
 				//JavaClassElement.javaCodeBuffer.append("(");
 				for (int i = 0; i < copyFrom.size(); i++) {
+					cast=JavaWriteUtilities.addCast(copyTo,copyFrom.get(i));
+					
 					JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(copyFrom.get(i)));
+					
+					JavaWriteUtilities.endCast(cast);
+					
+					JavaWriteUtilities.addTypeChangeFunctionToEnd(copyTo,copyFrom.get(i));
 				}
 				
 				JavaClassElement.javaCodeBuffer.append(")");
 				
 			}else if(typeOfCopyTo.equals("bigdecimal")){
 				
-				cast=JavaWriteUtilities.addCast(copyTo,copyFrom.get(0));
+				//cast=JavaWriteUtilities.addCast(copyTo,copyFrom.get(0));
 				
 				fromBigDecimalToBigDecimal();
 				
-				JavaWriteUtilities.endCast(cast);
+				//JavaWriteUtilities.endCast(cast);
 				
 				JavaWriteUtilities.addTypeChangeFunctionToEnd(copyTo,copyFrom.get(0));
 				

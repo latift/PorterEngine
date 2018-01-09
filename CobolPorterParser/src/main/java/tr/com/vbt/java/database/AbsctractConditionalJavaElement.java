@@ -93,7 +93,7 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 
 		List<AbstractToken> resultList = new ArrayList<AbstractToken>();
 
-		AbstractToken currentToken = null, nextToken = null, previousToken = null;
+		AbstractToken currentToken = null, nextToken = null, previousToken = null, newOperatorToken=null;
 
 		System.out.println(conditionList);
 		
@@ -127,6 +127,21 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 					currentToken.setDeger("<=");
 					conditionList.remove(index + 1);
 				}
+			}else if (currentToken.isOzelKelime("EQ")) {
+					newOperatorToken=new KarakterToken("=", 0, 0, 0);
+					conditionList.set(index, newOperatorToken);
+			}else if (currentToken.isOzelKelime("GE")) {
+					newOperatorToken=new KarakterToken(">=", 0, 0, 0);
+					conditionList.set(index, newOperatorToken);
+			}else if (currentToken.isOzelKelime("GT")) {
+					newOperatorToken=new KarakterToken(">", 0, 0, 0);
+					conditionList.set(index, newOperatorToken);
+			}else if (currentToken.isOzelKelime("LE")) {
+				newOperatorToken=new KarakterToken("<=", 0, 0, 0);
+				conditionList.set(index, newOperatorToken);
+			}else if (currentToken.isOzelKelime("LT")) {
+				newOperatorToken=new KarakterToken("<", 0, 0, 0);
+				conditionList.set(index, newOperatorToken);
 			}
 			resultList.add(currentToken);
 		}
@@ -233,24 +248,25 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 				continue;
 			}
 
-			logger.debug(curFilter.getFilterValue().getDeger().toString());
-			if (curFilter.getFilterValue().getTip().equals(TokenTipi.Sayi)) {
-				methodParameterType = ConvertUtilities.getVariableTypeOfString(curFilter.getFilterValue()).toString();
-				methodParameterName = curFilter.getFilterName().getDeger().toString().replaceAll("-", "_");
-			} else if (curFilter.getFilterValue().isRecordVariable()) {
-				methodParameterType = ConvertUtilities.getVariableTypeOfString(curFilter.getFilterValue().getLinkedToken()).toString();
-				methodParameterName = curFilter.getFilterValue().getLinkedToken().getDeger().toString().replaceAll("-",
-						"_");
-			} else if (curFilter.getFilterValue().isPojoVariable()) {
+			logger.debug(curFilter.getFilterName().getDeger().toString());
+			
+			if (curFilter.getFilterName().isRecordVariable()) {
+				methodParameterType = ConvertUtilities.getVariableTypeOfString(curFilter.getFilterName().getLinkedToken()).toString();
+				methodParameterName = curFilter.getFilterName().getLinkedToken().getDeger().toString();
+			} else if (curFilter.getFilterName().isPojoVariable()) {
 				
-				methodParameterType = ConvertUtilities.getPojosFieldType(curFilter.getFilterValue());
+				methodParameterType = ConvertUtilities.getPojosFieldType(curFilter.getFilterName());
 				
-				methodParameterName = curFilter.getFilterValue().getColumnNameToken().getDeger().toString()
+				methodParameterName = curFilter.getFilterName().getColumnNameToken().getDeger().toString()
 						.replaceAll("-", "_");
-			} else {
-				methodParameterType = ConvertUtilities.getVariableTypeOfString(curFilter.getFilterValue()).toString();
-				methodParameterName = curFilter.getFilterValue().getDeger().toString().replaceAll("-", "_");
-			}
+			}else{
+				methodParameterType = ConvertUtilities.getVariableTypeOfString(curFilter.getFilterName()).toString();
+				if(curFilter.getFilterName()!=null && curFilter.getFilterName().getColumnNameToken()!=null){
+					methodParameterName = curFilter.getFilterName().getColumnNameToken().getDeger().toString().replaceAll("-", "_");
+				}else{
+					methodParameterName = curFilter.getFilterName().getDeger().toString().replaceAll("-", "_");
+				}
+			} 
 			//createdFindByMethod.getMethodName().append( methodParameterType + " " + ConvertUtilities.onlyFieldOfIncludedVariable(methodParameterName));
 
 			MethodParameter parameter=new MethodParameter();
@@ -673,20 +689,20 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 			
 						filter=(Filter) conditionListInParantesiz.get(index);
 						
-						if(filter.filterOperator.getDeger().equals('=')){
+						if(filter.filterOperator.getDeger().equals('=') || filter.filterOperator.getDeger().equals("=")){
 								result.append("Restrictions.eq(\"");
-						}else if(filter.filterOperator.getDeger().equals('>')){
+						}else if(filter.filterOperator.getDeger().equals('>') || filter.filterOperator.getDeger().equals(">")){
 								result.append("Restrictions.gt(\"");
-						}else if(filter.filterOperator.getDeger().equals('<')){
+						}else if(filter.filterOperator.getDeger().equals('<') || filter.filterOperator.getDeger().equals("<")){
 								result.append("Restrictions.lt(\"");
-						}else if(filter.filterOperator.getDeger().equals("^=")){
+						}else if(filter.filterOperator.getDeger().equals("^=") ){
 								result.append("Restrictions.not(Restrictions.eq(\"");
 						}else if(filter.filterOperator.getDeger().equals(">=")){
 								result.append("Restrictions.ge(\"");
 						}else if(filter.filterOperator.getDeger().equals("<=")){
 								result.append("Restrictions.le(\"");
 						}else{
-							result.append("Restrictions.unknown(");
+							result.append("Restrictions.unknown(\"");
 						}
 						
 						
@@ -712,12 +728,12 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 		private void createFilterWithAndConditions(int index) {
 			Filter filter;
 			filter=(Filter) conditionListWithFiltersAndParantesiz.get(index);
-			if(filter.filterOperator.getDeger().equals('=')){
+			if(filter.filterOperator.getDeger().equals('=')|| filter.filterOperator.getDeger().equals("=")){
 				findByMethodImplemantation.getMethodImplementation().append("main_crit.add(Restrictions.eq(\"");
-			}else if(filter.filterOperator.getDeger().equals('>')){
+			}else if(filter.filterOperator.getDeger().equals('>') || filter.filterOperator.getDeger().equals(">")){
 				findByMethodImplemantation.getMethodImplementation().append("main_crit.add(Restrictions.gt(\"");
 				
-			}else if(filter.filterOperator.getDeger().equals('<')){
+			}else if(filter.filterOperator.getDeger().equals('<') || filter.filterOperator.getDeger().equals("<")){
 				findByMethodImplemantation.getMethodImplementation().append("main_crit.add(Restrictions.lt(\"");
 				
 			}else if(filter.filterOperator.getDeger().equals("^=")){
@@ -730,37 +746,45 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 				
 				findByMethodImplemantation.getMethodImplementation().append("main_crit.add(Restrictions.le(\"");
 			}else{
-				findByMethodImplemantation.getMethodImplementation().append("main_crit.add(Restrictions.unknown(");
+				findByMethodImplemantation.getMethodImplementation().append("main_crit.add(Restrictions.unknown(\"");
 			}
 
 			String criteriaName;
-			String filterType, filterValue="", columnType;
-			criteriaName=createFilterName(filter.getFilterName().getDeger().toString());
-			if(filter.getFilterValue().getTip().equals(TokenTipi.Sayi)){
-				findByMethodImplemantation.getMethodImplementation().append(filter.getFilterName().getDeger().toString().replaceAll("-","_").toLowerCase()+"\", "+filter.getFilterName().getDeger().toString().replaceAll("-","_")+")");
-			}else if(filter.getFilterValue().isRecordVariable()){
-				findByMethodImplemantation.getMethodImplementation().append(criteriaName+"\", "+filter.getFilterValue().getLinkedToken().getDeger().toString().replaceAll("-","_")+")");
-			}else if(filter.getFilterValue().isPojoVariable()){
-				findByMethodImplemantation.getMethodImplementation().append(criteriaName+"\", "+filter.getFilterValue().getColumnNameToken().getDeger().toString().replaceAll("-","_")+")");
+			String filterType, criteriaValue="", columnType;
+			if(filter.getFilterName()!=null &&filter.getFilterName().getColumnNameToken()!=null){
+				criteriaName=createFilterName(filter.getFilterName().getColumnNameToken().getDeger().toString());
+			}else{
+				criteriaName=createFilterName(filter.getFilterName().getDeger().toString());
+			}
+			
+			if(filter.getFilterName().isRecordVariable()){
+				findByMethodImplemantation.getMethodImplementation().append(criteriaName+"\", "+filter.getFilterName().getLinkedToken().getDeger().toString().replaceAll("-","_")+")");
+			}else if(filter.getFilterName().isPojoVariable()){
+				findByMethodImplemantation.getMethodImplementation().append(criteriaName+"\", "+filter.getFilterName().getColumnNameToken().getDeger().toString().replaceAll("-","_")+")");
 			}else if(filter.getFilterName().getLinkedToken()!=null){
-				findByMethodImplemantation.getMethodImplementation().append(criteriaName+"\", "+filter.getFilterValue().getDeger().toString().replaceAll("-","_")+")");
-			}else if(filter.getFilterName().getColumnNameToken()!=null){
-				findByMethodImplemantation.getMethodImplementation().append(criteriaName+"\", "+filter.getFilterValue().getDeger().toString().replaceAll("-","_")+")");
+				findByMethodImplemantation.getMethodImplementation().append(criteriaName+"\", "+filter.getFilterName().getLinkedToken().getDeger().toString().replaceAll("-","_")+")");
 			}else {
-				filterType=getFilterType(filter.getFilterValue());
-				filter.getFilterName().setPojoVariable(true);
-				columnType=getFilterType(filter.getFilterName());
+				
+				filterType=getFilterType(filter.getFilterName());
+				
+				//filter.getFilterName().setPojoVariable(true);
+				
+				columnType=getFilterType(filter.getFilterValue());
 				if(filterType.equalsIgnoreCase("string_type") && columnType.equalsIgnoreCase("date_type")){
-					filterValue=filter.getFilterValue().getDeger().toString().replaceAll("-","_");
-					filterValue="FrameworkConvertUtilities.stringToSqlDate("+filterValue+",\"yyyy-MM-dd\")";
+					criteriaValue=filter.getFilterValue().getDeger().toString().replaceAll("-","_");
+					criteriaValue="FrameworkConvertUtilities.stringToSqlDate("+criteriaValue+",\"yyyy-MM-dd\")";
 				}else if(filterType.equalsIgnoreCase("string_type") && columnType.equalsIgnoreCase("time_type")){
-					filterValue=filter.getFilterValue().getDeger().toString().replaceAll("-","_");
-					filterValue="FrameworkConvertUtilities.stringToSqlTime("+filterValue+")";
+					criteriaValue=filter.getFilterValue().getDeger().toString().replaceAll("-","_");
+					criteriaValue="FrameworkConvertUtilities.stringToSqlTime("+criteriaValue+")";
 				}else{
-					filterValue=filter.getFilterValue().getDeger().toString().replaceAll("-","_");
 					
+					if(filter.getFilterName()!=null && filter.getFilterName().getColumnNameToken()!=null){
+						criteriaValue=filter.getFilterName().getColumnNameToken().getDeger().toString();
+					}else{
+						criteriaValue=filter.getFilterName().getDeger().toString();
+					}
 				}
-				findByMethodImplemantation.getMethodImplementation().append(criteriaName+"\", "+filterValue+")");
+				findByMethodImplemantation.getMethodImplementation().append(criteriaName+"\", "+criteriaValue+")");
 			}
 			
 			findByMethodImplemantation.getMethodImplementation().append(")");
@@ -784,6 +808,8 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 		private void createFilterWithOrConditions() {
 			AbstractToken curToken;
 			Filter filter;
+			String firstChar;
+			boolean paramIsNumber=false;
 			StringBuffer result=new StringBuffer();
 			result.append("Restrictions.or(");
 			for(int index=0; index<conditionListWithFiltersAndParantesiz.size();index++){
@@ -797,11 +823,11 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 			
 						filter=(Filter) conditionListWithFiltersAndParantesiz.get(index);
 						
-						if(filter.filterOperator.getDeger().equals('=')){
+						if(filter.filterOperator.getDeger().equals('=') || filter.filterOperator.getDeger().equals("=")){
 								result.append("Restrictions.eq(\"");
-						}else if(filter.filterOperator.getDeger().equals('>')){
+						}else if(filter.filterOperator.getDeger().equals('>') || filter.filterOperator.getDeger().equals(">")){
 								result.append("Restrictions.gt(\"");
-						}else if(filter.filterOperator.getDeger().equals('<')){
+						}else if(filter.filterOperator.getDeger().equals('<') || filter.filterOperator.getDeger().equals("<")){
 								result.append("Restrictions.lt(\"");
 						}else if(filter.filterOperator.getDeger().equals("^=")){
 								result.append("Restrictions.not(Restrictions.eq(\"");
@@ -810,19 +836,24 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 						}else if(filter.filterOperator.getDeger().equals("<=")){
 								result.append("Restrictions.le(\"");
 						}else{
-							result.append("Restrictions.unknown(");
+							result.append("Restrictions.unknown(\"");
 						}
 						
+						firstChar=filter.getFilterValue().getDeger().toString().substring(0,1);
 						
-						if(filter.getFilterValue().getTip().equals(TokenTipi.Sayi)){
-							result.append(Utility.columnNameToPojoFieldName(filter.getFilterName().getDeger().toString())+"\", "+filter.getFilterName().getDeger().toString());
-						}else if(filter.getFilterValue().isRecordVariable()){
-							result.append(Utility.columnNameToPojoFieldName(filter.getFilterName().getDeger().toString())+"\", "+filter.getFilterValue().getLinkedToken().getDeger().toString().replaceAll("-","_"));
-						}else if(filter.getFilterValue().isPojoVariable()){
-							result.append(Utility.columnNameToPojoFieldName(filter.getFilterName().getDeger().toString())+"\", "+filter.getFilterValue().getColumnNameToken().getDeger().toString().replaceAll("-","_"));
+						try {
+							Integer.parseInt(firstChar);
+							paramIsNumber=true;
+						} catch (NumberFormatException e) {
+							paramIsNumber=false;
+						}
+						
+						if(filter.getFilterName().isRecordVariable()){
+							result.append(Utility.columnNameToPojoFieldName(filter.getFilterName().getDeger().toString())+"\", "+filter.getFilterName().getLinkedToken().getDeger().toString());
+						}else if(filter.getFilterName().isPojoVariable()){
+							result.append(Utility.columnNameToPojoFieldName(filter.getFilterName().getDeger().toString())+"\", "+filter.getFilterName().getColumnNameToken().getDeger().toString());
 						}else{
-							result.append(Utility.columnNameToPojoFieldName(filter.getFilterName().getDeger().toString())+"\", "+filter.getFilterValue().getDeger().toString().replaceAll("-","_"));
-							
+							result.append(Utility.columnNameToPojoFieldName(filter.getFilterName().getDeger().toString())+"\", "+filter.getFilterName().getDeger().toString());
 						}
 						
 						result.append(")");
@@ -857,6 +888,16 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 			 int sortByIndex=0;
 			 if(conditionList==null ||conditionList.size()==0){
 				 return;
+			 }
+			 if(conditionList.size()==1){ //*S**READ TKS-AIRLINE BY AIR-CODE-NUM
+				 newSortList.add(new OzelKelimeToken(ReservedNaturalKeywords.SORTED_BY,0, 0, 0));
+				 newSortList.add(conditionList.get(0));
+				 this.sortList=newSortList;
+				 
+				 newConditionList=new ArrayList<AbstractToken>();
+				 this.conditionList=newConditionList;
+				 return;
+		
 			 }
 			for(int index=0; index<conditionList.size();index++){
 				if(conditionList.get(index).isKelime(ReservedNaturalKeywords.SORTED_BY)){

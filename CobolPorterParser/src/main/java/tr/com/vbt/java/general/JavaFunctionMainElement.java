@@ -98,6 +98,7 @@ public class JavaFunctionMainElement extends  AbstractJavaElement{
 					||this.getChildren().get(i) instanceof JavaAtEndOfPageElement){
 				
 				children.remove(i);
+				i--;
 			}
 		}
 		

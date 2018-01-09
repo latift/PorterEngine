@@ -66,7 +66,7 @@ public class JavaWriteUtilities {
 			
 			
 		}else if(token.getTip().equals(TokenTipi.Array)){ //DVANATOPMEB(DOVIZGEC) -->DVANATOPMEB[DOVIZGEC]
-			
+			tempCodeBuffer.append(toCustomArrayVariableString(token));
 			
 		}else{
 			
@@ -1705,13 +1705,23 @@ public class JavaWriteUtilities {
 					result=" String.valueOf(";
 					
 				
-			// Bigdecimal -- Long
+			// Long --> Bigdecimal 
 			}else if(typeOfCopyTo.equalsIgnoreCase("bigdecimal") && typeOfCopyFrom.equalsIgnoreCase("long")){
 				result=" BigDecimal.valueOf(";
 			}
 			
 			// Bigdecimal -- String
 			else if(typeOfCopyTo.equalsIgnoreCase("bigdecimal") && typeOfCopyFrom.equalsIgnoreCase("string")){
+				result=" BigDecimal.valueOf(";
+			}
+			
+			// Date --> Bigdecimal 
+			else if(typeOfCopyTo.equalsIgnoreCase("bigdecimal") && typeOfCopyFrom.equalsIgnoreCase("date")){
+				result=" FCU.bigDecimalToDate(";
+			}
+			
+			// Bigdecimal -- Date
+			else if(typeOfCopyTo.equalsIgnoreCase("date") && typeOfCopyFrom.equalsIgnoreCase("bigdecimal")){
 				result=" BigDecimal.valueOf(";
 			}
 		

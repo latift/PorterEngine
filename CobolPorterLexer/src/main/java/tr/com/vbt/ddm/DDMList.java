@@ -118,7 +118,7 @@ public class DDMList {
 
 			while ((sCurrentLine = br.readLine()) != null) {
 				if(lineNumber>1){
-					if(fileName.contains("TKS-CRA")&& lineNumber==45){
+					if(fileName.contains("TKS-CRA")&& lineNumber==16){
 						logger.debug("");
 					}
 					//logger.debug("fileName:"+fileName+"  sCurrentLine:"+sCurrentLine);
@@ -192,7 +192,7 @@ public class DDMList {
 				F="";
 				Leng="";
 				
-			}else if(lineItemsList.get(0).startsWith("A")|| lineItemsList.get(0).startsWith("M")||lineItemsList.get(0).startsWith("P")||lineItemsList.get(0).startsWith("T")||lineItemsList.get(0).startsWith("G")){
+			}else if(lineItemsList.get(0).startsWith("A")|| lineItemsList.get(0).startsWith("M")||lineItemsList.get(0).startsWith("T")){
 				
 				T=lineItemsList.get(0);
 				L=lineItemsList.get(1);
@@ -200,6 +200,15 @@ public class DDMList {
 				Name=lineItemsList.get(3);
 				F=lineItemsList.get(4);
 				Leng=lineItemsList.get(5);
+				
+			}else if(lineItemsList.get(0).startsWith("G")){
+				
+				T=lineItemsList.get(0);
+				L=lineItemsList.get(1);
+				DB=lineItemsList.get(2);
+				Name=lineItemsList.get(3);
+				F="";
+				Leng="";
 				
 			}else{
 				L=lineItemsList.get(0);
@@ -210,13 +219,13 @@ public class DDMList {
 			}
 			
 			DDM d1 = new DDM(TableName,T,L,DB,Name,F,Leng);
+			
 			if(L.equals("1")){
 				d1.setFirstLevelDDM(d1);
 				firstLevelDDM=d1;
 			}else if(L.equals("2") && firstLevelDDM!=null && firstLevelDDM.getT()!=null && firstLevelDDM.getT().equals("G")){ //Groupsa
 				d1.setFirstLevelDDM(d1);
 				d1.setL("1");
-				firstLevelDDM=d1;
 			}else{
 				d1.setFirstLevelDDM(firstLevelDDM);
 			}
@@ -319,11 +328,25 @@ public DDM getDDMByKey(String key,AbstractToken curToken ) {
 		DDM ddm;
 		
 		String key="";
-		if(copyTo.getSynoynmsRealTableName()!=null&& !copyTo.getSynoynmsRealTableName().trim().isEmpty()){
+		if(copyTo.getTypeNameOfView()!=null&& !copyTo.getTypeNameOfView().trim().isEmpty()){
+			try {
+				if(copyTo.getColumnNameToken()!=null){
+					key=copyTo.getTypeNameOfView().toString()+"."+copyTo.getColumnNameToken().getDeger().toString();
+				}else if(copyTo.getLinkedToken()!=null){
+					key=copyTo.getTypeNameOfView().toString()+"."+copyTo.getLinkedToken().getDeger().toString();
+				}
+			} catch (Exception e) {
+				logger.debug(e.getMessage(),e);
+				throw e;
+			}
+			
+		}else if(copyTo.getSynoynmsRealTableName()!=null&& !copyTo.getSynoynmsRealTableName().trim().isEmpty()){
 			key=copyTo.getSynoynmsRealTableName().toString()+"."+copyTo.getColumnNameToken().getDeger().toString();
+		
 		}else{
 			key=copyTo.getDeger().toString()+"."+copyTo.getColumnNameToken().getDeger().toString();
 		}
+		
 		ddm=dDMMap.get(key);
 		if(ddm==null){
 			

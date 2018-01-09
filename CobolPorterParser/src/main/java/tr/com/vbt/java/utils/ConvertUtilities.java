@@ -290,6 +290,7 @@ public class ConvertUtilities {
 		ElementProgramDataTypeNatural programData;
 		ElementProgramGrupNatural grupData;
 		ElementProgramOneDimensionArrayNatural arrayItem;
+		ElementRedefineDataTypeOfSimpleDataType simpleRedefineDataType;
 		ElementDBDataTypeNatural dbDataType;
 		DDM ddm;
 		List<AbstractCommand> commandList = NaturalCommandList.getInstance().getCommandListWithIncludedVariables();
@@ -312,6 +313,12 @@ public class ConvertUtilities {
 				if (arrayItem.getDataName().equals(variableDeger)) {
 					return ConvertUtilities.getJavaVariableType(arrayItem.getDataType(),
 							arrayItem.getCommandMatchPoint(), arrayItem.getLengthAfterDot());
+				}
+			}else if (abstractCommand instanceof ElementRedefineDataTypeOfSimpleDataType) {
+				simpleRedefineDataType = (ElementRedefineDataTypeOfSimpleDataType) abstractCommand;
+				if (simpleRedefineDataType.getDataName().equals(variableDeger)) {
+					return ConvertUtilities.getJavaVariableType(simpleRedefineDataType.getDataType(),
+							simpleRedefineDataType.getCommandMatchPoint(), simpleRedefineDataType.getLengthAfterDot());
 				}
 			}
 
@@ -446,7 +453,7 @@ public class ConvertUtilities {
 			return "long";
 		}else if(variable.isIncludedVariable()){
 			try {
-				String type= variable.getIncludedVariable().getType().getSimpleName().toLowerCase();
+				String type= variable.getIncludedVariableField().getType().getSimpleName().toLowerCase();
 				return type;
 			} catch (Exception e) {
 				return null;
@@ -454,13 +461,14 @@ public class ConvertUtilities {
 		}else if(variable.isConstantVariableWithQuota()){
 			return "String";
 		}
-		if(variable.getLinkedToken()!=null){
-			variable=variable.getLinkedToken();
-		}else if(variable.isPojoVariable()){
+		if(variable.isPojoVariable()){
 			return getVariableTypeOfPojoAsString(variable);
 			
+		}else if(variable.getLinkedToken()!=null){
+			variable=variable.getLinkedToken();
 		}
-		AbstractCommand commmand;
+		
+			AbstractCommand commmand;
 		ElementProgramOneDimensionArrayNatural oneDimensionArrayChildDefinition;
 		ElementProgramDataTypeNatural programDataTypeDefinition;
 		
@@ -554,7 +562,7 @@ public class ConvertUtilities {
 
 	public static String getPojosFieldType(AbstractToken currentToken) {
 		// THESAP -->Thesap
-		String className = Utility.viewNameToPojoName(currentToken.getDeger().toString());
+		String className = Utility.viewNameToPojoName(currentToken.getTypeNameOfView().toString());
 
 		String fieldName = Utility.columnNameToPojoFieldName(currentToken.getColumnNameToken().getDeger().toString());
 

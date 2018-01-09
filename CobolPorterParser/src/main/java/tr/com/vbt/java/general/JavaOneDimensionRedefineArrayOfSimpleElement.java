@@ -72,7 +72,7 @@ public class JavaOneDimensionRedefineArrayOfSimpleElement extends AbstractJavaEl
 			
 			
 			//public RedefineSimpleToOneDimension TAX_EXC_ITEM = new RedefineSimpleToOneDimension(this,TAX-EXC-TEXT,10);
-			JavaClassElement.javaCodeBuffer.append("public RedefineSimpleToOneDimension "+(CustomStringUtils.replaceMiddleLineWithSubLine(dataName))+"=new RedefineSimpleToOneDimension(this,"+redCommandDataType.getDataName()+","+arrayLength+")");
+			JavaClassElement.javaCodeBuffer.append("public RedefineSimpleToOneDimension "+(CustomStringUtils.replaceMiddleLineWithSubLine(dataName))+"=new RedefineSimpleToOneDimension(this,\""+redCommandDataType.getDataName()+"\","+arrayLength+")");
 			
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA);
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);

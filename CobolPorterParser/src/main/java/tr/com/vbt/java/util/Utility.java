@@ -131,7 +131,7 @@ public class Utility {
 		public static String columnNameToPojoFieldName(String columnName){
 			StringBuffer pojoFieldName=new StringBuffer();
 			String convertedPart;
-			String[] viewNameParts=columnName.split("-");
+			String[] viewNameParts=columnName.split("_");
 			if(viewNameParts.length==1){
 				viewNameParts=columnName.split("_");
 			}
@@ -587,7 +587,29 @@ public class Utility {
 		}
 
 
+		public static boolean isInteger(String s) {
+		    try { 
+		        Integer.parseInt(s); 
+		    } catch(NumberFormatException e) { 
+		        return false; 
+		    } catch(NullPointerException e) {
+		        return false;
+		    }
+		    // only got here if we didn't return false
+		    return true;
+		}
 		
+		public static boolean isLong(String s) {
+		    try { 
+		        Long.parseLong(s); 
+		    } catch(NumberFormatException e) { 
+		        return false; 
+		    } catch(NullPointerException e) {
+		        return false;
+		    }
+		    // only got here if we didn't return false
+		    return true;
+		}
 		
 	
 }
