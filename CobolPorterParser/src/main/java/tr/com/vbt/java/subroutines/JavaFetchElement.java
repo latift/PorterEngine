@@ -28,7 +28,7 @@ public class JavaFetchElement extends  AbstractJavaElement{
 	
 	final static Logger logger = Logger.getLogger(JavaFetchElement.class);
 
-	private String programName;
+	private AbstractToken programName;
 	
 	List<AbstractToken> paragraghParameters;
 	
@@ -43,11 +43,11 @@ public class JavaFetchElement extends  AbstractJavaElement{
 		
 		try {
 			
-			programName=(String) this.parameters.get("programName");
+			programName=(AbstractToken) this.parameters.get("programName");
 			
 			paragraghParameters=(List<AbstractToken>) this.parameters.get("paragraghParameters");
 	
-			JavaClassElement.javaCodeBuffer.append("fetchV3"+JavaConstants.OPEN_NORMAL_BRACKET+"\""+programName+"\"" +","+" new Parameter[]"+JavaConstants.OPEN_BRACKET);
+			JavaClassElement.javaCodeBuffer.append("fetchV3"+JavaConstants.OPEN_NORMAL_BRACKET+JavaWriteUtilities.toCustomString(programName) +","+" new Parameter[]"+JavaConstants.OPEN_BRACKET);
 			
 			if(paragraghParameters !=null){
 

@@ -3459,7 +3459,7 @@ public class NaturalLexing extends AbstractLexing {
 			
 			logger.debug(current.getDeger().toString());
 			
-			if(current.getDeger().toString().equals("DOVIZ")){
+			if(current.getDeger().toString().equals("REZ_AMB_SW")){
 				logger.debug(current.toString());
 			}
 			
@@ -3718,7 +3718,7 @@ public class NaturalLexing extends AbstractLexing {
 				nextToken=tokenListesi.get(index+1);
 			}
 			
-			if(curToken.isKelime("TKS_LIMUCAK")){
+			if(curToken.isKelime("REZ_AMB_SW")){
 				logger.debug("");
 			}
 			
@@ -3737,7 +3737,7 @@ public class NaturalLexing extends AbstractLexing {
 					tableColumnReferans.put(curToken.getDeger().toString(), tableNameToken.getDeger().toString());
 					
 					logger.debug(curToken.getDeger().toString()+" Pojo olarak set edildi");
-				}else if(curToken.isSayi(1) && !nextToken.isKarakter(':')){
+				}else if(curToken.isSayi(1) && !nextToken.isKarakter(':')&& !nextToken.isKarakter(')')){
 					inViewOfState=false;
 				}
 			}

@@ -75,7 +75,7 @@ public class PaternFetch extends AbstractPattern_XY_KKKK_Z_WithoutCarriageReturn
 		
 		}
 		else if(abstractTokenInPattern.getSourceFieldName().equals("programName")){
-				matchedCommandAdd.setProgramName((String) currentTokenForMatch.getDeger());
+				matchedCommandAdd.setProgramName( currentTokenForMatch);
 				matchedCommandAdd.getParameters().put("programName", matchedCommandAdd.getProgramName());
 		
 		}else if(abstractTokenInPattern.getSourceFieldName().equals("paragraghParameters")){

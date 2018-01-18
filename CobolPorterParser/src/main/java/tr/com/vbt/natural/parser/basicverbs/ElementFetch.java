@@ -10,7 +10,7 @@ import tr.com.vbt.token.AbstractToken;
 
 public class ElementFetch extends AbstractCommand{
 	
-	private String programName;
+	private AbstractToken programName;
 	
 	private List<AbstractToken> paragraghParameters=new ArrayList<AbstractToken>();
 	
@@ -44,11 +44,13 @@ public class ElementFetch extends AbstractCommand{
 		return sb.toString();
 	}
 
-	public String getProgramName() {
+
+
+	public AbstractToken getProgramName() {
 		return programName;
 	}
 
-	public void setProgramName(String programName) {
+	public void setProgramName(AbstractToken programName) {
 		this.programName = programName;
 	}
 

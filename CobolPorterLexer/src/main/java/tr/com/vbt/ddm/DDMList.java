@@ -172,7 +172,7 @@ public class DDMList {
 			String Name;
 			String F;
 			String Leng;
-			String S;
+			String S = "";
 			String D;
 			
 			for(int i=0; i< lineItems.length;i++){
@@ -200,6 +200,9 @@ public class DDMList {
 				Name=lineItemsList.get(3);
 				F=lineItemsList.get(4);
 				Leng=lineItemsList.get(5);
+				if(lineItemsList.size()>6){
+					S=lineItemsList.get(6);
+				}
 				
 			}else if(lineItemsList.get(0).startsWith("G")){
 				
@@ -216,9 +219,13 @@ public class DDMList {
 				Name=lineItemsList.get(2);
 				F=lineItemsList.get(3);
 				Leng=lineItemsList.get(4);
+				if(lineItemsList.size()>5){
+					S=lineItemsList.get(5);
+				}
 			}
 			
 			DDM d1 = new DDM(TableName,T,L,DB,Name,F,Leng);
+			d1.setS(S);
 			
 			if(L.equals("1")){
 				d1.setFirstLevelDDM(d1);

@@ -519,10 +519,11 @@ public class Utility {
 			
 			StringBuilder sb=new StringBuilder();
 		
-			String biggerclassName = Utility.viewNameToBiggerPojoName(token.getDeger().toString());
 			
-			String className = Utility.viewNameToPojoName(token.getDeger().toString());
-
+			String biggerclassName = token.getDeger().toString();
+			
+			String className=Utility.viewNameToPojoName(token.getTypeNameOfView().toString());
+			
 			String fieldName = Utility.columnNameToPojoFieldName(token.getColumnNameToken().getDeger().toString());
 			
 			String setterName= Utility.viewNameToPojoSetterName(token.getColumnNameToken().getDeger().toString());
@@ -574,14 +575,14 @@ public class Utility {
 		 */
 		public static String findViewAndColumnNamesReturnTypeAdabas(AbstractToken token) {
 			DDM ddm= DDMList.getInstance().getDDM(token);
-			if(ddm.getF()!=null && ddm.getF().equals("N")&& ddm.getLeng().contains(".")){
+			if(ddm.getF()!=null && (ddm.getF().equals("N") || ddm.getF().equals("P"))&& ddm.getLeng().contains(".")){
 				return "bigdecimal";
 			}else if(ddm.getF()!=null && ddm.getF().equals("N")){
 				return "long";
 			}else if(ddm.getF()!=null && ddm.getF().equals("A")){
 				return "string";
-			}else if(ddm.getF()!=null && ddm.getF().equals("P")){
-				return "date";
+			}else if(ddm.getF()!=null && ddm.getF().equals("P") && ddm.getS()!=null && ddm.getS().equals("N")){
+				return "long";
 			}
 			return "string"; //Tipini bulamazsa java kodu hatalı da olsa çıksın diye String atıyoruz.
 		}
