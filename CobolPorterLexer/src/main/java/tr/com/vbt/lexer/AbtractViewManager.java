@@ -15,16 +15,18 @@ public abstract class AbtractViewManager {
 	
 	final static Logger logger = Logger.getLogger(AbtractViewManager.class);
 
-	protected static Map<String, String> viewSynonymMap = new HashMap<>();
+	//protected static Map<String, String> viewSynonymMap = new HashMap<>();
 	
 	protected static String operatingSourceFileName;
+	
+	
+	protected HashMap<String, String> tableColumnReferans;
 	
 
 	public void setTypeNameOfViews(List<AbstractToken> tokenListesi) {
 		
 		String viewName, synonymName, realTablName;
-		 viewSynonymMap = new HashMap<>();
-		loadViewSynonymMap(tokenListesi);
+		
 
 		AbstractToken curToken;
 
@@ -35,11 +37,13 @@ public abstract class AbtractViewManager {
 			if(curToken.getDeger() !=null){
 				logger.debug("CurToken:"+curToken.getDeger().toString());
 			}
+			if(curToken.getSatirNumarasi()==21){
+				logger.debug(curToken.getDeger().toString());
+			}
 			
 			if (curToken.getTip().equals(TokenTipi.Kelime) && curToken.getDeger() != null) {
-				viewName=curToken.getDeger().toString();
-				//logger.debug(synonymName);
-				synonymName=viewSynonymMap.get(curToken.getDeger().toString());
+				
+				synonymName=tableColumnReferans.get(curToken.getDeger().toString());
 				
 				if(synonymName==null){
 					synonymName=curToken.getDeger().toString();
@@ -58,8 +62,8 @@ public abstract class AbtractViewManager {
 
 	/*
 	 * Her natural program çevriminde bir kere calisir
-	 */
-	private static void loadViewSynonymMap(List<AbstractToken> tokenListesi) {
+	 *//*
+	protected static void loadViewSynonymMap(List<AbstractToken> tokenListesi) {
 		
 		if(operatingSourceFileName==ConversionLogModel.getInstance().getFileName()){
 			return;
@@ -89,7 +93,7 @@ public abstract class AbtractViewManager {
 				viewSynonymMap.put(viewName.getDeger().toString(),tableName.getDeger().toString());
 			}
 		}
-	}
+	}*/
 	
 	public void setTypeNameOfViews(AbstractToken curToken) {
 		
@@ -102,7 +106,7 @@ public abstract class AbtractViewManager {
 			
 			if (curToken.getTip().equals(TokenTipi.Kelime) && curToken.getDeger() != null) {
 				
-				synonymName=viewSynonymMap.get(curToken.getDeger().toString());
+				synonymName=tableColumnReferans.get(curToken.getDeger().toString());
 				
 				if(synonymName==null){
 					synonymName=curToken.getDeger().toString();

@@ -1145,8 +1145,24 @@ public class JavaWriteUtilities {
 		return getterString;
 	}
 	
+	/**
+	 *   P 1  AS  DUY-LOG
+		    2  AT  DUY-USER                         A    6  N
+		    2  AU  DUY-TIMESTAMP                    N 10.0  N
+		    2  AV  DUY-REMARKS                      A   10  N
+	 	
+	 	1  AS  DUY-LOG   --> TKS_DUY.setTksDuyuruAs(new ArrayList<TksDuyuruA>());
+	 */
 	private static String ruleP_1_setter(DDM ddm, AbstractToken token) throws Exception {
-		throw new Exception("Unimplemented Code");
+		
+		String getterString;//TKS_DUY;
+		getterString= token.getDeger().toString();
+		getterString +=".";
+		getterString +="set"+Utility.viewNameToPojoName(token.getDeger().toString())+ddm.getDB()+"(";		//setTksDuyuruAs(
+		getterString +="new ArrayList<";
+		getterString +=Utility.viewNameToPojoName(token.getDeger().toString())+ddm.getDB()+">";
+		getterString +="())";
+		return getterString;
 	}
 	
 	private static String ruleP_1_RedefinedColumnSetter(DDM ddm, AbstractToken token) throws Exception {

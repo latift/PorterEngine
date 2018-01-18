@@ -257,10 +257,16 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 				
 				methodParameterType = ConvertUtilities.getPojosFieldType(curFilter.getFilterName());
 				
-				methodParameterName = curFilter.getFilterName().getColumnNameToken().getDeger().toString()
-						.replaceAll("-", "_");
+				if(curFilter.getFilterName().getColumnNameToken()==null){
+					methodParameterName = curFilter.getFilterName().getDeger().toString();
+				}else{
+					methodParameterName = curFilter.getFilterName().getColumnNameToken().getDeger().toString();
+					}
 			}else{
 				methodParameterType = ConvertUtilities.getVariableTypeOfString(curFilter.getFilterName()).toString();
+				if(methodParameterType.toUpperCase().contains("UNDEFINED")){
+					methodParameterType = ConvertUtilities.getVariableTypeOfString(curFilter.getFilterValue()).toString();
+				}
 				if(curFilter.getFilterName()!=null && curFilter.getFilterName().getColumnNameToken()!=null){
 					methodParameterName = curFilter.getFilterName().getColumnNameToken().getDeger().toString().replaceAll("-", "_");
 				}else{
@@ -760,7 +766,11 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 			if(filter.getFilterName().isRecordVariable()){
 				findByMethodImplemantation.getMethodImplementation().append(criteriaName+"\", "+filter.getFilterName().getLinkedToken().getDeger().toString().replaceAll("-","_")+")");
 			}else if(filter.getFilterName().isPojoVariable()){
-				findByMethodImplemantation.getMethodImplementation().append(criteriaName+"\", "+filter.getFilterName().getColumnNameToken().getDeger().toString().replaceAll("-","_")+")");
+				if(filter.getFilterName().getColumnNameToken()==null){
+					findByMethodImplemantation.getMethodImplementation().append(criteriaName+"\", "+filter.getFilterName().getDeger().toString().replaceAll("-","_")+")");
+				}else{
+					findByMethodImplemantation.getMethodImplementation().append(criteriaName+"\", "+filter.getFilterName().getColumnNameToken().getDeger().toString().replaceAll("-","_")+")");
+				}
 			}else if(filter.getFilterName().getLinkedToken()!=null){
 				findByMethodImplemantation.getMethodImplementation().append(criteriaName+"\", "+filter.getFilterName().getLinkedToken().getDeger().toString().replaceAll("-","_")+")");
 			}else {

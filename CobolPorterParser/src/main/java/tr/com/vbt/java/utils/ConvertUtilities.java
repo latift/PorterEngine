@@ -279,9 +279,13 @@ public class ConvertUtilities {
 		}else if(variable.isConstantVariableWithQuota()){
 			return "String";
 		}
+		String variableDeger ;
+		if(variable.getLinkedToken()!=null){
+			variableDeger=variable.getLinkedToken().getDeger().toString();
+		}else{
+		    variableDeger = variable.getDeger().toString();
+		}
 		
-		String variableDeger = variable.getDeger().toString();
-
 		if (variable.getDeger().toString().contains(".")) {
 			int pointIndex = variable.getDeger().toString().indexOf(".");
 			variableDeger = variable.getDeger().toString().substring(pointIndex + 1);
@@ -296,6 +300,9 @@ public class ConvertUtilities {
 		List<AbstractCommand> commandList = NaturalCommandList.getInstance().getCommandListWithIncludedVariables();
 		for (AbstractCommand abstractCommand : commandList) {
 			logger.debug(abstractCommand.toString());
+			if(abstractCommand.getDataName()!=null && abstractCommand.getDataName().contains("DES")){
+				logger.debug(" ");
+			}
 			if (abstractCommand instanceof ElementProgramDataTypeNatural) {
 				programData = (ElementProgramDataTypeNatural) abstractCommand;
 				if (programData.getDataName().equals(variableDeger)) {
@@ -563,16 +570,15 @@ public class ConvertUtilities {
 	public static String getPojosFieldType(AbstractToken currentToken) {
 		// THESAP -->Thesap
 		String className = Utility.viewNameToPojoName(currentToken.getTypeNameOfView().toString());
-
-		String fieldName = Utility.columnNameToPojoFieldName(currentToken.getColumnNameToken().getDeger().toString());
-
-		Class c = null;
-
-		c = Utility.findPojoClass(className);
-		
-		Field field;
-
+		String fieldName="";
+		Field field=null;
 		try {
+			fieldName = Utility.columnNameToPojoFieldName(currentToken.getColumnNameToken().getDeger().toString());
+
+			Class c = null;
+	
+			c = Utility.findPojoClass(className);
+			
 			field = c.getDeclaredField(fieldName);
 		
 			field.setAccessible(true);

@@ -340,7 +340,7 @@ public class JavaInputElement extends AbstractJavaElement {
 			}
 
 
-			if(value.length()>maxLength){
+			if(value.length()>maxLength && !currToken.isPojoVariable()){
 				yCoord = yCoord + value.length();
 			}else{
 				yCoord = yCoord + maxLength;

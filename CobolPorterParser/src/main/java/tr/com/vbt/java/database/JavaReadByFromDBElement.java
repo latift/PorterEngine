@@ -13,6 +13,7 @@ import tr.com.vbt.java.util.Utility;
 import tr.com.vbt.java.utils.ConvertUtilities;
 import tr.com.vbt.lexer.ConversionLogModel;
 import tr.com.vbt.lexer.ReservedNaturalKeywords;
+import tr.com.vbt.lexer.ViewManagerFactory;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.TokenTipi;
 
@@ -112,6 +113,8 @@ public class JavaReadByFromDBElement extends AbsctractConditionalJavaElement {
 		try{
 
 		viewName = (AbstractToken) this.getParameters().get("viewName");
+		
+		//ViewManagerFactory.getInstance().setTypeNameOfViews(viewName);
 		
 		pojoType=Utility.viewNameToPojoName(viewName.getTypeNameOfView());
 		

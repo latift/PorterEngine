@@ -725,7 +725,7 @@ public class NaturalLexing extends AbstractLexing {
 				astInputReached=false;
 				
 
-			}else if(astInputReached  && (!astCurrent.isOzelKelime() || astCurrent.isOzelKelime(ReservedNaturalKeywords.WITH_TEXT)|| astCurrent.isOzelKelime("TEXT"))) {
+			}else if(astInputReached  && (!astCurrent.isOzelKelime() || astCurrent.isOneOfOzelKelime(ReservedNaturalKeywords.WITH_TEXT,"TEXT",ReservedNaturalKeywords.OFF))) {
 
 				astCurrent = tokenListesi.get(i);
 				
@@ -848,9 +848,10 @@ public class NaturalLexing extends AbstractLexing {
 						|| compressParam.getTip().equals(TokenTipi.Array)
 						|| compressParam.getTip().equals(TokenTipi.Karakter)
 						|| (compressParam.getTip().equals(TokenTipi.OzelKelime)
-								&& (compressParam.getDeger().equals("INTO")
+								&& (compressParam.getDeger().equals("TO")
+								 || (compressParam.getDeger().equals("INTO")
 										||compressParam.getDeger().equals("FULL")
-										|| compressParam.getDeger().equals("SUBSTR")))) {
+										|| compressParam.getDeger().equals("SUBSTR"))))) {
 
 					if (indexAfterinto == 1) {
 						i++;
@@ -859,8 +860,7 @@ public class NaturalLexing extends AbstractLexing {
 					if (intoReached) {
 						indexAfterinto++;
 					}
-					if (compressParam != null && compressParam.getDeger() != null
-							&& compressParam.getDeger().equals("INTO")) {
+					if (compressParam.isOneOfOzelKelime("INTO","TO")) {
 						intoReached = true;
 					}
 					System.out.println(compressParam.toString());
@@ -876,10 +876,10 @@ public class NaturalLexing extends AbstractLexing {
 				if (next.getTip().equals(TokenTipi.SatirBasi)) {
 					i++;
 				}
-				if (next.getTip().equals(TokenTipi.OzelKelime)
-						&& (next.getDeger().equals(ReservedNaturalKeywords.LEAVING_NO)
-								|| next.getDeger().equals(ReservedNaturalKeywords.LEAVING_NO_SPACE)
-								|| next.getDeger().equals(ReservedNaturalKeywords.LEAVE_NO))) {
+				if (next.isOneOfOzelKelime(ReservedNaturalKeywords.LEAVING_NO,
+						ReservedNaturalKeywords.LEAVING_NO_SPACE,
+						ReservedNaturalKeywords.LEAVE_NO
+						)) {
 					i++;
 				}
 				if (next.getTip().equals(TokenTipi.SatirBasi)) {
@@ -1828,21 +1828,21 @@ public class NaturalLexing extends AbstractLexing {
 		//Second Operation  Part****************************************************************
 		
 		
-		ViewManagerFactory.getInstance().setTypeNameOfViews(tokenListesi);
-		
-		SysnonymManagerFactory.getInstance().setSynonymsRealTableName(tokenListesi);
-		
-
-		setIncludedFiles(); //includedFiles Listesini doldurur.
+		loadIncludedFiles(); //includedFiles Listesini doldurur.
 		
 		loadTableColumnReferanses(customer,module); //Include edilen using dosyalarından columnreferans degerlerini toplayıp NaturalLExing in columnReferansına ekler.
 		
 		loadIncludedFields(customer,module);  //Include edilen dosyalardaki fieldleri includedFieldList te toplar.
 		
 		loadRedefinedTableColumns(customer,module); //Include edilen using dosyalarından columnreferans degerlerini toplayıp NaturalLExing in columnReferansına ekler.
-		
+
 		loadTableColumnReferansesForViewOf();
-				
+		
+		ViewManagerFactory.resetInstance();
+		ViewManagerFactory.getInstance(tableColumnReferans).setTypeNameOfViews(tokenListesi);
+		
+		SysnonymManagerFactory.getInstance().setSynonymsRealTableName(tokenListesi);
+		
 		setAllElementsOfArrayFlag(); // RESET MAP_DIZISI.D_SECIM(*) --> RESET
 		// MAP_DIZISI.D_SECIM yapar ve D_SECIM
 			// in flagini işaretler
@@ -3418,7 +3418,7 @@ public class NaturalLexing extends AbstractLexing {
 		
 	}
 
-	private void setIncludedFiles() {
+	private void loadIncludedFiles() {
 
 		AbstractToken current, usingToken, parameterToken;
 
@@ -3561,7 +3561,7 @@ public class NaturalLexing extends AbstractLexing {
 						tabloIsmiToken=new KelimeToken<>(tableNameDeger, current.getSatirNumarasi(), 0, 0);
 						tabloIsmiToken.setPojoVariable(true);
 						tabloIsmiToken.setColumnNameToken(current);
-						ViewManagerFactory.getInstance().setTypeNameOfViews(tabloIsmiToken);
+						ViewManagerFactory.getInstance(tableColumnReferans).setTypeNameOfViews(tabloIsmiToken);
 						tokenListesi.set(i, tabloIsmiToken);
 						//tokenListesi.add(i,tabloIsmiToken );  //Tablo ismini ekle.
 						//tokenListesi.add(i+1, new NoktaToken<>("."));  //Nokta ekle
@@ -3621,12 +3621,15 @@ public class NaturalLexing extends AbstractLexing {
 			tabloIsmiToken=new KelimeToken<>(tableNameDeger, current.getSatirNumarasi(), 0, 0);
 			tabloIsmiToken.setPojoVariable(true);
 			tabloIsmiToken.setColumnNameToken(columnToken);
-			ViewManagerFactory.getInstance().setTypeNameOfViews(tabloIsmiToken);
+			ViewManagerFactory.getInstance(tableColumnReferans).setTypeNameOfViews(tabloIsmiToken);
 			tokenListesi.set(i, tabloIsmiToken);
 			
 		}
 		
 	}
+	
+	
+	
 	
 	private boolean isLocalVariable(AbstractToken controlToken) {
 		
@@ -3715,15 +3718,17 @@ public class NaturalLexing extends AbstractLexing {
 				nextToken=tokenListesi.get(index+1);
 			}
 			
-			if(curToken.isKelime("AWB_EXE_DATE")){
+			if(curToken.isKelime("TKS_LIMUCAK")){
 				logger.debug("");
 			}
 			
 			if(curToken.isOzelKelime(ReservedNaturalKeywords.VIEW_OF) || curToken.isOzelKelime(ReservedNaturalKeywords.VIEW)){
 				inViewOfState=true;
 				tableNameToken=tokenListesi.get(index-1);
+				nextToken=tokenListesi.get(index+1);
 				index++; //ViewOf tanımını atlamak için kondu PERF30 VIEW OF PERF30
-				ViewManagerFactory.getInstance().setTypeNameOfViews(tableNameToken);
+				ViewManagerFactory.getInstance(tableColumnReferans).setTypeNameOfViews(tableNameToken);
+				tableColumnReferans.put(tableNameToken.getDeger().toString(), nextToken.getDeger().toString() );
 			}else if(inViewOfState){
 				if(curToken.isKelime()){
 					

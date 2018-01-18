@@ -17,11 +17,25 @@ public class ViewManagerImpl extends AbtractViewManager implements ViewManager{
 	
 	private static ViewManagerImpl instance;
 	
-	public static ViewManagerImpl getInstance() {
+	public static ViewManagerImpl getInstance(HashMap<String, String> tableColumnReferans) {
 		if (instance == null) {
-			instance = new ViewManagerImpl();
+			instance = new ViewManagerImpl(tableColumnReferans);
 		}
 		return instance;
 	}
+
+	private ViewManagerImpl(HashMap<String, String> tableColumnReferans) {
+		super();
+	   // viewSynonymMap = new HashMap<>();
+		//loadViewSynonymMap(tokenListesi);
+		this.tableColumnReferans=tableColumnReferans;
+	}
+
+	public static void resetInstance() {
+		instance=null;
+		
+	}
+	
+	
 
 }
