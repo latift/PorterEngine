@@ -1,7 +1,7 @@
 package tr.com.vbt.java.general;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.utils.ConvertUtilities;
@@ -10,7 +10,7 @@ import tr.com.vbt.lexer.ConversionLogModel;
 
 public class JavaLocal extends  AbstractJavaElement{
 	
-	final static Logger logger = LoggerFactory.getLogger(JavaLocal.class);
+	final static Logger logger = Logger.getLogger(JavaLocal.class);
 
 	public boolean writeJavaToStream() throws Exception{ super.writeJavaToStream();
 		

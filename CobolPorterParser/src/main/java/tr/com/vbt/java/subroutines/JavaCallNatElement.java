@@ -3,8 +3,8 @@ package tr.com.vbt.java.subroutines;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaClassElement;
@@ -24,7 +24,7 @@ import tr.com.vbt.token.ArrayToken;
 //callNat_v2("IDGNONYL", new Parameter[] { 		new Parameter("GLOBAL_MUSNO1", GLOBAL_MUSNO1),  new Parameter("MAPP.UYARI",MAPP.UYARI) })
 public class JavaCallNatElement extends  AbstractJavaElement{
 	
-	final static Logger logger = LoggerFactory.getLogger(JavaCallNatElement.class);
+	final static Logger logger = Logger.getLogger(JavaCallNatElement.class);
 
 	private String paragraghName;
 	

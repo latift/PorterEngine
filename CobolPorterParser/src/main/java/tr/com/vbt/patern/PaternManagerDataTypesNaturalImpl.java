@@ -9,6 +9,7 @@ import tr.com.vbt.natural.parser.datalayout.db.patern.PaternDBViewGroupNatural;
 import tr.com.vbt.natural.parser.datalayout.db.patern.PaternDBViewOfGroupNatural;
 import tr.com.vbt.natural.parser.datalayout.db.patern.PaternLocal;
 import tr.com.vbt.natural.parser.datalayout.db.patern.PaternParameter;
+import tr.com.vbt.natural.parser.datalayout.program.patern.PaternDataTypeFiller_Count_X;
 import tr.com.vbt.natural.parser.datalayout.program.patern.PaternProgramDataTypeNatural;
 import tr.com.vbt.natural.parser.datalayout.program.patern.PaternProgramDataTypeNaturalWithInit;
 import tr.com.vbt.natural.parser.datalayout.program.patern.PaternProgramDataTypeNaturalWithInitKelime;
@@ -56,6 +57,8 @@ public class PaternManagerDataTypesNaturalImpl  extends AbstractPaternManagerNat
 		
 		//DataType
 		commmandPatternList.add(new PaternProgramRedefineGroupNatural());
+
+		commmandPatternList.add(new PaternDataTypeFiller_Count_X());
 		
 		commmandPatternList.add(new PaternProgramDataTypeNatural());
 		commmandPatternList.add(new PaternProgramDataTypeNaturalWithInit());

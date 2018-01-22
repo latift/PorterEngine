@@ -3,12 +3,12 @@ package tr.com.vbt.java.utils;
 import java.io.File;
 import java.io.IOException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 public class WriteFileUtility {
 	
-	final static Logger logger = LoggerFactory.getLogger(WriteFileUtility.class);
+	final static Logger logger = Logger.getLogger(WriteFileUtility.class);
 
 	public static boolean createFileInPath(String str) throws Exception {
 		File file= new File(str);

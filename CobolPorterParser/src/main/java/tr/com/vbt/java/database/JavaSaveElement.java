@@ -1,7 +1,7 @@
 package tr.com.vbt.java.database;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaClassElement;
@@ -13,7 +13,7 @@ import tr.com.vbt.token.AbstractToken;
 //// 6214 STORE IDGIDBS-TGECICI  --> -->save(KET_AIRLINE_DAO, KET_AIRLINE);
 public class JavaSaveElement extends  AbstractJavaElement{
 	
-	final static Logger logger = LoggerFactory.getLogger(JavaSaveElement.class);
+	final static Logger logger = Logger.getLogger(JavaSaveElement.class);
 
 
 	private AbstractToken tableName;

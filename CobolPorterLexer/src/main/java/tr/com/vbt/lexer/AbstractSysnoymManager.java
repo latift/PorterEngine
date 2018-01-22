@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.TokenTipi;
@@ -14,7 +14,7 @@ public abstract class AbstractSysnoymManager implements SynonymManager{
 	
 	protected static Map<String, String> synonymToRealTableNameMap = new HashMap<>();
 	
-	final static Logger logger = LoggerFactory.getLogger(AbstractSysnoymManager.class);
+	final static Logger logger = Logger.getLogger(AbstractSysnoymManager.class);
 	
 	protected abstract void loadSynoymMap();
 

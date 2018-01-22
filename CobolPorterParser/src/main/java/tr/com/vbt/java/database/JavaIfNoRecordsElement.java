@@ -1,7 +1,7 @@
 package tr.com.vbt.java.database;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 
@@ -9,7 +9,7 @@ import tr.com.vbt.java.AbstractJavaElement;
 //ElementIfNoRecords
 public class JavaIfNoRecordsElement extends  AbstractJavaElement {
 	
-	final static Logger logger = LoggerFactory.getLogger(JavaIfNoRecordsElement.class);
+	final static Logger logger = Logger.getLogger(JavaIfNoRecordsElement.class);
 
 	public boolean writeJavaToStream() throws Exception{ super.writeJavaToStream();
 		

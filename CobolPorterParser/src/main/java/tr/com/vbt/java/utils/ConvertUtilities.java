@@ -9,8 +9,8 @@ import java.util.List;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.ddm.DDM;
@@ -29,6 +29,7 @@ import tr.com.vbt.natural.parser.datalayout.program.ElementProgramDataTypeNatura
 import tr.com.vbt.natural.parser.datalayout.program.ElementProgramGrupNatural;
 import tr.com.vbt.natural.parser.datalayout.program.ElementProgramOneDimensionArrayNatural;
 import tr.com.vbt.natural.parser.datalayout.program.ElementProgramTwoDimensionArrayNatural;
+import tr.com.vbt.natural.parser.datalayout.program.redefiners.ElementRedefineDataTypeOfSimpleDataType;
 import tr.com.vbt.patern.NaturalCommandList;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.TokenTipi;
@@ -37,7 +38,7 @@ import tr.com.vbt.util.WriteToFile;
 
 public class ConvertUtilities {
 
-	final static Logger logger = LoggerFactory.getLogger(ConvertUtilities.class);
+	final static Logger logger = Logger.getLogger(ConvertUtilities.class);
 	public static String yyyy_MM_dd = "yyyy_MM_dd";
 
 	public static long MILISECOND_TO_DAY = 1000 * 60 * 60 * 24;
@@ -216,26 +217,16 @@ public class ConvertUtilities {
 
 	private static VariableTypes getVariableTypeOfGlobalVariable(AbstractToken variable) {
 	
-		String variableName=variable.getDeger().toString();
-		if(variableName.contains("HESCINSI")||
-				variableName.contains("ISUSER")||
-				variableName.contains("YAZICI")||
-				variableName.contains("LAZERYAZICI")||
-				variableName.contains("GMESAJ")||
-				variableName.contains("PIKYAZICI")||
-				variableName.contains("HESDOKYAZICI")
-				){
-			return VariableTypes.STRING_TYPE;
-		}else{
-			return VariableTypes.LONG_TYPE;
-		}
-	
-
+		return variable.getVarType();
 	}
 	
 	public static String getVariableTypeOfPojoAsString(AbstractToken variable) {
-		
-		return Utility.findViewAndColumnNamesReturnType(variable).toLowerCase();
+		if(ConversionLogModel.getInstance().isRelationalDatabase()){
+			return Utility.findViewAndColumnNamesReturnTypeRelationalDB(variable).toLowerCase();
+				
+		}else{
+			return Utility.findViewAndColumnNamesReturnTypeAdabas(variable).toLowerCase();
+		}
 		
 	}
 
@@ -243,7 +234,11 @@ public class ConvertUtilities {
 		
 		String columnReturnType="";
 		try {
-			columnReturnType = Utility.findViewAndColumnNamesReturnType(variable).toLowerCase();
+			if(ConversionLogModel.getInstance().isRelationalDatabase()){
+				columnReturnType = Utility.findViewAndColumnNamesReturnTypeRelationalDB(variable).toLowerCase();
+			}else{
+				columnReturnType = Utility.findViewAndColumnNamesReturnTypeAdabas(variable).toLowerCase();
+			}
 		} catch (Exception e) {
 			logger.debug(e.getMessage(),e);
 		}
@@ -284,9 +279,13 @@ public class ConvertUtilities {
 		}else if(variable.isConstantVariableWithQuota()){
 			return "String";
 		}
+		String variableDeger ;
+		if(variable.getLinkedToken()!=null){
+			variableDeger=variable.getLinkedToken().getDeger().toString();
+		}else{
+		    variableDeger = variable.getDeger().toString();
+		}
 		
-		String variableDeger = variable.getDeger().toString();
-
 		if (variable.getDeger().toString().contains(".")) {
 			int pointIndex = variable.getDeger().toString().indexOf(".");
 			variableDeger = variable.getDeger().toString().substring(pointIndex + 1);
@@ -295,11 +294,15 @@ public class ConvertUtilities {
 		ElementProgramDataTypeNatural programData;
 		ElementProgramGrupNatural grupData;
 		ElementProgramOneDimensionArrayNatural arrayItem;
+		ElementRedefineDataTypeOfSimpleDataType simpleRedefineDataType;
 		ElementDBDataTypeNatural dbDataType;
 		DDM ddm;
 		List<AbstractCommand> commandList = NaturalCommandList.getInstance().getCommandListWithIncludedVariables();
 		for (AbstractCommand abstractCommand : commandList) {
 			logger.debug(abstractCommand.toString());
+			if(abstractCommand.getDataName()!=null && abstractCommand.getDataName().contains("DES")){
+				logger.debug(" ");
+			}
 			if (abstractCommand instanceof ElementProgramDataTypeNatural) {
 				programData = (ElementProgramDataTypeNatural) abstractCommand;
 				if (programData.getDataName().equals(variableDeger)) {
@@ -317,6 +320,12 @@ public class ConvertUtilities {
 				if (arrayItem.getDataName().equals(variableDeger)) {
 					return ConvertUtilities.getJavaVariableType(arrayItem.getDataType(),
 							arrayItem.getCommandMatchPoint(), arrayItem.getLengthAfterDot());
+				}
+			}else if (abstractCommand instanceof ElementRedefineDataTypeOfSimpleDataType) {
+				simpleRedefineDataType = (ElementRedefineDataTypeOfSimpleDataType) abstractCommand;
+				if (simpleRedefineDataType.getDataName().equals(variableDeger)) {
+					return ConvertUtilities.getJavaVariableType(simpleRedefineDataType.getDataType(),
+							simpleRedefineDataType.getCommandMatchPoint(), simpleRedefineDataType.getLengthAfterDot());
 				}
 			}
 
@@ -351,6 +360,8 @@ public class ConvertUtilities {
 		
 		ElementProgramOneDimensionArrayNatural elementProgramOneDimensionArrayNatural;
 		
+		ElementRedefineDataTypeOfSimpleDataType elementSimpleTypeRedefiner;
+		
 		AbstractToken searhVariable;
 		if(variable.getLinkedToken()!=null){
 			searhVariable=variable.getLinkedToken();
@@ -362,6 +373,10 @@ public class ConvertUtilities {
 
 		for (AbstractCommand abstractCommand : commandList) {
 			logger.debug(abstractCommand.toString());
+			
+			if(abstractCommand.getSatirNumarasi()==85){
+				logger.debug(abstractCommand.toString());
+			}
 			if (abstractCommand instanceof ElementProgramDataTypeNatural) {
 				programData = (ElementProgramDataTypeNatural) abstractCommand;
 				if (programData.getDataName().equals(searhVariable.getDeger())) {
@@ -376,6 +391,11 @@ public class ConvertUtilities {
 				elementProgramOneDimensionArrayNatural = (ElementProgramOneDimensionArrayNatural) abstractCommand;
 				if (elementProgramOneDimensionArrayNatural.getDataName().equals(searhVariable.getDeger())) {
 					return elementProgramOneDimensionArrayNatural;
+				}
+			}else if (abstractCommand instanceof ElementRedefineDataTypeOfSimpleDataType) {
+				elementSimpleTypeRedefiner = (ElementRedefineDataTypeOfSimpleDataType) abstractCommand;
+				if (elementSimpleTypeRedefiner.getDataName().equals(searhVariable.getDeger())) {
+					return elementSimpleTypeRedefiner;
 				}
 			}
 		}
@@ -440,7 +460,7 @@ public class ConvertUtilities {
 			return "long";
 		}else if(variable.isIncludedVariable()){
 			try {
-				String type= variable.getIncludedVariable().getType().getSimpleName().toLowerCase();
+				String type= variable.getIncludedVariableField().getType().getSimpleName().toLowerCase();
 				return type;
 			} catch (Exception e) {
 				return null;
@@ -448,13 +468,14 @@ public class ConvertUtilities {
 		}else if(variable.isConstantVariableWithQuota()){
 			return "String";
 		}
-		if(variable.getLinkedToken()!=null){
-			variable=variable.getLinkedToken();
-		}else if(variable.isPojoVariable()){
+		if(variable.isPojoVariable()){
 			return getVariableTypeOfPojoAsString(variable);
 			
+		}else if(variable.getLinkedToken()!=null){
+			variable=variable.getLinkedToken();
 		}
-		AbstractCommand commmand;
+		
+			AbstractCommand commmand;
 		ElementProgramOneDimensionArrayNatural oneDimensionArrayChildDefinition;
 		ElementProgramDataTypeNatural programDataTypeDefinition;
 		
@@ -548,17 +569,16 @@ public class ConvertUtilities {
 
 	public static String getPojosFieldType(AbstractToken currentToken) {
 		// THESAP -->Thesap
-		String className = Utility.viewNameToPojoName(currentToken.getDeger().toString());
-
-		String fieldName = Utility.columnNameToPojoFieldName(currentToken.getColumnNameToken().getDeger().toString());
-
-		Class c = null;
-
-		c = Utility.findPojoClass(className);
-		
-		Field field;
-
+		String className = Utility.viewNameToPojoName(currentToken.getTypeNameOfView().toString());
+		String fieldName="";
+		Field field=null;
 		try {
+			fieldName = Utility.columnNameToPojoFieldName(currentToken.getColumnNameToken().getDeger().toString());
+
+			Class c = null;
+	
+			c = Utility.findPojoClass(className);
+			
 			field = c.getDeclaredField(fieldName);
 		
 			field.setAccessible(true);

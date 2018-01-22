@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.lexer.ReservedCobolKeywords;
@@ -39,7 +39,7 @@ private String viewName;//UHM-ACILIS1
  */
 public class PaternReadWith extends AbstractPatternFromXToYWithoutCarriageReturn {
 
-	final static Logger logger = LoggerFactory.getLogger(PaternReadWith.class);
+	final static Logger logger = Logger.getLogger(PaternReadWith.class);
 	/**
 	 * @param args
 	 */

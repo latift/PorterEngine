@@ -3,8 +3,8 @@ package tr.com.vbt.java.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.conditions.Condition;
 import tr.com.vbt.java.conditions.ConditionJoiner;
@@ -19,7 +19,7 @@ import tr.com.vbt.token.TokenTipi;
 
 public class ConditionUtilities {
 
-	final static Logger logger = LoggerFactory.getLogger(ConditionUtilities.class);
+	final static Logger logger = Logger.getLogger(ConditionUtilities.class);
 	
 	private Condition rootCondition;
 	

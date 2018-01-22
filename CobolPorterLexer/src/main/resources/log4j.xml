@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "http://sapsbld/dtds/log4j.dtd">
+<log4j:configuration>
+      
+       <!-- Konsola (stdout) log basan appender, DEBUG seviyesinde -->
+       <appender name="console" class="org.apache.log4j.ConsoleAppender">
+             <param name="Threshold" value="debug" />
+             <layout class="org.apache.log4j.PatternLayout">
+                    <param name="ConversionPattern" 
+                              value="%d{HH:mm:ss.SSS} %X{sessionId} %X{customer} %X{module} %X{conversionFileType} %X{fileName}  %X{NaturalMode} %X{phase} %X{ConversionStatu}  [%thread]- %m%n"/>
+                              
+             </layout>
+       </appender>
+       
+
+ 
+       <!-- Dosyaya log basan appender, DEBUG seviyesinde -->
+       <appender name="logfile" class="org.apache.log4j.DailyRollingFileAppender">
+             <param name="DatePattern" value="'.'yyyy-MM-dd" />
+             <param name="File" value="/root/chopper/converter/THY_Conversion.log" />
+             <param name="Threshold" value="debug" />
+             <param name="Append" value="true" />
+             <layout class="org.apache.log4j.PatternLayout">
+                   <param name="ConversionPattern" 
+                              value="%d{HH:mm:ss.SSS} %X{sessionId} %X{customer} %X{module} %X{conversionFileType} %X{fileName}  %X{NaturalMode} %X{phase} %X{ConversionStatu}  [%thread]- %msg%n"/>
+           </layout>
+             
+       </appender>
+       
+       <appender name="FILE_WARN" class="org.apache.log4j.RollingFileAppender">
+             <param name="DatePattern" value="'.'yyyy-MM-dd" />
+             <param name="File" value="/root/chopper/converter/THY_Conversion_Summary.log" />
+             <param name="Threshold" value="warn" />
+             <param name="Append" value="true" />
+             <param name="maxFileSize" value="100MB" />
+             <param name="maxBackupIndex" value="20" />
+             <layout class="org.apache.log4j.PatternLayout">
+                   <param name="ConversionPattern" 
+                              value="%d{HH:mm:ss.SSS} %X{sessionId} %X{customer} %X{module} %X{conversionFileType} %X{fileName}  %X{NaturalMode} %X{phase} %X{ConversionStatu}  [%thread]- %msg%n"/>
+           </layout>
+       </appender>
+       
+       
+       <logger name="org.springframework.aop.framework.CglibAopProxy" additivity="false">
+             <level value="WARN" />
+       </logger>
+      
+       <logger name="com.mchange.v2.c3p0.SQLWarnings" additivity="false">
+             <level value="WARN" />
+       </logger>
+ 
+ 
+       <!-- Temel loglama tanımı -->
+       <root>
+             <priority value="warn" />
+             <appender-ref ref="console" />
+              <!-- <appender-ref ref="logfile" />-->
+              <appender-ref ref="FILE_WARN" />
+       </root>
+</log4j:configuration>

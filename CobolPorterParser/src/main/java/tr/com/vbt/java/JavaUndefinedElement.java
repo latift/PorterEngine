@@ -3,8 +3,8 @@ package tr.com.vbt.java;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.convert.TransferFromNaturalToJavaMain;
 import tr.com.vbt.java.general.JavaClassElement;
@@ -14,7 +14,7 @@ import tr.com.vbt.java.general.JavaConstants;
 //
 public class JavaUndefinedElement extends  AbstractJavaElement {
 	
-	final static Logger logger = LoggerFactory.getLogger(TransferFromNaturalToJavaMain.class);
+	final static Logger logger = Logger.getLogger(TransferFromNaturalToJavaMain.class);
 	
 	private String dataToDisplay;
 	

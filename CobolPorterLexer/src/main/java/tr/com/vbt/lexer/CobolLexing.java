@@ -11,8 +11,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.CobolOzelKelimeler;
@@ -33,7 +33,7 @@ import tr.com.vbt.util.WriteToFile;
 
 public class CobolLexing extends AbstractLexing{
 	
-	final static Logger logger = LoggerFactory.getLogger(CobolLexing.class);
+	final static Logger logger = Logger.getLogger(CobolLexing.class);
 
 	protected CobolOzelKelimeler ozelKelimeler;
 	

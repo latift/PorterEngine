@@ -3,8 +3,8 @@ package tr.com.vbt.java.conditions;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.general.JavaClassElement;
 import tr.com.vbt.java.utils.JavaWriteUtilities;
@@ -14,7 +14,7 @@ import tr.com.vbt.token.OzelKelimeToken;
 
 public class Condition implements ConditionInterface{
 	
-	final static Logger logger = LoggerFactory.getLogger(Condition.class);
+	final static Logger logger = Logger.getLogger(Condition.class);
 
 	public List<ConditionInterface> childConditions=new ArrayList<ConditionInterface>();
 	

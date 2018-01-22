@@ -1,13 +1,13 @@
 package tr.com.vbt.java.general;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 
 public class JavaFunctionVariablesElement extends  AbstractJavaElement{
 
-	final static Logger logger = LoggerFactory.getLogger(JavaFunctionVariablesElement.class);
+	final static Logger logger = Logger.getLogger(JavaFunctionVariablesElement.class);
 	
 	private String type;
 	

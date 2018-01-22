@@ -1,11 +1,11 @@
 package tr.com.vbt.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 public class ShowProperties {
 
-	final static Logger logger = LoggerFactory.getLogger(ShowProperties.class);
+	final static Logger logger = Logger.getLogger(ShowProperties.class);
 	/**
 	 * @param args
 	 */

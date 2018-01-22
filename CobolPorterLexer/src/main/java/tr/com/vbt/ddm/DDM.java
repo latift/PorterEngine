@@ -67,6 +67,17 @@ public class DDM {
 	}
 	
 	
+	public DDM(String tableName, String t, String l, String dB, String name, String f, String leng) {
+		super();
+		TableName = tableName;
+		T = t;
+		L = l;
+		DB=dB.substring(0,1).toUpperCase()+dB.substring(1);
+		Name = name;
+		F = f;
+		Leng = leng;
+	}
+	
 	public DDM(String tableName, String t, String l, String dB, String name) {
 		super();
 		TableName = tableName;
@@ -134,6 +145,9 @@ public class DDM {
 
 
 	public DDM getFirstLevelDDM() {
+		if(this.firstLevelDDM==null){
+			return this;
+		}
 		return firstLevelDDM;
 	}
 

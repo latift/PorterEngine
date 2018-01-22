@@ -94,7 +94,7 @@ public NaturalOzelKelimeler() {
 	ozelKelimeler.add("CALLNAT");
 	ozelKelimeler.add("REINPUT");
 	ozelKelimeler.add("EDITED");
-	//ozelKelimeler.add("NOT");
+	ozelKelimeler.add("NOT");
 	ozelKelimeler.add("EQ");
 	ozelKelimeler.add("GT");
 	ozelKelimeler.add("LT");
@@ -208,6 +208,7 @@ public NaturalOzelKelimeler() {
 	ozelKelimeler.add("IN");
 	ozelKelimeler.add("PHYSICAL");
 	ozelKelimeler.add("SEQUENCE");
+	ozelKelimeler.add("FILLER");
 	
 
 	/*

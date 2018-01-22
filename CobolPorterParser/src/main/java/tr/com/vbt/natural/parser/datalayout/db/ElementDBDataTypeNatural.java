@@ -2,8 +2,8 @@ package tr.com.vbt.natural.parser.datalayout.db;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.cobol.parser.DataTypeMapConverter;
@@ -26,7 +26,7 @@ public class ElementDBDataTypeNatural extends AbstractCommand implements Levelab
 
 	protected String dataName; // mandatory
 	
-	final static Logger logger = LoggerFactory.getLogger(ElementDBDataTypeNatural.class);
+	final static Logger logger = Logger.getLogger(ElementDBDataTypeNatural.class);
 
 	@Override
 	public String toString() {

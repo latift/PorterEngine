@@ -4,14 +4,14 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.util.ConverterConfiguration;
 
 public class SysnonymManagerAll extends AbstractSysnoymManager implements SynonymManager {
 
-	final static Logger logger = LoggerFactory.getLogger(SysnonymManagerAll.class);
+	final static Logger logger = Logger.getLogger(SysnonymManagerAll.class);
 	
 	private static SysnonymManagerAll instance;
 	
@@ -67,10 +67,16 @@ public class SysnonymManagerAll extends AbstractSysnoymManager implements Synony
 
 				while ((sCurrentLine = br.readLine()) != null) {
 					String[] parts=sCurrentLine.trim().split(" +");
-					synoym=parts[0];
-					realTable=parts[1].trim();
-					synonymToRealTableNameMap.put(ConverterConfiguration.DEFAULT_SCHEMA+"_"+synoym,ConverterConfiguration.DEFAULT_SCHEMA+"_"+realTable);
-					synonymToRealTableNameMap.put(synoym,realTable);
+					try {
+						synoym=parts[0];
+						logger.debug("synoym:"+synoym);
+						realTable=parts[1].trim();
+						synonymToRealTableNameMap.put(ConverterConfiguration.DEFAULT_SCHEMA+"_"+synoym,ConverterConfiguration.DEFAULT_SCHEMA+"_"+realTable);
+						synonymToRealTableNameMap.put(synoym,realTable);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 
 			} catch (IOException e) {

@@ -3,8 +3,8 @@ package tr.com.vbt.java.database;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJava;
 import tr.com.vbt.java.general.JavaClassElement;
@@ -92,7 +92,7 @@ public class JavaFindWithElementV2 extends AbsctractConditionalJavaElement imple
 	
 	ConversionLogModel logModel=ConversionLogModel.getInstance();
 
-	final static Logger logger = LoggerFactory.getLogger(JavaFindWithElementV2.class);
+	final static Logger logger = Logger.getLogger(JavaFindWithElementV2.class);
 
 	private AbstractToken viewName; // LIMAN
 	
@@ -140,8 +140,8 @@ public class JavaFindWithElementV2 extends AbsctractConditionalJavaElement imple
 		logger.debug("findByMethodSignature :"+findByMethodSignature);
 
 
-		calculatedResultListName = viewName.toCustomString().replaceAll("_", "") + "_RESULT_LIST";
-		calculatedDAOName = viewName.getTypeNameOfView().replaceAll("_", "") + "_DAO";
+		calculatedResultListName = viewName.toCustomString() + "_RESULT_LIST";
+		calculatedDAOName = viewName.getTypeNameOfView() + "_DAO";
 		
 		javaIfNoRecords=this.getChildWithName("JavaIfNoRecords");
 		
@@ -180,10 +180,10 @@ public class JavaFindWithElementV2 extends AbsctractConditionalJavaElement imple
 											
 									addTryBlock();
 											//			LIMAN=it.next();
-										JavaClassElement.javaCodeBuffer.append(viewName.toCustomString().replaceAll("_", "")+"="+itName+".next()"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
+										JavaClassElement.javaCodeBuffer.append(viewName.toCustomString()+"="+itName+".next()"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
 											
 										if(ConversionLogModel.getInstance().getCustomer().equals("THY")){
-												JavaClassElement.javaCodeBuffer.append("ISN=(int) "+viewName.toCustomString().replaceAll("_", "")+".getIsn()"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
+												JavaClassElement.javaCodeBuffer.append("ISN=(int) "+viewName.toCustomString()+".getIsn()"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
 										}
 											
 											//			ULKE_KODU=LIMAN.getLUlkeKodu();

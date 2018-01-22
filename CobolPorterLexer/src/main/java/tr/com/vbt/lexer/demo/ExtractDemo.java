@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 	public class ExtractDemo {
 		
-		final static Logger logger = LoggerFactory.getLogger(ExtractDemo.class);
+		final static Logger logger = Logger.getLogger(ExtractDemo.class);
 		public static void main(String[] args) {
 			//String input = "I have a cat, but I like my dog better.";
 			String input = "A 1 A";

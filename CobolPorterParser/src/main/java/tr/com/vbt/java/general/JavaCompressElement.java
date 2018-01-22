@@ -3,8 +3,8 @@ package tr.com.vbt.java.general;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.util.Utility;
@@ -17,7 +17,7 @@ import tr.com.vbt.token.TokenTipi;
 //5132     MAP2.ADSOY1   --> MAP2.ADSOY1=TOZLUK.getAdi+' '+ TOZLUK.getSoyad;
 public class JavaCompressElement extends AbstractJavaElement {
 
-	final static Logger logger = LoggerFactory.getLogger(JavaCompressElement.class);
+	final static Logger logger = Logger.getLogger(JavaCompressElement.class);
 
 	private List<AbstractToken> sourceList = new ArrayList<AbstractToken>();
 

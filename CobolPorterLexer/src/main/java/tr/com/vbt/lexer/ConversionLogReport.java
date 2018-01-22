@@ -6,8 +6,8 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.commons.collections.map.HashedMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.exceptions.ConversionException;
 import tr.com.vbt.java.general.JavaConstants;
@@ -15,7 +15,7 @@ import tr.com.vbt.util.WriteToFile;
 
 public class ConversionLogReport {
 	
-	final static Logger logger = LoggerFactory.getLogger(ConversionLogReport.class);
+	final static Logger logger = Logger.getLogger(ConversionLogReport.class);
 	
 	private static ConversionLogReport instance;
 	

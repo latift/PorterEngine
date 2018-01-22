@@ -10,16 +10,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
+import org.apache.log4j.Logger;
+import org.apache.log4j.MDC;
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.ddm.DDMList;
 import tr.com.vbt.java.MethodImplementation;
 import tr.com.vbt.java.MethodSignature;
 import tr.com.vbt.java.database.IteratorNameManager;
-import tr.com.vbt.java.database.SQLManager;
 import tr.com.vbt.java.general.JavaClassElement;
 import tr.com.vbt.java.general.JavaClassGeneral;
 import tr.com.vbt.java.general.JavaConstants;
@@ -49,7 +47,7 @@ import tr.com.vbt.util.WriteToFile;
 
 public class TransferFromNaturalToJavaMain {
 
-	final static Logger logger = LoggerFactory.getLogger(TransferFromNaturalToJavaMain.class);
+	final static Logger logger = Logger.getLogger(TransferFromNaturalToJavaMain.class);
 
 	ConversionOperationLogger conversionLogger = new ConversionOperationLogger();
 

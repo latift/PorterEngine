@@ -1,7 +1,7 @@
 package tr.com.vbt.java.loops;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.database.JavaIfNoRecordsElement;
@@ -15,7 +15,7 @@ import tr.com.vbt.token.AbstractToken;
 //ESCAPE TOP -->break;
 public class JavaEscapeBottomElement extends  AbstractJavaElement {
 	
-	final static Logger logger = LoggerFactory.getLogger(JavaEscapeBottomElement.class);
+	final static Logger logger = Logger.getLogger(JavaEscapeBottomElement.class);
 
 	AbstractToken loopName;
 	

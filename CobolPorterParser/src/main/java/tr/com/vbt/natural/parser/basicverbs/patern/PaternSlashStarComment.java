@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.cobol.parser.basicverbs.ElementComment;
@@ -23,7 +23,7 @@ import tr.com.vbt.token.TokenTipi;
  */
 public class PaternSlashStarComment extends AbstractPatternFromXToYWithCarriageReturn{
 
-	final static Logger logger = LoggerFactory.getLogger(PaternSlashStarComment.class);
+	final static Logger logger = Logger.getLogger(PaternSlashStarComment.class);
 	/**
 	 * @param args
 	 */

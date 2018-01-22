@@ -1,7 +1,7 @@
 package tr.com.vbt.java.general;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.java.AbstractJavaElement;
@@ -15,7 +15,7 @@ import tr.com.vbt.util.CustomStringUtils;
 
 public class JavaTwoDimensionRedifineArrayElement extends AbstractJavaElement {
 	
-	final static Logger logger = LoggerFactory.getLogger(JavaTwoDimensionRedifineArrayElement.class);
+	final static Logger logger = Logger.getLogger(JavaTwoDimensionRedifineArrayElement.class);
 
 
 	private String type;

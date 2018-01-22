@@ -20,7 +20,7 @@ T-KLIM  Uzunluk:0 Satir No:57 Tipi:Kelime
  */
 public class ElementFindNumberWith extends AbstractCommand{
 	
-	private String viewName; //Liman
+	private AbstractToken viewName; //Liman
 	
 	private String countName; //Count
 	
@@ -64,13 +64,12 @@ public class ElementFindNumberWith extends AbstractCommand{
 		return sb.toString();
 	}
 
-	
 
-	public String getViewName() {
+	public AbstractToken getViewName() {
 		return viewName;
 	}
 
-	public void setViewName(String viewName) {
+	public void setViewName(AbstractToken viewName) {
 		this.viewName = viewName;
 	}
 

@@ -12,6 +12,7 @@ import tr.com.vbt.natural.parser.basicverbs.patern.PaternCallNat;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternClosePrinter;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternCommentEntry;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternCompress;
+import tr.com.vbt.natural.parser.basicverbs.patern.PaternCompressTo;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternCompute;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternComputeRounded;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternDelete;
@@ -181,7 +182,7 @@ public class PaternManagerNaturalImpl  extends AbstractPaternManagerNatural{
 		commmandPatternList.add(new PaternSubroutine());
 		commmandPatternList.add(new PaternDefine());
 		commmandPatternList.add(new PaternEndSubroutine());
-		if(ConversionLogModel.getInstance().isMB()){
+		if(ConversionLogModel.getInstance().isFrameworkVersion2()){
 			commmandPatternList.add(new PaternOnError());
 		}
 		commmandPatternList.add(new PaternEndError());
@@ -248,6 +249,7 @@ public class PaternManagerNaturalImpl  extends AbstractPaternManagerNatural{
 		commmandPatternList.add(new PaternDivide());
 		commmandPatternList.add(new PaternMultiply());
 		commmandPatternList.add(new PaternCompress());
+		commmandPatternList.add(new PaternCompressTo());
 		commmandPatternList.add(new PaternNewPage());
 		commmandPatternList.add(new PaternNewPage2());
 		commmandPatternList.add(new PaternTerminate());

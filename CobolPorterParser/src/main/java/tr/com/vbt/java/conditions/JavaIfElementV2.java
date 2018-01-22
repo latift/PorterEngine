@@ -3,8 +3,8 @@ package tr.com.vbt.java.conditions;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJava;
 import tr.com.vbt.java.AbstractJavaElement;
@@ -21,7 +21,7 @@ import tr.com.vbt.token.AbstractToken;
 
 public class JavaIfElementV2 extends AbstractJavaElement {
 
-	final static Logger logger = LoggerFactory.getLogger(JavaIfElementV2.class);
+	final static Logger logger = Logger.getLogger(JavaIfElementV2.class);
 
 	private List<AbstractToken> conditionList = new ArrayList<AbstractToken>();
 	

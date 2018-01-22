@@ -27,7 +27,7 @@ public class JavaNaturalClassElement extends  AbstractJavaElement{
 		programId=(String) this.parameters.get("PROGRAM_ID");
 		
 		if(programId==null){
-			interfaceName=ConverterConfiguration.className;
+			interfaceName=ConverterConfiguration.className.replaceAll("-", "_");
 		}
 		
 		
@@ -62,8 +62,8 @@ public class JavaNaturalClassElement extends  AbstractJavaElement{
 		
 		AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 		AbstractJavaElement.javaCodeBuffer.append("import org.apache.commons.lang.StringUtils;"+JavaConstants.NEW_LINE);
-		AbstractJavaElement.javaCodeBuffer.append("import org.slf4j.Logger;"+JavaConstants.NEW_LINE);
-		AbstractJavaElement.javaCodeBuffer.append("import org.slf4j.LoggerFactory;"+JavaConstants.NEW_LINE);
+		AbstractJavaElement.javaCodeBuffer.append("import org.apache.log4j.Logger;"+JavaConstants.NEW_LINE);
+		AbstractJavaElement.javaCodeBuffer.append(""+JavaConstants.NEW_LINE);
 		
 		AbstractJavaElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);
 		
@@ -165,13 +165,13 @@ public class JavaNaturalClassElement extends  AbstractJavaElement{
 
 	private void addLogger() {
 
-		//final static Logger logger = LoggerFactory.getLogger(IDGP0011Impl.class);
+		//final static Logger logger = Logger.getLogger(IDGP0011Impl.class);
 		if(ConversionLogModel.getInstance().isMap()){
-			AbstractJavaElement.javaCodeBuffer.append("final static Logger logger = LoggerFactory.getLogger("+interfaceName+".class);"+JavaConstants.NEW_LINE);
+			AbstractJavaElement.javaCodeBuffer.append("final static Logger logger = Logger.getLogger("+interfaceName+".class);"+JavaConstants.NEW_LINE);
 		}else if(ConversionLogModel.getInstance().isMapTester()){
-			AbstractJavaElement.javaCodeBuffer.append("final static Logger logger = LoggerFactory.getLogger("+interfaceName+".class);"+JavaConstants.NEW_LINE);
+			AbstractJavaElement.javaCodeBuffer.append("final static Logger logger = Logger.getLogger("+interfaceName+".class);"+JavaConstants.NEW_LINE);
 		}else{
-			AbstractJavaElement.javaCodeBuffer.append("final static Logger logger = LoggerFactory.getLogger("+implementsClassName+".class);"+JavaConstants.NEW_LINE);
+			AbstractJavaElement.javaCodeBuffer.append("final static Logger logger = Logger.getLogger("+implementsClassName+".class);"+JavaConstants.NEW_LINE);
 		}
 		
 	}

@@ -2,8 +2,8 @@ package tr.com.vbt.java.general;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaClassElement;
@@ -17,7 +17,7 @@ import tr.com.vbt.token.AbstractToken;
 //SET KEY PF11='%W>'   --> registerPFKey("PF3", "Yeni Hareket", false,true, "W");
 public class JavaSetKeyElement extends  AbstractJavaElement {
 	
-	final static Logger logger = LoggerFactory.getLogger(JavaSetKeyElement.class);
+	final static Logger logger = Logger.getLogger(JavaSetKeyElement.class);
 
 	private List<AbstractToken> parametersOfSetKey;
 	

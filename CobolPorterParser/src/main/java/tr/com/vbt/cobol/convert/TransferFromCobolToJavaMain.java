@@ -2,8 +2,8 @@ package tr.com.vbt.cobol.convert;
 
 import java.io.FileNotFoundException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 import org.slf4j.MDC;
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
@@ -22,7 +22,7 @@ import tr.com.vbt.util.ConverterConfiguration;
 
 public class TransferFromCobolToJavaMain {
 	
-	final static Logger logger = LoggerFactory.getLogger(TransferFromCobolToJavaMain.class);
+	final static Logger logger = Logger.getLogger(TransferFromCobolToJavaMain.class);
 	
 	ConversionOperationLogger conversionLogger=new ConversionOperationLogger();
 	/**

@@ -4,8 +4,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.ddm.DDM;
@@ -20,9 +20,9 @@ import tr.com.vbt.token.KelimeToken;
 import tr.com.vbt.token.TokenTipi;
 import tr.com.vbt.util.WriteToFile;
 
-public class JavaTrimWriteUtilities {
+public class JavaTrimWriteUtilities extends AbstractJavaWriteUtility{
 	
-	final static Logger logger = LoggerFactory.getLogger(JavaTrimWriteUtilities.class);
+	final static Logger logger = Logger.getLogger(JavaTrimWriteUtilities.class);
 	
 	public static StringBuilder toCustomSetterString(AbstractToken token) throws Exception {
 		
@@ -83,7 +83,7 @@ public class JavaTrimWriteUtilities {
 			
 		}else if(token.getTip().equals(TokenTipi.Karakter)){
 		
-		}else if(token.isPojoVariable() && ConversionLogModel.getInstance().isMB()){ //MB
+		}else if(token.isPojoVariable() && ConversionLogModel.getInstance().isRelationalDatabase()){ //MB
 				
 			// IDGIDBS-TGECICI .HSONVALOR : = *DAT4I  --> TGECICI.setHSONVALOR(getSystemVAriable(DAT4I));
 			tempCodeBuffer.append(toCustomPojoDB2VariableSetterString(token, newValueToken));
@@ -138,7 +138,7 @@ public class JavaTrimWriteUtilities {
 		
 		}else if(token.isPojoVariable()){
 			
-			if(ConversionLogModel.getInstance().isMB()){
+			if(ConversionLogModel.getInstance().isRelationalDatabase()){
 			
 				tempCodeBuffer.append(toCustomPojoDB2VariableString(token));
 				
@@ -463,7 +463,7 @@ public class JavaTrimWriteUtilities {
 		
 		StringBuilder getterString=new StringBuilder();
 		
-		String columnReturnType=Utility.findViewAndColumnNamesReturnType(token);
+		String columnReturnType=Utility.findViewAndColumnNamesReturnTypeRelationalDB(token);
 		
 		if(columnReturnType.toLowerCase().equals("long")){
 			
@@ -637,338 +637,8 @@ public class JavaTrimWriteUtilities {
 	}
 	
 
-/*1)	Boş ve  1  se bir normal
-	 * 					1  A8  TAX-DOM-INT --> KetTax.getTaxDomInt()*/
-	private static String ruleEmtpy_1(DDM ddm, AbstractToken token) {
-		
-		String getterString;//TESKI;
-			getterString= "getPojoValue("+"\""+token.getDeger().toString();
 
-		getterString +=".";
-		if(token.getColumnNameToken()==null){
-			getterString +=Utility.viewNameToPojoGetterName(token.getDeger().toString());
-		}else{
-			getterString +=Utility.viewNameToPojoGetterName(token.getColumnNameToken().getDeger().toString());
-		}
-		getterString +="()"+"\""+")";
-		return getterString;
-
-	}
 	
-	/*1)	Boş ve  1  se bir normal
-	 * 
-	 *	tableColumnReferans.put("MUL_PREFIX","KET_MULTIFILE");
-		RedefinedColumn mulFrefix=new RedefinedColumn("KET_KCKGRP_EXC","KET_MULTFILE","MUL_TIMESTAMP","MUL_PREFIX",0,13,"A");
-		tableColumnRedefiners.put("MUL_PREFIX", mulFrefix);
-	
-	 * 					1  A8  MUL-PREFIX --> KET_MULTIFILE.getMultimestamp().substring(0,13);*/
-	private static String ruleEmtpy_1_RedefinedColumn(DDM ddm, AbstractToken token) {
-		
-		RedefinedColumn rdfColumn=token.getColumnNameToken().getRedefinedColumn();
-		
-		String getterString;//TESKI;
-			getterString= "getPojoValue("+"\""+token.getDeger().toString();
-		
-		getterString +=".";
-		if(rdfColumn.getColumn()==null){
-	
-			getterString +=Utility.viewNameToPojoGetterName(rdfColumn.toString());
-			
-		}else{
-			
-			getterString +=Utility.viewNameToPojoGetterName(rdfColumn.getColumn().toString());
-			
-		}
-		getterString +="()";
-		if(rdfColumn.getStartIndex()!=-1){
-			getterString +=".substring(";
-			getterString +=rdfColumn.getStartIndex()+","+rdfColumn.getEndIndex();
-			getterString +=")"+"\""+")";
-		}
-		
-		return getterString;
-
-	}
-	
-	/*1)	Boş ve  1  se bir normal
-	 * 					1  A8  TAX-DOM-INT --> KetTax.setTaxDomInt()*/
-	private static String ruleEmtpy_1_setter(DDM ddm, AbstractToken token) {
-		
-		String setterString;
-			setterString= "setPojoValue("+"\""+token.getDeger().toString()+"\"";
-		if(token.getColumnNameToken()==null){
-			
-			setterString +=token.getDeger().toString();
-					
-		}else{
-			
-			setterString +=token.getColumnNameToken().getDeger().toString();
-		}
-		return setterString;
-
-	}
-	
-	/*1)	Boş ve  1  se bir normal
-	 * 					1  A8  TAX-DOM-INT --> KetTax.setTaxDomInt()*/
-	private static String ruleEmtpy_1_RedefinedColumnSetter(DDM ddm, AbstractToken token) {
-		
-		String setterString;
-			setterString= "getPojoValue("+"\""+token.getDeger().toString();
-		setterString +=".";
-		if(token.getColumnNameToken()==null){
-			setterString +=Utility.viewNameToPojoSetterName(token.getDeger().toString())+"\""+")";
-		}else{
-			setterString +=Utility.viewNameToPojoSetterName(token.getColumnNameToken().getDeger().toString())+"\""+")";
-		}
-		return setterString;
-
-	}
-
-	/*
-	 * 	 * 		2)	M ve  1 se 
-	 * 					 M 1  A9  TAX-DETAIL  -->  KetTax.getKetTaxA9s().get(i).getTaxDetail()
-	 */							 
-	private static String ruleM_1(DDM ddm, AbstractToken token) throws Exception {
-		
-		// token.getDeger() = KETTAX
-		//columnt.getDeger() ==TAX_DETAIL
-		String getterString;//TESKI;
-			getterString= "getPojoValue("+"\""+token.getDeger().toString();
-		getterString +=".";
-		if(token.getColumnNameToken()==null){
-			getterString +=Utility.viewNameToPojoGetterName(token.getDeger().toString());
-		}else{
-			getterString +=Utility.viewNameToPojoGetterName(token.getColumnNameToken().getDeger().toString());
-		};
-		getterString +="s()";		//getKetTaxA9s()
-		getterString +=".";
-		if(token.getPojosDimension()==null){
-			getterString +="get("+JavaTrimWriteUtilities.toCustomString(token)+"-1)";
-		}else{
-			getterString +="get("+JavaTrimWriteUtilities.toCustomString(token.getPojosDimension())+"-1)";
-		}
-		getterString +=".";
-		getterString +=Utility.viewNameToPojoGetterName(token.getColumnNameToken().getDeger().toString());
-		getterString +="()"+"\""+")";
-		return getterString;
-	}
-	
-	/*
-	 * 	 * 		2)	M ve  1 se 
-	 * 					 M 1  A9  TAX-DETAIL  -->  KetTax.getKetTaxA9s().get(i).getTaxDetail()
-	 */							 
-	private static String ruleM_1_RedefinedColumn(DDM ddm, AbstractToken token) throws Exception {
-		
-		// token.getDeger() = KETTAX
-		//columnt.getDeger() ==TAX_DETAIL
-		String getterString;//TESKI;
-			getterString= "getPojoValue("+"\""+token.getDeger().toString();
-		getterString +=".";
-		getterString +="get"+token.getDeger().toString()+ddm.getDB()+"s()";		//getKetTaxA9s()
-		getterString +=".";
-		getterString +="get("+JavaTrimWriteUtilities.toCustomString(token.getPojosDimension())+"-1)";
-		getterString +=".";
-		getterString +=Utility.viewNameToPojoGetterName(token.getColumnNameToken().getDeger().toString());
-		getterString +="()"+"\""+")";
-		return getterString;
-	}
-
-	private static String ruleM_1_setter(DDM ddm, AbstractToken token) throws Exception {
-		
-		String getterString;//TESKI;
-			getterString= "getPojoValue("+"\""+token.getDeger().toString();
-		getterString +=".";
-		getterString +="get"+token.getDeger().toString()+ddm.getDB()+"s()";		//getKetTaxA9s()
-		getterString +=".";
-		getterString +="get("+JavaTrimWriteUtilities.toCustomString(token.getPojosDimension())+"-1)";
-		getterString +=".";
-		getterString +=Utility.viewNameToPojoSetterName(token.getColumnNameToken().getDeger().toString())+"\""+")";
-		return getterString;
-	}
-	
-	
-	private static String ruleM_1_RedefinedColumnSetter(DDM ddm, AbstractToken token) throws Exception {
-		
-		String getterString;//TESKI;
-			getterString= "getPojoValue("+"\""+token.getDeger().toString();
-		getterString +=".";
-		getterString +="get"+token.getDeger().toString()+ddm.getDB()+"s()";		//getKetTaxA9s()
-		getterString +=".";
-		getterString +="get("+JavaTrimWriteUtilities.toCustomString(token.getPojosDimension())+"-1)";
-		getterString +=".";
-		getterString +=Utility.viewNameToPojoSetterName(token.getColumnNameToken().getDeger().toString())+"\""+")";
-		return getterString;
-	}
-
-	/*
-	 * 	 * 		3)	P VE  1 se count içindir.
-	 * 					 P 1  AC  TAX-EXEMPT-PER  -->KetTax.getKetTaxAc().size();
-	 */
-	private static String ruleP_1(DDM ddm, AbstractToken token) {
-		String getterString;//TESKI;
-			getterString= "getPojoValue("+"\""+token.getDeger().toString();
-		getterString +=".";
-		getterString +="get"+token.getDeger().toString()+ddm.getFirstLevelDDM().getDB()+"s()";		//getKetTaxA9s()
-		getterString +=".";
-		getterString +="size()"+"\""+")";
-		return getterString;
-	}
-	
-	/*
-	 * 	 * 		3)	P VE  1 se count içindir.
-	 * 					 P 1  AC  TAX-EXEMPT-PER  -->KetTax.getKetTaxAc().size();
-	 */
-	private static String ruleP_1_RedefinedColumn(DDM ddm, AbstractToken token) {
-		String getterString;//TESKI;
-			getterString= "getPojoValue("+"\""+token.getDeger().toString();
-		getterString +=".";
-		getterString +="get"+token.getDeger().toString()+ddm.getFirstLevelDDM().getDB()+"s()";		//getKetTaxA9s()
-		getterString +=".";
-		getterString +="size()"+"\""+")";
-		return getterString;
-	}
-	
-	private static String ruleP_1_setter(DDM ddm, AbstractToken token) throws Exception {
-		throw new Exception("Unimplemented Code");
-	}
-	
-	private static String ruleP_1_RedefinedColumnSetter(DDM ddm, AbstractToken token) throws Exception {
-		throw new Exception("Unimplemented Code");
-	}
-
-	/*4)Boş ve 2 ise periodic altindadir.
-	 * 					DDM KET-DOMESTIC-TAX
-	 * 				  	P 1  AH  ITX-APPLIED
-    					  2  AI  ITX-CITIES  
-	 * 										--> KetDomesticTax.getKetTaxAh().get(i).getItxCities()*/	 
-	private static String ruleEmpty_2(DDM ddm, AbstractToken token) throws Exception {
-		String getterString;//TESKI;
-			getterString="getPojoValue("+"\""+ token.getDeger().toString();
-		getterString +=".";
-		//getterString +="get"+token.getDeger().toString()+Utility.viewNameToPojoGetterName(ddm.getFirstLevelDDM().getDB())+"s()";		//getKetTaxA9s()
-		getterString +=Utility.viewNameToPojoGetterName(token.getDeger()+"_"+ddm.getFirstLevelDDM().getDB()+"s");
-		getterString +="()";
-		getterString +=".";
-		if(token.getPojosDimension()!=null){
-			getterString +="get("+JavaTrimWriteUtilities.toCustomString(token.getPojosDimension())+"-1)";
-		}else{
-			getterString +="get()";
-		}
-		getterString +=".";
-		getterString +=Utility.viewNameToPojoGetterName(token.getColumnNameToken().getDeger().toString());
-		getterString +="()"+"\""+")";
-		return getterString;
-	}
-	
-	private static String ruleEmpty_2_RedefinedColumn(DDM ddm, AbstractToken token) throws Exception {
-		String getterString;//TESKI;
-			getterString= "getPojoValue("+"\""+token.getDeger().toString();
-		getterString +=".";
-		//getterString +="get"+token.getDeger().toString()+Utility.viewNameToPojoGetterName(ddm.getFirstLevelDDM().getDB())+"s()";		//getKetTaxA9s()
-		getterString +=Utility.viewNameToPojoGetterName(token.getDeger()+"_"+ddm.getFirstLevelDDM().getDB()+"s");
-		getterString +="()";
-		getterString +=".";
-		getterString +="get("+JavaTrimWriteUtilities.toCustomString(token.getPojosDimension())+"-1)";
-		getterString +=".";
-		getterString +=Utility.viewNameToPojoGetterName(token.getColumnNameToken().getDeger().toString());
-		getterString +="()"+"\""+")";
-		return getterString;
-	}
-	
-	//     2  AD  TAX-EXEMPT-CODE   --> KET_TAX.getKetTaxAcs().get(i-1).getTaxExemptCode()
-	private static String ruleEmpty_2_setter(DDM ddm, AbstractToken token) throws Exception {
-		String getterString;//TESKI;
-			getterString= "\""+token.getDeger().toString();
-		getterString +=".";
-		//getterString +="get"+token.getDeger().toString()+Utility.viewNameToPojoGetterName(ddm.getFirstLevelDDM().getDB())+"s()";		//getKetTaxA9s()
-		getterString +=Utility.viewNameToPojoGetterName(token.getDeger()+"_"+ddm.getFirstLevelDDM().getDB()+"s");
-		getterString +="()";
-		getterString +=".";
-		getterString +="get("+JavaTrimWriteUtilities.toCustomString(token.getPojosDimension())+"-1)";
-		getterString +=".";
-		getterString +=Utility.viewNameToPojoSetterName(token.getColumnNameToken().getDeger().toString())+"\"";
-		return getterString;
-	}
-	
-	//     2  AD  TAX-EXEMPT-CODE   --> KET_TAX.getKetTaxAcs().get(i-1).getTaxExemptCode()
-	private static String ruleEmpty_2_RedefinedColumnSetter(DDM ddm, AbstractToken token) throws Exception {
-		String getterString;//TESKI;
-			getterString= "getPojoValue("+"\""+token.getDeger().toString();
-		getterString +=".";
-		//getterString +="get"+token.getDeger().toString()+Utility.viewNameToPojoGetterName(ddm.getFirstLevelDDM().getDB())+"s()";		//getKetTaxA9s()
-		getterString +=Utility.viewNameToPojoGetterName(token.getDeger()+"_"+ddm.getFirstLevelDDM().getDB()+"s");
-		getterString +="()";
-		getterString +=".";
-		getterString +="get("+JavaTrimWriteUtilities.toCustomString(token.getPojosDimension())+"-1)";
-		getterString +=".";
-		getterString +=Utility.viewNameToPojoSetterName(token.getColumnNameToken().getDeger().toString())+"\""+")";
-		return getterString;
-	}
-
-
-	/**
-	 * 5) 	M  ve  2 ise 
-	 * 					KET-NOTE-ATPCO
-	 * 				
-					  P 1  A8  NOT-CODE-PERIODIC
-					  M 2  A9  NOT-CODE                         A    7  N
-	 * 						
-	 * 						-->KetNoteATPCO.getKetNoteAtpcoA8().get(i).getKetNoteAtpcoA9().get(i).getNotCode();
-	 * @throws Exception 
-
-	 */
-	private static String ruleM_2(DDM ddm, AbstractToken token) throws Exception {
-		
-		String getterString;//TESKI;
-			getterString= "getPojoValue("+"\""+token.getDeger().toString();
-		getterString +=".";
-		getterString +="get"+token.getDeger().toString()+ddm.getFirstLevelDDM().getDB()+"s()";		//getKetTaxA9s()
-		getterString +=".";
-		getterString +="get("+JavaTrimWriteUtilities.toCustomString(token.getPojosDimension())+"-1)";
-		getterString +=".";
-		getterString +="get"+token.getDeger().toString()+ddm.getDB()+"s()";		//getKetTaxA9s()
-		getterString +=".";
-		getterString +="get(i)";
-		getterString +=".";
-		getterString +=Utility.viewNameToPojoGetterName(token.getColumnNameToken().getDeger().toString());
-		getterString +="()"+"\""+")";
-		return getterString;
-	}
-	
-	private static String ruleM_2_setter(DDM ddm, AbstractToken token) throws Exception {
-		
-		String getterString;//TESKI;
-			getterString="getPojoValue("+ "\""+token.getDeger().toString();
-		getterString +=".";
-		getterString +="get"+token.getDeger().toString()+ddm.getFirstLevelDDM().getDB()+"s()";		//getKetTaxA9s()
-		getterString +=".";
-		getterString +="get("+JavaTrimWriteUtilities.toCustomString(token.getPojosDimension())+"-1)";
-		getterString +=".";
-		getterString +="get"+token.getDeger().toString()+ddm.getDB()+"s()";		//getKetTaxA9s()
-		getterString +=".";
-		getterString +="get(i)";
-		getterString +=".";
-		getterString +=Utility.viewNameToPojoSetterName(token.getColumnNameToken().getDeger().toString())+"\""+")";
-		return getterString;
-	}
-
-	private static String ruleM_2_RedefinedColumnSetter(DDM ddm, AbstractToken token) throws Exception {
-		
-		String getterString;//TESKI;
-			getterString= "getPojoValue("+"\""+token.getDeger().toString();
-		getterString +=".";
-		getterString +="get"+token.getDeger().toString()+ddm.getFirstLevelDDM().getDB()+"s()";		//getKetTaxA9s()
-		getterString +=".";
-		getterString +="get("+JavaTrimWriteUtilities.toCustomString(token.getPojosDimension())+"-1)";
-		getterString +=".";
-		getterString +="get"+token.getDeger().toString()+ddm.getDB()+"s()";		//getKetTaxA9s()
-		getterString +=".";
-		getterString +="get(i)";
-		getterString +=".";
-		getterString +=Utility.viewNameToPojoSetterName(token.getColumnNameToken().getDeger().toString())+"\""+")";
-		return getterString;
-	}
-
 	private static String writeArrayOfRecord(ElementProgramGrupNatural variableDefinitionGrupNatural, AbstractToken token) {
 		
 		StringBuilder tempCodeBuffer=new StringBuilder();
@@ -1125,10 +795,6 @@ public class JavaTrimWriteUtilities {
 		return "(int)";
 	}
 
-
-
-
-
-
+	
 
 }

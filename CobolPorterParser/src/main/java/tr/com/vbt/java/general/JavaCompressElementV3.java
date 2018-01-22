@@ -3,8 +3,8 @@ package tr.com.vbt.java.general;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.utils.ConvertUtilities;
@@ -35,7 +35,7 @@ import tr.com.vbt.token.KelimeToken;
 //0900	  COMPRESS MAP.SBIC '%%%%%%%%' INTO BICA12 LEAVE NO
 public class JavaCompressElementV3 extends AbstractJavaElement {
 
-	final static Logger logger = LoggerFactory.getLogger(JavaCompressElementV3.class);
+	final static Logger logger = Logger.getLogger(JavaCompressElementV3.class);
 
 	private List<AbstractToken> sourceList = new ArrayList<AbstractToken>();
 
@@ -113,7 +113,7 @@ public class JavaCompressElementV3 extends AbstractJavaElement {
 			JavaClassElement.javaCodeBuffer.append("=");
 		}
 
-		if(typeOfCopyTo.equalsIgnoreCase("date")){
+		if(typeOfCopyTo!=null &&typeOfCopyTo.equalsIgnoreCase("date")){
 			writeSourcePartToDate();
 		}else{
 			writeSourcePart();

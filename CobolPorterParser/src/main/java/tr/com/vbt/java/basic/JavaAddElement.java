@@ -2,8 +2,8 @@ package tr.com.vbt.java.basic;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaClassElement;
@@ -11,12 +11,13 @@ import tr.com.vbt.java.general.JavaConstants;
 import tr.com.vbt.java.utils.ConvertUtilities;
 import tr.com.vbt.java.utils.JavaWriteUtilities;
 import tr.com.vbt.token.AbstractToken;
+import tr.com.vbt.token.TokenTipi;
 
 
 // ADD 1 TO JJ --> JJ=JJ+1;
 public class JavaAddElement extends  AbstractJavaElement {
 	
-	final static Logger logger = LoggerFactory.getLogger(JavaAddElement.class);
+	final static Logger logger = Logger.getLogger(JavaAddElement.class);
 	
 	private List<AbstractToken> sourceList;
 	
@@ -27,7 +28,24 @@ public class JavaAddElement extends  AbstractJavaElement {
 		
 		destList=(List<AbstractToken>) this.getParameters().get("DESTINATION");
 		try{
-			JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(destList.get(0))+"="+JavaWriteUtilities.toCustomString(destList.get(0))+JavaConstants.PLUS+JavaWriteUtilities.toCustomString(sourceList.get(0))+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+			if(destList.get(0).isPojoVariable()){
+				
+				JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomSetterString(destList.get(0)));
+				
+				JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(destList.get(0)));
+				
+				JavaClassElement.javaCodeBuffer.append("+");
+				
+				for (int i = 0; i < sourceList.size(); i++) {
+					JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(sourceList.get(i)));
+				}
+				
+				JavaClassElement.javaCodeBuffer.append(")");
+				
+				//Pojodan Arraya
+			}else{
+				JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(destList.get(0))+"="+JavaWriteUtilities.toCustomString(destList.get(0))+JavaConstants.PLUS+JavaWriteUtilities.toCustomString(sourceList.get(0))+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+			}
 		} catch (Exception e) {
 			logger.debug("//Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()+this.getSourceCode().getCommandName());
 			JavaClassElement.javaCodeBuffer.append("/*Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()

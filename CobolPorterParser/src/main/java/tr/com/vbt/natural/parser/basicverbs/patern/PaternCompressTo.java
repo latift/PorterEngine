@@ -24,9 +24,9 @@ import tr.com.vbt.token.TokenTipi;
       //   5132     MAP2.ADSOY1 END_COMPRESS
  *
  */
-public class PaternCompress extends AbstractPattern{
+public class PaternCompressTo extends AbstractPattern{
 	
-	final static Logger logger = Logger.getLogger(PaternCompress.class);
+	final static Logger logger = Logger.getLogger(PaternCompressTo.class);
 
     protected AbstractToken starterToken; //COMPRESS
     
@@ -58,7 +58,7 @@ public class PaternCompress extends AbstractPattern{
 	}
 	
 
-	public PaternCompress() {
+	public PaternCompressTo() {
 		super();
 		
 		//COMPRESS
@@ -80,7 +80,7 @@ public class PaternCompress extends AbstractPattern{
 			
 		
 		//INTO
-		this.intoToken=new OzelKelimeToken("INTO", 0, 0, 0);
+		this.intoToken=new OzelKelimeToken("TO", 0, 0, 0);
 		intoToken.setTekrarlayabilir("+");
 		intoToken.setSourceFieldName("paragraghParameters");
 		patternTokenList.add(intoToken);

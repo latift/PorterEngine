@@ -3,8 +3,8 @@ package tr.com.vbt.java.basic;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.ddm.DDM;
 import tr.com.vbt.ddm.DDMList;
@@ -36,7 +36,7 @@ import tr.com.vbt.token.TokenTipi;
 
 public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 
-	final static Logger logger = LoggerFactory.getLogger(JavaBecomesEqualToElementV2.class);
+	final static Logger logger = Logger.getLogger(JavaBecomesEqualToElementV2.class);
 
 	private List<AbstractToken> copyFrom = new ArrayList<AbstractToken>(); // #TOPLAM-UPLIFT2 +(T-GYOG*T-UPLIFT)
 	
@@ -62,7 +62,9 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 			if(copyTo==null) {
 				return true;
 			}
-			
+			if(copyTo.getSatirNumarasi()==215){
+				logger.debug("");
+			}
 			copyFrom.set(0, createTableNameTokenForColumnsWithoutTable(copyFrom.get(0)));
 			
 			String typeOfCopyTo=ConvertUtilities.getTypeOfVariable(copyTo);
@@ -125,18 +127,20 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 				
 				JavaWriteUtilities.addTypeChangeFunctionToEnd(copyTo,copyFrom.get(0));
 				
-			}else if(copyTo.isPojoVariable() && ConversionLogModel.getInstance().isMB()){
-					
-				JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomSetterString(copyTo, copyFrom.get(0)));
-					
-			}else if(copyTo.isRedefinedVariable() || (copyTo.getLinkedToken()!=null && copyTo.getLinkedToken().isRedefinedVariable())){
+			}else if(copyTo.isRedefinedVariable() || (copyTo.getLinkedToken()!=null && copyTo.getLinkedToken().isRedefinedVariable()) || copyTo.isPojoVariable()){
 				//*S**ASSIGN TAX-INOUT = SCR-IN-OUT -->KET_TAX.setTaxInout(SCR_IN_OUT);
 				
 				JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomSetterString(copyTo));
 				
 				//JavaClassElement.javaCodeBuffer.append("(");
 				for (int i = 0; i < copyFrom.size(); i++) {
+					cast=JavaWriteUtilities.addCast(copyTo,copyFrom.get(i));
+					
 					JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(copyFrom.get(i)));
+					
+					JavaWriteUtilities.endCast(cast);
+					
+					JavaWriteUtilities.addTypeChangeFunctionToEnd(copyTo,copyFrom.get(i));
 				}
 				
 				JavaClassElement.javaCodeBuffer.append(")");

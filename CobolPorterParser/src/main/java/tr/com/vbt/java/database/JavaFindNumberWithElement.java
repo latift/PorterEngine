@@ -3,8 +3,8 @@ package tr.com.vbt.java.database;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJava;
 import tr.com.vbt.java.general.JavaClassElement;
@@ -93,7 +93,7 @@ public class JavaFindNumberWithElement extends AbsctractConditionalJavaElement i
 	
 	ConversionLogModel logModel=ConversionLogModel.getInstance();
 
-	final static Logger logger = LoggerFactory.getLogger(JavaDBViewOfDataTypeElement.class);
+	final static Logger logger = Logger.getLogger(JavaDBViewOfDataTypeElement.class);
 
 	private AbstractToken viewName; // LIMAN
 	
@@ -134,27 +134,17 @@ public class JavaFindNumberWithElement extends AbsctractConditionalJavaElement i
 		}
 		
 		
-		calculatedResultListName = viewName.toCustomString().replaceAll("_", "") + "_RESULT_LIST";
-		calculatedDAOName = viewName.getTypeNameOfView().replaceAll("_", "") + "_DAO";
+		calculatedResultListName = viewName.toCustomString() + "_RESULT_LIST";
+		calculatedDAOName = viewName.getTypeNameOfView()+ "_DAO";
 		
 		javaIfNoRecords=this.getChildWithName("JavaIfNoRecords");
 		
-		
-
-		calculatedResultListName = "";// LIMAN_RESULT_LIST
-		calculatedDAOName = "";
 		findByString=createFindByString("findOneBy");
 		findByMethodSignature=createFindByMethodString("findOneBy", pojoType);
 		
 		//itName="it"+pojoType;
 		itName=itNameManager.createIteratorName(pojoType);
 
-		calculatedResultListName = viewName.toCustomString().replaceAll("_", "") + "_RESULT_LIST";
-		calculatedDAOName = viewName.getTypeNameOfView().replaceAll("_", "") + "_DAO";
-		
-		javaIfNoRecords=this.getChildWithName("JavaIfNoRecords");
-		
-		
 		try {
 
 

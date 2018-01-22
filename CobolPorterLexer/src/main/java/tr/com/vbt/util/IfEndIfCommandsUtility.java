@@ -2,8 +2,8 @@ package tr.com.vbt.util;
 
 import java.util.LinkedList;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.OzelKelimeToken;
@@ -18,7 +18,7 @@ import tr.com.vbt.token.OzelKelimeToken;
  */
 public class IfEndIfCommandsUtility {
 	
-	final static Logger logger = LoggerFactory.getLogger(IfEndIfCommandsUtility.class);
+	final static Logger logger = Logger.getLogger(IfEndIfCommandsUtility.class);
 	
 	private LinkedList<AbstractToken<String>> endIfBuffer = new LinkedList<AbstractToken<String>>();
 	

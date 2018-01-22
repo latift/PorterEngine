@@ -1,11 +1,11 @@
 package tr.com.generated;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 public class BasicVerbsProgram {
 	
-	final static Logger logger = LoggerFactory.getLogger(BasicVerbsProgram.class);
+	final static Logger logger = Logger.getLogger(BasicVerbsProgram.class);
 	
 	int A;
 	int B;

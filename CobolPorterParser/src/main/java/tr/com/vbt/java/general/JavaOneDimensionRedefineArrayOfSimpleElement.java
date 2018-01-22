@@ -1,7 +1,7 @@
 package tr.com.vbt.java.general;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.java.AbstractJavaElement;
@@ -20,7 +20,7 @@ import tr.com.vbt.util.CustomStringUtils;
 
 public class JavaOneDimensionRedefineArrayOfSimpleElement extends AbstractJavaElement {
 	
-	final static Logger logger = LoggerFactory.getLogger(JavaOneDimensionRedefineArrayOfSimpleElement.class);
+	final static Logger logger = Logger.getLogger(JavaOneDimensionRedefineArrayOfSimpleElement.class);
 
 
 	private String dataName;
@@ -72,7 +72,7 @@ public class JavaOneDimensionRedefineArrayOfSimpleElement extends AbstractJavaEl
 			
 			
 			//public RedefineSimpleToOneDimension TAX_EXC_ITEM = new RedefineSimpleToOneDimension(this,TAX-EXC-TEXT,10);
-			JavaClassElement.javaCodeBuffer.append("public RedefineSimpleToOneDimension "+(CustomStringUtils.replaceMiddleLineWithSubLine(dataName))+"=new RedefineSimpleToOneDimension(this,"+redCommandDataType.getDataName()+","+arrayLength+")");
+			JavaClassElement.javaCodeBuffer.append("public RedefineSimpleToOneDimension "+(CustomStringUtils.replaceMiddleLineWithSubLine(dataName))+"=new RedefineSimpleToOneDimension(this,\""+redCommandDataType.getDataName()+"\","+arrayLength+")");
 			
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.DOT_WITH_COMMA);
 			JavaClassElement.javaCodeBuffer.append(JavaConstants.NEW_LINE);

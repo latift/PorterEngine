@@ -1,7 +1,7 @@
 package tr.com.vbt.java.basic;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaClassElement;
@@ -15,7 +15,7 @@ import tr.com.vbt.token.AbstractToken;
 //DIVIDE 10 INTO PFSAY GIVING TOPLAM_SAYFA REMAINDER KALAN   --> TOPLAM_SAYFA=PFSAY/10; KALAN=PFSAY%10;
 public class JavaDivideElement extends AbstractJavaElement {
 
-	final static Logger logger = LoggerFactory.getLogger(JavaDivideElement.class);
+	final static Logger logger = Logger.getLogger(JavaDivideElement.class);
 
 	private AbstractToken bolunen;
 

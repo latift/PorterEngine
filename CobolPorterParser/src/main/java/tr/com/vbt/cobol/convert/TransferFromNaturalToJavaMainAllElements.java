@@ -3,8 +3,8 @@ package tr.com.vbt.cobol.convert;
 import java.io.FileNotFoundException;
 import java.util.Date;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.database.SQLManager;
 import tr.com.vbt.lexer.ConversionFileType;
@@ -16,7 +16,7 @@ import tr.com.vbt.util.ConverterConfiguration;
 
 public class TransferFromNaturalToJavaMainAllElements {
 
-	final static Logger logger = LoggerFactory.getLogger(TransferFromNaturalToJavaMainAllElements.class);
+	final static Logger logger = Logger.getLogger(TransferFromNaturalToJavaMainAllElements.class);
 
 	/**
 	 * @param args

@@ -2,8 +2,8 @@ package tr.com.vbt.java.screen;
 
 import java.util.ArrayList;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.general.JavaClassElement;
 import tr.com.vbt.java.general.JavaConstants;
@@ -30,7 +30,7 @@ public class JavaInputTesterElement extends JavaInputElement {
 	
 	JavaInputElement javaInputElement;
 	
-	final static Logger logger = LoggerFactory.getLogger(JavaInputTesterElement.class);
+	final static Logger logger = Logger.getLogger(JavaInputTesterElement.class);
 
 	
 	public String INPUT_SIZE_1 = new String("A");

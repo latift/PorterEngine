@@ -1,7 +1,7 @@
 package tr.com.vbt.java.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.java.AbstractJava;
@@ -123,7 +123,7 @@ import tr.com.vbt.util.ConverterConfiguration;
 
 public class CreateProcessOperator extends ProcessOperator {
 
-	final static Logger logger = LoggerFactory.getLogger(CreateProcessOperator.class);
+	final static Logger logger = Logger.getLogger(CreateProcessOperator.class);
 
 	public CreateProcessOperator(Rule rule, AbstractCommand sourceElement) {
 		super(rule);

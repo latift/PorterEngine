@@ -1,7 +1,7 @@
 package tr.com.vbt.java.basic;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaClassElement;
@@ -14,7 +14,7 @@ import tr.com.vbt.util.CustomStringUtils;
 ////EXAMINE SCRTXT FOR 'YETISKIN' GIVING POSITION LOC  --> LOC=FrameworkCU.indexOf(SCRTXT,YETISKIN);
 public class JavaExamineForGivingPositionElement extends  AbstractJavaElement {
 	
-	final static Logger logger = LoggerFactory.getLogger(JavaExamineForGivingPositionElement.class);
+	final static Logger logger = Logger.getLogger(JavaExamineForGivingPositionElement.class);
 	
 	private AbstractToken sourceToken;
 	

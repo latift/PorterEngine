@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.map.HashedMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import com.sun.xml.rpc.processor.config.Configuration;
 
@@ -23,7 +23,7 @@ import tr.com.vbt.util.WriteToFile;
 
 public class DDMList {
 	
-	final static Logger logger = LoggerFactory.getLogger(DDMList.class);
+	final static Logger logger = Logger.getLogger(DDMList.class);
 
 	Map<String, DDM> dDMMap = new HashedMap();
 	
@@ -118,7 +118,10 @@ public class DDMList {
 
 			while ((sCurrentLine = br.readLine()) != null) {
 				if(lineNumber>1){
-					logger.debug("fileName:"+fileName+"  sCurrentLine:"+sCurrentLine);
+					if(fileName.contains("TKS-CRA")&& lineNumber==16){
+						logger.debug("");
+					}
+					//logger.debug("fileName:"+fileName+"  sCurrentLine:"+sCurrentLine);
 					addLineToDDM(fileName,sCurrentLine);
 				}
 				lineNumber++;
@@ -169,7 +172,7 @@ public class DDMList {
 			String Name;
 			String F;
 			String Leng;
-			String S;
+			String S = "";
 			String D;
 			
 			for(int i=0; i< lineItems.length;i++){
@@ -178,31 +181,64 @@ public class DDMList {
 				}
 			}
 			
-			logger.debug("File:"+fileName+" Line:"+sCurrentLine);
+			//logger.debug("File:"+fileName+" Line:"+sCurrentLine);
 			
-			if(lineItemsList.get(0).startsWith("A")|| lineItemsList.get(0).startsWith("M")||lineItemsList.get(0).startsWith("P")||lineItemsList.get(0).startsWith("T")||lineItemsList.get(0).startsWith("G")){
+			if(lineItemsList.get(0).startsWith("P")){
 				
 				T=lineItemsList.get(0);
 				L=lineItemsList.get(1);
 				DB=lineItemsList.get(2);
 				Name=lineItemsList.get(3);
+				F="";
+				Leng="";
+				
+			}else if(lineItemsList.get(0).startsWith("A")|| lineItemsList.get(0).startsWith("M")||lineItemsList.get(0).startsWith("T")){
+				
+				T=lineItemsList.get(0);
+				L=lineItemsList.get(1);
+				DB=lineItemsList.get(2);
+				Name=lineItemsList.get(3);
+				F=lineItemsList.get(4);
+				Leng=lineItemsList.get(5);
+				if(lineItemsList.size()>6){
+					S=lineItemsList.get(6);
+				}
+				
+			}else if(lineItemsList.get(0).startsWith("G")){
+				
+				T=lineItemsList.get(0);
+				L=lineItemsList.get(1);
+				DB=lineItemsList.get(2);
+				Name=lineItemsList.get(3);
+				F="";
+				Leng="";
 				
 			}else{
 				L=lineItemsList.get(0);
 				DB=lineItemsList.get(1);
 				Name=lineItemsList.get(2);
-				
+				F=lineItemsList.get(3);
+				Leng=lineItemsList.get(4);
+				if(lineItemsList.size()>5){
+					S=lineItemsList.get(5);
+				}
 			}
 			
-			DDM d1 = new DDM(TableName,T,L,DB,Name);
+			DDM d1 = new DDM(TableName,T,L,DB,Name,F,Leng);
+			d1.setS(S);
+			
 			if(L.equals("1")){
+				d1.setFirstLevelDDM(d1);
 				firstLevelDDM=d1;
+			}else if(L.equals("2") && firstLevelDDM!=null && firstLevelDDM.getT()!=null && firstLevelDDM.getT().equals("G")){ //Groupsa
+				d1.setFirstLevelDDM(d1);
+				d1.setL("1");
 			}else{
 				d1.setFirstLevelDDM(firstLevelDDM);
 			}
 			
 			String key=d1.getTableName().substring(0,d1.getTableName().length()-3).replaceAll("-", "_") + d1.getName().replaceAll("-", "_");
-			logger.debug("Put To DDM List:"+key);
+			//logger.debug("Put To DDM List:"+key);
 			dDMMap.put(key, d1);
 		} catch (Exception e) {
 			//DDM dosyalarında hatalı satirlar olabilir. Yada yukardaki formata uymayan satirlar. Bunlari ihmal edebilirsin.
@@ -225,8 +261,18 @@ public class DDMList {
 		DDM ddm;
 		
 		String key="";
+		//String key=d1.getTableName().substring(0,d1.getTableName().length()-3).replaceAll("-", "_") + d1.getName().replaceAll("-", "_");
 		if(copyTo.getTypeNameOfView()!=null&& !copyTo.getTypeNameOfView().trim().isEmpty()){
-			key=copyTo.getTypeNameOfView().toString()+"."+copyTo.getColumnNameToken().getDeger().toString();
+			try {
+				if(copyTo.getColumnNameToken()!=null){
+					key=copyTo.getTypeNameOfView().toString()+"."+copyTo.getColumnNameToken().getDeger().toString();
+				}else if(copyTo.getLinkedToken()!=null){
+					key=copyTo.getTypeNameOfView().toString()+"."+copyTo.getLinkedToken().getDeger().toString();
+				}
+			} catch (Exception e) {
+				logger.debug(e.getMessage(),e);
+				throw e;
+			}
 			
 		}else if(copyTo.getSynoynmsRealTableName()!=null&& !copyTo.getSynoynmsRealTableName().trim().isEmpty()){
 			key=copyTo.getSynoynmsRealTableName().toString()+"."+copyTo.getColumnNameToken().getDeger().toString();
@@ -240,9 +286,9 @@ public class DDMList {
 			
 			return ddm;
 		}
-		if(ddm.getFirstLevelDDM()!=null &&ddm.getFirstLevelDDM().getT().equals("G")){ //Grupsa
+		/*if(ddm.getFirstLevelDDM()!=null &&ddm.getFirstLevelDDM().getT().equals("G")){ //Grupsa
 			ddm.setL(ddm.getFirstLevelDDM().getL());
-		}
+		}*/
 		return ddm;
 		
 		
@@ -289,11 +335,25 @@ public DDM getDDMByKey(String key,AbstractToken curToken ) {
 		DDM ddm;
 		
 		String key="";
-		if(copyTo.getSynoynmsRealTableName()!=null&& !copyTo.getSynoynmsRealTableName().trim().isEmpty()){
+		if(copyTo.getTypeNameOfView()!=null&& !copyTo.getTypeNameOfView().trim().isEmpty()){
+			try {
+				if(copyTo.getColumnNameToken()!=null){
+					key=copyTo.getTypeNameOfView().toString()+"."+copyTo.getColumnNameToken().getDeger().toString();
+				}else if(copyTo.getLinkedToken()!=null){
+					key=copyTo.getTypeNameOfView().toString()+"."+copyTo.getLinkedToken().getDeger().toString();
+				}
+			} catch (Exception e) {
+				logger.debug(e.getMessage(),e);
+				throw e;
+			}
+			
+		}else if(copyTo.getSynoynmsRealTableName()!=null&& !copyTo.getSynoynmsRealTableName().trim().isEmpty()){
 			key=copyTo.getSynoynmsRealTableName().toString()+"."+copyTo.getColumnNameToken().getDeger().toString();
+		
 		}else{
 			key=copyTo.getDeger().toString()+"."+copyTo.getColumnNameToken().getDeger().toString();
 		}
+		
 		ddm=dDMMap.get(key);
 		if(ddm==null){
 			

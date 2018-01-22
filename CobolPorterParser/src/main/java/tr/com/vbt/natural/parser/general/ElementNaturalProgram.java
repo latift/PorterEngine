@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.cobol.parser.AbstractMultipleLinesCommand;
@@ -15,7 +15,7 @@ import tr.com.vbt.util.WriteToFile;
 
 public class ElementNaturalProgram extends AbstractMultipleLinesCommand {
 
-	final static Logger logger = LoggerFactory.getLogger(ElementNaturalProgram.class);
+	final static Logger logger = Logger.getLogger(ElementNaturalProgram.class);
 	
 	public ElementNaturalProgram(List<AbstractCommand> commandListesi) {
 		super("PROGRAM","ELEMENT_PROGRAM",commandListesi);

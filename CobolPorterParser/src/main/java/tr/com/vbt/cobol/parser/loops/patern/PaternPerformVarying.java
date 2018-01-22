@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.cobol.parser.loops.ElementPerformVarying;
@@ -35,7 +35,7 @@ JJ  Uzunluk:0 Satir No:26 Tipi:Kelime
  */
 public class PaternPerformVarying extends AbstractPatternFromXToYWithoutCarriageReturn{
 
-	final static Logger logger = LoggerFactory.getLogger(PaternPerformVarying.class);
+	final static Logger logger = Logger.getLogger(PaternPerformVarying.class);
 	/**
 	 * @param args
 	 */

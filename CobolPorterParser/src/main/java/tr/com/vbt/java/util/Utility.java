@@ -4,11 +4,13 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.cobol.parser.Levelable;
+import tr.com.vbt.ddm.DDM;
+import tr.com.vbt.ddm.DDMList;
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaConstants;
 import tr.com.vbt.java.utils.ConvertUtilities;
@@ -23,7 +25,7 @@ public class Utility {
 	
 	public static boolean DEBUG;
 
-	final static Logger logger = LoggerFactory.getLogger(Utility.class);
+	final static Logger logger = Logger.getLogger(Utility.class);
 	
 		public AbstractJavaElement getChildWithName(AbstractJavaElement parent, String childName){
 			/*
@@ -129,7 +131,7 @@ public class Utility {
 		public static String columnNameToPojoFieldName(String columnName){
 			StringBuffer pojoFieldName=new StringBuffer();
 			String convertedPart;
-			String[] viewNameParts=columnName.split("-");
+			String[] viewNameParts=columnName.split("_");
 			if(viewNameParts.length==1){
 				viewNameParts=columnName.split("_");
 			}
@@ -284,7 +286,7 @@ public class Utility {
 		}
 
 		
-	public static String findViewAndColumnNamesReturnType(AbstractToken condition){
+	public static String findViewAndColumnNamesReturnTypeRelationalDB(AbstractToken condition){
 			
 			String getterString, tableName, className, biggerPojoName, columnName = null, getterMethod;
 			
@@ -324,6 +326,9 @@ public class Utility {
 			}
 			
 		    try {
+		    	if(getterMethod.contains("gtTimestamp")){
+		    		logger.debug("");
+		    	}
 				method= c.getDeclaredMethod(getterMethod, null);
 				returnClass=method.getReturnType();
 				return returnClass.getSimpleName().toString();
@@ -356,7 +361,7 @@ public class Utility {
 			//THesap --> class(ThesapPK)
 		private static Class findPojosPkClass(String pojoClassName) {
 			
-			if(ConversionLogModel.getInstance().isMB()){
+			if(ConversionLogModel.getInstance().isRelationalDatabase()){
 				
 				String fullPKClassName,schemaName;
 				
@@ -394,7 +399,7 @@ public class Utility {
 
 		public static Class findPojoClass(String className) {
 			
-			if(ConversionLogModel.getInstance().isMB()){
+			if(ConversionLogModel.getInstance().isRelationalDatabase()){
 				
 				String fullClassName,schemaName;
 				
@@ -419,6 +424,15 @@ public class Utility {
 			}else{
 				Class c = null;
 	
+				try {
+					  c = Class.forName("tr.com.thy.dal.pojo."+className);
+				} catch (ClassNotFoundException e) {
+				
+				}
+				if(c!=null){
+					return c;
+				}
+				
 				THYModules[] modules = THYModules.class.getEnumConstants();
 	
 				for(int i=0; i<modules.length;i++){
@@ -505,10 +519,11 @@ public class Utility {
 			
 			StringBuilder sb=new StringBuilder();
 		
-			String biggerclassName = Utility.viewNameToBiggerPojoName(token.getDeger().toString());
 			
-			String className = Utility.viewNameToPojoName(token.getDeger().toString());
-
+			String biggerclassName = token.getDeger().toString();
+			
+			String className=Utility.viewNameToPojoName(token.getTypeNameOfView().toString());
+			
 			String fieldName = Utility.columnNameToPojoFieldName(token.getColumnNameToken().getDeger().toString());
 			
 			String setterName= Utility.viewNameToPojoSetterName(token.getColumnNameToken().getDeger().toString());
@@ -549,8 +564,53 @@ public class Utility {
 			}
 		}
 
+		/**
+		 * long,
+		 * bigdecimal
+		 * date
+		 * time
+		 * string
+		 * @param token
+		 * @return
+		 */
+		public static String findViewAndColumnNamesReturnTypeAdabas(AbstractToken token) {
+			DDM ddm= DDMList.getInstance().getDDM(token);
+			if(ddm.getF()!=null && (ddm.getF().equals("N") || ddm.getF().equals("P"))&& ddm.getLeng().contains(".")){
+				return "bigdecimal";
+			}else if(ddm.getF()!=null && ddm.getF().equals("N")){
+				return "long";
+			}else if(ddm.getF()!=null && ddm.getF().equals("A")){
+				return "string";
+			}else if(ddm.getF()!=null && ddm.getF().equals("P") && ddm.getS()!=null && ddm.getS().equals("N")){
+				return "long";
+			}
+			return "string"; //Tipini bulamazsa java kodu hatalı da olsa çıksın diye String atıyoruz.
+		}
 
+
+		public static boolean isInteger(String s) {
+		    try { 
+		        Integer.parseInt(s); 
+		    } catch(NumberFormatException e) { 
+		        return false; 
+		    } catch(NullPointerException e) {
+		        return false;
+		    }
+		    // only got here if we didn't return false
+		    return true;
+		}
 		
+		public static boolean isLong(String s) {
+		    try { 
+		        Long.parseLong(s); 
+		    } catch(NumberFormatException e) { 
+		        return false; 
+		    } catch(NullPointerException e) {
+		        return false;
+		    }
+		    // only got here if we didn't return false
+		    return true;
+		}
 		
 	
 }

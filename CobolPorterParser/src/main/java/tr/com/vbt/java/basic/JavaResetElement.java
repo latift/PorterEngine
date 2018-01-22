@@ -2,8 +2,8 @@ package tr.com.vbt.java.basic;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.java.AbstractJavaElement;
@@ -17,13 +17,15 @@ import tr.com.vbt.natural.parser.datalayout.program.ElementProgramGrupNatural;
 import tr.com.vbt.natural.parser.datalayout.program.ElementProgramOneDimensionArrayNatural;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.ArrayToken;
+import tr.com.vbt.token.KelimeToken;
+import tr.com.vbt.token.SayiToken;
 import tr.com.vbt.token.TokenTipi;
 
 
 // RESET #T-BIT-TARIH #T-SEFNO  #CARSEF #U-REG #T-TARIH --> #T-BIT-TARIH=0;  T-SEFNO="";  CARSEF=0;
 public class JavaResetElement extends  AbstractJavaElement {
 	
-	final static Logger logger = LoggerFactory.getLogger(JavaResetElement.class);
+	final static Logger logger = Logger.getLogger(JavaResetElement.class);
 	
 	private List<AbstractToken> resetVariableList;
 	
@@ -68,8 +70,53 @@ public class JavaResetElement extends  AbstractJavaElement {
 			    if(variableDefinitionCommand instanceof ElementProgramOneDimensionArrayNatural && 
 			    		(variable.isAllArrayItems() || (variable.getLinkedToken()!=null && variable.getLinkedToken().isAllArrayItems()))){
 			    	JavaClassElement.javaCodeBuffer.append("FCU.resetArray("+JavaWriteUtilities.toCustomString(variable)+")"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
-			    }else if(variableType==VariableTypes.INT_TYPE
-						||variableType==VariableTypes.LONG_TYPE){
+			    }else if(variable.isRedefinedVariable()){
+					AbstractToken token;
+					try{
+						if(variableType==VariableTypes.INT_TYPE||variableType==VariableTypes.LONG_TYPE){
+							token=new SayiToken<Long>(0l,0, 0, 0);
+							JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomSetterString(variable,token)+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+						}else{
+							token=new KelimeToken<>("",0,0,0);
+							JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomSetterString(variable,token)+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+						}
+					} catch (Exception e) {
+						logger.debug("//Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()+this.getSourceCode().getCommandName());
+						JavaClassElement.javaCodeBuffer.append("/*Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()
+								+this.getSourceCode().getCommandName()+"*/"+JavaConstants.NEW_LINE);
+						logger.error("//Conversion Error:"+e.getMessage(), e); 
+						ConvertUtilities.writeconversionErrors(e, this); 
+					}
+				}else if(variable.isPojoVariable()){
+					try{
+						if(variableType==VariableTypes.INT_TYPE||variableType==VariableTypes.LONG_TYPE||variableType==VariableTypes.BIG_DECIMAL_TYPE){
+							JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomSetterString(variable));
+						
+							JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(new KelimeToken("0",0,0,0)));
+							JavaClassElement.javaCodeBuffer.append(")"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+						}else{
+							JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomSetterString(variable));
+						
+							JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(new KelimeToken("new String()",0,0,0)));
+							JavaClassElement.javaCodeBuffer.append(")"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);
+						}
+					} catch (Exception e) {
+						logger.debug("//Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()+this.getSourceCode().getCommandName());
+						JavaClassElement.javaCodeBuffer.append("/*Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()
+								+this.getSourceCode().getCommandName()+"*/"+JavaConstants.NEW_LINE);
+						logger.error("//Conversion Error:"+e.getMessage(), e); 
+						ConvertUtilities.writeconversionErrors(e, this); 
+					}
+					//0412 1 MAP_DIZISI                                                                                                                   
+					//0414   2 D_SECIM    (A1/1:100)                                                                                                      
+					//0416   2 D_HESCINSI (A1/1:100)
+					//0418   2 D_HESNO    (N8/1:100) 
+					
+					// 1076   RESET MAP_DIZISI 
+					
+					// --> 
+					
+				}else if(variableType==VariableTypes.INT_TYPE||variableType==VariableTypes.LONG_TYPE){
 					
 					try{
 						JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(variable)+"="+"0"+JavaConstants.DOT_WITH_COMMA+JavaConstants.NEW_LINE);

@@ -1,7 +1,7 @@
 package tr.com.vbt.java.basic;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaClassElement;
@@ -14,7 +14,7 @@ public class JavaUpdateElement extends  AbstractJavaElement {
 	
 	private int recNumber;
 	
-	final static Logger logger = LoggerFactory.getLogger(JavaUpdateElement.class);
+	final static Logger logger = Logger.getLogger(JavaUpdateElement.class);
 	
 	public boolean writeJavaToStream() throws Exception{ super.writeJavaToStream();
 		

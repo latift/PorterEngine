@@ -3,8 +3,8 @@ package tr.com.vbt.java.screen;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 
 import tr.com.vbt.java.AbstractJavaElement;
 import tr.com.vbt.java.general.JavaClassElement;
@@ -44,7 +44,7 @@ import tr.com.vbt.util.ConverterConfiguration;
  */
 public class JavaInputElement extends AbstractJavaElement {
 
-	final static Logger logger = LoggerFactory.getLogger(JavaInputElement.class);
+	final static Logger logger = Logger.getLogger(JavaInputElement.class);
 
 	// Paramaters: functionName;
 	protected List<AbstractToken> inputParameters;
@@ -340,7 +340,7 @@ public class JavaInputElement extends AbstractJavaElement {
 			}
 
 
-			if(value.length()>maxLength){
+			if(value.length()>maxLength && !currToken.isPojoVariable()){
 				yCoord = yCoord + value.length();
 			}else{
 				yCoord = yCoord + maxLength;
