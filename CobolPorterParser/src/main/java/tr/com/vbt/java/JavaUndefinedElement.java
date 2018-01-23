@@ -22,7 +22,7 @@ public class JavaUndefinedElement extends  AbstractJavaElement {
 	
 	public boolean writeJavaToStream() throws Exception{ super.writeJavaToStream();
 		
-		JavaClassElement.javaCodeBuffer.append(JavaConstants.COMMENT_ONE_LINE);
+		//JavaClassElement.javaCodeBuffer.append(JavaConstants.COMMENT_ONE_LINE);
 		JavaClassElement.javaCodeBuffer.append("UNDEFINED ELEMENT");
 		
 		try {

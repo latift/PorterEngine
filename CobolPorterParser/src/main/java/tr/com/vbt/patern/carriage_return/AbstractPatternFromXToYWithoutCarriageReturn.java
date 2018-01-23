@@ -102,6 +102,7 @@ public abstract class AbstractPatternFromXToYWithoutCarriageReturn extends Abstr
 					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.ON)
 					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.REPLACE)
 					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.WITH)
+					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.ALARM)
 					&&!currentTokenForMatch.getDeger().equals(ReservedCobolKeywords.NUMERIC)){ //IFElement için eklendi
 				if(currentTokenForMatch.tokenMatchs(enderToken)){
 					logger.info(" MATCHED: "+currentTokenForMatch.getDeger());

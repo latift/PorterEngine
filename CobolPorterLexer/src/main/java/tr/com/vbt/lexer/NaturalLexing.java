@@ -725,7 +725,8 @@ public class NaturalLexing extends AbstractLexing {
 				astInputReached=false;
 				
 
-			}else if(astInputReached  && (!astCurrent.isOzelKelime() || astCurrent.isOneOfOzelKelime(ReservedNaturalKeywords.WITH_TEXT,"TEXT",ReservedNaturalKeywords.OFF))) {
+			}else if(astInputReached  && (!astCurrent.isOzelKelime() || 
+					astCurrent.isOneOfOzelKelime(ReservedNaturalKeywords.WITH_TEXT,"TEXT",ReservedNaturalKeywords.OFF,ReservedNaturalKeywords.ALARM))) {
 
 				astCurrent = tokenListesi.get(i);
 				
@@ -2217,6 +2218,8 @@ public class NaturalLexing extends AbstractLexing {
 			return;
 		}
 		AbstractToken astPrevious, astLeft, astDoubleDot,astEquals, astRight;
+		
+		int leftArrayKontrolIndex;
 
 		// AddStarter
 		for (int i = 1; i < tokenListesi.size() - 3; i++) {
@@ -2237,19 +2240,29 @@ public class NaturalLexing extends AbstractLexing {
 				continue;
 			}
 			
+			leftArrayKontrolIndex=i;
+			// #DELETE(#I):='DEL' için yazildi.
+			if(astLeft.isKarakter(')')){
+				do{
+					astLeft=tokenListesi.get(leftArrayKontrolIndex);
+					leftArrayKontrolIndex--;
+				}while(!astLeft.isKarakter('('));
+				 astLeft=tokenListesi.get(leftArrayKontrolIndex);
+			}
+			
 			if(!astLeft.isKelime() && !astLeft.isArray()){
 				continue;
 			}
 
 			logger.debug("astCurrent:" + astLeft.getDeger().toString()+ " "+astEquals.getDeger().toString()+" "+astRight.getDeger().toString());
 			//1)	= varsa ve öncesinde token varsa ondan önce de özelKelime(if gibi) yada karakter varsa (parantez açma gibi) becomes_equal_to koyma.
-			if( astPrevious.isOneOfOzelKelime("IF","ELSE_IF","ACCEPT","OR","AND","EQ","LT","LE","GT","GE","NE","FORMAT","ASSIGN", "BY","FOR","WITH","NOT")){
+			/*if( astPrevious.isOneOfOzelKelime("IF","ELSE_IF","ACCEPT","OR","AND","EQ","LT","LE","GT","GE","NE","FORMAT","ASSIGN", "BY","FOR","WITH","NOT")){
 				continue;
 			}
 			
 			if( astPrevious.isOneOfKelime("WHERE","CLR")){
 				continue;
-			}
+			}*/
 			// 2)  = varsa ve öncesinde token varsa ondan önce de karakter varsa (parantez açma gibi ) koyma
 			if(astPrevious.isKarakter('(')){
 				continue;
@@ -2266,7 +2279,7 @@ public class NaturalLexing extends AbstractLexing {
 			}
 			logger.debug("Becomes Equal To ekleniyor. SatirNo:"+astLeft.getSatirNumarasi());
 			
-			tokenListesi.add(i, new OzelKelimeToken<String>(ReservedNaturalKeywords.BECOMES_EQUAL_TO, 0, 0, 0,true));
+			tokenListesi.add(leftArrayKontrolIndex, new OzelKelimeToken<String>(ReservedNaturalKeywords.BECOMES_EQUAL_TO, 0, 0, 0,true));
 			i++;
 	
 		}
@@ -4277,6 +4290,7 @@ public class NaturalLexing extends AbstractLexing {
 				tokenListesi.remove(i);
 				astNexter = tokenListesi.get(i);
 				astNexter.setDeger("DIYEZ_DIYEZ_" + astNexter.getDeger());
+				astNexter.setTip(TokenTipi.Kelime);
 				astNexter.setLocalVariable(true);
 				// FMM-ISN(*)
 			} else if (astCurrent.isKarakter('#')

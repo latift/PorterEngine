@@ -61,7 +61,7 @@ public class PaternSubtract extends AbstractPattern{
 	
 	@Override
 	public AbstractCommand createElement(){
-		ElementSubtract createdElement = new ElementSubtract(ReservedCobolKeywords.SUBTRACT,"PROCEDURE_DIVISION.*.SUBTRACT");
+		ElementSubtract createdElement = new ElementSubtract(ReservedCobolKeywords.SUBTRACT,"GENERAL.*.SUBTRACT");
 		return createdElement;
 	}
 

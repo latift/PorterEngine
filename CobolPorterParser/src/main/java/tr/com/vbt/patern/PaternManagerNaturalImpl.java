@@ -40,6 +40,7 @@ import tr.com.vbt.natural.parser.basicverbs.patern.PaternMoveAD;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternMoveByName;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternMoveLeftJustified;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternMoveRightJustified;
+import tr.com.vbt.natural.parser.basicverbs.patern.PaternMoveV2;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternMultiply;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternPerform;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternRedefine;
@@ -225,6 +226,7 @@ public class PaternManagerNaturalImpl  extends AbstractPaternManagerNatural{
 		commmandPatternList.add(new PaternAdd());
 		commmandPatternList.add(new PaternPerform());
 		commmandPatternList.add(new PaternMove());
+		commmandPatternList.add(new PaternMoveV2());
 		commmandPatternList.add(new PaternMoveAD()); //Ne olduğunu anlamalıyız.
 		commmandPatternList.add(new PaternMoveByName());
 		commmandPatternList.add(new PaternMoveLeftJustified());

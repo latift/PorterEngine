@@ -16,6 +16,7 @@ import tr.com.vbt.lexer.ConversionLogModel;
 import tr.com.vbt.lexer.RedefinedColumn;
 import tr.com.vbt.natural.parser.datalayout.program.ElementProgramDataTypeNatural;
 import tr.com.vbt.natural.parser.datalayout.program.ElementProgramGrupNatural;
+import tr.com.vbt.natural.parser.datalayout.program.redefiners.ElementRedefineDataTypeOfSimpleDataType;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.ArrayToken;
 import tr.com.vbt.token.KelimeToken;
@@ -52,6 +53,9 @@ public class JavaWriteUtilities extends AbstractJavaWriteUtility{
 		}else if(token.isConstantVariableWithQuota()){		
 		
 			
+		}else if(token.isGlobalVariable()){		
+			
+			tempCodeBuffer.append(toCustomGlobalVariableString(token));
 		}else if(token.isRecordVariable()){
 				
 			tempCodeBuffer.append(toCustomRecordVariableSetterString(token));
@@ -578,11 +582,15 @@ public class JavaWriteUtilities extends AbstractJavaWriteUtility{
 		
 		ElementProgramGrupNatural variableDefinitionGrupNatural = null;
 		
+		ElementRedefineDataTypeOfSimpleDataType variableSimpleRedefineType=null;
+		
 		variableDefinition=ConvertUtilities.getVariableDefinitinCommand(token);
 		
 		System.out.println("test");
 		if(variableDefinition instanceof ElementProgramGrupNatural){
 			variableDefinitionGrupNatural=(ElementProgramGrupNatural) variableDefinition;
+		}else if(variableDefinition instanceof ElementRedefineDataTypeOfSimpleDataType){
+			variableSimpleRedefineType=(ElementRedefineDataTypeOfSimpleDataType) variableDefinition;
 		}
 		
 		if(variableDefinitionGrupNatural!=null&&variableDefinitionGrupNatural.getArrayLength()!=0){
@@ -871,7 +879,27 @@ public class JavaWriteUtilities extends AbstractJavaWriteUtility{
 		tempCodeBuffer.append(token.getDeger().toString());  //MAP_DIZISI
 		tempCodeBuffer.append(".");
 		tempCodeBuffer.append(token.getLinkedToken().getDeger().toString()); //D_SIRA
-		if(token.getLinkedToken().getTip().equals(TokenTipi.Array)){
+		if(token.getLinkedToken().getTip().equals(TokenTipi.Array)&& token.getLinkedToken().isRedefinedVariable()){
+			arrayToken=(ArrayToken) token.getLinkedToken();
+			firstDimension=arrayToken.getFirstDimension();
+			secDimension=arrayToken.getSecondDimension();
+			if(firstDimension.getDeger() instanceof Integer){
+				firstDimensionSize=((int)((long)firstDimension.getDeger()));
+				tempCodeBuffer.append("["+addIntCastForArrays()+firstDimensionSize+"-1]");
+			}else {
+				tempCodeBuffer.append("["+addIntCastForArrays()+firstDimension.getDeger()+"-1]");
+			}
+			if(secDimension!=null){
+				if(secDimension.getDeger() instanceof Integer){
+					secDimensionSize=((int)((long)secDimension.getDeger()));
+					tempCodeBuffer.append("["+addIntCastForArrays()+secDimensionSize+"-1]");
+				}else {
+					tempCodeBuffer.append("["+addIntCastForArrays()+secDimension.getDeger()+"-1]");
+				}
+			}
+			tempCodeBuffer.append(".setValue(");
+			
+		}else if(token.getLinkedToken().getTip().equals(TokenTipi.Array)){
 			arrayToken=(ArrayToken) token.getLinkedToken();
 			firstDimension=arrayToken.getFirstDimension();
 			secDimension=arrayToken.getSecondDimension();

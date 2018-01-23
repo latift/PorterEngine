@@ -178,9 +178,9 @@ public abstract class AbstractJavaWriteUtility {
 		getterString.append(".");
 		
 		if(token.getTypeNameOfView()!=null){
-			getterString.append(Utility.viewNameToPojoGetterName(token.getTypeNameOfView()+"_"+ddm.getFirstLevelDDM().getDB()+"s"));
+			getterString.append(Utility.viewNameToPojoGetterName(token.getTypeNameOfView()+"_"+ddm.getFirstLevelDDM().getDB()+"s()"));
 		}else{
-			getterString.append(Utility.viewNameToPojoGetterName(token.getDeger().toString()+"_"+ddm.getFirstLevelDDM().getDB()+"s"));
+			getterString.append(Utility.viewNameToPojoGetterName(token.getDeger().toString()+"_"+ddm.getFirstLevelDDM().getDB()+"s()"));
 		}
 		
 		getterString.append(".");
@@ -209,7 +209,7 @@ public abstract class AbstractJavaWriteUtility {
 		String getterString;//TESKI;
 			getterString= "getPojoValue("+"\""+token.getDeger().toString();
 		getterString +=".";
-		getterString +="get"+token.getDeger().toString()+ddm.getDB()+"s()";		//getKetTaxA9s()
+		getterString +=Utility.viewNameToPojoGetterName(token.getTypeNameOfView().toString())+"_"+ddm.getFirstLevelDDM().getDB()+"s()";		//getKetTaxA9s()
 		getterString +=".";
 		getterString +="get("+JavaWriteUtilities.toCustomString(token.getPojosDimension())+"-1)";
 		getterString +=".";
@@ -223,7 +223,7 @@ public abstract class AbstractJavaWriteUtility {
 		String getterString;//TESKI;
 			getterString= "getPojoValue("+"\""+token.getDeger().toString();
 		getterString +=".";
-		getterString +="get"+token.getDeger().toString()+ddm.getDB()+"s()";		//getKetTaxA9s()
+		getterString +=Utility.viewNameToPojoGetterName(token.getTypeNameOfView().toString())+"_"+ddm.getFirstLevelDDM().getDB()+"s()";		//getKetTaxA9s()
 		getterString +=".";
 		if(token.getPojosDimension()==null){
 			getterString +="get("+"-1)";
@@ -241,7 +241,7 @@ public abstract class AbstractJavaWriteUtility {
 		String getterString;//TESKI;
 			getterString= "getPojoValue("+"\""+token.getDeger().toString();
 		getterString +=".";
-		getterString +="get"+token.getDeger().toString()+ddm.getDB()+"s()";		//getKetTaxA9s()
+		getterString +=Utility.viewNameToPojoGetterName(token.getTypeNameOfView().toString())+"_"+ddm.getFirstLevelDDM().getDB()+"s()";		//getKetTaxA9s()
 		getterString +=".";
 		getterString +="get("+JavaWriteUtilities.toCustomString(token.getPojosDimension())+"-1)";
 		getterString +=".";
@@ -257,7 +257,7 @@ public abstract class AbstractJavaWriteUtility {
 		String getterString;//TESKI;
 		getterString= token.getDeger().toString();
 		getterString +=".";
-		getterString +=Utility.viewNameToPojoGetterName(token.getDeger().toString())+"_"+ddm.getFirstLevelDDM().getDB()+"s()";		//getKetTaxA9s()
+		getterString +=Utility.viewNameToPojoGetterName(token.getTypeNameOfView().toString())+"_"+ddm.getFirstLevelDDM().getDB()+"s()";		//getKetTaxA9s()
 		getterString +=".";
 		getterString +="size()";
 		return getterString;
@@ -316,7 +316,7 @@ public abstract class AbstractJavaWriteUtility {
 		getterString.append(token.getDeger().toString());
 		getterString.append(".");
 		//getterString +="get"+token.getDeger().toString()+Utility.viewNameToPojoGetterName(ddm.getFirstLevelDDM().getDB())+"s()";		//getKetTaxA9s()
-		getterString.append(Utility.viewNameToPojoGetterName(token.getDeger()+"_"+ddm.getFirstLevelDDM().getDB()+"s"));
+		getterString.append(Utility.viewNameToPojoGetterName(token.getTypeNameOfView()+"_"+ddm.getFirstLevelDDM().getDB()+"s"));
 		getterString.append("()");
 		getterString.append(".");
 		if(token.getPojosDimension()!=null){
@@ -338,7 +338,7 @@ public abstract class AbstractJavaWriteUtility {
 			getterString= "getPojoValue("+"\""+token.getDeger().toString();
 		getterString +=".";
 		//getterString +="get"+token.getDeger().toString()+Utility.viewNameToPojoGetterName(ddm.getFirstLevelDDM().getDB())+"s()";		//getKetTaxA9s()
-		getterString +=Utility.viewNameToPojoGetterName(token.getDeger()+"_"+ddm.getFirstLevelDDM().getDB()+"s");
+		getterString +=Utility.viewNameToPojoGetterName(token.getTypeNameOfView()+"_"+ddm.getFirstLevelDDM().getDB()+"s");
 		getterString +="()";
 		getterString +=".";
 		getterString +="get("+JavaWriteUtilities.toCustomString(token.getPojosDimension())+"-1)";
@@ -354,7 +354,7 @@ public abstract class AbstractJavaWriteUtility {
 		getterString.append(token.getDeger().toString());
 		getterString .append(".");
 		//getterString .append("get"+token.getDeger().toString()+Utility.viewNameToPojoGetterName(ddm.getFirstLevelDDM().getDB())+"s()";		//getKetTaxA9s()
-		getterString .append(Utility.viewNameToPojoGetterName(token.getDeger()+"_"+ddm.getFirstLevelDDM().getDB()+"s"));
+		getterString .append(Utility.viewNameToPojoGetterName(token.getTypeNameOfView()+"_"+ddm.getFirstLevelDDM().getDB()+"s"));
 		getterString .append("()");
 		getterString .append(".");
 		
@@ -379,7 +379,7 @@ public abstract class AbstractJavaWriteUtility {
 			getterString= "getPojoValue("+"\""+token.getDeger().toString();
 		getterString +=".";
 		//getterString +="get"+token.getDeger().toString()+Utility.viewNameToPojoGetterName(ddm.getFirstLevelDDM().getDB())+"s()";		//getKetTaxA9s()
-		getterString +=Utility.viewNameToPojoGetterName(token.getDeger()+"_"+ddm.getFirstLevelDDM().getDB()+"s");
+		getterString +=Utility.viewNameToPojoGetterName(token.getTypeNameOfView()+"_"+ddm.getFirstLevelDDM().getDB()+"s");
 		getterString +="()";
 		getterString +=".";
 		getterString +="get("+JavaWriteUtilities.toCustomString(token.getPojosDimension())+"-1)";
@@ -464,7 +464,7 @@ public abstract class AbstractJavaWriteUtility {
 		StringBuilder getterString=new StringBuilder();
 		getterString.append(token.getDeger().toString());
 		getterString .append(".");
-		getterString .append("get"+token.getDeger().toString()+ddm.getFirstLevelDDM().getDB()+"s()");		//getKetTaxA9s()
+		getterString .append("get"+token.getTypeNameOfView().toString()+"_"+ddm.getFirstLevelDDM().getDB()+"s()");		//getKetTaxA9s()
 		getterString .append(".");
 		if(token.getPojosDimension()==null){
 			getterString.append("get(-1)");
@@ -472,7 +472,7 @@ public abstract class AbstractJavaWriteUtility {
 			getterString .append("get("+JavaWriteUtilities.toCustomString(token.getPojosDimension())+"-1)");
 		}
 		getterString .append(".");
-		getterString .append("get"+token.getDeger().toString()+ddm.getDB()+"s()");		//getKetTaxA9s()
+		getterString .append("get"+token.getTypeNameOfView().toString()+"_"+ddm.getDB()+"s()");		//getKetTaxA9s()
 		getterString .append(".");
 		getterString .append("get(i)");
 		getterString .append(".");
