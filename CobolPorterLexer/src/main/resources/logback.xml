@@ -52,9 +52,9 @@
   
   
 
-  <root level="debug">
+  <root level="info">
      <!-- <appender-ref ref="FILE"/>  -->
-    <appender-ref ref="STDOUT"/>
+     <appender-ref ref="STDOUT"/>
       <appender-ref ref="FILE_WARN" />
   </root>
   

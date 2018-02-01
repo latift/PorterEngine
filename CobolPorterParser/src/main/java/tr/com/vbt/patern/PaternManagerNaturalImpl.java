@@ -313,10 +313,11 @@ public class PaternManagerNaturalImpl  extends AbstractPaternManagerNatural{
 		commmandPatternList.add(new PaternInput());
 		commmandPatternList.add(new PaternInputNoErase());
 		
-		commmandPatternList.add(new PaternWrite());
-		commmandPatternList.add(new PaternWriteNoTitle());
-		commmandPatternList.add(new PaternWriteWithPrintNumber());
 		commmandPatternList.add(new PaternWriteWithPrintNumberAndNoTitle());
+		commmandPatternList.add(new PaternWriteWithPrintNumber());
+		commmandPatternList.add(new PaternWriteNoTitle());
+		commmandPatternList.add(new PaternWrite());
+		
 		
 		commmandPatternList.add(new PaternControlWindow());
 		commmandPatternList.add(new PaternControlScreen());

@@ -392,7 +392,7 @@ public class JavaWriteElement extends AbstractJavaElement {
 			if (nextToken.getDeger().equals("X")) {
 				yCoord = YCoordCarpan * ConverterConfiguration.NATURAL_X_LENGTH+yCoord;
 			} else if (nextToken.getDeger().equals("T")) {
-				yCoord = YCoordCarpan * ConverterConfiguration.NATURAL_T_LENGTH+yCoord;
+				yCoord = YCoordCarpan * ConverterConfiguration.NATURAL_T_LENGTH;
 			} else { // Hata durumda en azından boyle göstersin
 				yCoord = YCoordCarpan * 1+yCoord;
 			}
