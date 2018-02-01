@@ -259,11 +259,11 @@ public class JavaWriteElement extends AbstractJavaElement {
 			
 			newScreenIO.setToken(currToken);
 
-			if(value.length()>maxLength){
-				yCoord = yCoord + value.length();
-			}else{
+			//if(value.length()>maxLength){
+			//	yCoord = yCoord + value.length();
+			//}else{
 				yCoord = yCoord + maxLength;
-			}
+			//}
 			
 			screenInputOutputArray.add(newScreenIO);
 
