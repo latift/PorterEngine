@@ -355,7 +355,7 @@ public class JavaWriteElement extends AbstractJavaElement {
 					
 				}
 	
-				yCoord = yCoord + value.length();
+				yCoord = yCoord + maxLength;
 	
 				screenInputOutputArray.add(newScreenIO);
 	

@@ -13,6 +13,8 @@ public class ElementReInput extends AbstractCommand{
 	
 	private AbstractToken markValue;
 	
+	private boolean isFull;
+	
 	
 	public ElementReInput(AbstractToken baseToken,
 			List<AbstractToken> tokenListesi, AbstractCommand parent) {
@@ -70,6 +72,14 @@ public class ElementReInput extends AbstractCommand{
 
 	public void setDataToDisplay(List<AbstractToken> dataToDisplay) {
 		this.dataToDisplay = dataToDisplay;
+	}
+
+	public boolean isFull() {
+		return isFull;
+	}
+
+	public void setFull(boolean isFull) {
+		this.isFull = isFull;
 	}
 
 

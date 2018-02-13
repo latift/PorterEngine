@@ -247,7 +247,9 @@ public class JavaInputElement extends AbstractJavaElement {
 
 		String value = null;
 
-		
+		if (currToken.isKelime("SECIM")||currToken.isKelime("DIYEZ_SECIM")){
+			logger.debug("...");
+		}
 		
 		if (currToken.getTip().equals(TokenTipi.Kelime)) {
 			
@@ -440,7 +442,7 @@ public class JavaInputElement extends AbstractJavaElement {
 			if(currToken.getInputADParameters()!=null){
 				inputADParameters=currToken.getInputADParameters().getDeger().toString();
 				
-				if(inputADParameters.contains("M")){
+				if(inputADParameters.contains("M") || inputADParameters.contains("A")){
 					return true;
 				}
 			}
@@ -450,7 +452,7 @@ public class JavaInputElement extends AbstractJavaElement {
 				if(inputADParameters.contains("EM")){
 					return false;
 				}
-				if(inputADParameters.contains("M")){
+				if(inputADParameters.contains("M") || inputADParameters.contains("A")){
 					return true;
 				}
 			}

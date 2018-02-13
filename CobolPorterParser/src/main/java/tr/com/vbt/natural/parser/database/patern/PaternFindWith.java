@@ -191,6 +191,7 @@ public class PaternFindWith extends AbstractPatternFromXToYWithoutCarriageReturn
 					&&!currentTokenForMatch.getDeger().equals(ReservedCobolKeywords.EQUAL)
 					&&!currentTokenForMatch.getDeger().equals(ReservedCobolKeywords.IS)
 					&&!currentTokenForMatch.getDeger().equals(ReservedCobolKeywords.IS_NUMERIC)
+					&&!currentTokenForMatch.getDeger().equals("THRU")
 					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.EQ)
 					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.NE)
 					&&!currentTokenForMatch.getDeger().equals(ReservedCobolKeywords.NUMERIC)){ //IFElement için eklendi

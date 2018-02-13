@@ -202,6 +202,7 @@ public class PaternFindWithThru extends AbstractPatternFromXToYWithoutCarriageRe
 					&&!currentTokenForMatch.getDeger().equals(ReservedCobolKeywords.IS)
 					&&!currentTokenForMatch.getDeger().equals(ReservedCobolKeywords.IS_NUMERIC)
 					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.EQ)
+					&&!currentTokenForMatch.getDeger().equals("THRU")
 					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.NE)
 					&&!currentTokenForMatch.getDeger().equals(ReservedCobolKeywords.NUMERIC)){ //IFElement için eklendi
 				if(currentTokenForMatch.tokenMatchs(enderToken)){

@@ -376,6 +376,8 @@ public class JavaBecomesEqualToElementV2 extends AbstractJavaElement {
 				+",\""+copyFrom.get(0) + "\","
 				+ JavaWriteUtilities.toCustomString(copyTo)+")");
 		}else{
+			//FCU.copyPojoSubTableToArray(TKS_AMB_VIEW.getAmbUldFps(), "AMB-ULD", DIYEZ_AMB_ULD);  
+			//Olması Gereken:FCU.copyPojoSubTableToArray(TKS_AMB_VIEW.getTksAmbHwbFps(),"AMB-ULD",DIYEZ_AMB_ULD);
 			JavaClassElement.javaCodeBuffer.append("FCU.copyPojoSubTableToArray("
 					+ JavaWriteUtilities.pojosSubTablesArray(copyFrom.get(0))
 					+",\""+ddm.getName() + "\","

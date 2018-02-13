@@ -98,6 +98,7 @@ public IkiliOzelKelimelerNatural() {
 	ikiliKelimeler.add(new DoubleWordKeyword("GROUP","BY"));
 	ikiliKelimeler.add(new DoubleWordKeyword("MULTIPLY","ROUNDED"));
 	ikiliKelimeler.add(new DoubleWordKeyword("REPLACE","WITH"));
+	ikiliKelimeler.add(new DoubleWordKeyword("REINPUT","FULL"));
 	
 }
 

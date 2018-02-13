@@ -150,6 +150,7 @@ import tr.com.vbt.natural.parser.screen.patern.PaternInputMarkUsingMap;
 import tr.com.vbt.natural.parser.screen.patern.PaternInputNoErase;
 import tr.com.vbt.natural.parser.screen.patern.PaternInputUsingMap;
 import tr.com.vbt.natural.parser.screen.patern.PaternReInput;
+import tr.com.vbt.natural.parser.screen.patern.PaternReInputFull;
 import tr.com.vbt.natural.parser.screen.patern.PaternReInputWith;
 import tr.com.vbt.natural.parser.screen.patern.PaternSize;
 import tr.com.vbt.natural.parser.screen.patern.PaternTitle;
@@ -312,6 +313,7 @@ public class PaternManagerNaturalImpl  extends AbstractPaternManagerNatural{
 		commmandPatternList.add(new PaternReInputWith());
 		commmandPatternList.add(new PaternInput());
 		commmandPatternList.add(new PaternInputNoErase());
+		commmandPatternList.add(new PaternReInputFull());
 		
 		commmandPatternList.add(new PaternWriteWithPrintNumberAndNoTitle());
 		commmandPatternList.add(new PaternWriteWithPrintNumber());

@@ -690,7 +690,8 @@ public class NaturalLexing extends AbstractLexing {
 				tokenListesi.add(i, new OzelKelimeToken<String>(ReservedNaturalKeywords.END_REINPUT, astCurrent.getSatirNumarasi(), 0, 0,true));
 				
 				astFormatReached=false;
-			}else if (astCurrent.isOzelKelime(ReservedNaturalKeywords.REINPUT)||astCurrent.isOzelKelime(ReservedNaturalKeywords.REINPUT_WITH)) { // DIPSLAY
+			}else if (astCurrent.isOzelKelime(ReservedNaturalKeywords.REINPUT)||astCurrent.isOzelKelime(ReservedNaturalKeywords.REINPUT_WITH) ||
+					astCurrent.isOzelKelime("REINPUT_FULL")) { // DIPSLAY
 							// varsa
 			astFormatReached=true;
 			

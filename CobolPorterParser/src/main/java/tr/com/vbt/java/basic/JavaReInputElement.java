@@ -20,6 +20,8 @@ public class JavaReInputElement extends AbstractJavaElement {
 	final static Logger logger = Logger.getLogger(JavaReInputElement.class);
 
 	private List<AbstractToken> dataToDisplay;
+	
+	private boolean isFull;
 
 	StringBuilder dataToDisplayBuilder = new StringBuilder();
 	
@@ -42,6 +44,9 @@ public class JavaReInputElement extends AbstractJavaElement {
 			markValueToken = null;
 		}
 
+		if (this.getParameters().get("full")!=null && this.getParameters().get("full").toString().equals("true")){
+			isFull=true;
+		}
 		try {
 			for (AbstractToken item : dataToDisplay) {
 
