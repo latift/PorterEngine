@@ -118,6 +118,7 @@ public class JavaFindWithElementV2 extends AbsctractConditionalJavaElement imple
 		}
 		
 		conditionList = (List<AbstractToken>) this.parameters.get("conditionList");
+		parseThruKeyword();
 		parseSortList();
 		convertConditions(); // Tek token olmayan filtre operatorlerini tek tokena düşürür.
 		defineConditionTokenTypes();
@@ -216,11 +217,7 @@ public class JavaFindWithElementV2 extends AbsctractConditionalJavaElement imple
 
 
 
-	
 
-
-
-	
 	private void defineConditionTokenTypes() {
 		AbstractToken currentToken = null;
 		

@@ -326,15 +326,22 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 				}else{
 					continue;
 				}
-	
-				findByString.append(addCastForConstantNumber(curFilter));
-			
-				
-				findByString.append(JavaWriteUtilities.toCustomString(curFilter.getFilterValue()));
-				
-				findByString.append(endCastStr);
-				
-				endCastStr="";
+				if(curFilter.getFilterValue().getThruFirstToken()==null){
+						findByString.append(addCastForConstantNumber(curFilter));
+					
+						
+						findByString.append(JavaWriteUtilities.toCustomString(curFilter.getFilterValue()));
+						
+						findByString.append(endCastStr);
+						
+						endCastStr="";
+				}else{
+					findByString.append(JavaWriteUtilities.toCustomString(curFilter.getFilterValue().getThruFirstToken()));
+					
+					findByString.append(",");
+							
+					findByString.append(JavaWriteUtilities.toCustomString(curFilter.getFilterValue().getThruSecondToken()));
+				}
 				
 				
 				
@@ -399,9 +406,31 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 
 			// FIND IDGIDBS-TBESYIL WITH MUSNO=PMUSNO AND HESHARYIL>=10
 			// -->findByMusno_HesharyilGE_
+			
 			if (curFilter != null) {
-				logger.debug(curFilter.getFilterName().getDeger().toString());
-					if (curFilter.getFilterName().getLinkedToken() != null) {
+					logger.debug(curFilter.getFilterName().getDeger().toString());
+					if(curFilter.getFilterValue()!=null && curFilter.getFilterValue().getThruFirstToken()!=null){
+						createdFindByMethodName.append("Thru");
+						AbstractToken firstThruToken, secontThruToken;
+						if(curFilter.getFilterValue().getThruFirstToken()!=null && curFilter.getFilterValue().getThruFirstToken().getLinkedToken()!=null){
+							firstThruToken=curFilter.getFilterValue().getThruFirstToken().getLinkedToken();
+						}else if(curFilter.getFilterValue().getThruFirstToken()!=null && curFilter.getFilterValue().getThruFirstToken().getColumnNameToken()!=null){
+							firstThruToken=curFilter.getFilterValue().getThruFirstToken().getColumnNameToken();
+						}else{
+							firstThruToken=curFilter.getFilterValue().getThruFirstToken();
+						}
+						createdFindByMethodName.append(Utility.columnNameToPojoFieldNameWithFirstLetterUpper(firstThruToken.getDeger().toString()));
+						
+						if(curFilter.getFilterValue().getThruSecondToken()!=null && curFilter.getFilterValue().getThruSecondToken().getLinkedToken()!=null){
+							secontThruToken=curFilter.getFilterValue().getThruSecondToken().getLinkedToken();
+						}else if(curFilter.getFilterValue().getThruSecondToken()!=null && curFilter.getFilterValue().getThruSecondToken().getColumnNameToken()!=null){
+							secontThruToken=curFilter.getFilterValue().getThruSecondToken().getColumnNameToken();
+						}else{
+							secontThruToken=curFilter.getFilterValue().getThruSecondToken();
+						}
+						createdFindByMethodName.append(Utility.columnNameToPojoFieldNameWithFirstLetterUpper(secontThruToken.getDeger().toString()));
+						
+					}else if (curFilter.getFilterName().getLinkedToken() != null) {
 						createdFindByMethodName.append(Utility.columnNameToPojoFieldNameWithFirstLetterUpper(
 								curFilter.getFilterName().getLinkedToken().getDeger().toString()));
 					}else if (curFilter.getFilterName().getColumnNameToken() != null) {
@@ -942,6 +971,38 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 				
 				}
 				this.sortList=newSortList;
+			}
+			this.conditionList=newConditionList;
+			
+			
+		}
+		
+		protected void parseThruKeyword() {
+			
+			AbstractToken curToken=null, nextToken=null, thruToken=null;
+			
+			 List<AbstractToken> newConditionList=new ArrayList<AbstractToken>();
+			 
+			 AbstractToken newThruToken;
+			
+			for(int index=0; index<conditionList.size()-2;index++){
+					
+					curToken=conditionList.get(index);
+					thruToken=conditionList.get(index+1);
+					nextToken=conditionList.get(index+2);
+					
+					if(thruToken.isOzelKelime("THRU")){
+						newThruToken=thruToken;
+						newThruToken.setThruFirstToken(curToken);
+						newThruToken.setThruSecondToken(nextToken);
+						newConditionList.add(newThruToken);
+						index=index+2;
+							
+					}else{
+						newConditionList.add(curToken);
+					}
+					
+				
 			}
 			this.conditionList=newConditionList;
 			

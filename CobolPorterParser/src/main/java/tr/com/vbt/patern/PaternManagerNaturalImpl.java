@@ -86,7 +86,6 @@ import tr.com.vbt.natural.parser.database.patern.PaternIfNoRecordsFound;
 import tr.com.vbt.natural.parser.database.patern.PaternRead;
 import tr.com.vbt.natural.parser.database.patern.PaternReadBy;
 import tr.com.vbt.natural.parser.database.patern.PaternReadByLogicalDescending;
-import tr.com.vbt.natural.parser.database.patern.PaternReadByThru;
 import tr.com.vbt.natural.parser.database.patern.PaternReadInPhysicalSequence;
 import tr.com.vbt.natural.parser.database.patern.PaternReadWith;
 import tr.com.vbt.natural.parser.database.patern.PaternReadWithThru;
@@ -334,7 +333,6 @@ public class PaternManagerNaturalImpl  extends AbstractPaternManagerNatural{
 		//Database
 		commmandPatternList.add(new PaternReadBy());
 		commmandPatternList.add(new PaternRead());
-		commmandPatternList.add(new PaternReadByThru());
 		commmandPatternList.add(new PaternReadByLogicalDescending());
 		commmandPatternList.add(new PaternReadWith());
 		commmandPatternList.add(new PaternReadWithThru());

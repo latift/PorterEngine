@@ -119,6 +119,7 @@ public class JavaReadByFromDBElement extends AbsctractConditionalJavaElement {
 		pojoType=Utility.viewNameToPojoName(viewName.getTypeNameOfView());
 		
 		conditionList = (List<AbstractToken>) this.parameters.get("conditionList");
+		parseThruKeyword();
 		
 		parseSortList();
 		convertConditions(); // Tek token olmayan filtre operatorlerini tek tokena düşürür.

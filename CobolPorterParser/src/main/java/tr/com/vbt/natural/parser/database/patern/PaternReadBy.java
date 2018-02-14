@@ -189,6 +189,7 @@ public class PaternReadBy extends AbstractPatternFromXToYWithoutCarriageReturn {
 					&&!currentTokenForMatch.getDeger().equals(ReservedCobolKeywords.IS_NUMERIC)
 					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.STARTING_FROM)
 					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.ENDING_AT)
+					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.THRU)
 					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.EQ)
 					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.NE)
 					&&!currentTokenForMatch.getDeger().equals(ReservedCobolKeywords.NUMERIC)){ //IFElement için eklendi
