@@ -56,7 +56,7 @@ public class JavaCopyElementV2 extends AbstractJavaElement {
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-//				e.printStackTrace();
+				logger.info(e.getMessage(),e);
 			}
 		} catch (Exception e) {
 			logger.debug("//Conversion Error" + this.getClass() + this.getSourceCode().getSatirNumarasi()

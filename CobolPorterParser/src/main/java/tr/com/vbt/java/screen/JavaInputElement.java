@@ -79,11 +79,9 @@ public class JavaInputElement extends AbstractJavaElement {
 		
 		if(ConversionLogModel.getInstance().getConversionFileType().equals(ConversionFileType.MAP_TESTER) && !(this instanceof JavaInputTesterElement)){
 			
-			
 			tester=new JavaInputTesterElement(this);
 			
 			tester.inputParameters=this.inputParameters;
-			
 			
 			return tester.writeJavaToStream();
 		}
@@ -566,17 +564,17 @@ public class JavaInputElement extends AbstractJavaElement {
 		nextToken = inputParameters.get(index + 1);
 
 		if (currToken.getTip().equals(TokenTipi.Sayi) && nextToken.getTip().equals(TokenTipi.Kelime)
-				&& (nextToken.getDeger().equals("X") || nextToken.getDeger().equals("T"))) {
+				&& (nextToken.isKarakter('X') || nextToken.isKarakter('T') || nextToken.isKelime("X") || nextToken.isKelime("T")  )) {
 
 			int YCoordCarpan;
 
 			YCoordCarpan = (int) ((long)currToken.getDeger());
-			if (nextToken.getDeger().equals("X")) {
-				yCoord = YCoordCarpan * ConverterConfiguration.NATURAL_X_LENGTH;
-			} else if (nextToken.getDeger().equals("T")) {
+			if (nextToken.isKarakter('X') || nextToken.isKelime("X")) {
+				yCoord = YCoordCarpan * ConverterConfiguration.NATURAL_X_LENGTH+yCoord;
+			} else if (nextToken.isKarakter('T') || nextToken.isKelime("T")) {
 				yCoord = YCoordCarpan * ConverterConfiguration.NATURAL_T_LENGTH;
 			} else { // Hata durumda en azından boyle göstersin
-				yCoord = YCoordCarpan * ConverterConfiguration.NATURAL_T_LENGTH;
+				yCoord = YCoordCarpan * 1+yCoord;
 			}
 
 			offset = 1;

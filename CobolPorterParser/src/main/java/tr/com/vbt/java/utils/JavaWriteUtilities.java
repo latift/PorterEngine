@@ -604,11 +604,11 @@ public class JavaWriteUtilities extends AbstractJavaWriteUtility{
 
 
 	private static String toCustomConstantVariableString(AbstractToken token) {
-		if(token.getDeger().toString().trim().length()==0){
+		//if(token.getDeger().toString().trim().length()==0){
 			return "\""+token.getDeger().toString()+"\"";
-		}else{
-			return "\""+token.getDeger().toString().trim().toString()+"\"";
-		}
+		//}else{
+		//	return "\""+token.getDeger().toString().trim().toString()+"\"";
+		//}
 		
 	}
 	
@@ -878,8 +878,12 @@ public class JavaWriteUtilities extends AbstractJavaWriteUtility{
 		
 		tempCodeBuffer.append(token.getDeger().toString());  //MAP_DIZISI
 		tempCodeBuffer.append(".");
-		tempCodeBuffer.append(token.getLinkedToken().getDeger().toString()); //D_SIRA
-		if(token.getLinkedToken().getTip().equals(TokenTipi.Array)&& token.getLinkedToken().isRedefinedVariable()){
+		if(token.getLinkedToken()!=null){
+			tempCodeBuffer.append(token.getLinkedToken().getDeger().toString()); //D_SIRA
+		}else if(token.getColumnNameToken()!=null){
+			tempCodeBuffer.append(token.getColumnNameToken().getDeger().toString()); //D_SIRA
+		}
+		if(token.getLinkedToken()!=null && token.getLinkedToken().getTip().equals(TokenTipi.Array)&& token.getLinkedToken().isRedefinedVariable()){
 			arrayToken=(ArrayToken) token.getLinkedToken();
 			firstDimension=arrayToken.getFirstDimension();
 			secDimension=arrayToken.getSecondDimension();
@@ -899,7 +903,7 @@ public class JavaWriteUtilities extends AbstractJavaWriteUtility{
 			}
 			tempCodeBuffer.append(".setValue(");
 			
-		}else if(token.getLinkedToken().getTip().equals(TokenTipi.Array)){
+		}else if(token.getLinkedToken()!=null && token.getLinkedToken().getTip().equals(TokenTipi.Array)){
 			arrayToken=(ArrayToken) token.getLinkedToken();
 			firstDimension=arrayToken.getFirstDimension();
 			secDimension=arrayToken.getSecondDimension();
@@ -919,8 +923,11 @@ public class JavaWriteUtilities extends AbstractJavaWriteUtility{
 			}
 		}else if(token.getLinkedToken()!=null && token.getLinkedToken().isRedefinedVariable()){
 			tempCodeBuffer.append(".setValue(");
-		}else if(token.getLinkedToken().getTip().equals(TokenTipi.Kelime)){
+		}else if(token.getLinkedToken()!=null && token.getLinkedToken().getTip().equals(TokenTipi.Kelime)){
 				//Do nothing
+		}else if(token.getColumnNameToken()!=null){
+			
+			tempCodeBuffer.append(token.getColumnNameToken().getDeger().toString());
 		}else{
 			tempCodeBuffer.append(token.getLinkedToken());
 		}

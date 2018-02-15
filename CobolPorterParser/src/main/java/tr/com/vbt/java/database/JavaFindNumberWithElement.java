@@ -42,71 +42,22 @@ import tr.com.vbt.token.TokenTipi;
  */
 
 /**
- 3642 FIND IDGIDBS-TIPTALCEK WITH (MUSNO1=SECMUSNO1 OR MUSNO2=SECMUSNO1)                                                             
- 3644     AND DOVIZ=WDOVIZ AND                                                                                                       
- 3646     KALAN_MEBLAG> 0 AND AKOD1^='S' AND AKOD2^='S'                                                                              
- 3648   IF NO                                                                                                                        
- 3650     ESCAPE ROUTINE                                                                                                             
- 3652   END-NOREC                                                                                                                     
- 3328 END-FIND 
- 
- 
-			   Criteria crit = getSession().createCriteria(getPersistentClass());
-		        Criterion c =Restrictions.eq("id.musno1", sECMUSNO1);
-		       Criterion c2 =Restrictions.eq("id.musno2", sECMUSNO1);
-		       
-		       Criterion c3 =Restrictions.eq("id.doviz", wDOVIZ);
-		      // Criterion c6 =Restrictions.gt("kalanMeblag",(float) 0);
-		       Criterion c7 =Restrictions.not(Restrictions.eq("akod1", akod));
-		       Criterion c8 =Restrictions.not(Restrictions.eq("akod2", akod));
-		       
-		       
-		       crit.add(Restrictions.or(c, c2));
-		       crit.add(c3);
-		      // crit.add(c6);
-		       crit.add(c7);
-		       crit.add(c8);
-			    
-		       return crit.list();
- 
- FindByOpParantezMusnoEqualsOrMusno2EqualsCloseParantes
- */
-/**
- * @author 47159500
- *
- */
-/**
- * Algoritma:
- * 
- * 1) ^= --> Tek bir tokena çevir.
- * 2) Filtreleri tek bir filtre token olarak set et. Filtreden sonra gelen = i ve diğer token i token içinde fitreoperator ve filtrevaluetoken olarak set et.
- * 3) AND, OR ve Parantezleri filtrejoiner olarak set et.
- * 4) Bu aşamalardan sonra sonuç: (Musno1, or, musno2,), and, doviz, and, kalanmeblag, and, akod1, and, akod2  Yani: (Filtre,Joiner,Filtre,), Joiner Filtre vs...)
-   5)   a) Criteria crit = getSession().createCriteria(getPersistentClass());
-        b) Parantez gördü isen subfonksiyonu çağır. Parantez içindeki ifadenin criterion objesini yarat. 
-        c) Filtre gördü isen filtreyi yarat. 
-        			Filtreden sonraki joiner ifadeye göre and ise  crit.add(c3); yap.
-        												or ise  crit.or(c3); yap.
-        
- */ 
+
+NUMBER = runPreparedStatementInt("select count(*)  from TCT.TKS_REZ this_ where this_.REZ_CNR=" + DIYEZ_CNR, "Integer");
+
+  */
+
 public class JavaFindNumberWithElement extends AbsctractConditionalJavaElement implements FinderJavaElement{
 	
 	ConversionLogModel logModel=ConversionLogModel.getInstance();
 
-	final static Logger logger = Logger.getLogger(JavaDBViewOfDataTypeElement.class);
+	final static Logger logger = Logger.getLogger(JavaFindNumberWithElement.class);
 
 	private AbstractToken viewName; // LIMAN
 	
 	private AbstractToken viewNameToken; //LIMAN;
 	
-	private List<AbstractToken> sortList;
-	
-	String calculatedResultListName = "";// LIMAN_RESULT_LIST
-	String calculatedDAOName = "";
-	
-	
-	String findByString,itName; //method call from natural
-
+	private String selectCountString; //method call from natural
 	
 	private AbstractJava javaIfNoRecords;
 	
@@ -133,35 +84,18 @@ public class JavaFindNumberWithElement extends AbsctractConditionalJavaElement i
 			e1.printStackTrace();
 		}
 		
-		
-		calculatedResultListName = viewName.toCustomString() + "_RESULT_LIST";
-		calculatedDAOName = viewName.getTypeNameOfView()+ "_DAO";
-		
-		javaIfNoRecords=this.getChildWithName("JavaIfNoRecords");
-		
-		findByString=createFindByString("findOneBy");
-		findByMethodSignature=createFindByMethodString("findOneBy", pojoType);
-		
-		//itName="it"+pojoType;
-		itName=itNameManager.createIteratorName(pojoType);
-
 		try {
 
 
-			//LIMAN_RESULT_LIST=LIMAN_DAO.findByMusno2AndReferansSmallerAndOpenParBsicilOrAsicilCloseParAndIslemTar(GecMusno2, Map.refno, 0,0,Guntar);
-			JavaClassElement.javaCodeBuffer.append(calculatedResultListName);
+			//NUMBER = runPreparedStatementInt("select count(*)  from TCT.TKS_REZ this_ where this_.REZ_CNR=" + DIYEZ_CNR, "Integer");
+
+			JavaClassElement.javaCodeBuffer.append("NUMBER");
 			JavaClassElement.javaCodeBuffer.append("=");
-			JavaClassElement.javaCodeBuffer.append(calculatedDAOName);
-			JavaClassElement.javaCodeBuffer.append(".");
-			JavaClassElement.javaCodeBuffer.append(findByString+ JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
+			JavaClassElement.javaCodeBuffer.append("runPreparedStatementInt(\"");
+			selectCountString="select count(*)  from TCT."+pojoType+" this_ where this_";
+			JavaClassElement.javaCodeBuffer.append(selectCountString);
 			
-			JavaClassElement.javaCodeBuffer.append("NUMBER=0;"+ JavaConstants.NEW_LINE);
-			
-			JavaClassElement.javaCodeBuffer.append("if("+calculatedResultListName+"!=null){"+ JavaConstants.NEW_LINE);
-			
-			JavaClassElement.javaCodeBuffer.append("NUMBER="+calculatedResultListName+".size()"+JavaConstants.DOT_WITH_COMMA+ JavaConstants.NEW_LINE);
-			
-			JavaClassElement.javaCodeBuffer.append("}"+ JavaConstants.NEW_LINE);
+			JavaClassElement.javaCodeBuffer.append(", \"Integer\")"+ JavaConstants.DOT_WITH_COMMA + JavaConstants.NEW_LINE);
 					
 		} catch (Exception e) {
 			logger.debug("//Conversion Error"+this.getClass()+this.getSourceCode().getSatirNumarasi()+this.getSourceCode().getCommandName());
@@ -171,8 +105,6 @@ public class JavaFindNumberWithElement extends AbsctractConditionalJavaElement i
 			ConvertUtilities.writeconversionErrors(e, this);
 		}
 
-		writeHibernateCode();
-		writeDAOInterfaceCode();
 		return true;
 	}
 

@@ -55,7 +55,7 @@ public class JavaWriteElement extends AbstractJavaElement {
 
 	long xCoord, yCoord;
 	
-	private List<AbstractToken> undefinedParameterList=new ArrayList<>();
+	//private List<EngineIOUndefined> undefinedParameterList=new ArrayList<>();
 	
 	boolean isMap;
 	
@@ -92,6 +92,9 @@ public class JavaWriteElement extends AbstractJavaElement {
 			removeAdParameters();
 			
 			removeParantezI();
+			
+			controlSatirSonuEksi();
+			
 			if(inputParameters==null || inputParameters.size()==0) {
 				return true;
 			}
@@ -116,8 +119,7 @@ public class JavaWriteElement extends AbstractJavaElement {
 					} else if (matchsPaternArray(index)) {
 
 					} else {
-						
-						undefinedParameterList.add(inputParameters.get(index));
+						matchUndefinedTokens();
 					}
 
 					index = index + offset;
@@ -139,6 +141,27 @@ public class JavaWriteElement extends AbstractJavaElement {
 		}
 
 		return true;
+	}
+
+
+
+	private void controlSatirSonuEksi() {
+		
+		AbstractToken curToken,nextToken,nexterToken;
+		for (int index = 0; index < inputParameters.size() - 2; index++) {
+			
+			curToken = inputParameters.get(index);
+			nextToken=inputParameters.get(index+1);
+			nexterToken=inputParameters.get(index+2);
+			
+			
+			if(curToken.isConstantVariableWithQuota() && nextToken.isKarakter('-') && nexterToken.isConstantVariableWithQuota()){
+				curToken.setDeger(curToken.getDeger().toString()+nexterToken.getDeger().toString());
+				inputParameters.remove(index+2);
+				inputParameters.remove(index+1);
+			}
+		}
+		
 	}
 
 
@@ -224,8 +247,6 @@ public class JavaWriteElement extends AbstractJavaElement {
 				return true;
 			}
 			
-			writeUndefinedTokens();
-		
 			if (currToken.isConstantVariableWithQuota() || currToken.isSystemVariable() ||currToken.isPojoVariable()) {
 
 				newScreenIO = new EngineIOLabel((int)xCoord, (int)yCoord, IOModeType.AD_D, value, XCoordinationTypes.REFERANCE,
@@ -279,29 +300,15 @@ public class JavaWriteElement extends AbstractJavaElement {
 	}
 
 
-		
-	private void writeUndefinedTokens() {
+
+	private void matchUndefinedTokens() {
 		
 		StringBuffer sb=new StringBuffer();
 		
-		if(undefinedParameterList==null || undefinedParameterList.isEmpty()){
-			return;
-		}
-		
-		for(AbstractToken undefined: undefinedParameterList){
-			
-			sb.append(undefined.toCustomString());
-			
-		}
 		newScreenIO = new EngineIOUndefined((int)xCoord, (int)yCoord, IOModeType.AD_D, sb.toString(), XCoordinationTypes.REFERANCE,  XCoordinationTypes.EXACT,0,ConverterConfiguration.DEFAULT_MAX_LENGTH_FOR_LABEL);
 		
 		screenInputOutputArray.add(newScreenIO);
 		
-		xCoord=xCoord+1;
-		
-		yCoord=0;
-		
-		undefinedParameterList=new  ArrayList<AbstractToken>();
 	}
 
 	// *S** SCRLINES(*)
@@ -321,8 +328,6 @@ public class JavaWriteElement extends AbstractJavaElement {
 			arrayToken=(ArrayToken) currToken;
 			
 			long maxLength=ConvertUtilities.getVariableMaxLength(currToken);
-			
-			writeUndefinedTokens();
 			
 			if(arrayToken.getFirstDimension().getDeger().equals('*')){   //SCRLINES(*)
 				value = JavaWriteUtilities.toCustomString(arrayToken).toString();
@@ -384,14 +389,14 @@ public class JavaWriteElement extends AbstractJavaElement {
 		nextToken = inputParameters.get(index + 1);
 
 		if (currToken.getTip().equals(TokenTipi.Sayi) && nextToken.getTip().equals(TokenTipi.Kelime)
-				&& (nextToken.getDeger().equals("X") || nextToken.getDeger().equals("T"))) {
+					&& (nextToken.isKarakter('X') || nextToken.isKarakter('T') || nextToken.isKelime("X") || nextToken.isKelime("T")  )) {	
 
 			int YCoordCarpan;
 
 			YCoordCarpan = (int) ((long)(currToken.getDeger()));
-			if (nextToken.getDeger().equals("X")) {
+			if (nextToken.isKarakter('X') || nextToken.isKelime("X")) {
 				yCoord = YCoordCarpan * ConverterConfiguration.NATURAL_X_LENGTH+yCoord;
-			} else if (nextToken.getDeger().equals("T")) {
+			} else if (nextToken.isKarakter('T') || nextToken.isKelime("T")) {
 				yCoord = YCoordCarpan * ConverterConfiguration.NATURAL_T_LENGTH;
 			} else { // Hata durumda en azından boyle göstersin
 				yCoord = YCoordCarpan * 1+yCoord;
@@ -433,21 +438,6 @@ public class JavaWriteElement extends AbstractJavaElement {
 			sIO = screenInputOutputArray.get(index);
 
 			xCoord=sIO.getXCoord();
-			
-		/*	if (sIO.getTagType().equals(NaturalTagTypes.LABEL)) {
-				if(sIO instanceof ScreenIOUndefined)
-				{
-					writeUndefined(sIO);
-				}else{
-					writeLabel(sIO);
-				}
-			} else if (sIO.getTagType().equals(NaturalTagTypes.INPUTFIELD)) {
-				if(sIO instanceof ScreenIOIntegerInput){
-					writeNumberInputField(sIO);
-				}else{
-					writeStringInputField(sIO);
-				}
-			}*/
 			
 			if(sIO instanceof EngineIOUndefined)
 			{

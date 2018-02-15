@@ -125,6 +125,20 @@ public class ConditionUtilities {
 					}
 				}
 				curCondition.addChildCondition(sCondition);
+			}else if(controlThruCondition(curToken,nextToken, nexterToken)){
+				
+				SimpleCondition sCondition=new SimpleCondition(curToken,nextToken, nexterToken);
+				sCondition.setNotCondition(notCondition);
+				notCondition=false;
+				i=i+2;
+				if(i+1<conditionList.size()){
+					nextToken=conditionList.get(i+1);
+					if(nextToken!=null && controlConditionJoiner(nextToken)){
+						i++;
+						sCondition.setConditionJoiner(new ConditionJoiner(nextToken));
+					}
+				}
+				curCondition.addChildCondition(sCondition);
 			}else {
 				errorTokenList=new ArrayList<>();
 				errorTokenList.add(curToken);
@@ -136,6 +150,18 @@ public class ConditionUtilities {
 		return;
 	}
 
+
+
+
+	private boolean controlThruCondition(AbstractToken curToken, AbstractToken nextToken, AbstractToken nexterToken) {
+		if(nextToken ==null|| nexterToken==null){
+			return false;
+		}
+		if(nextToken.isConditionOperator()&&nexterToken.isOzelKelime("THRU") ){
+			return true;
+		}
+		return false;
+	}
 
 
 
@@ -230,6 +256,39 @@ public class ConditionUtilities {
 		return resultList;
 	}
 
+	public List<AbstractToken> parseThruKeyword(List<AbstractToken> conditionList) {
+		
+		AbstractToken curToken=null, nextToken=null, thruToken=null;
+		
+		 List<AbstractToken> newConditionList=new ArrayList<AbstractToken>();
+		 
+		 AbstractToken newThruToken;
+		
+		for(int index=0; index<conditionList.size();index++){
+				
+				curToken=conditionList.get(index);
+				if(index+2<conditionList.size()){
+					thruToken=conditionList.get(index+1);
+					nextToken=conditionList.get(index+2);
+				}else{
+					thruToken=null;
+				}
+				if(thruToken!=null && thruToken.isOzelKelime("THRU")){
+					newThruToken=thruToken;
+					newThruToken.setThruFirstToken(curToken);
+					newThruToken.setThruSecondToken(nextToken);
+					newConditionList.add(newThruToken);
+					index=index+2;
+						
+				}else{
+					newConditionList.add(curToken);
+				}
+				
+		}
+		return newConditionList;
+		
+		
+	}
 
 
 

@@ -727,7 +727,7 @@ public class NaturalLexing extends AbstractLexing {
 				
 
 			}else if(astInputReached  && (!astCurrent.isOzelKelime() || 
-					astCurrent.isOneOfOzelKelime(ReservedNaturalKeywords.WITH_TEXT,"TEXT",ReservedNaturalKeywords.OFF,ReservedNaturalKeywords.ALARM))) {
+					astCurrent.isOneOfOzelKelime(ReservedNaturalKeywords.WITH_TEXT,"TEXT",ReservedNaturalKeywords.ON,ReservedNaturalKeywords.OFF,ReservedNaturalKeywords.ALARM))) {
 
 				astCurrent = tokenListesi.get(i);
 				
@@ -847,6 +847,7 @@ public class NaturalLexing extends AbstractLexing {
 				while (compressParam.getTip().equals(TokenTipi.Kelime)
 						|| compressParam.getTip().equals(TokenTipi.SatirBasi)
 						|| compressParam.getTip().equals(TokenTipi.Nokta)
+						|| compressParam.getTip().equals(TokenTipi.Sayi)
 						|| compressParam.getTip().equals(TokenTipi.Array)
 						|| compressParam.getTip().equals(TokenTipi.Karakter)
 						|| (compressParam.getTip().equals(TokenTipi.OzelKelime)
@@ -2078,7 +2079,7 @@ public class NaturalLexing extends AbstractLexing {
 				astNexter.setLocalVariable(true);
 				// FMM-ISN(*)
 			} else if (astCurrent.isKarakter('#')
-					&& (astNext.isKelime()|| astNext.isOzelKelime())) {
+					&& (astNext.isKelime()|| astNext.isOzelKelime()|| astNext.isSayi())) {
 				tokenListesi.remove(i);
 				astNext.setDeger("DIYEZ_" + astNext.getDeger());  // #DO varsa bu DO ozelkelimede olsa normal kelime olarak düsünülmeli.
 				astNext.setLocalVariable(true);

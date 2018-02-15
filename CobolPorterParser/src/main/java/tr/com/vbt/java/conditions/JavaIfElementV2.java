@@ -36,6 +36,8 @@ public class JavaIfElementV2 extends AbstractJavaElement {
 		try {
 			
 			conditionList = (List<AbstractToken>) this.parameters.get("conditionList");
+			
+			conditionList=conUtilities.parseThruKeyword(conditionList);
 
 			conUtilities.processConditions(conditionList);
 

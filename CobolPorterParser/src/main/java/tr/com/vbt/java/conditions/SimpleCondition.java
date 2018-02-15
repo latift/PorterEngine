@@ -105,7 +105,10 @@ public class SimpleCondition implements ConditionInterface {
 		
 			SimpleConditionWriter conWriter;
 			//IF TPS-DOF NE MASK(YYMMDD) OR TPS-DOF < TPS-DOS
-			if ((conOperator.isKarakter('=')||conOperator.isKarakter("==")||conOperator.isOzelKelime("EQ")) && conditionRight.isMasked()){
+			if ((conOperator.isKarakter('=')||conOperator.isKarakter("==")||conOperator.isOzelKelime("EQ")) && conditionRight.isOzelKelime("THRU")){
+				conWriter=new SimplePrimitiveTypeThruWriter();
+				
+			}else if ((conOperator.isKarakter('=')||conOperator.isKarakter("==")||conOperator.isOzelKelime("EQ")) && conditionRight.isMasked()){
 				conWriter=new SimpleMaskEqualsConditionWriter();
 				
 			}else if((conOperator.isKarakter("!=")||conOperator.isOzelKelime("NE")) && conditionRight.isMasked()){

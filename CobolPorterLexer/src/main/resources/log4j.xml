@@ -52,7 +52,7 @@
  
        <!-- Temel loglama tanımı -->
        <root>
-             <priority value="debug"/>
+             <priority value="info"/>
              <appender-ref ref="console" />
               <!-- <appender-ref ref="logfile" />-->
               <appender-ref ref="FILE_WARN" />
