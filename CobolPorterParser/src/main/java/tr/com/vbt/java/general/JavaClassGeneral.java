@@ -93,8 +93,7 @@ public class JavaClassGeneral extends AbstractJavaElement{
 			this.writeJavaToStream();
 			WriteToFile.writeToFile(JavaClassGeneral.javaCodeBuffer,fullJavaFilePath);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.info(e.getMessage(),e);
 		}
 		logger.info("End of Java Export");
 		return JavaClassGeneral.javaCodeBuffer;

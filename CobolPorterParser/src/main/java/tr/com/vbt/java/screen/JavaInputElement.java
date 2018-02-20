@@ -245,16 +245,17 @@ public class JavaInputElement extends AbstractJavaElement {
 
 		String value = null;
 
-		if (currToken.isKelime("SECIM")||currToken.isKelime("DIYEZ_SECIM")){
+		if (currToken.isKelime("DIYEZ_ORG")||currToken.isKelime("DIYEZ_ORG")){
 			logger.debug("...");
 		}
 		
 		if (currToken.getTip().equals(TokenTipi.Kelime)) {
 			
-			if(currToken.getLinkedToken()!=null && currToken.getLinkedToken().getDeger().equals("MEBLAG")){
+			if(currToken.getLinkedToken()!=null && currToken.getLinkedToken().getDeger().equals("DIYEZ_ORG")){
 				logger.debug("...");
 			}
 			long maxLength=ConvertUtilities.getVariableMaxLength(currToken);
+			logger.warn(currToken.getDeger().toString()+" "+maxLength);
 			
 			value = JavaWriteUtilities.toCustomString(currToken).toString();
 			
@@ -339,12 +340,13 @@ public class JavaInputElement extends AbstractJavaElement {
 						XCoordinationTypes.EXACT,0,(int)maxLength, currToken.isConstantVariableWithQuota());
 			}
 
-
+/*
 			if(value.length()>maxLength && !currToken.isPojoVariable()){
 				yCoord = yCoord + value.length();
 			}else{
-				yCoord = yCoord + maxLength;
-			}
+	*/		logger.warn("maxLength:"+ maxLength);
+			yCoord = yCoord + maxLength + 1;
+		//	}
 			
 			if(!isButton(currToken)){
 				
@@ -535,7 +537,7 @@ public class JavaInputElement extends AbstractJavaElement {
 					
 				}
 	
-				yCoord = yCoord + value.length();
+				yCoord = yCoord + maxLength + 1;
 	
 				screenInputOutputArray.add(newScreenIO);
 	

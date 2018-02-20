@@ -278,14 +278,10 @@ public class JavaWriteElement extends AbstractJavaElement {
 						XCoordinationTypes.REFERANCE, XCoordinationTypes.EXACT,0,(int)maxLength);
 			}
 			
+			yCoord = yCoord + maxLength + 1;
+			
 			newScreenIO.setToken(currToken);
 
-			//if(value.length()>maxLength){
-			//	yCoord = yCoord + value.length();
-			//}else{
-				yCoord = yCoord + maxLength;
-			//}
-			
 			screenInputOutputArray.add(newScreenIO);
 
 			offset = 0;
@@ -360,7 +356,7 @@ public class JavaWriteElement extends AbstractJavaElement {
 					
 				}
 	
-				yCoord = yCoord + maxLength;
+				yCoord = yCoord + maxLength + 1;
 	
 				screenInputOutputArray.add(newScreenIO);
 	

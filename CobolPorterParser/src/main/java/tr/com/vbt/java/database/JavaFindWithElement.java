@@ -122,13 +122,8 @@ public class JavaFindWithElement extends AbsctractConditionalJavaElement impleme
 		parseSortList();
 		convertConditions(); // Tek token olmayan filtre operatorlerini tek tokena düşürür.
 		defineConditionTokenTypes();
-		try {
-			convertConditionsToFilters();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
+
+		convertConditionsToFilters();
 
 		calculatedResultListName = "";// LIMAN_RESULT_LIST
 		calculatedDAOName = "";
