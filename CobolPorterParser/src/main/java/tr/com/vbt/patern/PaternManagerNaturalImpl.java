@@ -1,6 +1,6 @@
 package tr.com.vbt.patern;
 
-import tr.com.vbt.cobol.parser.file.patern.PaternCloseFile;
+import tr.com.vbt.natural.parser.file.patern.PaternCloseFile;
 import tr.com.vbt.lexer.ConversionLogModel;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternAdd;
 import tr.com.vbt.natural.parser.basicverbs.patern.PaternAssign;

@@ -36,15 +36,22 @@ public class JavaGetElement extends AbstractJavaElement {
 			
 			viewName = (AbstractToken) this.getParameters().get("viewName");
 			
+			String viewNameStr;
+			if(viewName.getColumnNameToken()!=null){
+				viewNameStr=viewName.getColumnNameToken().getDeger().toString();
+			}else{
+				viewNameStr=viewName.getTypeNameOfView();
+			}
+			
 			if (isnToken != null) {
 				//KET_AIRLINE=KET_AIRLINE_DAO.getById((long) ISN);
-				JavaClassElement.javaCodeBuffer.append(viewName.getTypeNameOfView()+" = "+ viewName.getTypeNameOfView() +"_DAO.getById((long) "+JavaWriteUtilities.toCustomString(isnToken)+");");
+				JavaClassElement.javaCodeBuffer.append(viewNameStr+" = "+ viewNameStr +"_DAO.getById((long) "+JavaWriteUtilities.toCustomString(isnToken)+");");
 
 			}
 			isnTokenArray = (ArrayToken) this.getParameters().get("isnTokenArray");
 			if (isnTokenArray != null) {
 				//KET_AIRLINE = KET_AIRLINE_DAO.getById((long) ISNS[ITEM-1]);
-				JavaClassElement.javaCodeBuffer.append(viewName.getTypeNameOfView()+" = "+ viewName.getTypeNameOfView() +"_DAO.getById((long) "+JavaWriteUtilities.toCustomString(isnTokenArray)+");");
+				JavaClassElement.javaCodeBuffer.append(viewNameStr+" = "+ viewNameStr +"_DAO.getById((long) "+JavaWriteUtilities.toCustomString(isnTokenArray)+");");
 
 			}
 

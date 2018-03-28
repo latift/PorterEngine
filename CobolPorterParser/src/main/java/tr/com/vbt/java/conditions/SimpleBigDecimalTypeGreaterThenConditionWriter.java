@@ -14,7 +14,12 @@ public class SimpleBigDecimalTypeGreaterThenConditionWriter implements SimpleCon
 
 		boolean cast;
 		
-		JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(conditionLeft));
+		if(conditionLeft.getColumnNameToken()!=null){
+			JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(conditionLeft.getColumnNameToken()));
+		}else{
+			JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(conditionLeft));
+					
+		}
 		
 		JavaClassElement.javaCodeBuffer.append(".compareTo(");
 		

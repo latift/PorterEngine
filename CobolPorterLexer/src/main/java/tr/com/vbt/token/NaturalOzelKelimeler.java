@@ -183,7 +183,7 @@ public NaturalOzelKelimeler() {
 	ozelKelimeler.add("IF_ACCEPT");
 	ozelKelimeler.add("REJECT");
 	ozelKelimeler.add("REJECT_IF");
-	ozelKelimeler.add("COMMAND");
+	//ozelKelimeler.add("COMMAND");
 	ozelKelimeler.add("THRU");
 	ozelKelimeler.add("LOGICAL");
 	ozelKelimeler.add("DESCENDING");

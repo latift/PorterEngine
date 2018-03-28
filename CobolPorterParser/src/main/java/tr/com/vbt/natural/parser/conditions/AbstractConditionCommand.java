@@ -22,8 +22,8 @@ public abstract class AbstractConditionCommand extends AbstractCommand{
 
 
 	public AbstractConditionCommand(String commandName,
-			String detailedCobolName2,int satirNumarasi) {
-		super(commandName,detailedCobolName2, satirNumarasi);
+			String detailedCobolName2, int satirNumarasi) {
+		super(commandName,detailedCobolName2,satirNumarasi);
 	}
 
 }

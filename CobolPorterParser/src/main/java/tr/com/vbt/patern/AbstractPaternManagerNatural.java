@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
-import tr.com.vbt.cobol.parser.basicverbs.ElementUndefinedCobol;
+import tr.com.vbt.natural.parser.basicverbs.ElementUndefinedCobol;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.TokenTipi;
 
@@ -53,10 +53,9 @@ public abstract class  AbstractPaternManagerNatural  implements PaternManager{
 				
 			}
 		}while(commandPaternIterator.hasNext());
-		if(command!=null&&command.getCommandName()!=null&&command.getCommandName().equals("VAC-CLSTYP")){
-			logger.info("debug");
-		}
-		System.out.println(command);
+
+		
+		logger.debug(command);
 		
 		if(matchedCommandList.size()==0){
 			String undefinedCommandDescrtiption="";
@@ -67,6 +66,7 @@ public abstract class  AbstractPaternManagerNatural  implements PaternManager{
 			int matchPointOfUndefined=0;
 			
 			if(token.getTip().equals(TokenTipi.OzelKelime)|| token.isSayi()){
+				undefinedCommandDescrtiption=token.getDeger().toString();
 				offset++;
 				matchPointOfUndefined++;
 				try {
@@ -91,6 +91,7 @@ public abstract class  AbstractPaternManagerNatural  implements PaternManager{
 							undefCommand=new ElementUndefinedCobol(token.toString(),"UNDEFINED_COBOL_KEYWORD");
 							undefCommand.setSatirNumarasi(token.getSatirNumarasi());
 							undefCommand.setDataToDisplay(token.toString());
+							undefCommand.getParameters().put("dataToDisplay",undefCommand.getDataToDisplay());
 						}else{
 							undefCommand=new ElementUndefinedCobol("UNDEFINED_COBOL_KEYWORD","UNDEFINED_COBOL_KEYWORD");
 							undefCommand.setSatirNumarasi(token.getSatirNumarasi());
@@ -102,6 +103,7 @@ public abstract class  AbstractPaternManagerNatural  implements PaternManager{
 			
 			undefCommand=new ElementUndefinedCobol(undefinedCommandDescrtiption,"UNDEFINED_COBOL_KEYWORD");
 			undefCommand.setDataToDisplay(undefinedCommandDescrtiption);
+			undefCommand.getParameters().put("dataToDisplay",undefCommand.getDataToDisplay());
 			undefCommand.setCommandMatchPoint(matchPointOfUndefined);
 			undefCommand.setSatirNumarasi(token.getSatirNumarasi());
 			return undefCommand;

@@ -575,19 +575,27 @@ public class TransferFromNaturalToJavaMain {
 				}
 
 				commandList.setTypeNameOfView();
+				
+				logCurrentCommandList(commandList);
 
 				commandList.changeProgramDataTypeToDBDataType(); // ElementProgramGrupNatural -->
 																	// ElementDBDataTypeNatural
+				
+				logCurrentCommandList(commandList);
 
 				commandList.findAndSetDataTypeDefinitions(); // Record DataType
 																// ların sonuna
 																// Ender ekler.
 
+				logCurrentCommandList(commandList);
+				
+				
 				commandList.setRedefineElementsParents(); // Redefine Grup
 															// Elementların Redefine
 															// Ettiği normal
 															// dataType ı set eder.
 
+				logCurrentCommandList(commandList);
 				commandList.markSimpleRedefineElements(); // Parse düzeltmesidir.
 															// Redefine olarak parse
 															// edilemeyen ama
@@ -597,6 +605,7 @@ public class TransferFromNaturalToJavaMain {
 															// redefineCommand ile
 															// replace edilir.
 
+				logCurrentCommandList(commandList);
 				commandList.markOneDimensionRedefineElementOfSimpleDataType(); // Parse
 				// düzeltmesidir.
 				// Redefine olarak
@@ -607,6 +616,7 @@ public class TransferFromNaturalToJavaMain {
 				// redefineCommand
 				// ile replace
 				// edilir.
+				logCurrentCommandList(commandList);
 
 				commandList.markTwoDimensionRedefineElements(); // Parse
 																// düzeltmesidir.
@@ -618,6 +628,7 @@ public class TransferFromNaturalToJavaMain {
 																// redefineCommand
 																// ile replace
 																// edilir.
+				logCurrentCommandList(commandList);
 
 				commandList.markRedefinedTokens();
 
@@ -772,6 +783,18 @@ public class TransferFromNaturalToJavaMain {
 		}
 
 	}
+
+	private void logCurrentCommandList(CommandList commandList) {
+		logger.debug("******************************************************************************");
+		AbstractCommand curCommand;
+		for(int i=0; i<commandList.getCommandList().size(); i++){
+			curCommand=commandList.getCommandList().get(i);
+			logger.debug(curCommand.getCommandName()+"  \t\t\t "  +curCommand.getDataName() );
+		}
+		logger.debug("******************************************************************************");
+		
+	}
+
 
 	private void moveOnErrorMethod(ElementNaturalProgram ep) {
 		List<AbstractCommand> children=ep.getChildElementList();

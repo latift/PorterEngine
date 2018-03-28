@@ -484,6 +484,9 @@ public class JavaSqlSelectElement extends  AbstractJavaElement{
 		
 		SQLManager.registerSQL(sqlStringKey, sqlString);
 		
+		if(ConversionLogModel.getInstance().getCustomer().equals("SGK")){
+			return;
+		}
 		JavaClassElement.javaCodeBuffer.append("IsciDovizleriSQL."+sqlStringKey);
 		
 		

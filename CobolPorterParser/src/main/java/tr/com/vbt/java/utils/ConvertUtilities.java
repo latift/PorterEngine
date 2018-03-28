@@ -120,8 +120,9 @@ public class ConvertUtilities {
 			variable=variable.getLinkedToken();
 		}
 		
-		
-		if(variable.isSystemVariable()){
+		if(variable.getColumnNameToken()!=null && variable.getColumnNameToken().isPojoSubTableCount()){
+			return VariableTypes.LONG_TYPE;
+		}else if(variable.isSystemVariable()){
 			return getVariableTypeOfSystem(variable);
 		}else if(variable.isPojoVariable()){
 			return getVariableTypeOfPojo(variable);

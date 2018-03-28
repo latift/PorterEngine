@@ -139,8 +139,13 @@ public class JavaFindWithElementV2 extends AbsctractConditionalJavaElement imple
 		logger.debug("findByMethodSignature :"+findByMethodSignature);
 
 
-		calculatedResultListName = viewName.toCustomString() + "_RESULT_LIST";
-		calculatedDAOName = viewName.getTypeNameOfView() + "_DAO";
+		if(viewName.getColumnNameToken()!=null){
+			calculatedResultListName = viewName.getColumnNameToken().getDeger() + "_RESULT_LIST";
+			calculatedDAOName = viewName.getColumnNameToken().getDeger() + "_DAO";
+		}else{
+			calculatedResultListName = viewName.toCustomString() + "_RESULT_LIST";
+			calculatedDAOName = viewName.toCustomString() + "_DAO";
+		}
 		
 		javaIfNoRecords=this.getChildWithName("JavaIfNoRecords");
 		

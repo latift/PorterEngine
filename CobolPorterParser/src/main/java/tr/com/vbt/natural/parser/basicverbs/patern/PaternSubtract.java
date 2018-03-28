@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
-import tr.com.vbt.cobol.parser.basicverbs.ElementSubtract;
+import tr.com.vbt.natural.parser.basicverbs.ElementSubtract;
 import tr.com.vbt.lexer.ReservedCobolKeywords;
 import tr.com.vbt.patern.AbstractPattern;
 import tr.com.vbt.token.AbstractToken;

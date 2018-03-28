@@ -105,7 +105,15 @@ public class SimpleCondition implements ConditionInterface {
 		
 			SimpleConditionWriter conWriter;
 			//IF TPS-DOF NE MASK(YYMMDD) OR TPS-DOF < TPS-DOS
-			if ((conOperator.isKarakter('=')||conOperator.isKarakter("==")||conOperator.isOzelKelime("EQ")) && conditionRight.isOzelKelime("THRU")){
+			if ((conOperator.isKarakter('=')||conOperator.isKarakter("==")||conOperator.isOzelKelime("EQ")) && conditionLeft.isPojoVariable()
+					&&conditionLeft.getColumnNameToken()!=null && conditionLeft.getColumnNameToken().isAllArrayItems() && conditionLeft.getColumnNameToken().isPojoVariable()){
+				conWriter=new PojoSubTableContainsWriter();
+				
+			}else if ((conOperator.isKarakter("!=")||conOperator.isOzelKelime("NE")) && conditionLeft.isPojoVariable()
+					&&conditionLeft.getColumnNameToken()!=null && conditionLeft.getColumnNameToken().isAllArrayItems() && conditionLeft.getColumnNameToken().isPojoVariable()){
+				conWriter=new PojoSubTableContainsWriter();
+				
+			}else if ((conOperator.isKarakter('=')||conOperator.isKarakter("==")||conOperator.isOzelKelime("EQ")) && conditionRight.isOzelKelime("THRU")){
 				conWriter=new SimplePrimitiveTypeThruWriter();
 				
 			}else if ((conOperator.isKarakter('=')||conOperator.isKarakter("==")||conOperator.isOzelKelime("EQ")) && conditionRight.isMasked()){

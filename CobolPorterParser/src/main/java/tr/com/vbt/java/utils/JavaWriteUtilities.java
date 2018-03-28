@@ -204,14 +204,28 @@ public class JavaWriteUtilities extends AbstractJavaWriteUtility{
 
 	public static StringBuilder toCustomString(AbstractToken token, String castType) throws Exception  {
 		
-		StringBuilder tempCodeBuffer=new StringBuilder();
-		
 		if(castType.toUpperCase().equals("BIGDECIMAL")){
 			
 		}
 		return null;
 		
 	}
+	
+	public static String toCustomString(AbstractToken pojosDimension, boolean isIndex) {
+		
+		StringBuilder tempCodeBuffer=new StringBuilder();
+		
+		if(pojosDimension.getTip().equals(TokenTipi.Sayi)){
+			
+			tempCodeBuffer.append(toCustomNumberVariableString(pojosDimension,isIndex));
+			
+		}else if(pojosDimension.isKelime()){
+			tempCodeBuffer.append(toCustomKarakterVariableString(pojosDimension));
+		}
+		return tempCodeBuffer.toString();
+	}
+
+	
 	public static StringBuilder toCustomString(AbstractToken token) throws Exception  {
 
 		StringBuilder tempCodeBuffer=new StringBuilder();
@@ -506,6 +520,38 @@ public class JavaWriteUtilities extends AbstractJavaWriteUtility{
 		return "(int)";
 	}
 
+	private static String toCustomNumberVariableString(AbstractToken token, boolean isIndex) {
+		
+		StringBuilder tempCodeBuffer=new StringBuilder();
+		
+		Double tokenDegerDouble = null;
+
+		Long tokenDegerLong = null;
+		
+		if(token.getDeger() instanceof Double){
+			tokenDegerDouble=(Double) token.getDeger();
+			tempCodeBuffer.append((double)token.getDeger());
+		}else if(token.getDeger() instanceof Long){
+			tokenDegerLong=(Long) token.getDeger();
+			if(tokenDegerLong.equals(0)){
+				tempCodeBuffer.append("0"); //token.getDeger kullansam 0.0 üretirki bu da long tiplerde compile hatası verir.
+			}else{
+				if(isIndex){
+					tempCodeBuffer.append(token.getDeger());
+					
+				}else{
+					tempCodeBuffer.append(token.getDeger()+"l");
+									
+				}
+			}
+		}else{
+			tempCodeBuffer.append(token.getDeger());
+		}
+		
+		return tempCodeBuffer.toString();
+	}
+	
+	
 	private static String toCustomNumberVariableString(AbstractToken token) {
 		
 		StringBuilder tempCodeBuffer=new StringBuilder();
@@ -1014,15 +1060,25 @@ public class JavaWriteUtilities extends AbstractJavaWriteUtility{
 				return tempCodeBuffer.toString();
 			}
 			
-			tempCodeBuffer.append(copyTo.getDeger().toString()); //KETTAX;
 		
-			tempCodeBuffer.append(".");
+			// token.getDeger() = KETTAX
+			//columnt.getDeger() ==TAX_DETAIL
 			
-			tempCodeBuffer.append(Utility.viewNameToPojoGetterName(copyTo.getColumnNameToken().getDeger()+"_"+ddm.getDB()+"s"));
+			StringBuilder getterString=new StringBuilder();
 			
-			tempCodeBuffer.append("()");
+			getterString.append(copyTo.getDeger().toString());
+			getterString.append(".");
 			
-			return tempCodeBuffer.toString();
+			if(copyTo.getTypeNameOfView()!=null){
+				getterString.append(Utility.viewNameToPojoGetterName(copyTo.getTypeNameOfView()+"_"+ddm.getFirstLevelDDM().getDB()+"s()"));
+			}else{
+				getterString.append(Utility.viewNameToPojoGetterName(copyTo.getDeger().toString()+"_"+ddm.getFirstLevelDDM().getDB()+"s()"));
+			}
+			
+			addPojosControlMethodCloser(getterString);
+			
+			return getterString.toString();
+			
 		}
 		
 	}
@@ -1400,6 +1456,8 @@ public class JavaWriteUtilities extends AbstractJavaWriteUtility{
 			
 			throw new Exception(token.getDeger().toString()+"DDM bulunamadi.");
 		}
+
+
 
 
 

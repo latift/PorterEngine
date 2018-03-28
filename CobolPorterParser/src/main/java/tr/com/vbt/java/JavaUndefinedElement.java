@@ -20,10 +20,12 @@ public class JavaUndefinedElement extends  AbstractJavaElement {
 	
 	private List dataToDisplayList;
 	
-	public boolean writeJavaToStream() throws Exception{ super.writeJavaToStream();
+	public boolean writeJavaToStream() throws Exception{ 
+		
+		super.writeJavaToStream();
 		
 		//JavaClassElement.javaCodeBuffer.append(JavaConstants.COMMENT_ONE_LINE);
-		JavaClassElement.javaCodeBuffer.append("UNDEFINED ELEMENT");
+		JavaClassElement.javaCodeBuffer.append("UNDEFINED_ELEMENT");
 		
 		try {
 			if(this.parameters.get("dataToDisplay")!=null){

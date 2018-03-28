@@ -4,8 +4,8 @@ import java.util.LinkedList;
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.cobol.parser.Levelable;
-import tr.com.vbt.cobol.parser.datalayout.ElementDataTypeCobol;
-import tr.com.vbt.cobol.parser.datalayout.ElementGroupDataType;
+import tr.com.vbt.natural.parser.datalayout.ElementDataTypeCobol;
+import tr.com.vbt.natural.parser.datalayout.ElementGroupDataType;
 import tr.com.vbt.natural.parser.datalayout.db.ElementDBDataTypeNatural;
 import tr.com.vbt.natural.parser.datalayout.db.ElementDBMultipleUnitDataTypeNatural;
 import tr.com.vbt.natural.parser.datalayout.db.ElementDBRedefineDataGroupNatural;

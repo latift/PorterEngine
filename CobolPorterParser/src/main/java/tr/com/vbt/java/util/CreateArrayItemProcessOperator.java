@@ -122,7 +122,9 @@ public class CreateArrayItemProcessOperator extends ProcessOperator {
 			e.printStackTrace();
 			throw e;
 		}
-		
+		if(sourceElement.getDetailedCobolName().equals("")){
+			logger.debug("UNDEFINED_COBOL_KEYWORD");
+		}
 		logger.info("OPERATE RULE:"+rule.getRuleNum()+"  "+rule.getCobolDetailedName()+"  SourceElement:"+sourceElement.getDetailedCobolName()+"  JavaParentElement:"+  sourceElement.getParentJavaElement()+ " Added:"+sourceElement.getJavaElement());
 		
 		return elementForCreate;

@@ -957,8 +957,10 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 					if(index<conditionList.size()-1){
 						nextToken=conditionList.get(index+1);
 					}
-				
-					if(nextToken.isKelime("DESC")){
+					if(nextToken==null){
+						continue;
+					}
+					else if(nextToken.isKelime("DESC")){
 							curToken.setDescending(true);
 							conditionList.remove(index+1);
 					}else if(nextToken.isKelime("ASC")){
@@ -985,6 +987,7 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 			 
 			 AbstractToken newThruToken;
 			
+			 
 			for(int index=0; index<conditionList.size()-2;index++){
 					
 					curToken=conditionList.get(index);
@@ -1000,6 +1003,10 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 							
 					}else{
 						newConditionList.add(curToken);
+						if(index==conditionList.size()-3){
+							newConditionList.add(thruToken);
+							newConditionList.add(nextToken);
+						}
 					}
 					
 				

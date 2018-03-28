@@ -1,41 +1,36 @@
 package tr.com.vbt.cobol.parser.basicverbs.patern;
 
+import java.util.List;
+
 import tr.com.vbt.cobol.parser.AbstractCommand;
-import tr.com.vbt.cobol.parser.basicverbs.ElementStopRun;
+import tr.com.vbt.cobol.parser.division.ElementIdentificationDivision;
 import tr.com.vbt.lexer.ReservedCobolKeywords;
 import tr.com.vbt.patern.AbstractPattern;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.OzelKelimeToken;
 
 /**
- *   STOP RUN
+ *     STOP RUN.
  *
  */
 public class PaternStopRun extends AbstractPattern{
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		//AbstractPattern asp =new PaternAdd();
-
-	}
-	
 
 	public PaternStopRun() {
 		super();
-		//ADD
-		AbstractToken astKeyword=new OzelKelimeToken("STOP_RUN", 0, 0, 0);
+		
+		//IDENTIFICATION_DIVISION
+		AbstractToken astKeyword=new OzelKelimeToken("IDENTIFICATION_DIVISION", 0, 0, 0);
 		astKeyword.setTekrarlayabilir("+");
+		astKeyword.setSourceFieldName("FIRST_COMMAND");
 		patternTokenList.add(astKeyword);
 		
-	
 	}
 	
 	@Override
 	public AbstractCommand createElement(){
-		ElementStopRun createdElement = new ElementStopRun(ReservedCobolKeywords.STOP_RUN,"PROCEDURE_DIVISION.*.STOP_RUN");
-		return createdElement;
+		ElementIdentificationDivision elementDisplay = new ElementIdentificationDivision(ReservedCobolKeywords.IDENTIFICATION_DIVISION,"GENERAL.*.IDENTIFICATION_DIVISION");
+		return elementDisplay;
 	}
 
 
@@ -43,23 +38,13 @@ public class PaternStopRun extends AbstractPattern{
 	public void setTokenToElement(AbstractCommand matchedCommand,
 			AbstractToken currentTokenForMatch,
 			AbstractToken abstractTokenInPattern) {
-		
-	
 	}
-
-
 		
 
 
-
-
-
-	
-	
-	
-
-	
-	
+	public AbstractCommand getmatchedCommand(List<AbstractToken> tokenListesi, int offset) {
+		return super.getmatchedCommand(tokenListesi, offset);
+	}
 	
 	
 

@@ -94,6 +94,9 @@ public class ReservedCobolKeywords {
 		public static final String OPEN_OUTPUT = "OPEN_OUTPUT";
 		public static final String NOT = "NOT";
 		public static final String READ_FILE = "READ_FILE";
+		public static String  ENVIRONMENT="ENVIRONMENT";
+		public static String  IDENTIFICATION="IDENTIFICATION";
+		public static String  DIVISION="DIVISION";
 		public static String  INPUT_OUTPUT_SECTION= "INPUT-OUTPUT SECTION";
 		public static String  SOURCE_COMPUTER="SOURCE-COMPUTER";
 		public static String  OBJECT_COMPUTER="OBJECT-COMPUTER";

@@ -128,16 +128,16 @@ public class JavaNaturalClassElement extends  AbstractJavaElement{
 
 		if(ConversionLogModel.getInstance().isProgram()){
 //			@Component
-			AbstractJavaElement.javaCodeBuffer.append("@Component"+JavaConstants.NEW_LINE);
+			//AbstractJavaElement.javaCodeBuffer.append("@Component"+JavaConstants.NEW_LINE);
 //			@Service(value = "TPSFTEP1")
-			AbstractJavaElement.javaCodeBuffer.append("@Service(value = \""+interfaceName+"\")"+JavaConstants.NEW_LINE);
+			//AbstractJavaElement.javaCodeBuffer.append("@Service(value = \""+interfaceName+"\")"+JavaConstants.NEW_LINE);
 //			@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "session")
-			AbstractJavaElement.javaCodeBuffer.append("@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = \"session\")"+JavaConstants.NEW_LINE);
+			//AbstractJavaElement.javaCodeBuffer.append("@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = \"session\")"+JavaConstants.NEW_LINE);
 		}else{
 			//@Component(value = "IDGNGECI")
 			//@Scope("prototype")
-			AbstractJavaElement.javaCodeBuffer.append("@Component(value = \""+interfaceName+"\")"+JavaConstants.NEW_LINE);
-			AbstractJavaElement.javaCodeBuffer.append("@Scope(\"prototype\")"+JavaConstants.NEW_LINE);
+			//AbstractJavaElement.javaCodeBuffer.append("@Component(value = \""+interfaceName+"\")"+JavaConstants.NEW_LINE);
+			//AbstractJavaElement.javaCodeBuffer.append("@Scope(\"prototype\")"+JavaConstants.NEW_LINE);
 		}
 		
 		if(logModel.isMapOrMapTester()){

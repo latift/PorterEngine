@@ -254,6 +254,9 @@ public class JavaInputElement extends AbstractJavaElement {
 			if(currToken.getLinkedToken()!=null && currToken.getLinkedToken().getDeger().equals("DIYEZ_ORG")){
 				logger.debug("...");
 			}
+			if(currToken.getSatirNumarasi()==1671){
+				logger.debug("...");
+			}
 			long maxLength=ConvertUtilities.getVariableMaxLength(currToken);
 			logger.warn(currToken.getDeger().toString()+" "+maxLength);
 			
@@ -355,7 +358,12 @@ public class JavaInputElement extends AbstractJavaElement {
 			}
 			offset = 0;
 			
-			logger.debug("Input Match matchsPaternWord:" + newScreenIO.toString());
+			if(newScreenIO==null){
+				logger.debug("Input Match matchsPaternWord:" + newScreenIO);
+						
+			}else{
+				logger.debug("Input Match matchsPaternWord:" + newScreenIO.toString());
+			}
 	
 			return true;
 		}

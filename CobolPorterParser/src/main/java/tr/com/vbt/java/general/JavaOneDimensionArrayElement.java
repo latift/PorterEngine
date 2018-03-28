@@ -102,8 +102,13 @@ public class JavaOneDimensionArrayElement extends AbstractJavaElement {
 
 	//*S**1 #SECIM     (N2)  
 	@Override
-	public boolean writeJavaToStream() throws Exception{ super.writeJavaToStream();
+	public boolean writeJavaToStream() throws Exception{ 
+		
+		super.writeJavaToStream();
 		try {
+			
+			writeFieldAnnotation();
+			
 			dataType = (String) this.parameters.get("dataType");
 			if(this.parameters.get("length")!=null){
 				length=(int)((long) this.parameters.get("length"));

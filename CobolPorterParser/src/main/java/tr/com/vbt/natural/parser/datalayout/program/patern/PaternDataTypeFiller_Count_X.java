@@ -1,7 +1,7 @@
 package tr.com.vbt.natural.parser.datalayout.program.patern;
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
-import tr.com.vbt.cobol.parser.datalayout.ElementDataTypeCobol;
+import tr.com.vbt.natural.parser.datalayout.ElementDataTypeCobol;
 import tr.com.vbt.lexer.ReservedCobolKeywords;
 import tr.com.vbt.lexer.ReservedNaturalKeywords;
 import tr.com.vbt.natural.parser.datalayout.program.ElementProgramDataTypeNatural;

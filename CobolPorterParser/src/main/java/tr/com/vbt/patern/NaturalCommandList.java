@@ -19,8 +19,8 @@ import tr.com.vbt.cobol.parser.AbstractEndingCommand;
 import tr.com.vbt.cobol.parser.AbstractMultipleLinesCommand;
 import tr.com.vbt.cobol.parser.DataTypeMapConverter;
 import tr.com.vbt.cobol.parser.Levelable;
-import tr.com.vbt.cobol.parser.basicverbs.ElementUndefinedCobol;
-import tr.com.vbt.cobol.parser.enders.ElementEndGroupDataType;
+import tr.com.vbt.natural.parser.basicverbs.ElementUndefinedCobol;
+import tr.com.vbt.natural.parser.enders.ElementEndGroupDataType;
 import tr.com.vbt.java.util.DataTypesCommandsUtility;
 import tr.com.vbt.java.util.MultipleLinesCommandsUtility;
 import tr.com.vbt.java.utils.VariableTypes;
@@ -740,51 +740,11 @@ public class NaturalCommandList extends AbstractCommandList {
 		}
 
 	/**
-	 * 
-	 * 000100 01 WS-CONTROL-INFO. 00010000 1 current.GroupDataType=true, -->
-	 * putToBuffer 000101 05 FILLER PIC X(5). 00010100 2 current.dataType=true,
-	 * next.dataType=true, currentLevel<=nextLevel--> doNothing 000102 05
-	 * WS-CARD-JOB-ID PIC X(8). 00010200 2 current.dataType=true,
-	 * next.dataType=true, currentLevel<=nextLevel --> doNothing 000103 05
-	 * WS-CARD-JOB-ACTION PIC X(8). 00010300 3 current.dataType=true,
-	 * next.GroupDataType=true, next.level<=current.level --> doNothing 000104
-	 * 05 WS-CARD-SOURCE-OR-DD. 00010400 1 current.GroupDataType=true, -->
-	 * putToBuffer 000105 10 WS-CARD-SOURCE-ONLY PIC X(8). 00010500 2
-	 * current.dataType=true, next.dataType=true, currentLevel<=nextLevel -->
-	 * doNothing 000106 10 WS-CARD-DDNAME PIC X(8). 00010700 3
-	 * current.dataType=true, next.GroupDataType=true, currentLevel<=nextLevel
-	 * --> doNothing 000108 10 WS-CARD-DSID-AREA 00010800 1
-	 * current.GroupDataType=true, --> putToBuffer 000109 15
-	 * WS-CARD-DSID-PREFIX. 00010900 1 current.GroupDataType=true, -->
-	 * putToBuffer 000110 20 WS-CARD-DSID-PREFIX-1 PIC X(01). 2
-	 * current.dataType=true, next.dataType=true, currentLevel<=nextLevel -->
-	 * doNothing 000112 20 WS-CARD-DSID-PREFIX-2 PIC X(01). 2
-	 * current.dataType=true, next.dataType=true, currentLevel<=nextLevel -->
-	 * doNothing 000114 20 WS-CARD-DSID-PREFIX-3 PIC X(01). 4
-	 * current.dataType=true, next.dataType=true, currentLevel>nextLevel -->
-	 * addEnderFromBuffer 000116 15 WS-CARD-DSID-FILLER PIC X(05). 4
-	 * current.dataType=true, next.dataType=true, currentLevel>nextLevel-->
-	 * addEnderFromBuffer 000118 10 WS-CARD-NUMB-TERM PIC 9(4). 00011800 3
-	 * current.dataType=true, next.GroupDataType=true, currentLevel<=nextLevel
-	 * --> doNothing 000119 10 WS-CARD-VERSION-AREA REDEFINES WS-CARD-NUMB-TERM.
-	 * 00011900 1 current.GroupDataType=true, --> putToBuffer 000121 15
-	 * WS-CARD-VERSION PIC X(01). 00012100 2 current.dataType=true,
-	 * next.dataType=true, currentLevel<=nextLevel--> doNothing 000123 15
-	 * WS-CARD-VERSION-FILLER PIC X(03). 00012300 5 current.dataType=true,
-	 * next.GroupDataType=true, currentLevel>nextLevel --> addEnderFromBuffer
-	 * 000125 05 WS-CARD-APPLICATION REDEFINES WS-CARD-SOURCE-OR-DD. 00012500 1
-	 * current.GroupDataType=true, --> putToBuffer 000126 10 WS-CARD-APP-ID PIC
-	 * X 00012600 2 current.dataType=true, next.dataType=true,
-	 * currentLevel<=nextLevel --> doNothing 000129 10 FILLER PIC XX. 00012900 4
-	 * current.dataType=true, next.dataType=true, currentLevel>nextLevel -->
-	 * addEnderFromBuffer 000130 05 FILLER PIC X(47). 00013000 6
-	 * current.dataType=true, next.dataType=false, next.GroupDataType=false -->
-	 * addEnderFromBuffer
-	 * 
-	 * 
-	 * 1) current.GroupDataType=true, --> putToBuffer 2) current.DataType=true,
-	 * next.dataType=false, next.GroupDataType=false--> addEnderFromBuffer-->
-	 * addEnderFromBuffer since currentLevel<=01 3)
+
+	 * 1) current.GroupDataType=true, --> putToBuffer 
+	 * 2) current.DataType=true, next.dataType=false, next.GroupDataType=false--> addEnderFromBuffer-->
+	 * addEnderFromBuffer since currentLevel<=01 
+	 * 3)
 	 * current.DataType=true,currentLevel>nextLevel --> addEnderFromBuffer-->
 	 * addEnderFromBuffer since currentLevel<=nextLevel
 	 * 
@@ -804,7 +764,7 @@ public class NaturalCommandList extends AbstractCommandList {
 			logger.info("Next Command:" + nextCommand.toString());
 			
 			// 1) current.GroupDataType=true, --> putToBuffer
-			if (DataTypesCommandsUtility.isGroupDataType(currentCommand) && DataTypesCommandsUtility.isGroupDataType(nextCommand) && currentCommand.getLevelOfCode()==nextCommand.getLevelOfCode()) {
+			if (DataTypesCommandsUtility.isGroupDataType(currentCommand) && DataTypesCommandsUtility.isGroupDataType(nextCommand) && currentCommand.getLevelNumber()==nextCommand.getLevelNumber()) {
 				
 				try {
 					if(currentLevelable==null){
@@ -1282,6 +1242,7 @@ public class NaturalCommandList extends AbstractCommandList {
 		ElementRedefineDataTypeOfSimpleDataType redefinerElement = null, redefinedCommandLevel2 = null;
 		ElementProgramRedefineGrupNatural redefineGroupCommand;
 		ElementProgramDataTypeNatural redefinedCommand = null;
+		ElementDBDataTypeNatural redefinedDbDataTypeCommand=null;
 
 		int indexY;
 		for (int indexX = 0; indexX < commandList.size(); indexX++) {
@@ -1292,7 +1253,11 @@ public class NaturalCommandList extends AbstractCommandList {
 				logger.debug("redefineGroupCommand: " + redefineGroupCommand);
 				logger.debug("redefineGroupCommand.getRedefinedCommand: " + redefineGroupCommand.getRedefinedCommand());
 				try {
-					redefinedCommand = (ElementProgramDataTypeNatural) redefineGroupCommand.getRedefinedCommand();
+					if(redefineGroupCommand.getRedefinedCommand()  instanceof  ElementProgramDataTypeNatural){
+						redefinedCommand = (ElementProgramDataTypeNatural) redefineGroupCommand.getRedefinedCommand();
+					}else if(redefineGroupCommand.getRedefinedCommand()  instanceof  ElementDBDataTypeNatural){
+						redefinedDbDataTypeCommand=(ElementDBDataTypeNatural) redefineGroupCommand.getRedefinedCommand();
+					}
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

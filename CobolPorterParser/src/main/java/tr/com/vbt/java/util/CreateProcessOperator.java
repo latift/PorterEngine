@@ -537,6 +537,9 @@ public class CreateProcessOperator extends ProcessOperator {
 			throw e;
 		}
 		sourceElement.setJavaElement(elementForCreate);
+		if(sourceElement.getDetailedCobolName().equals("")){
+			logger.debug("UNDEFINED_COBOL_KEYWORD");
+		}
 		logger.info("OPERATE RULE:" + rule.getRuleNum() + "  " + rule.getCobolDetailedName() + "  SourceElement:" + sourceElement.getDetailedCobolName() + "  JavaParentElement:" + sourceElement.getParentJavaElement() + " Added:" + sourceElement.getJavaElement());
 
 		return elementForCreate;

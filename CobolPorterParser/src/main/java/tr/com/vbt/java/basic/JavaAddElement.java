@@ -28,7 +28,21 @@ public class JavaAddElement extends  AbstractJavaElement {
 		
 		destList=(List<AbstractToken>) this.getParameters().get("DESTINATION");
 		try{
-			if(destList.get(0).isPojoVariable()){
+			String typeOfCopyTo=ConvertUtilities.getTypeOfVariable(destList.get(0));
+			
+			 if(typeOfCopyTo.equalsIgnoreCase("bigdecimal")){
+					
+					//cast=JavaWriteUtilities.addCast(copyTo,copyFrom.get(0));
+					
+					fromBigDecimalToBigDecimal();
+					
+					//JavaWriteUtilities.endCast(cast);
+					
+					JavaWriteUtilities.addTypeChangeFunctionToEnd(destList.get(0),sourceList.get(0));
+					
+					JavaClassElement.javaCodeBuffer.append(")"+JavaConstants.DOT_WITH_COMMA);
+					
+			}else if(destList.get(0).isPojoVariable()){
 				
 				JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomSetterString(destList.get(0)));
 				
@@ -40,7 +54,7 @@ public class JavaAddElement extends  AbstractJavaElement {
 					JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(sourceList.get(i)));
 				}
 				
-				JavaClassElement.javaCodeBuffer.append(")");
+				JavaClassElement.javaCodeBuffer.append(")"+JavaConstants.DOT_WITH_COMMA);
 				
 				//Pojodan Arraya
 			}else{
@@ -54,6 +68,17 @@ public class JavaAddElement extends  AbstractJavaElement {
 			ConvertUtilities.writeconversionErrors(e, this); 
 		}
 		return true;
+	}
+	
+	private void fromBigDecimalToBigDecimal() throws Exception {
+		
+		JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(destList.get(0)));
+		JavaClassElement.javaCodeBuffer.append("=");
+			
+		JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(destList.get(0)));
+		JavaClassElement.javaCodeBuffer.append(".add(");
+		JavaClassElement.javaCodeBuffer.append(JavaWriteUtilities.toCustomString(sourceList.get(0)));
+			
 	}
 
 	@Override

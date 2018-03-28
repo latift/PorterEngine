@@ -1,27 +1,29 @@
 package tr.com.vbt.cobol.parser.division;
 
-import tr.com.vbt.cobol.parser.AbstractMultipleLinesCommand;
+import java.util.List;
+
+import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.lexer.ReservedCobolKeywords;
+import tr.com.vbt.token.AbstractToken;
 
-public class ElementIdentificationDivision extends AbstractMultipleLinesCommand{
-
-	String PROGRAM_ID;
-	String AUTHOR;
-	String DATE_WRITTEN;
+//IDENTIFICATION DIVISION.
+public class ElementIdentificationDivision extends AbstractCommand{
 	
+	public ElementIdentificationDivision(AbstractToken baseToken,
+			List<AbstractToken> tokenListesi, AbstractCommand parent) {
+		super("ElementIdentificationDivision","GENERAL.*.IDENTIFICATION_DIVISION");
+	}
 	
 	public ElementIdentificationDivision(String elementName,String detailedCobolName) {
 		super(elementName, detailedCobolName);
 	}
-	
+
 
 	@Override
 	public String exportContents() {
 		StringBuilder sb=new StringBuilder();
-		sb.append(" "+ReservedCobolKeywords.IDENTIFICATION_DIVISION);
-		sb.append(" "+ReservedCobolKeywords.PROGRAM_ID +"=\""+ this.PROGRAM_ID+"\"\n");
-		sb.append(ReservedCobolKeywords.AUTHOR +"=\""+ this.AUTHOR+"\"\n");
-		sb.append(ReservedCobolKeywords.DATE_WRITTEN +"=\""+ this.DATE_WRITTEN+"\"\n");
+		sb.append(" "+ReservedCobolKeywords.IDENTIFICATION_DIVISION );
+		sb.append("\n");
 		return sb.toString();
 	}
 
@@ -34,36 +36,11 @@ public class ElementIdentificationDivision extends AbstractMultipleLinesCommand{
 	@Override
 	public String exportCommands() {
 		StringBuilder sb=new StringBuilder();
-		sb.append(" "+ReservedCobolKeywords.IDENTIFICATION_DIVISION);
-		sb.append(" "+ReservedCobolKeywords.PROGRAM_ID +"=\""+ this.PROGRAM_ID);
-		sb.append(" "+ReservedCobolKeywords.AUTHOR +"=\""+ this.AUTHOR);
-		sb.append(" "+ReservedCobolKeywords.DATE_WRITTEN +"=\""+ this.DATE_WRITTEN+"\"\n");
+		sb.append(" "+ReservedCobolKeywords.IDENTIFICATION_DIVISION );
+		sb.append("\n");
 		return sb.toString();
 	}
 
-	public String getPROGRAM_ID() {
-		return PROGRAM_ID;
-	}
-
-	public void setPROGRAM_ID(String pROGRAM_ID) {
-		PROGRAM_ID = pROGRAM_ID;
-	}
-
-	public String getAUTHOR() {
-		return AUTHOR;
-	}
-
-	public void setAUTHOR(String aUTHOR) {
-		AUTHOR = aUTHOR;
-	}
-
-	public String getDATE_WRITTEN() {
-		return DATE_WRITTEN;
-	}
-
-	public void setDATE_WRITTEN(String dATE_WRITTEN) {
-		DATE_WRITTEN = dATE_WRITTEN;
-	}
-
+	
 	
 }

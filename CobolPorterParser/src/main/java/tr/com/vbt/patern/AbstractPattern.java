@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
-import tr.com.vbt.cobol.parser.conditions.AbstractConditionCommand;
+import tr.com.vbt.natural.parser.conditions.AbstractConditionCommand;
 import tr.com.vbt.java.util.Utility;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.TokenTipi;

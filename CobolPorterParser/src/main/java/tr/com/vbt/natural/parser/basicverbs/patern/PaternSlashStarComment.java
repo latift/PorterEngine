@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
-import tr.com.vbt.cobol.parser.basicverbs.ElementComment;
+import tr.com.vbt.natural.parser.basicverbs.ElementComment;
 import tr.com.vbt.lexer.ReservedCobolKeywords;
 import tr.com.vbt.patern.carriage_return.AbstractPatternFromXToYWithCarriageReturn;
 import tr.com.vbt.token.AbstractToken;

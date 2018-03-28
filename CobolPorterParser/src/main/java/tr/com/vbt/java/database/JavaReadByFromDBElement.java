@@ -139,9 +139,14 @@ public class JavaReadByFromDBElement extends AbsctractConditionalJavaElement {
 			// itName="it"+pojoType;
 			itName = itNameManager.createIteratorName(pojoType);
 
-			calculatedResultListName = viewName.getTypeNameOfView().replaceAll("-", "_") + "_RESULT_LIST";
-			calculatedDAOName = viewName.getTypeNameOfView().replaceAll("-", "_") + "_DAO";
-
+			if(viewName.getColumnNameToken()!=null){
+				calculatedResultListName = viewName.getColumnNameToken().getDeger() + "_RESULT_LIST";
+				calculatedDAOName = viewName.getColumnNameToken().getDeger() + "_DAO";
+			}else{
+				calculatedResultListName = viewName.toCustomString() + "_RESULT_LIST";
+				calculatedDAOName = viewName.toCustomString() + "_DAO";
+			}
+			
 			javaIfNoRecords = this.getChildWithName("JavaIfNoRecords");
 
 			// LIMAN_RESULT_LIST=LIMAN_DAO.findByMusno2AndReferansSmallerAndOpenParBsicilOrAsicilCloseParAndIslemTar(GecMusno2,
@@ -181,9 +186,16 @@ public class JavaReadByFromDBElement extends AbsctractConditionalJavaElement {
 
 			addTryBlock();
 			// LIMAN=it.next();
-			JavaClassElement.javaCodeBuffer.append(viewName.toCustomString() + "=" + itName + ".next()"
+			String viewNameForJava;
+			if(viewName.getColumnNameToken()!=null){
+				viewNameForJava=viewName.getColumnNameToken().getDeger().toString();
+			}else{
+				viewNameForJava=viewName.getDeger().toString();
+			}
+			JavaClassElement.javaCodeBuffer.append(viewNameForJava + "=" + itName + ".next()"
 					+ JavaConstants.DOT_WITH_COMMA + JavaConstants.NEW_LINE);
-
+		
+			
 			if (ConversionLogModel.getInstance().getCustomer().equals("THY")) {
 				JavaClassElement.javaCodeBuffer.append("ISN=(int) " + viewName.toCustomString() + ".getIsn()"
 						+ JavaConstants.DOT_WITH_COMMA + JavaConstants.NEW_LINE);

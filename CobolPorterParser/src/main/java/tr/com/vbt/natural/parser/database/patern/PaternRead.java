@@ -140,6 +140,9 @@ public class PaternRead extends AbstractPatternFromXToYWithoutCarriageReturn {
 		while(tokenListIterator.hasNext())	{ //Satir Başı bu paternlerde önemli ancak bitişte önemli başlangıçta bunu atlıyoruz.
 			currentTokenForMatch=tokenListIterator.next();
 			matchedCommand.increaseCommandsMatchPoint();
+			if(currentTokenForMatch.isOzelKelime("WITH")){
+				return null;
+			}
 			if(!currentTokenForMatch.getTip().equals(TokenTipi.SatirBasi)){
 				break;
 			}
@@ -164,6 +167,8 @@ public class PaternRead extends AbstractPatternFromXToYWithoutCarriageReturn {
 					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.ENDING_AT)
 					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.EQ)
 					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.NE)
+					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.GT)
+					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.LT)
 					&&!currentTokenForMatch.getDeger().equals(ReservedCobolKeywords.NUMERIC)){ //IFElement için eklendi
 				if(currentTokenForMatch.tokenMatchs(enderToken)){
 					logger.info(" MATCHED: "+currentTokenForMatch.getDeger());

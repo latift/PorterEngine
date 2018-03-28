@@ -235,6 +235,8 @@ public class PaternFindOneWith extends AbstractPatternFromXToYWithoutCarriageRet
 					&&!currentTokenForMatch.getDeger().equals(ReservedCobolKeywords.IS_NUMERIC)
 					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.EQ)
 					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.NE)
+					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.GT)
+					&&!currentTokenForMatch.getDeger().equals(ReservedNaturalKeywords.LT)
 					&&!currentTokenForMatch.getDeger().equals(ReservedCobolKeywords.NUMERIC)){ //IFElement için eklendi
 				if(currentTokenForMatch.tokenMatchs(enderToken)){
 					logger.info(" MATCHED: "+currentTokenForMatch.getDeger());

@@ -392,6 +392,7 @@ public class NaturalLexing extends AbstractLexing {
 				while ((callNatParam.getTip().equals(TokenTipi.Kelime)
 						|| callNatParam.getTip().equals(TokenTipi.SatirBasi)
 						|| callNatParam.getTip().equals(TokenTipi.Nokta)
+						|| callNatParam.getTip().equals(TokenTipi.Sayi)
 						|| callNatParam.getTip().equals(TokenTipi.Array)
 						|| callNatParam.getTip().equals(TokenTipi.Karakter))) {
 
@@ -1680,6 +1681,7 @@ public class NaturalLexing extends AbstractLexing {
 			currentTokenizer.eolIsSignificant(true);
 			currentTokenizer.ordinaryChar('/');
 			currentTokenizer.wordChars('_', '_');
+			currentTokenizer.wordChars('#', '#');
 			// currentTokenizer.whitespaceChars('.', '.');
 			currentTokenizer.ordinaryChar('.');
 			// print the stream tokens
@@ -1716,6 +1718,7 @@ public class NaturalLexing extends AbstractLexing {
 					if (tokenVal.equals(ReservedCobolKeywords.PROCEDURE_DIVISION)) {
 
 					}
+					tokenVal=operateDiyez(tokenVal);
 					if (naturalOzelKelimeler.ozelKelimeler.contains(tokenVal) && !inComment) {
 						// Öncesinde diyez varsa ve comment içinde değilse
 						// diyezi tokenListe eklemedik. Sonra gelen eleman
@@ -1725,7 +1728,7 @@ public class NaturalLexing extends AbstractLexing {
 						tokenListesi.add(ozelKelime);
 
 					} else {
-						tokenListesi.add(new KelimeToken(currentTokenizer.sval.replaceAll("-", "_"),
+						tokenListesi.add(new KelimeToken(tokenVal.replaceAll("-", "_"),
 								currentTokenizer.lineno(), 0, satirdakiTokenSirasi));
 					}
 					satirdakiTokenSirasi++;
@@ -1817,7 +1820,7 @@ public class NaturalLexing extends AbstractLexing {
 		
 		joinKeywordsWithSpaces(); // Remove da icinde.
 		
-		controlDiyezToken();
+		//controlDiyezToken();
 		
 		changeLastDotToEnd(); //Bazen kodu . ile bitiriyorlar. Bu durumda END ile replace ediyoruz.
 		
@@ -1924,6 +1927,17 @@ public class NaturalLexing extends AbstractLexing {
 
 	
 
+
+	private String operateDiyez(String tokenVal) {
+		logger.debug(tokenVal);
+		if(tokenVal.charAt(0)=='#'){
+			return "DIYEZ_"+tokenVal.substring(1);
+		}else if(tokenVal.charAt(tokenVal.length()-1)=='#'){
+			return tokenVal.substring(0,tokenVal.length()-1)+"_DIYEZ";
+		}else{
+			return tokenVal.replaceAll("#", "_DIYEZ_");
+		}
+	}
 
 	/*
 	 * Sadece MAP conversion durumunda çalışır
@@ -3543,7 +3557,8 @@ public class NaturalLexing extends AbstractLexing {
 						logger.debug("");
 					}
 					if (tableColumnReferans.containsKey(columnName)) {
-
+						
+						
 						String schemaName;
 					
 						if (tableColumnReferans.get(columnName).contains(".")) {
@@ -3743,7 +3758,9 @@ public class NaturalLexing extends AbstractLexing {
 				nextToken=tokenListesi.get(index+1);
 				index++; //ViewOf tanımını atlamak için kondu PERF30 VIEW OF PERF30
 				ViewManagerFactory.getInstance(tableColumnReferans).setTypeNameOfViews(tableNameToken);
-				tableColumnReferans.put(tableNameToken.getDeger().toString(), nextToken.getDeger().toString() );
+				//View of içindeki ifade tableColumnReferans da tutulmamali. TableColumnReferans adi üstünde table-column iliskisidir.
+				//Gerekiyorsa Viewof içindeki bilgi başka bir referans da tutulmali.
+				//tableColumnReferans.put(tableNameToken.getDeger().toString(), nextToken.getDeger().toString() );
 			}else if(inViewOfState){
 				if(curToken.isKelime()){
 					

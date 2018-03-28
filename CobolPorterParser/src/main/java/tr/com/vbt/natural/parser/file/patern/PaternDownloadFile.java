@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
-import tr.com.vbt.cobol.parser.file.ElementCloseFile;
+import tr.com.vbt.natural.parser.file.ElementCloseFile;
 import tr.com.vbt.lexer.ReservedCobolKeywords;
 import tr.com.vbt.natural.parser.file.ElementDownloadFile;
 import tr.com.vbt.patern.carriage_return.AbstractPatternFromXToYWithCarriageReturn;
