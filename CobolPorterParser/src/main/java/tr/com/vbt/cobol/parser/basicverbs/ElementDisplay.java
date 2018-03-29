@@ -1,17 +1,21 @@
 package tr.com.vbt.cobol.parser.basicverbs;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.lexer.ReservedCobolKeywords;
+import tr.com.vbt.lexer.ReservedNaturalKeywords;
 import tr.com.vbt.token.AbstractToken;
 
 //PROCEDURE DIVISION.
 public class ElementDisplay extends AbstractCommand{
 	
+	private List<String> dataToDisplay=new ArrayList<String>();
+	
 	public ElementDisplay(AbstractToken baseToken,
 			List<AbstractToken> tokenListesi, AbstractCommand parent) {
-		super("ElementIdentificationDivision","GENERAL.*.IDENTIFICATION_DIVISION");
+		super("ElementDisplay","GENERAL.*.DISPLAY");
 	}
 	
 	public ElementDisplay(String elementName,String detailedCobolName) {
@@ -22,8 +26,11 @@ public class ElementDisplay extends AbstractCommand{
 	@Override
 	public String exportContents() {
 		StringBuilder sb=new StringBuilder();
-		sb.append(" "+ReservedCobolKeywords.IDENTIFICATION_DIVISION );
-		sb.append("\n");
+		sb.append(" "+ReservedNaturalKeywords.DISPLAY +"=\"");
+		for (String data : dataToDisplay) {
+			sb.append(" "+ data);	
+		}
+		sb.append("\"\n");
 		return sb.toString();
 	}
 
@@ -36,10 +43,22 @@ public class ElementDisplay extends AbstractCommand{
 	@Override
 	public String exportCommands() {
 		StringBuilder sb=new StringBuilder();
-		sb.append(" "+ReservedCobolKeywords.IDENTIFICATION_DIVISION );
+		sb.append(" "+ReservedNaturalKeywords.DISPLAY +"=\"");
+		for (String data : dataToDisplay) {
+			sb.append(" "+ data);	
+		}
 		sb.append("\n");
 		return sb.toString();
 	}
+
+	public List<String> getDataToDisplay() {
+		return dataToDisplay;
+	}
+
+	public void setDataToDisplay(List<String> dataToDisplay) {
+		this.dataToDisplay = dataToDisplay;
+	}
+
 
 	
 	

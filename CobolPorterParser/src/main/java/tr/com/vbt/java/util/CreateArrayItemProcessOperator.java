@@ -85,6 +85,10 @@ public class CreateArrayItemProcessOperator extends ProcessOperator {
 	
 		String javaElement=rule.getJavaElement();
 		
+		if(javaElement==null){
+			throw new RuntimeException("CreateArrayItemProcessOperator Rule Java Sınıfı tanımlanmanmamış: Rule No:"+rule.getRuleNum());
+		}
+		
 		if(javaElement.equals("JavaFunctionElement")){
 			elementForCreate=new JavaFunctionElement();
 		}else if(javaElement.equals("JavaFunctionMainElement")){
@@ -105,11 +109,17 @@ public class CreateArrayItemProcessOperator extends ProcessOperator {
 			elementForCreate=new JSPDisplayFormElement();
 		}
 		
-		
+		if(elementForCreate==null){
+			throw new RuntimeException("CreateArrayItemProcessOperator Sınıfına Element tanımı eklenmeli.. Element:"+javaElement);
+		}
 		logger.info("test3");
 		
 		setParentJava(rule,sourceElement);
 		
+		if (sourceElement.getParentJavaElement()== null) {
+			throw new RuntimeException("CreateArrayItemProcessOperator Source un ParentJavası null. SourceElement:"+sourceElement+" Rule:"+rule.getRuleNum());
+		}
+	
 		sourceElement.getParentJavaElement().getChildren().add(elementForCreate);
 		
 		sourceElement.setJavaElement(elementForCreate);

@@ -54,6 +54,8 @@ public interface CommandList {
 	public void changeProgramDataTypeToDBDataType();
 	
 	public Set<String> getUndefinedCommandSet();
+	
+	public void addDefineData() ;
 
 	
 }

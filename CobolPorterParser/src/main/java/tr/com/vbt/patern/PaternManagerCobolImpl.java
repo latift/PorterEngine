@@ -8,7 +8,11 @@ import org.apache.log4j.Logger;
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.cobol.parser.basicverbs.ElementUndefinedCobol;
+import tr.com.vbt.cobol.parser.basicverbs.patern.PaternDisplay;
+import tr.com.vbt.cobol.parser.basicverbs.patern.PaternEnd;
+import tr.com.vbt.cobol.parser.basicverbs.patern.PaternStopRun;
 import tr.com.vbt.cobol.parser.division.patern.PaternIdentificationDivision;
+import tr.com.vbt.cobol.parser.general.patern.PaternMain;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.TokenTipi;
 
@@ -25,12 +29,17 @@ public class PaternManagerCobolImpl  implements PaternManager{
 		
 		//Div And Sections Start
 		commmandPatternList.add(new PaternIdentificationDivision());
+		commmandPatternList.add(new PaternMain());
 		//Div And Sections Start
 		
 		//DataType Start
 		//DataType Start
 	
 		//Basic Verb Start
+		commmandPatternList.add(new PaternEnd());
+		commmandPatternList.add(new PaternDisplay());
+		commmandPatternList.add(new PaternStopRun());
+		
 		//Basic Verb End
 		
 		//Condition Start

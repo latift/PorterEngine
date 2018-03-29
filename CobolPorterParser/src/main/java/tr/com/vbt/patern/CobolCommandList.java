@@ -4,14 +4,11 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
-
 import org.slf4j.MDC;
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
@@ -19,22 +16,20 @@ import tr.com.vbt.cobol.parser.AbstractEndingCommand;
 import tr.com.vbt.cobol.parser.AbstractMultipleLinesCommand;
 import tr.com.vbt.cobol.parser.DataTypeMapConverter;
 import tr.com.vbt.cobol.parser.Levelable;
-import tr.com.vbt.natural.parser.basicverbs.ElementUndefinedCobol;
-import tr.com.vbt.natural.parser.enders.ElementEndGroupDataType;
+import tr.com.vbt.cobol.parser.division.enders.ElementEndIdentificationDivision;
+import tr.com.vbt.cobol.parser.division.enders.ElementEndProcedureDivision;
+import tr.com.vbt.cobol.parser.enders.ElementEndDefineData;
+import tr.com.vbt.cobol.parser.general.ElementDefineData;
 import tr.com.vbt.java.util.DataTypesCommandsUtility;
-import tr.com.vbt.java.util.MultipleLinesCommandsUtility;
+import tr.com.vbt.java.util.MultipleLinesCommandsCobolUtility;
 import tr.com.vbt.java.utils.VariableTypes;
 import tr.com.vbt.lexer.AbstractLexing;
 import tr.com.vbt.lexer.ConversionLogModel;
-import tr.com.vbt.lexer.NaturalMode;
 import tr.com.vbt.lexer.ReservedCobolKeywords;
 import tr.com.vbt.lexer.ReservedNaturalKeywords;
-import tr.com.vbt.natural.parser.conditions.enders.ElementEndNone;
-import tr.com.vbt.natural.parser.conditions.enders.ElementEndValue;
-import tr.com.vbt.natural.parser.conditions.enders.ElementEndWhen;
+import tr.com.vbt.natural.parser.basicverbs.ElementUndefinedCobol;
 import tr.com.vbt.natural.parser.datalayout.db.ElementDBDataTypeNatural;
 import tr.com.vbt.natural.parser.datalayout.db.ElementDBViewOfNatural;
-import tr.com.vbt.natural.parser.datalayout.db.enders.ElementEndLocal;
 import tr.com.vbt.natural.parser.datalayout.db.enders.ElementEndParameter;
 import tr.com.vbt.natural.parser.datalayout.program.ElementProgramDataTypeNatural;
 import tr.com.vbt.natural.parser.datalayout.program.ElementProgramGrupNatural;
@@ -44,7 +39,7 @@ import tr.com.vbt.natural.parser.datalayout.program.redefiners.ElementOneDimenRe
 import tr.com.vbt.natural.parser.datalayout.program.redefiners.ElementProgramRedefineGrupNatural;
 import tr.com.vbt.natural.parser.datalayout.program.redefiners.ElementRedefineDataTypeOfSimpleDataType;
 import tr.com.vbt.natural.parser.datalayout.program.redefiners.ElementTwoDimenRedefineArrayOfOneDimenArray;
-import tr.com.vbt.natural.parser.enders.ElementEndSubroutine;
+import tr.com.vbt.natural.parser.enders.ElementEndGroupDataType;
 import tr.com.vbt.natural.parser.loops.ElementLoop;
 import tr.com.vbt.natural.parser.screen.ElementEndDefineWindow;
 import tr.com.vbt.token.AbstractToken;
@@ -327,7 +322,7 @@ public class CobolCommandList extends AbstractCommandList {
 	}
 
 	public void findAndSetEndingCommands() throws Exception {
-		MultipleLinesCommandsUtility utility = new MultipleLinesCommandsUtility();
+		MultipleLinesCommandsCobolUtility utility = new MultipleLinesCommandsCobolUtility();
 		for (AbstractCommand command : commandList) {
 
 			if (utility.isStarter(command)) {
@@ -359,30 +354,36 @@ public class CobolCommandList extends AbstractCommandList {
 	 */
 	public void addVirtualEndings() {
 
-		addVirtualEndingForLocal();
+		addVirtualEndingForIdentificationDivision();
 		
-		addVirtualEndingForParameter();
+		//addVirtualEndingForProcedureDivision();
+		
+		addVirtualEndingForDefineData();
 
-		addVirtualEndingForDefineWindow();
-
-		addVirtualEndingForValue();
-		
-		addVirtualEndingForNone();
-		
-		addVirtualEndingSubroutine();
-		
-		addVirtualEndingWhen();
-		
-		addVirtualLoopForFindAndRead(); //Read yada Find if yada for gibi bir şeyin icinde ise mutlaka loop la kapatilir. 
-		
-		enderManagerForReportMode.addVirtualEndersForReportMode();
-		
 	}
 
+	private void addVirtualEndingForDefineData() {
+		ElementEndDefineData elementEndDefineData;
 
+		AbstractCommand curCommand;
+		
+		for (int index = 0; index < commandList.size() - 1; index++) {
+
+			curCommand = commandList.get(index);
+
+			if (curCommand.getCommandName().equals(ReservedCobolKeywords.PROCEDURE_DIVISION)) {
+				
+				elementEndDefineData = new ElementEndDefineData("ElementEndDefineData", "GENERAL.*.END-DEFINE-DATA");
+				
+				commandList.add(index,elementEndDefineData);
+				break;
+				
+			}
+		}
+	}	
 	
-	private void addVirtualEndingWhen() {
-		ElementEndWhen elementEndWhen;
+	private void addVirtualEndingForIdentificationDivision() {
+		ElementEndIdentificationDivision elementEndIdentificationDivision;
 
 		AbstractCommand curCommand;
 		AbstractCommand nextCommand;
@@ -393,7 +394,7 @@ public class CobolCommandList extends AbstractCommandList {
 
 			System.out.println(curCommand.getCommandName());
 
-			if (curCommand.getCommandName().equals(ReservedNaturalKeywords.WHEN)) {
+			if (curCommand.getCommandName().equals(ReservedCobolKeywords.IDENTIFICATION_DIVISION)) {
 
 				while (true) {
 					index++;
@@ -402,133 +403,21 @@ public class CobolCommandList extends AbstractCommandList {
 					}
 					nextCommand = commandList.get(index);
 
-					if (nextCommand.getCommandName().equals(ReservedNaturalKeywords.WHEN)
-							|| nextCommand.getCommandName().equals(ReservedNaturalKeywords.END_DECIDE)
-							|| nextCommand.getCommandName().equals(ReservedNaturalKeywords.DECIDE)
-							|| nextCommand.getCommandName().equals(ReservedNaturalKeywords.DECIDE_FIRST_CONDITION)
-							|| nextCommand.getCommandName().equals(ReservedNaturalKeywords.DECIDE_ON_FIRST_VALUE)) {
+					if (nextCommand.getCommandName().equals(ReservedCobolKeywords.PROCEDURE_DIVISION)) {
 
-						elementEndWhen = new ElementEndWhen("ElementEndWhen", "GENERAL.*.END_WHEN");
-						elementEndWhen.setVisualCommand(true);
-						commandList.add(index, elementEndWhen);
+						elementEndIdentificationDivision = new ElementEndIdentificationDivision("ElementEndIdentificationDivision", "GENERAL.*.END_IDENTIFICATION_DIVISION");
+						elementEndIdentificationDivision.setVisualCommand(true);
+						elementEndIdentificationDivision.setSatirNumarasi(nextCommand.getSatirNumarasi());
+						commandList.add(index, elementEndIdentificationDivision);
 						break;
 					}
 				}
 			}
 		}
-	}
-
-	private void addVirtualEndingSubroutine() {
-		
-		if(ConversionLogModel.getInstance().getMode().equals(NaturalMode.STRUCTRURED)){
-			return;
-		}
-		
-		AbstractCommand curCommand = null, nextCommand, preCommand;
-		
-		AbstractCommand elementEndSubroutine = null;
-		
-		boolean firstSubroutineReached = false;
-		
-		for (int index = 0; index < commandList.size(); index++) {
-
-			curCommand = commandList.get(index);
+	}	
 	
-			if(curCommand.getCommandName().equals(ReservedNaturalKeywords.SUBROUTINE)){
-				
-				if(firstSubroutineReached){
-					
-					preCommand = commandList.get(index-1);
-					if(preCommand.getCommandName().equals(ReservedNaturalKeywords.END_SUBROUTINE)){
-						
-						continue;  //END_SUBROUTINE varsa bir şey yapma
-						
-					}else{
-						elementEndSubroutine=new ElementEndSubroutine(ReservedNaturalKeywords.END_SUBROUTINE,"GENERAL.END-SUBROUTINE");
-						
-						elementEndSubroutine.setVisualCommand(true);
-						
-						elementEndSubroutine.setSatirNumarasi(curCommand.getSatirNumarasi());
-						
-						commandList.add(index, elementEndSubroutine);
-						
-						index++;
-					}
-				
-				}else{
-				
-					firstSubroutineReached=true;
-				}
-			}
-			
-		}
-		
-		//Add SubroutineEnder before END
-		if(firstSubroutineReached){
-			
-			if(!commandList.get(commandList.size()-2).getCommandName().equals(ReservedNaturalKeywords.END_SUBROUTINE)){
-			
-				elementEndSubroutine=new ElementEndSubroutine(ReservedNaturalKeywords.END_SUBROUTINE,"GENERAL.END-SUBROUTINE");
-				
-				elementEndSubroutine.setVisualCommand(true);
-			
-				elementEndSubroutine.setSatirNumarasi(curCommand.getSatirNumarasi());
-			
-				commandList.add(commandList.size()-1, elementEndSubroutine);
-			}
-		}
-		
-		
-	}
-
-	
-
-	
-	
-
-	
-
-	private void addVirtualEndingForValue() {
-		ElementEndValue elementEndValue;
-
-		AbstractCommand curCommand;
-		AbstractCommand nextCommand;
-
-		for (int index = 0; index < commandList.size() - 1; index++) {
-
-			curCommand = commandList.get(index);
-
-			logger.debug(curCommand.getCommandName());
-
-			if (curCommand.getCommandName().equals(ReservedNaturalKeywords.VALUE)) {
-
-				while (true) {
-					index++;
-					if (index == commandList.size() - 1) {
-						break;
-					}
-					nextCommand = commandList.get(index);
-
-					if (nextCommand.getCommandName().equals(ReservedNaturalKeywords.VALUE)
-							|| nextCommand.getCommandName().equals(ReservedNaturalKeywords.NONE)
-							|| nextCommand.getCommandName().equals(ReservedNaturalKeywords.END_DECIDE)) {
-
-						elementEndValue = new ElementEndValue("ElementEndValue", "GENERAL.*.END_VALUE");
-						elementEndValue.setVisualCommand(true);
-						commandList.add(index, elementEndValue);
-						break;
-					}
-				}
-			}
-		}
-
-	}
-
-	
-	
-	
-	private void addVirtualEndingForNone() {
-		ElementEndNone elementEndNone;
+	private void addVirtualEndingForProcedureDivision() {
+		ElementEndProcedureDivision elementEndProcedureDivision;
 
 		AbstractCommand curCommand;
 		AbstractCommand nextCommand;
@@ -539,7 +428,7 @@ public class CobolCommandList extends AbstractCommandList {
 
 			System.out.println(curCommand.getCommandName());
 
-			if (curCommand.getCommandName().equals(ReservedNaturalKeywords.NONE)) {
+			if (curCommand.getCommandName().equals(ReservedCobolKeywords.PROCEDURE_DIVISION)) {
 
 				while (true) {
 					index++;
@@ -548,66 +437,18 @@ public class CobolCommandList extends AbstractCommandList {
 					}
 					nextCommand = commandList.get(index);
 
-					if (nextCommand.getCommandName().equals(ReservedNaturalKeywords.END_DECIDE)) {
+					if (nextCommand.getCommandName().equals(ReservedCobolKeywords.MAIN)) {
 
-						elementEndNone = new ElementEndNone("ElementEndNone", "GENERAL.*.END_NONE");
-						elementEndNone.setVisualCommand(true);
-						commandList.add(index, elementEndNone);
+						elementEndProcedureDivision = new ElementEndProcedureDivision("ElementEndProcedureDivision", "GENERAL.*.END_PROCEDURE_DIVISION");
+						elementEndProcedureDivision.setSatirNumarasi(nextCommand.getSatirNumarasi());
+						elementEndProcedureDivision.setVisualCommand(true);
+						commandList.add(index, elementEndProcedureDivision);
 						break;
 					}
 				}
 			}
 		}
-
-	}
-
-	private void addVirtualEndingForLocal() {
-
-		ElementEndLocal elementEndLocal = new ElementEndLocal("ElementEndLocal", "GENERAL.*.END-LOCAL", true);
-		
-		elementEndLocal.setVisualCommand(true);
-		
-		boolean addEnderForLocal = false;
-
-		AbstractCommand curCommand;
-		AbstractCommand nextCommand;
-
-		for (int index = 0; index < commandList.size() - 1; index++) {
-
-			curCommand = commandList.get(index);
-			nextCommand = commandList.get(index + 1);
-
-			logger.debug("curCommand:"+curCommand+"  curCommand.getCommandName:"+curCommand.getCommandName());
-
-			if (curCommand.getCommandName().equals(ReservedNaturalKeywords.LOCAL)) {
-				addEnderForLocal = true;
-			} else if (addEnderForLocal && (!nextCommand.getCommandName().equals(ReservedNaturalKeywords.DATA_TYPE)
-					&& !nextCommand.getCommandName().equals(ReservedNaturalKeywords.PROGRAM_DATA_TYPE)
-					&& !nextCommand.getCommandName().equals(ReservedNaturalKeywords.REDEFINE_GROUP_DATA)
-					&& !nextCommand.getCommandName().equals(ReservedNaturalKeywords.PROGRAM_REDEFINE_GROUP)
-					&& !nextCommand.getCommandName().equals(ReservedNaturalKeywords.PROGRAM_REDEFINE_DATA_TYPE)
-					&& !nextCommand.getCommandName().equals(ReservedNaturalKeywords.PROGRAM_ARRAY_DATA_TYPE)
-					&& !nextCommand.getCommandName().equals(ReservedNaturalKeywords.PROGRAM_TWO_DIMENSION_ARRAY_DATA_TYPE)
-					&& !nextCommand.getCommandName().equals(ReservedNaturalKeywords.MU_DATA_TYPE)
-					&& !nextCommand.getCommandName().equals(ReservedNaturalKeywords.PROGRAM_ONE_DIMENSION_REDEFINE_ARRAY_OF_SIMPLE)
-					&& !nextCommand.getCommandName().equals(ReservedNaturalKeywords.PROGRAM_TWO_DIMENSION_REDEFINE_ARRAY_DATA_TYPE)
-					&& !nextCommand.getCommandName().equals(ReservedNaturalKeywords.VIEW_OF)
-					&& !nextCommand.getCommandName().equals(ReservedNaturalKeywords.DB_DATA_TYPE)
-					&& !nextCommand.getCommandName().equals(ReservedNaturalKeywords.DB_REDEFINE_GROUP_DATA)
-					&& !nextCommand.getCommandName().equals(ReservedNaturalKeywords.END_GROUP_DATA_TYPE)
-					&& !nextCommand.getCommandName().equals(ReservedNaturalKeywords.LOCAL_USING)
-					&& !nextCommand.getDetailedCobolName().toUpperCase().contains(ReservedNaturalKeywords.UNDEFINED)
-					&& !nextCommand.getCommandName().equals(ReservedNaturalKeywords.PROGRAM_GROUP)
-					&& !nextCommand.getCommandName().equals(ReservedNaturalKeywords.COMMENT_ENTRY))) {
-				elementEndLocal.setSatirNumarasi(curCommand.getSatirNumarasi());
-				elementEndLocal.setVisualCommand(true);
-				commandList.add(index + 1, elementEndLocal);
-				addEnderForLocal = false;
-			}
-		}
-
-	}
-	
+	}	
 	private void addVirtualEndingForParameter() {
 
 		ElementEndParameter elementEndParameter = new ElementEndParameter("ElementEndParameter", "GENERAL.*.END-PARAMETER");
@@ -689,9 +530,6 @@ public class CobolCommandList extends AbstractCommandList {
 		 	//  1.2 LOOP gördükce bufferdan cıkar.
 			//  1.3 END-SUBROUTINE gördüğünde Bufferda varsa buffer kadar LOOP koy.
 		private void addVirtualLoopForFindAndRead() {
-			if (ConversionLogModel.getInstance().getMode().equals(NaturalMode.STRUCTRURED)) {
-				return;
-			}
 
 			AbstractCommand curCommand, visualLoop;
 		
@@ -1737,6 +1575,18 @@ public class CobolCommandList extends AbstractCommandList {
 			if(includedPojoList)
 
 		}*/
+		
+	}
+
+
+
+	@Override
+	public void addDefineData() {
+		
+		ElementDefineData elementEndDefineData = new ElementDefineData(ReservedCobolKeywords.DEFINE_DATA, "GENERAL.*.DEFINE_DATA");
+		
+		commandList.add(0,elementEndDefineData);
+		
 		
 	}
 

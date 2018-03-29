@@ -5,22 +5,12 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-
 import tr.com.vbt.cobol.parser.AbstractCommand;
-import tr.com.vbt.cobol.parser.AbstractEndingCommand;
-import tr.com.vbt.cobol.parser.AbstractMultipleLinesCommand;
-import tr.com.vbt.cobol.parser.Levelable;
-import tr.com.vbt.java.util.MultipleLinesCommandsUtility;
-import tr.com.vbt.lexer.ConversionLogModel;
-import tr.com.vbt.lexer.NaturalMode;
 import tr.com.vbt.lexer.ReservedCobolKeywords;
 import tr.com.vbt.lexer.ReservedNaturalKeywords;
 import tr.com.vbt.natural.parser.conditions.enders.ElementEndIf;
 import tr.com.vbt.natural.parser.enders.ElementEndEndOfPage;
-import tr.com.vbt.natural.parser.general.ElementDo;
-import tr.com.vbt.natural.parser.general.ElementDoEnd;
 import tr.com.vbt.natural.parser.general.ElementEndError;
-import tr.com.vbt.natural.parser.loops.ElementLoop;
 
 public class VirtualEnderManagerForReportingMode {
 
@@ -50,9 +40,7 @@ public class VirtualEnderManagerForReportingMode {
  * 	At Top Of PAge den sonra DO yoksa sonraki komuttan sonra DOEND koyar. 
  */
 	private void addVirtualAtTopOfPage() {
-		if (ConversionLogModel.getInstance().getMode().equals(NaturalMode.STRUCTRURED)) {
-			return;
-		}
+
 		AbstractCommand curCommand = null, nextCommand;
 				
 		for (int index = 0; index < commandList.size() - 1; index++) {
@@ -109,9 +97,6 @@ public class VirtualEnderManagerForReportingMode {
 	//		1.5  LastItemMode IF ise  ve CurrentLevel LastItemLevel ile aynı ise, 
 	//						Bufferdaki END-IF i koy.  LastItemMode u ve Leveli  bufferdaki sonItem ile set et.
 	private void addVirtualEndIf() {
-		if (ConversionLogModel.getInstance().getMode().equals(NaturalMode.STRUCTRURED)) {
-			return;
-		}
 
 		AbstractCommand curCommand = null, nextCommand,visualEndIf, visualEndError, previousCommand;
 		
@@ -299,9 +284,6 @@ public class VirtualEnderManagerForReportingMode {
 	 *//*
 	private void addEndErrorWithDoDoend() {
 
-		if (ConversionLogModel.getInstance().getMode().equals(NaturalMode.STRUCTRURED)) {
-			return;
-		}
 
 		ElementEndError elementEndError;
 

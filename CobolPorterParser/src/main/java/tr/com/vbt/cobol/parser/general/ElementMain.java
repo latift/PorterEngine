@@ -4,19 +4,20 @@ import java.util.List;
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.cobol.parser.AbstractMultipleLinesCommand;
+import tr.com.vbt.lexer.ReservedCobolKeywords;
 import tr.com.vbt.lexer.ReservedNaturalKeywords;
 import tr.com.vbt.token.AbstractToken;
 
-public class ElementMainStart extends AbstractMultipleLinesCommand{
+public class ElementMain extends AbstractMultipleLinesCommand{
 
 	
 	
-	public ElementMainStart(AbstractToken baseToken,
+	public ElementMain(AbstractToken baseToken,
 			List<AbstractToken> tokenListesi, AbstractCommand parent) {
-		super("MainStart","MAIN_START");
+		super("ElementMain","GENERAL.*.MAIN");
 	}
 	
-	public ElementMainStart(String elementName,String detailedCobolName) {
+	public ElementMain(String elementName,String detailedCobolName) {
 		super(elementName, detailedCobolName);
 	}
 
@@ -24,7 +25,7 @@ public class ElementMainStart extends AbstractMultipleLinesCommand{
 	@Override
 	public String exportContents() {
 		StringBuilder sb=new StringBuilder();
-		sb.append(" "+ReservedNaturalKeywords.MAIN_START+"\"\n");
+		sb.append(" "+ReservedCobolKeywords.MAIN+"\"\n");
 		sb.append(" Ender:"+this.endingCommand);
 		sb.append("\"\n");
 		return sb.toString();
@@ -39,7 +40,7 @@ public class ElementMainStart extends AbstractMultipleLinesCommand{
 	@Override
 	public String exportCommands() {
 		StringBuilder sb=new StringBuilder();
-		sb.append(" "+ReservedNaturalKeywords.MAIN_START+" ");
+		sb.append(" "+ReservedCobolKeywords.MAIN+" ");
 		sb.append(" Ender:"+this.endingCommand);
 		sb.append("\"\n");
 		return sb.toString();

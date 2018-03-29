@@ -14,6 +14,9 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.MDC;
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
+import tr.com.vbt.cobol.parser.general.ElementCobolProgram;
+import tr.com.vbt.cobol.parser.general.ElementMain;
+import tr.com.vbt.cobol.parser.general.ElementSubroutine;
 import tr.com.vbt.ddm.DDMList;
 import tr.com.vbt.java.MethodImplementation;
 import tr.com.vbt.java.MethodSignature;
@@ -25,19 +28,16 @@ import tr.com.vbt.java.util.RuleNotFoundException;
 import tr.com.vbt.java.utils.ConvertUtilities;
 import tr.com.vbt.java.utils.WriteFileUtility;
 import tr.com.vbt.lexer.AbstractLexing;
+import tr.com.vbt.lexer.CobolLexing;
 import tr.com.vbt.lexer.ConversionFileType;
 import tr.com.vbt.lexer.ConversionLogModel;
 import tr.com.vbt.lexer.ConversionLogReport;
-import tr.com.vbt.lexer.CobolLexing;
 import tr.com.vbt.lexer.Phase;
-import tr.com.vbt.cobol.parser.general.ElementCobolProgram;
-import tr.com.vbt.cobol.parser.general.ElementMainStart;
-import tr.com.vbt.cobol.parser.general.ElementSubroutine;
-import tr.com.vbt.patern.CommandList;
 import tr.com.vbt.patern.CobolCommandList;
+import tr.com.vbt.patern.CommandList;
 import tr.com.vbt.patern.PaternManager;
-import tr.com.vbt.patern.PaternManagerDataTypesCobolImpl;
 import tr.com.vbt.patern.PaternManagerCobolImpl;
+import tr.com.vbt.patern.PaternManagerDataTypesCobolImpl;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.TokenTipi;
 import tr.com.vbt.util.ConversionMode;
@@ -54,6 +54,7 @@ public class TransferFromCobolToJavaMain {
 
 	protected PaternManager paternManagerCode = new PaternManagerCobolImpl();
 
+	
 	/**
 	 * @param args
 	 * @throws FileNotFoundException
@@ -560,6 +561,8 @@ public class TransferFromCobolToJavaMain {
 				// 2.1 Parse Data Type Definition tokens( END_DEFINE oncesi) To
 				// Command List
 				commandList = CobolCommandList.getInstance(lexer.tokenListesi, lexer);
+				
+				commandList.addDefineData();
 
 				//commandList.replaceGlobalVariables();
 
@@ -768,8 +771,6 @@ public class TransferFromCobolToJavaMain {
 			IteratorNameManager.resetIteratorNameManager();
 			sb = javaTreeElement.writeJavaBaslat(logModel.getFullJavaFileName());
 			
-			DDMList.getInstance().writeUndefinedDDMList();
-			
 			javaTreeElement.resetSourceCode();
 			IteratorNameManager.resetIteratorNameManager();
 			
@@ -797,13 +798,13 @@ public class TransferFromCobolToJavaMain {
 		List<AbstractCommand> children=ep.getChildElementList();
 		
 		AbstractCommand child=null;
-		ElementMainStart mainStart=null;
+		ElementMain mainStart=null;
 		ElementSubroutine subroutine=null, onErrorSubroutine=null;
 		
 		for(int i=0; i<children.size(); i++){
 			child=children.get(i);
-			if(child.getCommandName().equals("MAIN_START")){
-				mainStart=(ElementMainStart) child;
+			if(child.getCommandName().equals("MAIN")){
+				mainStart=(ElementMain) child;
 				break;
 			}
 		}

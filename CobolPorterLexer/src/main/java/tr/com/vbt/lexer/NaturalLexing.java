@@ -287,7 +287,7 @@ public class NaturalLexing extends AbstractLexing {
 				// koy
 				endIfutil.putEndIfTokenToBuffer();
 				previousIsElse = false;
-			} else if (astCurrent.isOzelKelime("END-IF")) {// End-İf görürsen bufferdan birtane sil. (End-ifi programcıkoyduise)
+			} else if (astCurrent.isOzelKelime("END-IF")|| astCurrent.isOzelKelime("END_IF")) {// End-İf görürsen bufferdan birtane sil. (End-ifi programcıkoyduise)
 				endIfutil.getEndIfFromBuffer();
 				previousIsElse = false;
 	

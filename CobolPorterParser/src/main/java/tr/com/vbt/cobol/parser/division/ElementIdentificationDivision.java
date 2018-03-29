@@ -3,11 +3,12 @@ package tr.com.vbt.cobol.parser.division;
 import java.util.List;
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
+import tr.com.vbt.cobol.parser.AbstractMultipleLinesCommand;
 import tr.com.vbt.lexer.ReservedCobolKeywords;
 import tr.com.vbt.token.AbstractToken;
 
 //IDENTIFICATION DIVISION.
-public class ElementIdentificationDivision extends AbstractCommand{
+public class ElementIdentificationDivision extends AbstractMultipleLinesCommand{
 	
 	public ElementIdentificationDivision(AbstractToken baseToken,
 			List<AbstractToken> tokenListesi, AbstractCommand parent) {

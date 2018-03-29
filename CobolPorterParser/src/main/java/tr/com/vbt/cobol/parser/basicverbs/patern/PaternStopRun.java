@@ -3,6 +3,7 @@ package tr.com.vbt.cobol.parser.basicverbs.patern;
 import java.util.List;
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
+import tr.com.vbt.cobol.parser.basicverbs.ElementStopRun;
 import tr.com.vbt.cobol.parser.division.ElementIdentificationDivision;
 import tr.com.vbt.lexer.ReservedCobolKeywords;
 import tr.com.vbt.patern.AbstractPattern;
@@ -19,8 +20,8 @@ public class PaternStopRun extends AbstractPattern{
 	public PaternStopRun() {
 		super();
 		
-		//IDENTIFICATION_DIVISION
-		AbstractToken astKeyword=new OzelKelimeToken("IDENTIFICATION_DIVISION", 0, 0, 0);
+		//STOP_RUN
+		AbstractToken astKeyword=new OzelKelimeToken("STOP_RUN", 0, 0, 0);
 		astKeyword.setTekrarlayabilir("+");
 		astKeyword.setSourceFieldName("FIRST_COMMAND");
 		patternTokenList.add(astKeyword);
@@ -29,7 +30,7 @@ public class PaternStopRun extends AbstractPattern{
 	
 	@Override
 	public AbstractCommand createElement(){
-		ElementIdentificationDivision elementDisplay = new ElementIdentificationDivision(ReservedCobolKeywords.IDENTIFICATION_DIVISION,"GENERAL.*.IDENTIFICATION_DIVISION");
+		ElementStopRun elementDisplay = new ElementStopRun(ReservedCobolKeywords.STOP_RUN,"GENERAL.*.STOP_RUN");
 		return elementDisplay;
 	}
 

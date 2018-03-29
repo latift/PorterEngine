@@ -1,27 +1,26 @@
-package tr.com.vbt.cobol.parser.division.patern;
+package tr.com.vbt.cobol.parser.basicverbs.patern;
 
 import java.util.List;
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
-import tr.com.vbt.cobol.parser.division.ElementIdentificationDivision;
-import tr.com.vbt.cobol.parser.division.ElementProcedureDivision;
+import tr.com.vbt.cobol.parser.basicverbs.ElementEnd;
 import tr.com.vbt.lexer.ReservedCobolKeywords;
 import tr.com.vbt.patern.AbstractPattern;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.OzelKelimeToken;
 
 /**
- *     PROCEDURE_DIVISION.
+ *     STOP RUN.
  *
  */
-public class PaternProcedureDivision extends AbstractPattern{
+public class PaternEnd extends AbstractPattern{
 
 
-	public PaternProcedureDivision() {
+	public PaternEnd() {
 		super();
 		
-		//PROCEDURE_DIVISION
-		AbstractToken astKeyword=new OzelKelimeToken("PROCEDURE_DIVISION", 0, 0, 0);
+		//STOP_RUN
+		AbstractToken astKeyword=new OzelKelimeToken("END", 0, 0, 0);
 		astKeyword.setTekrarlayabilir("+");
 		astKeyword.setSourceFieldName("FIRST_COMMAND");
 		patternTokenList.add(astKeyword);
@@ -30,7 +29,7 @@ public class PaternProcedureDivision extends AbstractPattern{
 	
 	@Override
 	public AbstractCommand createElement(){
-		ElementProcedureDivision elementDisplay = new ElementProcedureDivision(ReservedCobolKeywords.PROCEDURE_DIVISION,"GENERAL.*.PROCEDURE_DIVISION");
+		ElementEnd elementDisplay = new ElementEnd(ReservedCobolKeywords.END,"GENERAL.*.END");
 		return elementDisplay;
 	}
 

@@ -355,6 +355,7 @@ public CobolOzelKelimeler() {
 	ozelKelimeler.add("TABLE");
 	ozelKelimeler.add("NULL");
 	ozelKelimeler.add("I_O_CONTROL") ;
+	ozelKelimeler.add("MAIN");
 
 }
 

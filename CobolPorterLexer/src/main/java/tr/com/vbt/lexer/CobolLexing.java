@@ -1653,7 +1653,7 @@ public class CobolLexing extends AbstractLexing {
 
 	public void removeDotTokens() {
 		for (int i = 0; i < tokenListesi.size() - 1; i++) {
-			if (tokenListesi.get(i).getTip().equals(TokenTipi.Nokta)) {
+			if (tokenListesi.get(i).isNoktaToken()) {
 				tokenListesi.remove(i);
 			}
 		}
@@ -1806,11 +1806,13 @@ public class CobolLexing extends AbstractLexing {
 		
 		removeSatirBasiTokens();
 		
+		removeDotTokens();
+		
 		joinKeywordsWithSpaces(); // Remove da icinde.
 		
 		//controlDiyezToken();
 		
-		changeLastDotToEnd(); //Bazen kodu . ile bitiriyorlar. Bu durumda END ile replace ediyoruz.
+		//changeLastDotToEnd(); //Bazen kodu . ile bitiriyorlar. Bu durumda END ile replace ediyoruz.
 		
 		//removePojosSubTableCountToken();
 

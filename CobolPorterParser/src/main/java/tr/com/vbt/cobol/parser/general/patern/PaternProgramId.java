@@ -7,6 +7,8 @@ import tr.com.vbt.cobol.parser.general.ElementProgramId;
 import tr.com.vbt.lexer.ReservedCobolKeywords;
 import tr.com.vbt.patern.AbstractPattern;
 import tr.com.vbt.token.AbstractToken;
+import tr.com.vbt.token.GenelTipToken;
+import tr.com.vbt.token.KelimeToken;
 import tr.com.vbt.token.OzelKelimeToken;
 
 /**
@@ -19,11 +21,19 @@ public class PaternProgramId extends AbstractPattern{
 	public PaternProgramId() {
 		super();
 		
-		//IDENTIFICATION_DIVISION
+		//PROGRAM-ID
 		AbstractToken astKeyword=new OzelKelimeToken("PROGRAM-ID", 0, 0, 0);
 		astKeyword.setTekrarlayabilir("+");
 		astKeyword.setSourceFieldName("FIRST_COMMAND");
 		patternTokenList.add(astKeyword);
+		
+		
+		//HELLO_WORD
+		AbstractToken<String> astSource=new KelimeToken<String>();
+		astSource.setTekrarlayabilir("+");
+		astSource.setSourceFieldName("param");
+		patternTokenList.add(astSource);
+		
 		
 	}
 	
@@ -46,9 +56,11 @@ public class PaternProgramId extends AbstractPattern{
 		
 		}
 		else if(abstractTokenInPattern.getSourceFieldName().equals("FIRST_COMMAND")){
-				matchedCommandAdd.setParam(currentTokenForMatch);
-				matchedCommandAdd.getParameters().put("param", matchedCommandAdd.getParam());
-		
+			
+		}else if(abstractTokenInPattern.getSourceFieldName().equals("param")){
+			matchedCommandAdd.setParam(currentTokenForMatch);
+			matchedCommandAdd.getParameters().put("param", matchedCommandAdd.getParam());
+	
 		}
 	}
 		

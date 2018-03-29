@@ -4,14 +4,11 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
-
 import org.slf4j.MDC;
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
@@ -19,16 +16,15 @@ import tr.com.vbt.cobol.parser.AbstractEndingCommand;
 import tr.com.vbt.cobol.parser.AbstractMultipleLinesCommand;
 import tr.com.vbt.cobol.parser.DataTypeMapConverter;
 import tr.com.vbt.cobol.parser.Levelable;
-import tr.com.vbt.natural.parser.basicverbs.ElementUndefinedCobol;
-import tr.com.vbt.natural.parser.enders.ElementEndGroupDataType;
 import tr.com.vbt.java.util.DataTypesCommandsUtility;
-import tr.com.vbt.java.util.MultipleLinesCommandsUtility;
+import tr.com.vbt.java.util.MultipleLinesCommandsNaturalUtility;
 import tr.com.vbt.java.utils.VariableTypes;
 import tr.com.vbt.lexer.AbstractLexing;
 import tr.com.vbt.lexer.ConversionLogModel;
 import tr.com.vbt.lexer.NaturalMode;
 import tr.com.vbt.lexer.ReservedCobolKeywords;
 import tr.com.vbt.lexer.ReservedNaturalKeywords;
+import tr.com.vbt.natural.parser.basicverbs.ElementUndefinedCobol;
 import tr.com.vbt.natural.parser.conditions.enders.ElementEndNone;
 import tr.com.vbt.natural.parser.conditions.enders.ElementEndValue;
 import tr.com.vbt.natural.parser.conditions.enders.ElementEndWhen;
@@ -44,6 +40,7 @@ import tr.com.vbt.natural.parser.datalayout.program.redefiners.ElementOneDimenRe
 import tr.com.vbt.natural.parser.datalayout.program.redefiners.ElementProgramRedefineGrupNatural;
 import tr.com.vbt.natural.parser.datalayout.program.redefiners.ElementRedefineDataTypeOfSimpleDataType;
 import tr.com.vbt.natural.parser.datalayout.program.redefiners.ElementTwoDimenRedefineArrayOfOneDimenArray;
+import tr.com.vbt.natural.parser.enders.ElementEndGroupDataType;
 import tr.com.vbt.natural.parser.enders.ElementEndSubroutine;
 import tr.com.vbt.natural.parser.loops.ElementLoop;
 import tr.com.vbt.natural.parser.screen.ElementEndDefineWindow;
@@ -327,7 +324,7 @@ public class NaturalCommandList extends AbstractCommandList {
 	}
 
 	public void findAndSetEndingCommands() throws Exception {
-		MultipleLinesCommandsUtility utility = new MultipleLinesCommandsUtility();
+		MultipleLinesCommandsNaturalUtility utility = new MultipleLinesCommandsNaturalUtility();
 		for (AbstractCommand command : commandList) {
 
 			if (utility.isStarter(command)) {
@@ -375,6 +372,9 @@ public class NaturalCommandList extends AbstractCommandList {
 		
 		addVirtualLoopForFindAndRead(); //Read yada Find if yada for gibi bir şeyin icinde ise mutlaka loop la kapatilir. 
 		
+		if(ConversionLogModel.getInstance().getMode()==null || ConversionLogModel.getInstance().getMode().equals(NaturalMode.STRUCTRURED)){
+			return;
+		}
 		enderManagerForReportMode.addVirtualEndersForReportMode();
 		
 	}
@@ -1737,6 +1737,14 @@ public class NaturalCommandList extends AbstractCommandList {
 			if(includedPojoList)
 
 		}*/
+		
+	}
+
+
+
+	@Override
+	public void addDefineData() {
+		// TODO Auto-generated method stub
 		
 	}
 

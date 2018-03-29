@@ -1,21 +1,20 @@
-package tr.com.vbt.cobol.parser.division;
+package tr.com.vbt.cobol.parser.basicverbs;
 
 import java.util.List;
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
-import tr.com.vbt.cobol.parser.AbstractMultipleLinesCommand;
 import tr.com.vbt.lexer.ReservedCobolKeywords;
 import tr.com.vbt.token.AbstractToken;
 
 //PROCEDURE DIVISION.
-public class ElementProcedureDivision extends AbstractMultipleLinesCommand{
+public class ElementEnd extends AbstractCommand{
 	
-	public ElementProcedureDivision(AbstractToken baseToken,
+	public ElementEnd(AbstractToken baseToken,
 			List<AbstractToken> tokenListesi, AbstractCommand parent) {
-		super("ElementProcedureDivision","GENERAL.*.PROCEDURE_DIVISION");
+		super("ElementEnd","GENERAL.*.END");
 	}
 	
-	public ElementProcedureDivision(String elementName,String detailedCobolName) {
+	public ElementEnd(String elementName,String detailedCobolName) {
 		super(elementName, detailedCobolName);
 	}
 
@@ -23,7 +22,7 @@ public class ElementProcedureDivision extends AbstractMultipleLinesCommand{
 	@Override
 	public String exportContents() {
 		StringBuilder sb=new StringBuilder();
-		sb.append(" "+ReservedCobolKeywords.PROCEDURE_DIVISION );
+		sb.append(" "+ReservedCobolKeywords.END );
 		sb.append("\n");
 		return sb.toString();
 	}
@@ -37,7 +36,7 @@ public class ElementProcedureDivision extends AbstractMultipleLinesCommand{
 	@Override
 	public String exportCommands() {
 		StringBuilder sb=new StringBuilder();
-		sb.append(" "+ReservedCobolKeywords.PROCEDURE_DIVISION );
+		sb.append(" "+ReservedCobolKeywords.END );
 		sb.append("\n");
 		return sb.toString();
 	}

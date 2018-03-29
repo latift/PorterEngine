@@ -1,30 +1,30 @@
-package tr.com.vbt.cobol.parser.basicverbs;
+package tr.com.vbt.cobol.parser.enders;
 
 import java.util.List;
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.cobol.parser.AbstractEndingCommand;
-import tr.com.vbt.lexer.ReservedCobolKeywords;
+import tr.com.vbt.lexer.ReservedNaturalKeywords;
 import tr.com.vbt.token.AbstractToken;
 
-//PROCEDURE DIVISION.
-public class ElementStopRun extends AbstractEndingCommand{
+//END-DEFINE-DATA
+public class ElementEndDefineData extends AbstractEndingCommand{
 	
-	public ElementStopRun(AbstractToken baseToken,
+	public ElementEndDefineData(AbstractToken baseToken,
 			List<AbstractToken> tokenListesi, AbstractCommand parent) {
-		super("ElementStopRun","GENERAL.*.STOP_RUN");
+		super("ElementEndDefineData","GENERAL.*.END-DEFINE-DATA");
 	}
 	
-	public ElementStopRun(String elementName,String detailedCobolName) {
+	public ElementEndDefineData(String elementName,String detailedCobolName) {
 		super(elementName, detailedCobolName);
 	}
+
 
 
 	@Override
 	public String exportContents() {
 		StringBuilder sb=new StringBuilder();
-		sb.append(" "+ReservedCobolKeywords.STOP_RUN );
-		sb.append("\n");
+		sb.append(" "+ReservedNaturalKeywords.END_DEFINE_DATA +"\n");
 		return sb.toString();
 	}
 
@@ -37,11 +37,9 @@ public class ElementStopRun extends AbstractEndingCommand{
 	@Override
 	public String exportCommands() {
 		StringBuilder sb=new StringBuilder();
-		sb.append(" "+ReservedCobolKeywords.STOP_RUN );
-		sb.append("\n");
+		sb.append(" "+ReservedNaturalKeywords.END_DEFINE_DATA +"\n");
 		return sb.toString();
 	}
 
-	
 	
 }

@@ -2,7 +2,6 @@ package tr.com.vbt.java.util;
 
 import org.apache.log4j.Logger;
 
-
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.java.AbstractJava;
 import tr.com.vbt.java.JavaUndefinedElement;
@@ -75,11 +74,13 @@ import tr.com.vbt.java.general.JavaCompressElementV3;
 import tr.com.vbt.java.general.JavaFunctionElement;
 import tr.com.vbt.java.general.JavaFunctionMainElement;
 import tr.com.vbt.java.general.JavaGeneralVariableElement;
+import tr.com.vbt.java.general.JavaIdentificationDivision;
 import tr.com.vbt.java.general.JavaLocal;
 import tr.com.vbt.java.general.JavaOneDimensionArrayElement;
 import tr.com.vbt.java.general.JavaOneDimensionRedefineArray;
 import tr.com.vbt.java.general.JavaOneDimensionRedefineArrayOfSimpleElement;
 import tr.com.vbt.java.general.JavaParameter;
+import tr.com.vbt.java.general.JavaProcedureDivision;
 import tr.com.vbt.java.general.JavaProgramGrup;
 import tr.com.vbt.java.general.JavaRedefineDataTypeElement;
 import tr.com.vbt.java.general.JavaRedefineGrupElement;
@@ -135,7 +136,9 @@ public class CreateProcessOperator extends ProcessOperator {
 	@Override
 	public AbstractJava operateRule(Rule rule, AbstractCommand sourceElement) {
 		String javaElement = rule.getJavaElement();
-
+		if(javaElement==null){
+			throw new RuntimeException("Rule Java Sınıfı tanımlanmanmamış: Rule No:"+rule.getRuleNum());
+		}
 		switch (javaElement) {
 		case "JavaClassElement":
 			elementForCreate = new JavaClassElement();
@@ -494,6 +497,12 @@ public class CreateProcessOperator extends ProcessOperator {
 		case "JavaBackoutTransaction":
 			elementForCreate = new JavaBackoutTransaction();
 			break;
+		case "JavaIdentificationDivision":
+			elementForCreate = new JavaIdentificationDivision();
+			break;
+		case "JavaProcedureDivision":
+			elementForCreate = new JavaProcedureDivision();
+			break;
 
 		// JSP
 		case "JSPGeneral":
@@ -503,6 +512,9 @@ public class CreateProcessOperator extends ProcessOperator {
 		default:
 		}
 
+		if(elementForCreate==null){
+			throw new RuntimeException("CreateProcesser Sınıfına Element tanımı eklenmeli.. Element:"+javaElement);
+		}
 		AbstractJava aje;
 		if (!javaElement.equals("JavaClassGeneral") && !javaElement.equals("JSPGeneral")) {
 			aje = sourceElement.getParent().getJavaElement();
@@ -516,8 +528,8 @@ public class CreateProcessOperator extends ProcessOperator {
 				}
 			}
 			sourceElement.setParentJavaElement(aje);
-			if (sourceElement.getParent().getJavaElement() == null) {
-
+			if (sourceElement.getParentJavaElement()== null) {
+				throw new RuntimeException("Source un ParentJavası null. SourceElement:"+sourceElement+" Rule:"+rule.getRuleNum());
 			}
 			sourceElement.getParentJavaElement().getChildren().add(elementForCreate);
 			

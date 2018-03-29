@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import tr.com.vbt.cobol.parser.AbstractCommand;
 import tr.com.vbt.cobol.parser.AbstractMultipleLinesCommand;
 import tr.com.vbt.java.util.RuleNotFoundException;
+import tr.com.vbt.lexer.ReservedCobolKeywords;
 import tr.com.vbt.lexer.ReservedNaturalKeywords;
 import tr.com.vbt.util.WriteToFile;
 
@@ -36,10 +37,10 @@ public class ElementCobolProgram extends AbstractMultipleLinesCommand {
 		{
 			currentCommand=commandListIterator.next();
 		    System.out.println(currentCommand.toString());
-			if (currentCommand.getCommandName().equals(ReservedNaturalKeywords.DEFINE_DATA)) 
+			if (currentCommand.getCommandName().equals(ReservedCobolKeywords.DEFINE_DATA)) 
 			{
 				this.addChild(currentCommand);
-			}else if(currentCommand.getCommandName().equals(ReservedNaturalKeywords.MAIN_START)){
+			}else if(currentCommand.getCommandName().equals(ReservedCobolKeywords.PROCEDURE_DIVISION)){
 				this.addChild(currentCommand);
 			}
 		}while(commandListIterator.hasNext());
