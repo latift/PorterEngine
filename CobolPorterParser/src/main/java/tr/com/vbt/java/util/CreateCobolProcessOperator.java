@@ -123,11 +123,11 @@ import tr.com.vbt.java.subroutines.JavaFetchElement;
 import tr.com.vbt.java.subroutines.JavaFetchReturnElement;
 import tr.com.vbt.util.ConverterConfiguration;
 
-public class CreateProcessOperator extends ProcessOperator {
+public class CreateCobolProcessOperator extends ProcessOperator {
 
-	final static Logger logger = Logger.getLogger(CreateProcessOperator.class);
+	final static Logger logger = Logger.getLogger(CreateCobolProcessOperator.class);
 
-	public CreateProcessOperator(Rule rule, AbstractCommand sourceElement) {
+	public CreateCobolProcessOperator(Rule rule, AbstractCommand sourceElement) {
 		super(rule);
 		if (sourceElement != null) {
 			parentJava = sourceElement.getParentJavaElement();
@@ -521,17 +521,13 @@ public class CreateProcessOperator extends ProcessOperator {
 		}
 		AbstractJava aje;
 		if (!javaElement.equals("JavaClassGeneral") && !javaElement.equals("JSPGeneral")) {
-			aje = sourceElement.getParent().getJavaElement();
-			if (aje == null) {
-				// TODO: Bu koda girdi ise sorun var demektir. Burayı hata
-				// dosyasına loglayabiliriz.
-				if (ConverterConfiguration.sourceLan.equals("NATURAL")) {
-					aje = JavaClassGeneral.getInstance().getChildWithName("JavaNaturalClassElement");
-				} else if (ConverterConfiguration.sourceLan.equals("COBOL")) {
-					aje = JavaClassGeneral.getInstance().getChildWithName("JavaCobolClassElement");
-				}
+			
+			setParentJava(rule,sourceElement);
+			
+			if (sourceElement.getParentJavaElement()== null) {
+				throw new RuntimeException("CreateArrayItemProcessOperator Source un ParentJavası null. SourceElement:"+sourceElement+" Rule:"+rule.getRuleNum());
 			}
-			sourceElement.setParentJavaElement(aje);
+			
 			if (sourceElement.getParentJavaElement()== null) {
 				throw new RuntimeException("Source un ParentJavası null. SourceElement:"+sourceElement+" Rule:"+rule.getRuleNum());
 			}
@@ -564,6 +560,29 @@ public class CreateProcessOperator extends ProcessOperator {
 	private void setSourceCode(AbstractCommand sourceElement) {
 		elementForCreate.setSourceCode(sourceElement);
 
+	}
+	
+	private void setParentJava(Rule rule, AbstractCommand sourceElement) {
+		AbstractJava aje;
+		String[] detailedName;
+		if(rule.getJavaDetailedParentName()!=null&&rule.getJavaDetailedParentName().length()>0){
+			if(ConverterConfiguration.destLan.equals("JSP")){
+				aje=JSPGeneral.getInstance();
+			}else{
+				aje=JavaClassGeneral.getInstance();
+			}
+			detailedName=rule.getJavaDetailedParentName().split("\\.");
+			for (String childName : detailedName) {
+				if(childName.equals("JavaClassGeneral")||childName.equals("JSPGeneral")){
+					continue;
+				}
+				aje=aje.getChildWithName(childName);
+			}
+			sourceElement.setParentJavaElement(aje);
+		}else{
+			sourceElement.setParentJavaElement(sourceElement.getParent().getJavaElement());
+			
+		}
 	}
 
 }

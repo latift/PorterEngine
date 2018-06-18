@@ -987,7 +987,9 @@ public abstract class AbsctractConditionalJavaElement extends AbstractJavaElemen
 			 
 			 AbstractToken newThruToken;
 			
-			 
+			 if(conditionList==null){
+				 return;
+			 }
 			for(int index=0; index<conditionList.size()-2;index++){
 					
 					curToken=conditionList.get(index);

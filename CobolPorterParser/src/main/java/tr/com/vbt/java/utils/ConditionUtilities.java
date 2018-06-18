@@ -264,6 +264,9 @@ public class ConditionUtilities {
 		 
 		 AbstractToken newThruToken;
 		
+		 if(conditionList==null || conditionList.size()==0){
+			 return conditionList;
+		 }
 		for(int index=0; index<conditionList.size();index++){
 				
 				curToken=conditionList.get(index);
@@ -347,14 +350,14 @@ public class ConditionUtilities {
 				}else if(currentToken.getDeger().equals("NOT")){
 					currentToken.setDeger("!");
 					currentToken.setTip(TokenTipi.Karakter);
-				}else if(currentToken.getDeger().equals('^')){
+				}else if(currentToken.getDeger().equals('^') && index+1<conditionList.size()){
 					nextToken=conditionList.get(index+1);
 					if(nextToken.getDeger().equals('=')){
 						currentToken.setDeger("!=");
 						currentToken.setTip(TokenTipi.Karakter);
 						conditionList.remove(index+1); 
 					}
-				}else if(currentToken.getDeger().equals('!')){
+				}else if(currentToken.getDeger().equals('!')&& index+1<conditionList.size()){
 					nextToken=conditionList.get(index+1);
 					if(nextToken.getDeger().equals('=')){
 						currentToken.setDeger("!=");
@@ -362,14 +365,14 @@ public class ConditionUtilities {
 						conditionList.remove(index+1); 
 					}
 					
-				}else if(currentToken.getDeger().equals('>')){ // >= Tek tokena cevir
+				}else if(currentToken.getDeger().equals('>')&& index+1<conditionList.size() ){ // >= Tek tokena cevir
 					nextToken=conditionList.get(index+1);
 					if( nextToken.getDeger().equals('=')){
 						currentToken.setDeger(">=");
 						currentToken.setTip(TokenTipi.Karakter);
 						conditionList.remove(index+1);
 					}
-				}else if(currentToken.getDeger().equals('<')){ // <= Tek tokena cevir
+				}else if(currentToken.getDeger().equals('<')&& index+1<conditionList.size()){ // <= Tek tokena cevir
 					nextToken=conditionList.get(index+1);
 					if( nextToken.getDeger().equals('=')){
 						currentToken.setDeger("<=");

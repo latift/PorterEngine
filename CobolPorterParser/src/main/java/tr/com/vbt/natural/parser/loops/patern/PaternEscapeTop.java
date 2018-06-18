@@ -56,6 +56,8 @@ public class PaternEscapeTop extends AbstractPattern {
 
 			matchedCommandAdd.getParameters().put("LOOP_NAME", matchedCommandAdd.getLoopName());
 
+		}else if(abstractTokenInPattern.getSourceFieldName().equals("FIRST_COMMAND")){
+			matchedCommandAdd.getParameters().put("FIRST_COMMAND", currentTokenForMatch);
 		}
 	}
 	

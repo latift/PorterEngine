@@ -6,6 +6,9 @@ import java.util.Map;
 
 import tr.com.vbt.java.basic.JavaCallFunctionElement;
 import tr.com.vbt.java.database.FinderJavaElement;
+import tr.com.vbt.java.database.JavaFindNumberWithElement;
+import tr.com.vbt.java.database.JavaFindWithElement;
+import tr.com.vbt.java.database.JavaFindWithElementV2;
 import tr.com.vbt.java.general.JavaClassElement;
 import tr.com.vbt.java.general.JavaClassGeneral;
 import tr.com.vbt.java.general.JavaConstants;
@@ -13,11 +16,19 @@ import tr.com.vbt.java.general.JavaFunctionElement;
 import tr.com.vbt.java.general.JavaFunctionMainElement;
 import tr.com.vbt.java.general.JavaNaturalClassElement;
 import tr.com.vbt.java.general.JavaValidationElement;
+import tr.com.vbt.java.loops.JavaFor;
+import tr.com.vbt.java.loops.JavaForTimesElement;
+import tr.com.vbt.java.loops.JavaRepeatElement;
+import tr.com.vbt.java.loops.JavaRepeatUntilElement;
+import tr.com.vbt.java.loops.JavaRepeatWhileElement;
+import tr.com.vbt.java.loops.JavaWhileElement;
 import tr.com.vbt.java.utils.ConvertUtilities;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.KelimeToken;
 
 public class AbstractJavaElement extends AbstractJava{
+	
+	public static  AbstractJava parentLoopElement;
 
 	@Override
 	public boolean hasInputChild(){
@@ -433,6 +444,32 @@ public class AbstractJavaElement extends AbstractJava{
 			return true;
 		}
 		return false;
+	}
+	
+	@Override
+	public boolean controlIfInFindStatement() {
+		logger.warn("Control:"+this.getJavaElementName());
+		if(this.getParent()!=null &&( this.getParent() instanceof JavaFindWithElementV2
+				|| this.getParent() instanceof JavaFindNumberWithElement
+				|| this.getParent() instanceof JavaFindWithElement
+				)){
+			return true;
+		}else if(this.getParent()!=null && this.getParent() instanceof JavaClassGeneral ){
+			return false;
+		}else if(this.getParent()==null){
+			return false;
+		}else if(this.getParent() instanceof JavaWhileElement ||
+				this.getParent() instanceof JavaForTimesElement ||
+				this.getParent() instanceof JavaFor ||
+				this.getParent() instanceof JavaRepeatElement ||
+				this.getParent() instanceof JavaRepeatWhileElement ||
+				this.getParent() instanceof JavaRepeatUntilElement ){
+			parentLoopElement=this.getParent();
+			return false;
+		}else{
+			return this.getParent().controlIfInFindStatement();
+		}
+		
 	}
 
 	

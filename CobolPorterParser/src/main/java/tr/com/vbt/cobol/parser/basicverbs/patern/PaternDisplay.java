@@ -36,7 +36,7 @@ public class PaternDisplay extends AbstractPattern{
 		//HELLO_WORD
 		AbstractToken<String> astSource=new KelimeToken<String>();
 		astSource.setTekrarlayabilir("+");
-		astSource.setSourceFieldName("param");
+		astSource.setSourceFieldName("dataToDisplay");
 		patternTokenList.add(astSource);
 		
 		//Ender
@@ -66,15 +66,15 @@ public class PaternDisplay extends AbstractPattern{
 			if(currentTokenForMatch.getTip().equals(TokenTipi.Karakter)&&currentTokenForMatch.getDeger().equals('#')){
 				return;
 			}
-			matchedCommandAdd.getDataToDisplay().add((String) currentTokenForMatch.getDeger());
+			matchedCommandAdd.getDataToDisplay().add((AbstractToken) currentTokenForMatch);
 			
-			List<String> sourceList;
+			List<AbstractToken> sourceList;
 			if(matchedCommandAdd.getParameters().get("dataToDisplay")!=null){
-				sourceList=(List<String>) matchedCommandAdd.getParameters().get("dataToDisplay");
+				sourceList=(List<AbstractToken>) matchedCommandAdd.getParameters().get("dataToDisplay");
 			}else{
-				sourceList=new ArrayList<String>();
+				sourceList=new ArrayList<AbstractToken>();
 			}
-			sourceList.add((String) currentTokenForMatch.getDeger());
+			sourceList.add((AbstractToken) currentTokenForMatch);
 			matchedCommandAdd.getParameters().put("dataToDisplay", sourceList);
 		}
 	}

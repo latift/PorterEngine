@@ -23,11 +23,11 @@ import tr.com.vbt.java.jsp.JSPGeneralVariableElement;
 import tr.com.vbt.java.jsp.general.JSPGeneral;
 import tr.com.vbt.util.ConverterConfiguration;
 
-public class CreateArrayItemProcessOperator extends ProcessOperator {
+public class CreateArrayItemCobolProcessOperator extends ProcessOperator {
 
-	final static Logger logger = Logger.getLogger(CreateArrayItemProcessOperator.class);
+	final static Logger logger = Logger.getLogger(CreateArrayItemCobolProcessOperator.class);
 	
-	public CreateArrayItemProcessOperator(Rule rule, AbstractCommand sourceElement) {
+	public CreateArrayItemCobolProcessOperator(Rule rule, AbstractCommand sourceElement) {
 		super(rule);
 		//findParent();
 	}

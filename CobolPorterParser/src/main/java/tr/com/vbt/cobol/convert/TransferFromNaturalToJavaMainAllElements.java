@@ -63,7 +63,8 @@ public class TransferFromNaturalToJavaMainAllElements {
 		
 			logModel.setModule(logModel.getModuleList().get(i).getModule());
 			logModel.setSchemaName(logModel.getModuleList().get(i).getSchema());
-			
+			logger.warn(logModel.getModule()+" conversion  started");
+				
 			ConversionLogReport.getInstance().reset();
 			ConversionLogReport.getInstance().setAllConversionStartTime(conversionGeneralStartDate);
 			
@@ -96,6 +97,7 @@ public class TransferFromNaturalToJavaMainAllElements {
 				ConversionLogReport.getInstance().setAllConversionEndTime(new Date());
 			}
 			ConversionLogReport.getInstance().writeReport();
+			logger.warn(logModel.getModule()+" conversion finished");
 		}
 		
 		try {

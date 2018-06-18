@@ -11,7 +11,7 @@ import tr.com.vbt.token.AbstractToken;
 //PROCEDURE DIVISION.
 public class ElementDisplay extends AbstractCommand{
 	
-	private List<String> dataToDisplay=new ArrayList<String>();
+	private List<AbstractToken> dataToDisplay=new ArrayList<AbstractToken>();
 	
 	public ElementDisplay(AbstractToken baseToken,
 			List<AbstractToken> tokenListesi, AbstractCommand parent) {
@@ -27,8 +27,8 @@ public class ElementDisplay extends AbstractCommand{
 	public String exportContents() {
 		StringBuilder sb=new StringBuilder();
 		sb.append(" "+ReservedNaturalKeywords.DISPLAY +"=\"");
-		for (String data : dataToDisplay) {
-			sb.append(" "+ data);	
+		for (AbstractToken data : dataToDisplay) {
+			sb.append(" "+ data.getDeger().toString());	
 		}
 		sb.append("\"\n");
 		return sb.toString();
@@ -44,18 +44,18 @@ public class ElementDisplay extends AbstractCommand{
 	public String exportCommands() {
 		StringBuilder sb=new StringBuilder();
 		sb.append(" "+ReservedNaturalKeywords.DISPLAY +"=\"");
-		for (String data : dataToDisplay) {
+		for (AbstractToken data : dataToDisplay) {
 			sb.append(" "+ data);	
 		}
 		sb.append("\n");
 		return sb.toString();
 	}
 
-	public List<String> getDataToDisplay() {
+	public List<AbstractToken> getDataToDisplay() {
 		return dataToDisplay;
 	}
 
-	public void setDataToDisplay(List<String> dataToDisplay) {
+	public void setDataToDisplay(List<AbstractToken> dataToDisplay) {
 		this.dataToDisplay = dataToDisplay;
 	}
 
