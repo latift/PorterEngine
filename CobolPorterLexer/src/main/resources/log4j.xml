@@ -38,7 +38,7 @@
  
        <!-- Temel loglama tanımı -->
        <root>
-             <priority value="warn"/>
+             <priority value="debug"/>
               <appender-ref ref="console" />
                <appender-ref ref="logfile" />
        </root>

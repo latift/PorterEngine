@@ -51,7 +51,7 @@ public abstract class AbstractPatternFromXToYWithCarriageReturn extends Abstract
 		
 		AbstractToken midfieldToken=patternTokenList.get(1);
 		
-		AbstractToken enderToken=patternTokenList.get(2);
+//		AbstractToken enderToken=patternTokenList.get(2);
 		
 		if(!currentTokenForMatch.tokenMatchs(starterToken)){
 			return null;
@@ -70,14 +70,14 @@ public abstract class AbstractPatternFromXToYWithCarriageReturn extends Abstract
 					&&!currentTokenForMatch.getDeger().equals(ReservedCobolKeywords.NOT) //IFElement için eklendi
 					&&!currentTokenForMatch.getDeger().equals(ReservedCobolKeywords.OR) //IFElement için eklendi
 					&&!currentTokenForMatch.getDeger().equals(ReservedCobolKeywords.AND))){ //IFElement için eklendi
-				if(currentTokenForMatch.tokenMatchs(enderToken)){
+				if(currentTokenForMatch.getDeger().equals(TokenTipi.CommandKey)){
 					logger.info(" MATCHED"+currentTokenForMatch.getDeger());
 					return matchedCommand;
 				}else{
 					return null;
 				}
 			}
-			else if(currentTokenForMatch.getTip().equals(TokenTipi.Nokta)){
+			else if(currentTokenForMatch.getDeger().equals(TokenTipi.Nokta)){
 				continue;
 			}
 			else{

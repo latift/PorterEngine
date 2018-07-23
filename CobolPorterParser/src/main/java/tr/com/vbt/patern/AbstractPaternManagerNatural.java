@@ -65,7 +65,7 @@ public abstract class  AbstractPaternManagerNatural  implements PaternManager{
 			ElementUndefinedCobol undefCommand = null;
 			int matchPointOfUndefined=0;
 			
-			if(token.getTip().equals(TokenTipi.OzelKelime)|| token.isSayi()){
+			if(token.getTip().equals(TokenTipi.CommandKey)|| token.isSayi()){
 				undefinedCommandDescrtiption=token.getDeger().toString();
 				offset++;
 				matchPointOfUndefined++;

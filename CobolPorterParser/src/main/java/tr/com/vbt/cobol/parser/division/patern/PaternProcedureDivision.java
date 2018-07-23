@@ -8,6 +8,7 @@ import tr.com.vbt.cobol.parser.division.ElementProcedureDivision;
 import tr.com.vbt.lexer.ReservedCobolKeywords;
 import tr.com.vbt.patern.AbstractPattern;
 import tr.com.vbt.token.AbstractToken;
+import tr.com.vbt.token.CommandKeyToken;
 import tr.com.vbt.token.OzelKelimeToken;
 
 /**
@@ -21,7 +22,7 @@ public class PaternProcedureDivision extends AbstractPattern{
 		super();
 		
 		//PROCEDURE_DIVISION
-		AbstractToken astKeyword=new OzelKelimeToken("PROCEDURE_DIVISION", 0, 0, 0);
+		AbstractToken astKeyword=new CommandKeyToken("PROCEDURE_DIVISION", 0, 0, 0);
 		astKeyword.setTekrarlayabilir("+");
 		astKeyword.setSourceFieldName("FIRST_COMMAND");
 		patternTokenList.add(astKeyword);

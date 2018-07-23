@@ -16,6 +16,7 @@ import tr.com.vbt.cobol.parser.AbstractEndingCommand;
 import tr.com.vbt.cobol.parser.AbstractMultipleLinesCommand;
 import tr.com.vbt.cobol.parser.DataTypeMapConverter;
 import tr.com.vbt.cobol.parser.Levelable;
+import tr.com.vbt.cobol.parser.division.enders.ElementEndDataDivision;
 import tr.com.vbt.cobol.parser.division.enders.ElementEndIdentificationDivision;
 import tr.com.vbt.cobol.parser.division.enders.ElementEndProcedureDivision;
 import tr.com.vbt.cobol.parser.enders.ElementEndDefineData;
@@ -122,7 +123,7 @@ public class CobolCommandList extends AbstractCommandList {
 			// Data kısmını PaternManagerNaturalImpl ile manage et. Sonraki
 			// kısımlarda PaternManagerNaturalImpl da geç. Performans için.
 			if (command.getCommandName().equals(ReservedCobolKeywords.PROCEDURE_DIVISION)) {
-				logger.info("End of Variable Definition Part Parse  Tokens To Command Lis");
+				logger.info("End of Variable Definition Part Parse  Tokens To Command List");
 				logger.info("*************************************************************************************");
 				logger.info("*************************************************************************************");
 				logger.info("*************************************************************************************");
@@ -324,7 +325,8 @@ public class CobolCommandList extends AbstractCommandList {
 	public void findAndSetEndingCommands() throws Exception {
 		MultipleLinesCommandsCobolUtility utility = new MultipleLinesCommandsCobolUtility();
 		for (AbstractCommand command : commandList) {
-
+			if(command.getCommandName().equals("DATA_DIVISION"))
+				logger.info("");
 			if (utility.isStarter(command)) {
 				utility.putStarterToBuffer((AbstractMultipleLinesCommand) command);
 			} else if (utility.isEnder(command)) {
@@ -354,9 +356,12 @@ public class CobolCommandList extends AbstractCommandList {
 	 */
 	public void addVirtualEndings() {
 
-		addVirtualEndingForIdentificationDivision();
 		
-		//addVirtualEndingForProcedureDivision();
+		addVirtualEndingForIdentificationDivision();
+		addVirtualEndingForDataDivision();
+		
+		
+		addVirtualEndingForProcedureDivision();
 		
 		addVirtualEndingForDefineData();
 
@@ -403,12 +408,46 @@ public class CobolCommandList extends AbstractCommandList {
 					}
 					nextCommand = commandList.get(index);
 
-					if (nextCommand.getCommandName().equals(ReservedCobolKeywords.PROCEDURE_DIVISION)) {
+					if (nextCommand.getCommandName().contains("DIVISION")) {
 
 						elementEndIdentificationDivision = new ElementEndIdentificationDivision("ElementEndIdentificationDivision", "GENERAL.*.END_IDENTIFICATION_DIVISION");
 						elementEndIdentificationDivision.setVisualCommand(true);
 						elementEndIdentificationDivision.setSatirNumarasi(nextCommand.getSatirNumarasi());
 						commandList.add(index, elementEndIdentificationDivision);
+						break;
+					}
+				}
+			}
+		}
+	}	
+	
+	private void addVirtualEndingForDataDivision() {
+		ElementEndDataDivision elementEndDataDivision;
+
+		AbstractCommand curCommand;
+		AbstractCommand nextCommand;
+
+		for (int index = 0; index < commandList.size() - 1; index++) {
+
+			curCommand = commandList.get(index);
+
+			System.out.println(curCommand.getCommandName());
+
+			if (curCommand.getCommandName().equals(ReservedCobolKeywords.DATA_DIVISION)) {
+
+				while (true) {
+					index++;
+					if (index == commandList.size() - 1) {
+						break;
+					}
+					nextCommand = commandList.get(index);
+
+					if (nextCommand.getCommandName().contains("DIVISION")) {
+
+						elementEndDataDivision = new ElementEndDataDivision("ElementEndDataDivision", "GENERAL.*.END_DATA_DIVISION");
+						elementEndDataDivision.setVisualCommand(true);
+						elementEndDataDivision.setSatirNumarasi(nextCommand.getSatirNumarasi());
+						commandList.add(index, elementEndDataDivision);
 						break;
 					}
 				}

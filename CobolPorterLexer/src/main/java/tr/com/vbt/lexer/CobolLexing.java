@@ -23,6 +23,7 @@ import tr.com.vbt.java.utils.VariableTypes;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.ArrayToken;
 import tr.com.vbt.token.CobolOzelKelimeler;
+import tr.com.vbt.token.CommandKeyToken;
 import tr.com.vbt.token.DortluOzelKelimelerNatural;
 import tr.com.vbt.token.IkiliOzelKelimelerCobol;
 import tr.com.vbt.token.KarakterToken;
@@ -174,29 +175,29 @@ public class CobolLexing extends AbstractLexing {
 				// devam
 				// et.
 			continue;
-			}else if (astCurrent.isOzelKelime(ReservedNaturalKeywords.AND)
-							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.OR)
-							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.NOT)
-							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.IS)
-							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.NUMERIC)
-							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.IS_NUMERIC)
-							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.EQUAL)
-							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.MASK)
-							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.SUBSTR)
-							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.WITH)
-							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.THRU)
-							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.STARTING_FROM)
+			}else if (astCurrent.isOzelKelime(ReservedCobolKeywords.AND)
+							|| astCurrent.isOzelKelime(ReservedCobolKeywords.OR)
+							|| astCurrent.isOzelKelime(ReservedCobolKeywords.NOT)
+							|| astCurrent.isOzelKelime(ReservedCobolKeywords.IS)
+							|| astCurrent.isOzelKelime(ReservedCobolKeywords.NUMERIC)
+							|| astCurrent.isOzelKelime(ReservedCobolKeywords.IS_NUMERIC)
+							|| astCurrent.isOzelKelime(ReservedCobolKeywords.EQUAL)
+							|| astCurrent.isOzelKelime(ReservedCobolKeywords.MASK)
+							|| astCurrent.isOzelKelime(ReservedCobolKeywords.SUBSTR)
+							|| astCurrent.isOzelKelime(ReservedCobolKeywords.WITH)
+							|| astCurrent.isOzelKelime(ReservedCobolKeywords.THRU)
+							|| astCurrent.isOzelKelime(ReservedCobolKeywords.STARTING_FROM)
 							|| astCurrent.isOzelKelime("IN_PHYSICAL_SEQUENCE")
-							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.ENDING_AT)
-							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.DESCENDING)
-							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.ASCENDING)
-							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.SORTED_BY)
-							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.GE)
-							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.GT)
-							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.LE)
-							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.LT)
-							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.EQ)
-							|| astCurrent.isOzelKelime(ReservedNaturalKeywords.NE)) { // VLM-DEGER
+							|| astCurrent.isOzelKelime(ReservedCobolKeywords.ENDING_AT)
+							|| astCurrent.isOzelKelime(ReservedCobolKeywords.DESCENDING)
+							|| astCurrent.isOzelKelime(ReservedCobolKeywords.ASCENDING)
+							|| astCurrent.isOzelKelime(ReservedCobolKeywords.SORTED_BY)
+							|| astCurrent.isOzelKelime(ReservedCobolKeywords.GE)
+							|| astCurrent.isOzelKelime(ReservedCobolKeywords.GT)
+							|| astCurrent.isOzelKelime(ReservedCobolKeywords.LE)
+							|| astCurrent.isOzelKelime(ReservedCobolKeywords.LT)
+							|| astCurrent.isOzelKelime(ReservedCobolKeywords.EQ)
+							|| astCurrent.isOzelKelime(ReservedCobolKeywords.NE)) { // VLM-DEGER
 																							// (
 																							// ACOCC-XX2
 																							// ,
@@ -1703,16 +1704,20 @@ public class CobolLexing extends AbstractLexing {
 				case CustomStreamTokenizer.TT_WORD:
 					logger.debug("Word: " + currentTokenizer.sval);
 					String tokenVal = currentTokenizer.sval;
-					if (tokenVal.equals(ReservedCobolKeywords.PROCEDURE_DIVISION)) {
-
+//					if (tokenVal.equals(ReservedCobolKeywords.PROCEDURE_DIVISION)) {
+//
+//					}
+					//tokenVal=operateDiyez(tokenVal);
+					if(satirdakiTokenSirasi==0 && cobolOzelKelimeler.ozelKelimeler.contains(tokenVal) && !inComment)
+					{
+						CommandKeyToken commandKey=new CommandKeyToken(tokenVal, currentTokenizer.lineno(), 0,satirdakiTokenSirasi);
+					tokenListesi.add(commandKey);
 					}
-					tokenVal=operateDiyez(tokenVal);
-					if (cobolOzelKelimeler.ozelKelimeler.contains(tokenVal) && !inComment) {
+					else if (cobolOzelKelimeler.ozelKelimeler.contains(tokenVal) && !inComment) {
 						// Öncesinde diyez varsa ve comment içinde değilse
 						// diyezi tokenListe eklemedik. Sonra gelen eleman
 						// systemVariable ise systemVariable olarak set ettik.
-						OzelKelimeToken ozelKelime = new OzelKelimeToken(tokenVal, currentTokenizer.lineno(), 0,
-								satirdakiTokenSirasi);
+						OzelKelimeToken ozelKelime = new OzelKelimeToken(tokenVal, currentTokenizer.lineno(), 0,satirdakiTokenSirasi);
 						tokenListesi.add(ozelKelime);
 
 					} else {
@@ -1893,7 +1898,7 @@ public class CobolLexing extends AbstractLexing {
 		
 		addIfVisualTokens();
 		
-		addEnders();
+		//addEnders();
 	
 		//setKeyValueKeywords(); // Remove da icinde.
 

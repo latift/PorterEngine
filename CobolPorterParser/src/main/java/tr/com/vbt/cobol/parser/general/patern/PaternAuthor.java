@@ -3,7 +3,8 @@ package tr.com.vbt.cobol.parser.general.patern;
 import java.util.List;
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
-import tr.com.vbt.cobol.parser.general.ElementProgramId;
+import tr.com.vbt.cobol.parser.general.ElementAuthor;
+import tr.com.vbt.cobol.parser.general.ElementAuthor;
 import tr.com.vbt.lexer.ReservedCobolKeywords;
 import tr.com.vbt.patern.AbstractPattern;
 import tr.com.vbt.token.AbstractToken;
@@ -16,14 +17,14 @@ import tr.com.vbt.token.OzelKelimeToken;
  *     PROGRAM-ID. HELLO_WORD.
  *
  */
-public class PaternProgramId extends AbstractPattern{
+public class PaternAuthor extends AbstractPattern{
 
 	
-	public PaternProgramId() {
+	public PaternAuthor() {
 		super();
 		
 		//PROGRAM-ID
-		AbstractToken astKeyword=new CommandKeyToken("PROGRAM-ID", 0, 0, 0);
+		AbstractToken astKeyword=new CommandKeyToken("AUTHOR", 0, 0, 0);
 		astKeyword.setTekrarlayabilir("+");
 		astKeyword.setSourceFieldName("FIRST_COMMAND");
 		patternTokenList.add(astKeyword);
@@ -40,7 +41,7 @@ public class PaternProgramId extends AbstractPattern{
 	
 	@Override
 	public AbstractCommand createElement(){
-		ElementProgramId elementDisplay = new ElementProgramId(ReservedCobolKeywords.PROGRAM_ID,"GENERAL.*.PROGRAM_ID");
+		ElementAuthor elementDisplay = new ElementAuthor(ReservedCobolKeywords.AUTHOR,"GENERAL.*.AUTHOR");
 		return elementDisplay;
 	}
 
@@ -50,7 +51,7 @@ public class PaternProgramId extends AbstractPattern{
 			AbstractToken currentTokenForMatch,
 			AbstractToken abstractTokenInPattern) {
 		
-		ElementProgramId matchedCommandAdd=(ElementProgramId) matchedCommand;
+		ElementAuthor matchedCommandAdd=(ElementAuthor) matchedCommand;
 		
 		super.setSatirNumarasi(matchedCommand,currentTokenForMatch, abstractTokenInPattern);
 		if(abstractTokenInPattern.getSourceFieldName()==null){

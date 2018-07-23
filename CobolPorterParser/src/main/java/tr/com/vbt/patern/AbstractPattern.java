@@ -79,7 +79,7 @@ public abstract class AbstractPattern  {
 						break;
 					}
 					matchedCommand.increaseCommandsMatchPoint();
-					logger.info(" MATCHED  SatirBAsi Or Nokta POINT:"+matchedCommand.getCommandMatchPoint());
+					logger.info(" MATCHED  SatirBasi Or Nokta POINT:"+matchedCommand.getCommandMatchPoint());
 				}
 			}
 			
@@ -104,9 +104,10 @@ public abstract class AbstractPattern  {
 			if(Utility.DEBUG){
 				logger.info("PATERN TOKEN KONTROL: Paterndeki Token:"+abstractTokenInPattern.getDeger()+" "+ abstractTokenInPattern.getTip()+"  Current Token: "+currentTokenForMatch.getDeger() + " "+abstractTokenInPattern.getTip());
 			}
-			
+			if(currentTokenForMatch.getDeger().equals("PIC"))
+				logger.info(">>>>>>>>"+currentTokenForMatch.getDeger()+">>>>>"+abstractTokenInPattern.getDeger());
 			if(!currentTokenForMatch.tokenMatchs(abstractTokenInPattern)){
-					logger.info(" NOT MATCHED"+currentTokenForMatch.getDeger());
+					logger.info(" NOT MATCHED "+currentTokenForMatch.getDeger());
 					Utility.DEBUG=false;
 					lastElementMatched=false;
 					if(abstractTokenInPattern.isOptional()){
@@ -116,7 +117,7 @@ public abstract class AbstractPattern  {
 					return null;
 			}
 			else{
-					logger.info(" MATCHED"+currentTokenForMatch.getDeger());
+					logger.info(" MATCHED "+currentTokenForMatch.getDeger());
 					matchedCommand.setSourceCodeSentence(matchedCommand.getSourceCodeSentence(),currentTokenForMatch);
 					setTokenToElement(matchedCommand, currentTokenForMatch,abstractTokenInPattern);
 					matchedCommand.increaseCommandsMatchPoint();

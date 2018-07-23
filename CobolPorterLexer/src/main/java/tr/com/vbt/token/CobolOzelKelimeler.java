@@ -21,6 +21,8 @@ public CobolOzelKelimeler() {
 	ozelKelimeler.add("AUTHOR");
 	ozelKelimeler.add("DATE-WRITTEN");
 	ozelKelimeler.add("WORKING-STORAGE-SECTION-WRITTEN");
+	ozelKelimeler.add("WORKING-STORAGE-SECTION");
+	ozelKelimeler.add("WORKING-STORAGE");
 	ozelKelimeler.add("SOURCE-COMPUTER");
 	ozelKelimeler.add("OBJECT-COMPUTER");
 	ozelKelimeler.add("MOVE");
@@ -235,6 +237,7 @@ public CobolOzelKelimeler() {
 	ozelKelimeler.add("GO"); 
 	ozelKelimeler.add("TO"); 
 	ozelKelimeler.add("IDENTIFICATION"); 
+	ozelKelimeler.add("PROCEDURE"); 
 	ozelKelimeler.add("ID"); 
 	ozelKelimeler.add("DIVISION"); 
 	ozelKelimeler.add("PROGRAM_ID"); 

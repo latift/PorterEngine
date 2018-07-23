@@ -3,7 +3,8 @@ package tr.com.vbt.cobol.parser.general.patern;
 import java.util.List;
 
 import tr.com.vbt.cobol.parser.AbstractCommand;
-import tr.com.vbt.cobol.parser.general.ElementProgramId;
+import tr.com.vbt.cobol.parser.general.ElementWorkingStorageSection;
+import tr.com.vbt.cobol.parser.general.ElementWorkingStorageSection;
 import tr.com.vbt.lexer.ReservedCobolKeywords;
 import tr.com.vbt.patern.AbstractPattern;
 import tr.com.vbt.token.AbstractToken;
@@ -16,31 +17,31 @@ import tr.com.vbt.token.OzelKelimeToken;
  *     PROGRAM-ID. HELLO_WORD.
  *
  */
-public class PaternProgramId extends AbstractPattern{
+public class PaternWorkingStorageSection extends AbstractPattern{
 
 	
-	public PaternProgramId() {
+	public PaternWorkingStorageSection() {
 		super();
 		
 		//PROGRAM-ID
-		AbstractToken astKeyword=new CommandKeyToken("PROGRAM-ID", 0, 0, 0);
+		AbstractToken astKeyword=new CommandKeyToken("WORKING-STORAGE_SECTION", 0, 0, 0);
 		astKeyword.setTekrarlayabilir("+");
 		astKeyword.setSourceFieldName("FIRST_COMMAND");
 		patternTokenList.add(astKeyword);
 		
 		
-		//HELLO_WORD
-		AbstractToken<String> astSource=new KelimeToken<String>();
-		astSource.setTekrarlayabilir("+");
-		astSource.setSourceFieldName("param");
-		patternTokenList.add(astSource);
+//		//HELLO_WORD
+//		AbstractToken<String> astSource=new KelimeToken<String>();
+//		astSource.setTekrarlayabilir("+");
+//		astSource.setSourceFieldName("param");
+//		patternTokenList.add(astSource);
 		
 		
 	}
 	
 	@Override
 	public AbstractCommand createElement(){
-		ElementProgramId elementDisplay = new ElementProgramId(ReservedCobolKeywords.PROGRAM_ID,"GENERAL.*.PROGRAM_ID");
+		ElementWorkingStorageSection elementDisplay = new ElementWorkingStorageSection(ReservedCobolKeywords.WORKING_STORAGE_SECTION,"GENERAL.*.WORKING_STORAGE_SECTION");
 		return elementDisplay;
 	}
 
@@ -50,7 +51,7 @@ public class PaternProgramId extends AbstractPattern{
 			AbstractToken currentTokenForMatch,
 			AbstractToken abstractTokenInPattern) {
 		
-		ElementProgramId matchedCommandAdd=(ElementProgramId) matchedCommand;
+		ElementWorkingStorageSection matchedCommandAdd=(ElementWorkingStorageSection) matchedCommand;
 		
 		super.setSatirNumarasi(matchedCommand,currentTokenForMatch, abstractTokenInPattern);
 		if(abstractTokenInPattern.getSourceFieldName()==null){

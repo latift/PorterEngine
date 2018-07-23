@@ -5,6 +5,7 @@ import tr.com.vbt.cobol.parser.general.ElementMain;
 import tr.com.vbt.lexer.ReservedCobolKeywords;
 import tr.com.vbt.patern.AbstractPattern;
 import tr.com.vbt.token.AbstractToken;
+import tr.com.vbt.token.CommandKeyToken;
 import tr.com.vbt.token.OzelKelimeToken;
 
 /**
@@ -26,7 +27,7 @@ public class PaternMain extends AbstractPattern{
 		super();
 		
 		//MAIN_PARAGRAPH
-		AbstractToken astKeyword=new OzelKelimeToken(ReservedCobolKeywords.MAIN, 0, 0, 0);
+		AbstractToken astKeyword=new CommandKeyToken(ReservedCobolKeywords.MAIN, 0, 0, 0);
 		astKeyword.setSourceFieldName("FIRST_COMMAND");
 		astKeyword.setTekrarlayabilir("+");
 		patternTokenList.add(astKeyword);

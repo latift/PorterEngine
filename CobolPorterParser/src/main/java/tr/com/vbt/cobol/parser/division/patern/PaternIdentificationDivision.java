@@ -7,6 +7,7 @@ import tr.com.vbt.cobol.parser.division.ElementIdentificationDivision;
 import tr.com.vbt.lexer.ReservedCobolKeywords;
 import tr.com.vbt.patern.AbstractPattern;
 import tr.com.vbt.token.AbstractToken;
+import tr.com.vbt.token.CommandKeyToken;
 import tr.com.vbt.token.OzelKelimeToken;
 
 /**
@@ -20,7 +21,7 @@ public class PaternIdentificationDivision extends AbstractPattern{
 		super();
 		
 		//IDENTIFICATION_DIVISION
-		AbstractToken astKeyword=new OzelKelimeToken("IDENTIFICATION_DIVISION", 0, 0, 0);
+		AbstractToken astKeyword=new CommandKeyToken("IDENTIFICATION_DIVISION", 0, 0, 0);
 		astKeyword.setTekrarlayabilir("+");
 		astKeyword.setSourceFieldName("FIRST_COMMAND");
 		patternTokenList.add(astKeyword);

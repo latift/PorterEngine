@@ -12,7 +12,9 @@ import tr.com.vbt.cobol.parser.basicverbs.patern.PaternDisplay;
 import tr.com.vbt.cobol.parser.basicverbs.patern.PaternEnd;
 import tr.com.vbt.cobol.parser.basicverbs.patern.PaternStopRun;
 import tr.com.vbt.cobol.parser.division.patern.PaternIdentificationDivision;
+import tr.com.vbt.cobol.parser.general.patern.PaternAuthor;
 import tr.com.vbt.cobol.parser.general.patern.PaternMain;
+import tr.com.vbt.cobol.parser.general.patern.PaternProgramId;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.TokenTipi;
 
@@ -29,6 +31,8 @@ public class PaternManagerCobolImpl  implements PaternManager{
 		
 		//Div And Sections Start
 		commmandPatternList.add(new PaternIdentificationDivision());
+		commmandPatternList.add(new PaternProgramId());
+		commmandPatternList.add(new PaternAuthor());
 		commmandPatternList.add(new PaternMain());
 		//Div And Sections Start
 		

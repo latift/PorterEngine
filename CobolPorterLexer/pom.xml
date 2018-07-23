@@ -18,13 +18,9 @@
 	<dependency>
 	   <groupId>tr.com.vbt.porter.lexer</groupId>
 	   <artifactId>Commons</artifactId>
- 		<version>0.0.1-SNAPSHOT</version>
+ 		<version>0.0.2-SNAPSHOT</version>
 	</dependency>
-	<dependency>
-	  <groupId>tr.com.thy.dal</groupId>
-	  <artifactId>THY_COMMON_DAL2</artifactId>
-	  <version>0.0.1-SNAPSHOT</version>
-	</dependency>
+
 
 	<dependency>
 			<groupId>tr.com.mb.dal</groupId>

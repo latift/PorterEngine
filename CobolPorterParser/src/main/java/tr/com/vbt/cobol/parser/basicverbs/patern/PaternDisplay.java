@@ -11,6 +11,7 @@ import tr.com.vbt.lexer.ReservedNaturalKeywords;
 import tr.com.vbt.patern.AbstractPattern;
 import tr.com.vbt.patern.carriage_return.AbstractPattern_XY_KKKK_Z_WithoutCarriageReturn;
 import tr.com.vbt.token.AbstractToken;
+import tr.com.vbt.token.CommandKeyToken;
 import tr.com.vbt.token.GenelTipToken;
 import tr.com.vbt.token.KelimeToken;
 import tr.com.vbt.token.OzelKelimeToken;
@@ -27,7 +28,7 @@ public class PaternDisplay extends AbstractPattern{
 		super();
 		
 		//PROGRAM-ID
-		AbstractToken astKeyword=new OzelKelimeToken("DISPLAY", 0, 0, 0);
+		AbstractToken astKeyword=new CommandKeyToken("DISPLAY", 0, 0, 0);
 		astKeyword.setTekrarlayabilir("+");
 		astKeyword.setSourceFieldName("FIRST_COMMAND");
 		patternTokenList.add(astKeyword);
@@ -40,8 +41,8 @@ public class PaternDisplay extends AbstractPattern{
 		patternTokenList.add(astSource);
 		
 		//Ender
-		AbstractToken<String> enderToken =new OzelKelimeToken(ReservedNaturalKeywords.END_DISPLAY,0,0,0);
-		patternTokenList.add(enderToken);
+//		AbstractToken<String> enderToken =new OzelKelimeToken(ReservedCobolKeywords.END_DISPLAY,0,0,0);
+//		patternTokenList.add(enderToken);
 		
 		
 	}
