@@ -22,7 +22,7 @@ import tr.com.vbt.token.AbstractToken;
  *
  */
 public class ElementMove extends AbstractCommand{
-	
+	private List<AbstractToken> conditionList=new ArrayList<AbstractToken>();
 	private AbstractToken dataToMove;
 	
 	private List<AbstractToken> destVariable=new ArrayList<AbstractToken>();
@@ -100,12 +100,8 @@ public class ElementMove extends AbstractCommand{
 		this.destVariable = destVariable;
 	}
 
-	
-	
-	
-	
-
-	
-
+	public List<AbstractToken> getConditionList() {
+		return conditionList;
+	}
 	
 }

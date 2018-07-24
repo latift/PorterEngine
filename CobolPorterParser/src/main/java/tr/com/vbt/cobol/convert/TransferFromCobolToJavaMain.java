@@ -37,6 +37,7 @@ import tr.com.vbt.patern.CobolCommandList;
 import tr.com.vbt.patern.CommandList;
 import tr.com.vbt.patern.PaternManager;
 import tr.com.vbt.patern.PaternManagerCobolImpl;
+import tr.com.vbt.patern.PaternManagerCommandCobolV2Impl;
 import tr.com.vbt.patern.PaternManagerDataTypesCobolImpl;
 import tr.com.vbt.token.AbstractToken;
 import tr.com.vbt.token.TokenTipi;
@@ -49,6 +50,8 @@ public class TransferFromCobolToJavaMain {
 	final static Logger logger = Logger.getLogger(TransferFromCobolToJavaMain.class);
 
 	ConversionOperationLogger conversionLogger = new ConversionOperationLogger();
+	
+	protected PaternManager paternManagerV2 = new PaternManagerCommandCobolV2Impl();
 
 	protected PaternManager paternManagerDataType = new PaternManagerDataTypesCobolImpl();
 
@@ -567,8 +570,9 @@ public class TransferFromCobolToJavaMain {
 				//commandList.replaceGlobalVariables();
 
 				try {
-					commandList.setPaternManager(paternManagerDataType);
-					commandList.parseDataTypeTokensToCommandsList();
+					commandList.setPaternManager(paternManagerV2);
+					commandList.parseCommandTokensToCommandsList();
+					//commandList.parseDataTypeTokensToCommandsList();
 				} catch (Exception e1) {
 					logger.warn("", e1);
 					throw e1;
